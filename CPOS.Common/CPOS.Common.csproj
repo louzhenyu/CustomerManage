@@ -63,6 +63,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferenceDll\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
+    <Reference Include="RedisOpenAPIClient">
+      <HintPath>..\ReferenceDll\RedisOpenAPIClient.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -111,6 +114,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlHelper.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /r /y $(TargetFileName) $(ProjectDir)..\ReferenceDll\</PostBuildEvent>

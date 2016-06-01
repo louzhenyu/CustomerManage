@@ -192,10 +192,7 @@ namespace JIT.CPOS.Web.WeiXin
 
                 VipEntity vipQueryInfo = new VipEntity();
                 VipEntity vipInfo = new VipEntity();
-                Loggers.Debug(new DebugLogInfo()
-                {
-                    Message = "一维码扫描---：" + "SetSignIn"
-                });
+              
                 #region --判断是新建还是修改管理平台
                 if (true)
                 {
@@ -224,6 +221,9 @@ namespace JIT.CPOS.Web.WeiXin
                             vipInfo.VipName = VipName;
                             //vipInfo.CouponInfo = qrcode;//CouponInfo已作为会籍店使用                         
                             vipInfo.HeadImgUrl = headimgurl;
+                            vipInfo.Col25 = "";
+
+
                             if (vipObj == null || vipObj.Length == 0 || vipObj[0] == null)
                             {
 
@@ -286,31 +286,18 @@ namespace JIT.CPOS.Web.WeiXin
 
                     #endregion
                 }
-                #endregion
-
-                Loggers.Debug(new DebugLogInfo()
-                {
-                    Message = "三维码扫描---：" + "SetSignIn"
-                });
+                #endregion             
 
                 string unitName = string.Empty;
                 string customerIdUnoin = string.Empty;
 
                 WMenuBLL menuServer = new WMenuBLL(loggingSessionInfo);
                 customerIdUnoin = menuServer.GetCustomerIdByWx(WeiXin);
-
-                Loggers.Debug(new DebugLogInfo()
-                {
-                    Message = "四维码扫描---：" + "SetSignIn"
-                });
-
-                //插入业务系统
+                #region --在商户系统中处理
+                //插入商户业务系统
                 customerIdUnoin = SetCustomerVipInfo(loggingSessionInfo, WeiXin, OpenID, City, IsShow, VipName, Gender, qrcode, null, null, headimgurl, qrcode_id, unionid, out VipIdTmp);
+                #endregion
 
-                Loggers.Debug(new DebugLogInfo()
-                {
-                    Message = "五维码扫描---：" + "SetSignIn"
-                });
                 //else //固定二维码
                 //{
 
@@ -331,10 +318,7 @@ namespace JIT.CPOS.Web.WeiXin
                 loggingSessionInfo = Default.GetBSLoggingSession(customerIdUnoin, "1");
                 var eventsBll = new LEventsBLL(loggingSessionInfo);
 
-                Loggers.Debug(new DebugLogInfo()
-                {
-                    Message = "三维码扫描---：" + qrcode_id + "------" + customerIdUnoin
-                });
+           
                 //处理扫描静态二维码事件****(这里的静态二维码事件返回的信息不会回到微信服务器，只是能返回到我们自己的服务器recivemsg.aspx上)
               //  eventsBll.SendQrCodeWxMessage(loggingSessionInfo, customerIdUnoin, WeiXin, qrcode_id, OpenID, HttpContext.Current, requestParams);
 
@@ -1351,7 +1335,7 @@ namespace JIT.CPOS.Web.WeiXin
             vipQueryInfo.WeiXin = WeiXin;
             vipQueryInfo.ClientID = customerIdUnoin;
 
-            var tmpUser = Default.GetBSLoggingSession(customerIdUnoin, "system");//商户系统的数据库链接
+            var tmpUser = Default.GetBSLoggingSession(customerIdUnoin, "system");//商户系统的数据库链接**
 
             #region 处理日志
             try
@@ -1398,7 +1382,11 @@ namespace JIT.CPOS.Web.WeiXin
                 vipInfo.HeadImgUrl = headimgurl;
 
                 var vipObj = vipServiceUnion.QueryByEntity(vipQueryInfo, null);
-                if (vipObj == null || vipObj.Length == 0 || vipObj[0] == null)
+
+                //取消关注做一个标识，以和未关注的oauth认证做区别***
+                vipInfo.Col25 = "";//表示为取消关注状态，会员取消关注时，需要将该字段置‘1’
+
+                if (vipObj == null || vipObj.Length == 0 || vipObj[0] == null)//新建
                 {
                     if (vipInfo.VIPID == null || vipInfo.VIPID.Equals(""))
                     {
@@ -1410,7 +1398,7 @@ namespace JIT.CPOS.Web.WeiXin
                     }
                     // vipInfo.Col49 = qrcode;//应该放在这里****
                     vipInfo.ClientID = tmpUser.CurrentUser.customer_id;
-                    vipInfo.Status = 1;
+                    vipInfo.Status = 1;//关注状态
                     vipInfo.VipPasswrod = "e10adc3949ba59abbe56e057f20f883e";
                     vipInfo.UnionID = unionid;
                     //if(qrcode_id != null && !qrcode_id.Equals(""))
@@ -1608,7 +1596,7 @@ namespace JIT.CPOS.Web.WeiXin
                     unitName = unitObj[0].UnitName.ToString();
                     SetUserUnitMapping(vipInfo.VIPID, unitId, tmpUser);
                 }
-                //Jermyn20131112判断是否临时变量
+                //Jermyn20131112判断是否临时二维码码
                 VipDCodeBLL vipDCodeServer = new VipDCodeBLL(tmpUser);
                 VipDCodeEntity vipDCodeInfo = vipDCodeServer.GetByID(qrcode_id);
                 if (vipDCodeInfo == null || vipDCodeInfo.Equals(""))
@@ -1620,6 +1608,28 @@ namespace JIT.CPOS.Web.WeiXin
                 }
                 else
                 {
+                    //这里记录临时二维码的扫描记录***                               
+                    QRCodeScanLogEntity qrCodeScanLogEntity = new QRCodeScanLogEntity();
+                    qrCodeScanLogEntity.QRCodeScanLogID = Guid.NewGuid();
+                    qrCodeScanLogEntity.VipID = vipInfo.VIPID;
+                    qrCodeScanLogEntity.OpenID = OpenID;
+                    qrCodeScanLogEntity.WeiXin = WeiXin;
+                    qrCodeScanLogEntity.QRCodeID = vipDCodeInfo.DCodeId.ToString();//记录主键值，而不是二维码code
+                    qrCodeScanLogEntity.CustomerId = tmpUser.ClientID;
+                    qrCodeScanLogEntity.QRCodeType = 2;//  二维码类型：1.永久二维码  2.临时二维码
+                    qrCodeScanLogEntity.BusTypeCode = vipDCodeInfo.DCodeType.ToString();//业务类型编码(记录临时二维码类型表里的场景值)
+                    qrCodeScanLogEntity.ObjectId = vipDCodeInfo.ObjectId ?? vipDCodeInfo.CreateBy;//二维码对应的对象（如员工集客，就记录员工的标识）,为空就记录create
+                    qrCodeScanLogEntity.IsDelete = 0;
+                    qrCodeScanLogEntity.CreateBy = "临时二维码扫描记录";
+                    qrCodeScanLogEntity.CreateTime = DateTime.Now;
+                    qrCodeScanLogEntity.LastUpdateBy = "临时二维码扫描记录";
+                    qrCodeScanLogEntity.LastUpdateTime = DateTime.Now;
+
+                    QRCodeScanLogBLL qrCodeScanLogBll = new QRCodeScanLogBLL(tmpUser);
+                    qrCodeScanLogBll.Create(qrCodeScanLogEntity);
+
+
+
                     vipDCodeInfo.Status = "1";
                     vipDCodeInfo.OpenId = OpenID;
                     vipDCodeInfo.DCodeId = qrcode_id;//类似50007094的文字
@@ -1712,8 +1722,13 @@ namespace JIT.CPOS.Web.WeiXin
                     VipEntity vipInfoUnion = vipObj[0];
                     vipInfoUnion.Status = 0;
                     vipInfoUnion.VipCode = null;
+
+                    //取消关注做一个标识，以和未关注的oauth认证做区别***
+                    vipInfoUnion.Col25 = "1";//表示为取消关注状态，会员取消关注时，需要将该字段置‘1’
+
                     vipServiceUnion.Update(vipInfoUnion, false);
                     vipId = vipInfoUnion.VIPID;
+                   
 
                 }
 
@@ -1751,7 +1766,7 @@ namespace JIT.CPOS.Web.WeiXin
         #endregion
 
         #region 推广二维码扫描时处理 added by zhangwei 2014-2-13
-
+        //已经不在使用
         /// <summary>
         ///推广二维码扫描时处理
         /// </summary>
@@ -1784,6 +1799,7 @@ namespace JIT.CPOS.Web.WeiXin
                             QRCode = qrcode_id
                         }, null)[0];
                 //记录扫描记录
+                /**
                 QRCodeScanLogEntity qrCodeScanLogEntity = new QRCodeScanLogEntity();
                 qrCodeScanLogEntity.QRCodeScanLogID = Guid.NewGuid();
                 qrCodeScanLogEntity.VipID = userId;
@@ -1793,6 +1809,7 @@ namespace JIT.CPOS.Web.WeiXin
                 qrCodeScanLogEntity.CustomerId = customerId;
                 QRCodeScanLogBLL qrCodeScanLogBll = new QRCodeScanLogBLL(loggingSessionInfo);
                 qrCodeScanLogBll.Create(qrCodeScanLogEntity);
+                 * */
                 //触发扫描动作
                 QRSacnPreAction(loggingSessionInfo, WeiXin, userId, openId, qrcode_id);
 

@@ -34,7 +34,7 @@ namespace JIT.CPOS.Web.ApplicationInterface
             {
                 //参数解析
                 var action = context.Request.QueryString["action"];
-           
+
                 //var strVersion = context.Request.QueryString["v"];
                 var strAPIType = context.Request.QueryString["type"];
                 var reqContent = context.Request["req"];
@@ -54,10 +54,10 @@ namespace JIT.CPOS.Web.ApplicationInterface
                 log4net.ILog logger = log4net.LogManager.GetLogger("Logger");
                 if (reqContent != null && reqContent.Length > 0)
                 {
-                reqContent = HttpUtility.UrlDecode(reqContent);
-                //Default.ReqData reqObj = reqContent.DeserializeJSONTo<Default.ReqData>();
-                logger.Info(new LogContent(action, context.Request["req"], commonRequest.UserID, commonRequest.CustomerID, commonRequest.UserID, commonRequest.OpenID,HttpContext.Current.GetClientIP(), "", "", null));
-                 }
+                    reqContent = HttpUtility.UrlDecode(reqContent);
+                    //Default.ReqData reqObj = reqContent.DeserializeJSONTo<Default.ReqData>();
+                    logger.Info(new LogContent(action, context.Request["req"], commonRequest.UserID, commonRequest.CustomerID, commonRequest.UserID, commonRequest.OpenID, HttpContext.Current.GetClientIP(), "", "", null));
+                }
 
                 #endregion
                 //
@@ -106,8 +106,15 @@ namespace JIT.CPOS.Web.ApplicationInterface
         {
             if (!string.IsNullOrWhiteSpace(this.JSONP))
             {
-                pRspContent = string.Format("{0}({1})",this.JSONP,pRspContent);
+                pRspContent = string.Format("{0}({1})", this.JSONP, pRspContent);
             }
+
+            //埋点
+            try
+            {
+                new JIT.CPOS.BS.BLL.BuryingPoint_Gateway(pContext, pRspContent);
+            }
+            catch { }
 
             pContext.Response.Clear();
             pContext.Response.StatusCode = 200;

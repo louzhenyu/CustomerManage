@@ -20,6 +20,7 @@ using System.Threading;
 using System.Configuration;
 using JIT.CPOS.BS.BLL.WX;
 using JIT.CPOS.DTO.Base;
+using JIT.CPOS.BS.BLL.RedisOperationBLL.OrderSend;
 
 namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
 {
@@ -2884,8 +2885,9 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                             //物流公司
                             order.carrier_name = inoutService.GetCompanyName(order.carrier_id);
 
-                            var CommonBLL = new CommonBLL();
-                            CommonBLL.SentShipMessage(order, vipInfo.WeiXinUserId, order.vip_no, CurrentUserInfo);
+                            //var CommonBLL = new CommonBLL();
+                            //CommonBLL.SentShipMessage(order, vipInfo.WeiXinUserId, order.vip_no, CurrentUserInfo);
+                            new SendOrderSendMsgBLL().SentShipMessage(order, vipInfo.WeiXinUserId, order.vip_no, CurrentUserInfo);
                         }
                         #endregion
                         responseData.success = true;

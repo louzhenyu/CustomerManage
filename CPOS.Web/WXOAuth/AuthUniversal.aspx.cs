@@ -48,7 +48,7 @@ namespace JIT.CPOS.Web.WXOAuth
                 Random rad = new Random();
                 int iRad = rad.Next(1000, 100000);
                 var openOAuthAppid = string.Empty;
-                if (!string.IsNullOrEmpty(Request["state"]))
+                if (!string.IsNullOrEmpty(Request["state"]))//很少会走到这里
                 {
                     #region state不为空
                     string state = Request["state"];

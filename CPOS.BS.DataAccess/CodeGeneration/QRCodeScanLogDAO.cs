@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/2/20 11:34:32
+ * Create On	:2016/5/21 12:42:09
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -25,8 +25,8 @@ using JIT.Utility.Entity;
 using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess;
 using JIT.Utility.Log;
-using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess.Query;
+using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.DataAccess.Base;
 
 namespace JIT.CPOS.BS.DataAccess
@@ -72,17 +72,18 @@ namespace JIT.CPOS.BS.DataAccess
                 throw new ArgumentNullException("pEntity");
             
             //初始化固定字段
-            pEntity.CreateTime = DateTime.Now;
-            pEntity.CreateBy = CurrentUserInfo.UserID;
-            pEntity.LastUpdateTime = pEntity.CreateTime;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
-            pEntity.IsDelete = 0;
+			pEntity.IsDelete=0;
+			pEntity.CreateTime=DateTime.Now;
+			pEntity.LastUpdateTime=pEntity.CreateTime;
+			pEntity.CreateBy=CurrentUserInfo.UserID;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [QRCodeScanLog](");
-            strSql.Append("[OpenID],[VipID],[QRCodeID],[CustomerId],[WeiXin],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[QRCodeScanLogID])");
+            strSql.Append("[OpenID],[VipID],[QRCodeID],[CustomerId],[WeiXin],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[BusTypeCode],[ObjectId],[QRCodeType],[QRCodeScanLogID])");
             strSql.Append(" values (");
-            strSql.Append("@OpenID,@VipID,@QRCodeID,@CustomerId,@WeiXin,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@QRCodeScanLogID)");            
+            strSql.Append("@OpenID,@VipID,@QRCodeID,@CustomerId,@WeiXin,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@BusTypeCode,@ObjectId,@QRCodeType,@QRCodeScanLogID)");            
 
 			Guid? pkGuid;
 			if (pEntity.QRCodeScanLogID == null)
@@ -102,6 +103,9 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
+					new SqlParameter("@BusTypeCode",SqlDbType.VarChar),
+					new SqlParameter("@ObjectId",SqlDbType.NVarChar),
+					new SqlParameter("@QRCodeType",SqlDbType.Int),
 					new SqlParameter("@QRCodeScanLogID",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.OpenID;
@@ -114,7 +118,10 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[7].Value = pEntity.LastUpdateTime;
 			parameters[8].Value = pEntity.LastUpdateBy;
 			parameters[9].Value = pEntity.IsDelete;
-			parameters[10].Value = pkGuid;
+			parameters[10].Value = pEntity.BusTypeCode;
+			parameters[11].Value = pEntity.ObjectId;
+			parameters[12].Value = pEntity.QRCodeType;
+			parameters[13].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -137,7 +144,7 @@ namespace JIT.CPOS.BS.DataAccess
             string id = pID.ToString();
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [QRCodeScanLog] where QRCodeScanLogID='{0}' and IsDelete=0 ", id.ToString());
+            sql.AppendFormat("select * from [QRCodeScanLog] where QRCodeScanLogID='{0}'  and isdelete=0 ", id.ToString());
             //读取数据
             QRCodeScanLogEntity m = null;
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -160,7 +167,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [QRCodeScanLog] where isdelete=0");
+            sql.AppendFormat("select * from [QRCodeScanLog] where 1=1  and isdelete=0");
             //读取数据
             List<QRCodeScanLogEntity> list = new List<QRCodeScanLogEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -183,25 +190,32 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
         public void Update(QRCodeScanLogEntity pEntity , IDbTransaction pTran)
         {
-            Update(pEntity,true,pTran);
+            Update(pEntity , pTran,true);
         }
-        public void Update(QRCodeScanLogEntity pEntity , bool pIsUpdateNullField, IDbTransaction pTran)
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="pEntity">实体实例</param>
+        /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
+        public void Update(QRCodeScanLogEntity pEntity , IDbTransaction pTran,bool pIsUpdateNullField)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.QRCodeScanLogID==null)
+            if (!pEntity.QRCodeScanLogID.HasValue)
             {
                 throw new ArgumentException("执行更新时,实体的主键属性值不能为null.");
             }
              //初始化固定字段
-            pEntity.LastUpdateTime = DateTime.Now;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
+			pEntity.LastUpdateTime=DateTime.Now;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+
 
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [QRCodeScanLog] set ");
-            if (pIsUpdateNullField || pEntity.OpenID!=null)
+                        if (pIsUpdateNullField || pEntity.OpenID!=null)
                 strSql.Append( "[OpenID]=@OpenID,");
             if (pIsUpdateNullField || pEntity.VipID!=null)
                 strSql.Append( "[VipID]=@VipID,");
@@ -214,7 +228,13 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
-                strSql.Append( "[LastUpdateBy]=@LastUpdateBy");
+                strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
+            if (pIsUpdateNullField || pEntity.BusTypeCode!=null)
+                strSql.Append( "[BusTypeCode]=@BusTypeCode,");
+            if (pIsUpdateNullField || pEntity.ObjectId!=null)
+                strSql.Append( "[ObjectId]=@ObjectId,");
+            if (pIsUpdateNullField || pEntity.QRCodeType!=null)
+                strSql.Append( "[QRCodeType]=@QRCodeType");
             if (strSql.ToString().EndsWith(","))
                 strSql.Remove(strSql.Length - 1, 1);
             strSql.Append(" where QRCodeScanLogID=@QRCodeScanLogID ");
@@ -227,6 +247,9 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@WeiXin",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
+					new SqlParameter("@BusTypeCode",SqlDbType.VarChar),
+					new SqlParameter("@ObjectId",SqlDbType.NVarChar),
+					new SqlParameter("@QRCodeType",SqlDbType.Int),
 					new SqlParameter("@QRCodeScanLogID",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.OpenID;
@@ -236,7 +259,10 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[4].Value = pEntity.WeiXin;
 			parameters[5].Value = pEntity.LastUpdateTime;
 			parameters[6].Value = pEntity.LastUpdateBy;
-			parameters[7].Value = pEntity.QRCodeScanLogID;
+			parameters[7].Value = pEntity.BusTypeCode;
+			parameters[8].Value = pEntity.ObjectId;
+			parameters[9].Value = pEntity.QRCodeType;
+			parameters[10].Value = pEntity.QRCodeScanLogID;
 
             //执行语句
             int result = 0;
@@ -252,11 +278,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pEntity">实体实例</param>
         public void Update(QRCodeScanLogEntity pEntity )
         {
-            Update(pEntity ,true);
-        }
-        public void Update(QRCodeScanLogEntity pEntity ,bool pIsUpdateNullField )
-        {
-            this.Update(pEntity, pIsUpdateNullField, null);
+            this.Update(pEntity, null);
         }
 
         /// <summary>
@@ -278,12 +300,12 @@ namespace JIT.CPOS.BS.DataAccess
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.QRCodeScanLogID==null)
+            if (!pEntity.QRCodeScanLogID.HasValue)
             {
                 throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
             }
             //执行 
-            this.Delete(pEntity.QRCodeScanLogID, pTran);           
+            this.Delete(pEntity.QRCodeScanLogID.Value, pTran);           
         }
 
         /// <summary>
@@ -297,11 +319,9 @@ namespace JIT.CPOS.BS.DataAccess
                 return ;   
             //组织参数化SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [QRCodeScanLog] set LastUpdateTime=@LastUpdateTime,LastUpdateBy=@LastUpdateBy,IsDelete=1 where QRCodeScanLogID=@QRCodeScanLogID;");
+            sql.AppendLine("update [QRCodeScanLog] set  isdelete=1 where QRCodeScanLogID=@QRCodeScanLogID;");
             SqlParameter[] parameters = new SqlParameter[] 
             { 
-                new SqlParameter{ParameterName="@LastUpdateTime",SqlDbType=SqlDbType.DateTime,Value=DateTime.Now},
-                new SqlParameter{ParameterName="@LastUpdateBy",SqlDbType=SqlDbType.VarChar,Value=Convert.ToString(CurrentUserInfo.UserID)},
                 new SqlParameter{ParameterName="@QRCodeScanLogID",SqlDbType=SqlDbType.UniqueIdentifier,Value=pID}
             };
             //执行语句
@@ -324,15 +344,15 @@ namespace JIT.CPOS.BS.DataAccess
             object[] entityIDs = new object[pEntities.Length];
             for (int i = 0; i < pEntities.Length; i++)
             {
-                var item = pEntities[i];
+                var pEntity = pEntities[i];
                 //参数校验
-                if (item == null)
+                if (pEntity == null)
                     throw new ArgumentNullException("pEntity");
-                if (item.QRCodeScanLogID==null)
+                if (!pEntity.QRCodeScanLogID.HasValue)
                 {
                     throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
                 }
-                entityIDs[i] = item.QRCodeScanLogID;
+                entityIDs[i] = pEntity.QRCodeScanLogID;
             }
             Delete(entityIDs, pTran);
         }
@@ -371,7 +391,7 @@ namespace JIT.CPOS.BS.DataAccess
                 primaryKeys.AppendFormat("'{0}',",item.ToString());
             }
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [QRCodeScanLog] set LastUpdateTime='"+DateTime.Now.ToString()+"',LastUpdateBy='"+CurrentUserInfo.UserID+"',IsDelete=1 where QRCodeScanLogID in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
+            sql.AppendLine("update [QRCodeScanLog] set  isdelete=1 where QRCodeScanLogID in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
             //执行语句
             int result = 0;   
             if (pTran == null)
@@ -392,7 +412,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [QRCodeScanLog] where isdelete=0 ");
+            sql.AppendFormat("select * from [QRCodeScanLog] where 1=1  and isdelete=0 ");
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)
@@ -453,9 +473,9 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [QRCodeScanLogID] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,* from [QRCodeScanLog] where isdelete=0 ");
+            pagedSql.AppendFormat(") as ___rn,* from [QRCodeScanLog] where 1=1  and isdelete=0 ");
             //总记录数SQL
-            totalCountSql.AppendFormat("select count(1) from [QRCodeScanLog] where isdelete=0 ");
+            totalCountSql.AppendFormat("select count(1) from [QRCodeScanLog] where 1=1  and isdelete=0 ");
             //过滤条件
             if (pWhereConditions != null)
             {
@@ -550,6 +570,12 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
             if (pQueryEntity.IsDelete!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
+            if (pQueryEntity.BusTypeCode!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "BusTypeCode", Value = pQueryEntity.BusTypeCode });
+            if (pQueryEntity.ObjectId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ObjectId", Value = pQueryEntity.ObjectId });
+            if (pQueryEntity.QRCodeType!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "QRCodeType", Value = pQueryEntity.QRCodeType });
 
             return lstWhereCondition.ToArray();
         }
@@ -558,7 +584,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pReader">向前只读器</param>
         /// <param name="pInstance">实体实例</param>
-        protected void Load(SqlDataReader pReader, out QRCodeScanLogEntity pInstance)
+        protected void Load(IDataReader pReader, out QRCodeScanLogEntity pInstance)
         {
             //将所有的数据从SqlDataReader中读取到Entity中
             pInstance = new QRCodeScanLogEntity();
@@ -608,6 +634,18 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["IsDelete"] != DBNull.Value)
 			{
 				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
+			}
+			if (pReader["BusTypeCode"] != DBNull.Value)
+			{
+				pInstance.BusTypeCode =  Convert.ToString(pReader["BusTypeCode"]);
+			}
+			if (pReader["ObjectId"] != DBNull.Value)
+			{
+				pInstance.ObjectId =  Convert.ToString(pReader["ObjectId"]);
+			}
+			if (pReader["QRCodeType"] != DBNull.Value)
+			{
+				pInstance.QRCodeType =   Convert.ToInt32(pReader["QRCodeType"]);
 			}
 
         }

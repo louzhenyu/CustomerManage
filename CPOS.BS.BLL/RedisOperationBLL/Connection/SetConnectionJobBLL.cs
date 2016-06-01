@@ -20,9 +20,9 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Connection
    
 
         /// <summary>
-        /// 种植 角色菜单 缓存
+        /// 种植 商户数据库链接 缓存
         /// </summary>
-        public void AutoSetRoleMenuCache()
+        public void AutoSetConnectionCache()
         {
             _CustomerIDList = CustomerBLL.Instance.GetCustomerList();//这里的Instance使用了单例的模式
             foreach (var customer in _CustomerIDList)

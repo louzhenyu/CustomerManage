@@ -105,6 +105,13 @@ namespace JIT.CPOS.Web.ApplicationInterface
                 pRspContent = string.Format("{0}({1})", this.JSONP, pRspContent);
             }
 
+            //埋点
+            try
+            {
+                new JIT.CPOS.BS.BLL.BuryingPoint_Gateway(pContext, pRspContent);
+            }
+            catch { }
+
             pContext.Response.Clear();
             pContext.Response.StatusCode = 200;
             pContext.Response.Write(pRspContent);

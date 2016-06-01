@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
+using System.Text;
 using JIT.CPOS.BS.Entity;
+using JIT.CPOS.BS.DataAccess;
 using System.Data;
+using System.Data.SqlClient;
 using JIT.CPOS.BS.BLL;
-using System;
+using JIT.CPOS.BS.BLL.Utility;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -56,29 +60,40 @@ namespace JIT.CPOS.BS.BLL
             string[] arr_role = roleId.Split(new char[] { ',' });
             roleId = arr_role[0];
 
-            DataSet ds = appSysService.GetRoleMenus(roleId);//从Dal层获取数据
+            //DataSet ds = appSysService.GetRoleMenus(roleId);//从Dal层获取数据
 
-            IList<MenuModel> menulist = new List<MenuModel>();
+            //IList<MenuModel> menulist = new List<MenuModel>();
 
-            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            //if (ds != null && ds.Tables[0].Rows.Count > 0)
+            //{
+            //menulist = //DataTableToObject.ConvertToList<MenuModel>(ds.Tables[0]);//菜单列表转换成实体对象
+            var menulist = default(List<MenuModel>);
+            menulist = new RedisRoleBLL().GetRole(loggingSessionInfo.ClientID, roleId);
+            if (menulist == null || menulist.Count <= 0)//从redis没有读取到，从数据库读取
             {
-                menulist = DataTableToObject.ConvertToList<MenuModel>(ds.Tables[0]);//菜单列表转换成实体对象
+                menulist = appSysService.GetRoleMenus(loggingSessionInfo.ClientID, roleId);
+                new RedisRoleBLL().SetRole(loggingSessionInfo.ClientID, roleId, menulist);
+                new RedisXML().RedisReadDBCount("RoleID", "角色权限相关", 2);
+            }
+            else {
+                new RedisXML().RedisReadDBCount("RoleID", "角色权限相关", 1);
+            }
 
-                if (menulist != null && menulist.Count > 0)
+            if (menulist != null && menulist.Count > 0)
+            {
+                foreach (MenuModel menu in menulist)
                 {
-                    foreach (MenuModel menu in menulist)
+                    menu.SubMenuList = new List<MenuModel>();
+                    foreach (MenuModel subMenu in menulist)//遍历所有的菜单项
                     {
-                        menu.SubMenuList = new List<MenuModel>();
-                        foreach (MenuModel subMenu in menulist)//遍历所有的菜单项
+                        if (subMenu.Parent_Menu_Id == menu.Menu_Id)
                         {
-                            if (subMenu.Parent_Menu_Id == menu.Menu_Id)
-                            {
-                                menu.SubMenuList.Add(subMenu);
-                            }
+                            menu.SubMenuList.Add(subMenu);
                         }
                     }
                 }
             }
+            //}
             return menulist;
         }
 
@@ -94,29 +109,40 @@ namespace JIT.CPOS.BS.BLL
             string[] arr_role = roleId.Split(new char[] { ',' });
             roleId = arr_role[0];
 
-            DataSet ds = appSysService.GetRoleMenus(roleId);//从Dal层获取数据
+            //DataSet ds = appSysService.GetRoleMenus(roleId);//从Dal层获取数据
 
-            IList<MenuModel> menulist = new List<MenuModel>();
+            //IList<MenuModel> menulist = new List<MenuModel>();
 
-            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            //if (ds != null && ds.Tables[0].Rows.Count > 0)
+            //{
+            //menulist = DataTableToObject.ConvertToList<MenuModel>(ds.Tables[0]);//菜单列表转换成实体对象
+            var menulist = default(List<MenuModel>);
+            menulist = new RedisRoleBLL().GetRole(loggingSessionInfo.ClientID, roleId);
+            if (menulist == null || menulist.Count <= 0)
             {
-                menulist = DataTableToObject.ConvertToList<MenuModel>(ds.Tables[0]);//菜单列表转换成实体对象
-
-                //if (menulist != null && menulist.Count > 0)
-                //{
-                //    foreach (MenuModel menu in menulist)
-                //    {
-                //        menu.SubMenuList = new List<MenuModel>();
-                //        foreach (MenuModel subMenu in menulist)//遍历所有的菜单项
-                //        {
-                //            if (subMenu.Parent_Menu_Id == menu.Menu_Id)
-                //            {
-                //                menu.SubMenuList.Add(subMenu);
-                //            }
-                //        }
-                //    }
-                //}
+                menulist = appSysService.GetRoleMenus(loggingSessionInfo.ClientID, roleId);
+                new RedisRoleBLL().SetRole(loggingSessionInfo.ClientID, roleId, menulist);
+                new RedisXML().RedisReadDBCount("RoleID", "角色权限相关", 2);
             }
+            else
+            {
+                new RedisXML().RedisReadDBCount("RoleID", "角色权限相关", 1);
+            }
+            //if (menulist != null && menulist.Count > 0)
+            //{
+            //    foreach (MenuModel menu in menulist)
+            //    {
+            //        menu.SubMenuList = new List<MenuModel>();
+            //        foreach (MenuModel subMenu in menulist)//遍历所有的菜单项
+            //        {
+            //            if (subMenu.Parent_Menu_Id == menu.Menu_Id)
+            //            {
+            //                menu.SubMenuList.Add(subMenu);
+            //            }
+            //        }
+            //    }
+            //}
+            //}
             return menulist;
         }
 
@@ -153,24 +179,38 @@ namespace JIT.CPOS.BS.BLL
             //分隔出角色ID和单位ID
             string[] arr_role = roleId.Split(new char[] { ',' });
             roleId = arr_role[0];
-            DataSet ds = appSysService.GetRoleMenus(roleId);//从Dal层获取数据
-            IList<MenuModel> menulist = new List<MenuModel>();
+            //DataSet ds = appSysService.GetRoleMenus(roleId);//从Dal层获取数据
+            //IList<MenuModel> menulist = new List<MenuModel>();
             MenuModel currentMenu = new MenuModel();
             errMsg = "";
-            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            //if (ds != null && ds.Tables[0].Rows.Count > 0)
+            //{
+            //menulist = DataTableToObject.ConvertToList<MenuModel>(ds.Tables[0]);//菜单列表转换成实体对象
+
+            var menulist = default(List<MenuModel>);
+            menulist = new RedisRoleBLL().GetRole(loggingSessionInfo.ClientID, roleId);
+            if (menulist == null || menulist.Count <= 0)
             {
-                menulist = DataTableToObject.ConvertToList<MenuModel>(ds.Tables[0]);//菜单列表转换成实体对象
-                var currentMenuList = menulist.Where(p => p.Menu_Code == menu_code).ToArray();
-                if (currentMenuList == null || currentMenuList.Length == 0)
-                {
-                    errMsg = "没有找到对应菜单编码的菜单";
-                }
-                else
-                {
-                    currentMenu = currentMenuList[0];
-                    GetSubMenus(currentMenu, menulist);
-                }
+                menulist = appSysService.GetRoleMenus(loggingSessionInfo.ClientID, roleId);
+                new RedisRoleBLL().SetRole(loggingSessionInfo.ClientID, roleId, menulist);
+                new RedisXML().RedisReadDBCount("RoleID", "角色权限相关", 2);
             }
+            else
+            {
+                new RedisXML().RedisReadDBCount("RoleID", "角色权限相关", 1);
+            }
+
+            var currentMenuList = menulist.Where(p => p.Menu_Code == menu_code).ToArray();
+            if (currentMenuList == null || currentMenuList.Length == 0)
+            {
+                errMsg = "没有找到对应菜单编码的菜单";
+            }
+            else
+            {
+                currentMenu = currentMenuList[0];
+                GetSubMenus(currentMenu, menulist);
+            }
+            //}
             return currentMenu;
         }
 

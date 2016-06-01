@@ -70,26 +70,26 @@ namespace JIT.CPOS.BS.DataAccess
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            
+
             //初始化固定字段
-			pEntity.IsDelete=0;
-			pEntity.CreateTime=DateTime.Now;
-			pEntity.LastUpdateTime=pEntity.CreateTime;
-			pEntity.CreateBy=CurrentUserInfo.UserID;
-			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+            pEntity.IsDelete = 0;
+            pEntity.CreateTime = DateTime.Now;
+            pEntity.LastUpdateTime = pEntity.CreateTime;
+            pEntity.CreateBy = CurrentUserInfo.UserID;
+            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
 
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [T_SalesReturn](");
             strSql.Append("[SalesReturnNo],[VipID],[ServicesType],[DeliveryType],[OrderID],[ItemID],[SkuID],[Qty],[ActualQty],[RefundAmount],[ConfirmAmount],[UnitID],[UnitName],[UnitTel],[Address],[Contacts],[Phone],[Reason],[Status],[CustomerID],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[SalesReturnID])");
             strSql.Append(" values (");
-            strSql.Append("@SalesReturnNo,@VipID,@ServicesType,@DeliveryType,@OrderID,@ItemID,@SkuID,@Qty,@ActualQty,@RefundAmount,@ConfirmAmount,@UnitID,@UnitName,@UnitTel,@Address,@Contacts,@Phone,@Reason,@Status,@CustomerID,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@SalesReturnID)");            
+            strSql.Append("@SalesReturnNo,@VipID,@ServicesType,@DeliveryType,@OrderID,@ItemID,@SkuID,@Qty,@ActualQty,@RefundAmount,@ConfirmAmount,@UnitID,@UnitName,@UnitTel,@Address,@Contacts,@Phone,@Reason,@Status,@CustomerID,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@SalesReturnID)");
 
-			Guid? pkGuid;
-			if (pEntity.SalesReturnID == null)
-				pkGuid = Guid.NewGuid();
-			else
-				pkGuid = pEntity.SalesReturnID;
+            Guid? pkGuid;
+            if (pEntity.SalesReturnID == null)
+                pkGuid = Guid.NewGuid();
+            else
+                pkGuid = pEntity.SalesReturnID;
 
             SqlParameter[] parameters = 
             {
@@ -120,39 +120,39 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@IsDelete",SqlDbType.Int),
 					new SqlParameter("@SalesReturnID",SqlDbType.UniqueIdentifier)
             };
-			parameters[0].Value = pEntity.SalesReturnNo;
-			parameters[1].Value = pEntity.VipID;
-			parameters[2].Value = pEntity.ServicesType;
-			parameters[3].Value = pEntity.DeliveryType;
-			parameters[4].Value = pEntity.OrderID;
-			parameters[5].Value = pEntity.ItemID;
-			parameters[6].Value = pEntity.SkuID;
-			parameters[7].Value = pEntity.Qty;
-			parameters[8].Value = pEntity.ActualQty;
-			parameters[9].Value = pEntity.RefundAmount;
-			parameters[10].Value = pEntity.ConfirmAmount;
-			parameters[11].Value = pEntity.UnitID;
-			parameters[12].Value = pEntity.UnitName;
-			parameters[13].Value = pEntity.UnitTel;
-			parameters[14].Value = pEntity.Address;
-			parameters[15].Value = pEntity.Contacts;
-			parameters[16].Value = pEntity.Phone;
-			parameters[17].Value = pEntity.Reason;
-			parameters[18].Value = pEntity.Status;
-			parameters[19].Value = pEntity.CustomerID;
-			parameters[20].Value = pEntity.CreateTime;
-			parameters[21].Value = pEntity.CreateBy;
-			parameters[22].Value = pEntity.LastUpdateTime;
-			parameters[23].Value = pEntity.LastUpdateBy;
-			parameters[24].Value = pEntity.IsDelete;
-			parameters[25].Value = pkGuid;
+            parameters[0].Value = pEntity.SalesReturnNo;
+            parameters[1].Value = pEntity.VipID;
+            parameters[2].Value = pEntity.ServicesType;
+            parameters[3].Value = pEntity.DeliveryType;
+            parameters[4].Value = pEntity.OrderID;
+            parameters[5].Value = pEntity.ItemID;
+            parameters[6].Value = pEntity.SkuID;
+            parameters[7].Value = pEntity.Qty;
+            parameters[8].Value = pEntity.ActualQty;
+            parameters[9].Value = pEntity.RefundAmount;
+            parameters[10].Value = pEntity.ConfirmAmount;
+            parameters[11].Value = pEntity.UnitID;
+            parameters[12].Value = pEntity.UnitName;
+            parameters[13].Value = pEntity.UnitTel;
+            parameters[14].Value = pEntity.Address;
+            parameters[15].Value = pEntity.Contacts;
+            parameters[16].Value = pEntity.Phone;
+            parameters[17].Value = pEntity.Reason;
+            parameters[18].Value = pEntity.Status;
+            parameters[19].Value = pEntity.CustomerID;
+            parameters[20].Value = pEntity.CreateTime;
+            parameters[21].Value = pEntity.CreateBy;
+            parameters[22].Value = pEntity.LastUpdateTime;
+            parameters[23].Value = pEntity.LastUpdateBy;
+            parameters[24].Value = pEntity.IsDelete;
+            parameters[25].Value = pkGuid;
 
             //执行并将结果回写
             int result;
             if (pTran != null)
-               result= this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
             else
-               result= this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters); 
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters);
             pEntity.SalesReturnID = pkGuid;
         }
 
@@ -212,9 +212,9 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(T_SalesReturnEntity pEntity , IDbTransaction pTran)
+        public void Update(T_SalesReturnEntity pEntity, IDbTransaction pTran)
         {
-            Update(pEntity , pTran,true);
+            Update(pEntity, pTran, true);
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(T_SalesReturnEntity pEntity , IDbTransaction pTran,bool pIsUpdateNullField)
+        public void Update(T_SalesReturnEntity pEntity, IDbTransaction pTran, bool pIsUpdateNullField)
         {
             //参数校验
             if (pEntity == null)
@@ -231,58 +231,58 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 throw new ArgumentException("执行更新时,实体的主键属性值不能为null.");
             }
-             //初始化固定字段
-			pEntity.LastUpdateTime=DateTime.Now;
-			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+            //初始化固定字段
+            pEntity.LastUpdateTime = DateTime.Now;
+            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
 
 
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [T_SalesReturn] set ");
-                        if (pIsUpdateNullField || pEntity.SalesReturnNo!=null)
-                strSql.Append( "[SalesReturnNo]=@SalesReturnNo,");
-            if (pIsUpdateNullField || pEntity.VipID!=null)
-                strSql.Append( "[VipID]=@VipID,");
-            if (pIsUpdateNullField || pEntity.ServicesType!=null)
-                strSql.Append( "[ServicesType]=@ServicesType,");
-            if (pIsUpdateNullField || pEntity.DeliveryType!=null)
-                strSql.Append( "[DeliveryType]=@DeliveryType,");
-            if (pIsUpdateNullField || pEntity.OrderID!=null)
-                strSql.Append( "[OrderID]=@OrderID,");
-            if (pIsUpdateNullField || pEntity.ItemID!=null)
-                strSql.Append( "[ItemID]=@ItemID,");
-            if (pIsUpdateNullField || pEntity.SkuID!=null)
-                strSql.Append( "[SkuID]=@SkuID,");
-            if (pIsUpdateNullField || pEntity.Qty!=null)
-                strSql.Append( "[Qty]=@Qty,");
-            if (pIsUpdateNullField || pEntity.ActualQty!=null)
-                strSql.Append( "[ActualQty]=@ActualQty,");
-            if (pIsUpdateNullField || pEntity.RefundAmount!=null)
-                strSql.Append( "[RefundAmount]=@RefundAmount,");
-            if (pIsUpdateNullField || pEntity.ConfirmAmount!=null)
-                strSql.Append( "[ConfirmAmount]=@ConfirmAmount,");
-            if (pIsUpdateNullField || pEntity.UnitID!=null)
-                strSql.Append( "[UnitID]=@UnitID,");
-            if (pIsUpdateNullField || pEntity.UnitName!=null)
-                strSql.Append( "[UnitName]=@UnitName,");
-            if (pIsUpdateNullField || pEntity.UnitTel!=null)
-                strSql.Append( "[UnitTel]=@UnitTel,");
-            if (pIsUpdateNullField || pEntity.Address!=null)
-                strSql.Append( "[Address]=@Address,");
-            if (pIsUpdateNullField || pEntity.Contacts!=null)
-                strSql.Append( "[Contacts]=@Contacts,");
-            if (pIsUpdateNullField || pEntity.Phone!=null)
-                strSql.Append( "[Phone]=@Phone,");
-            if (pIsUpdateNullField || pEntity.Reason!=null)
-                strSql.Append( "[Reason]=@Reason,");
-            if (pIsUpdateNullField || pEntity.Status!=null)
-                strSql.Append( "[Status]=@Status,");
-            if (pIsUpdateNullField || pEntity.CustomerID!=null)
-                strSql.Append( "[CustomerID]=@CustomerID,");
-            if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
-                strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
-            if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
-                strSql.Append( "[LastUpdateBy]=@LastUpdateBy");
+            if (pIsUpdateNullField || pEntity.SalesReturnNo != null)
+                strSql.Append("[SalesReturnNo]=@SalesReturnNo,");
+            if (pIsUpdateNullField || pEntity.VipID != null)
+                strSql.Append("[VipID]=@VipID,");
+            if (pIsUpdateNullField || pEntity.ServicesType != null)
+                strSql.Append("[ServicesType]=@ServicesType,");
+            if (pIsUpdateNullField || pEntity.DeliveryType != null)
+                strSql.Append("[DeliveryType]=@DeliveryType,");
+            if (pIsUpdateNullField || pEntity.OrderID != null)
+                strSql.Append("[OrderID]=@OrderID,");
+            if (pIsUpdateNullField || pEntity.ItemID != null)
+                strSql.Append("[ItemID]=@ItemID,");
+            if (pIsUpdateNullField || pEntity.SkuID != null)
+                strSql.Append("[SkuID]=@SkuID,");
+            if (pIsUpdateNullField || pEntity.Qty != null)
+                strSql.Append("[Qty]=@Qty,");
+            if (pIsUpdateNullField || pEntity.ActualQty != null)
+                strSql.Append("[ActualQty]=@ActualQty,");
+            if (pIsUpdateNullField || pEntity.RefundAmount != null)
+                strSql.Append("[RefundAmount]=@RefundAmount,");
+            if (pIsUpdateNullField || pEntity.ConfirmAmount != null)
+                strSql.Append("[ConfirmAmount]=@ConfirmAmount,");
+            if (pIsUpdateNullField || pEntity.UnitID != null)
+                strSql.Append("[UnitID]=@UnitID,");
+            if (pIsUpdateNullField || pEntity.UnitName != null)
+                strSql.Append("[UnitName]=@UnitName,");
+            if (pIsUpdateNullField || pEntity.UnitTel != null)
+                strSql.Append("[UnitTel]=@UnitTel,");
+            if (pIsUpdateNullField || pEntity.Address != null)
+                strSql.Append("[Address]=@Address,");
+            if (pIsUpdateNullField || pEntity.Contacts != null)
+                strSql.Append("[Contacts]=@Contacts,");
+            if (pIsUpdateNullField || pEntity.Phone != null)
+                strSql.Append("[Phone]=@Phone,");
+            if (pIsUpdateNullField || pEntity.Reason != null)
+                strSql.Append("[Reason]=@Reason,");
+            if (pIsUpdateNullField || pEntity.Status != null)
+                strSql.Append("[Status]=@Status,");
+            if (pIsUpdateNullField || pEntity.CustomerID != null)
+                strSql.Append("[CustomerID]=@CustomerID,");
+            if (pIsUpdateNullField || pEntity.LastUpdateTime != null)
+                strSql.Append("[LastUpdateTime]=@LastUpdateTime,");
+            if (pIsUpdateNullField || pEntity.LastUpdateBy != null)
+                strSql.Append("[LastUpdateBy]=@LastUpdateBy");
             strSql.Append(" where SalesReturnID=@SalesReturnID ");
             SqlParameter[] parameters = 
             {
@@ -310,29 +310,29 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@SalesReturnID",SqlDbType.UniqueIdentifier)
             };
-			parameters[0].Value = pEntity.SalesReturnNo;
-			parameters[1].Value = pEntity.VipID;
-			parameters[2].Value = pEntity.ServicesType;
-			parameters[3].Value = pEntity.DeliveryType;
-			parameters[4].Value = pEntity.OrderID;
-			parameters[5].Value = pEntity.ItemID;
-			parameters[6].Value = pEntity.SkuID;
-			parameters[7].Value = pEntity.Qty;
-			parameters[8].Value = pEntity.ActualQty;
-			parameters[9].Value = pEntity.RefundAmount;
-			parameters[10].Value = pEntity.ConfirmAmount;
-			parameters[11].Value = pEntity.UnitID;
-			parameters[12].Value = pEntity.UnitName;
-			parameters[13].Value = pEntity.UnitTel;
-			parameters[14].Value = pEntity.Address;
-			parameters[15].Value = pEntity.Contacts;
-			parameters[16].Value = pEntity.Phone;
-			parameters[17].Value = pEntity.Reason;
-			parameters[18].Value = pEntity.Status;
-			parameters[19].Value = pEntity.CustomerID;
-			parameters[20].Value = pEntity.LastUpdateTime;
-			parameters[21].Value = pEntity.LastUpdateBy;
-			parameters[22].Value = pEntity.SalesReturnID;
+            parameters[0].Value = pEntity.SalesReturnNo;
+            parameters[1].Value = pEntity.VipID;
+            parameters[2].Value = pEntity.ServicesType;
+            parameters[3].Value = pEntity.DeliveryType;
+            parameters[4].Value = pEntity.OrderID;
+            parameters[5].Value = pEntity.ItemID;
+            parameters[6].Value = pEntity.SkuID;
+            parameters[7].Value = pEntity.Qty;
+            parameters[8].Value = pEntity.ActualQty;
+            parameters[9].Value = pEntity.RefundAmount;
+            parameters[10].Value = pEntity.ConfirmAmount;
+            parameters[11].Value = pEntity.UnitID;
+            parameters[12].Value = pEntity.UnitName;
+            parameters[13].Value = pEntity.UnitTel;
+            parameters[14].Value = pEntity.Address;
+            parameters[15].Value = pEntity.Contacts;
+            parameters[16].Value = pEntity.Phone;
+            parameters[17].Value = pEntity.Reason;
+            parameters[18].Value = pEntity.Status;
+            parameters[19].Value = pEntity.CustomerID;
+            parameters[20].Value = pEntity.LastUpdateTime;
+            parameters[21].Value = pEntity.LastUpdateBy;
+            parameters[22].Value = pEntity.SalesReturnID;
 
             //执行语句
             int result = 0;
@@ -346,7 +346,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Update(T_SalesReturnEntity pEntity )
+        public void Update(T_SalesReturnEntity pEntity)
         {
             this.Update(pEntity, null);
         }
@@ -375,7 +375,7 @@ namespace JIT.CPOS.BS.DataAccess
                 throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
             }
             //执行 
-            this.Delete(pEntity.SalesReturnID.Value, pTran);           
+            this.Delete(pEntity.SalesReturnID.Value, pTran);
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace JIT.CPOS.BS.DataAccess
         public void Delete(object pID, IDbTransaction pTran)
         {
             if (pID == null)
-                return ;   
+                return;
             //组织参数化SQL
             StringBuilder sql = new StringBuilder();
             sql.AppendLine("update [T_SalesReturn] set  isdelete=1 where SalesReturnID=@SalesReturnID;");
@@ -397,10 +397,10 @@ namespace JIT.CPOS.BS.DataAccess
             //执行语句
             int result = 0;
             if (pTran != null)
-                result=this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
             else
-                result=this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
-            return ;
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
+            return;
         }
 
         /// <summary>
@@ -432,7 +432,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
         public void Delete(T_SalesReturnEntity[] pEntities)
-        { 
+        {
             Delete(pEntities, null);
         }
 
@@ -442,7 +442,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pIDs">标识符值数组</param>
         public void Delete(object[] pIDs)
         {
-            Delete(pIDs,null);
+            Delete(pIDs, null);
         }
 
         /// <summary>
@@ -450,24 +450,24 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pIDs">标识符值数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(object[] pIDs, IDbTransaction pTran) 
+        public void Delete(object[] pIDs, IDbTransaction pTran)
         {
-            if (pIDs == null || pIDs.Length==0)
-                return ;
+            if (pIDs == null || pIDs.Length == 0)
+                return;
             //组织参数化SQL
             StringBuilder primaryKeys = new StringBuilder();
             foreach (object item in pIDs)
             {
-                primaryKeys.AppendFormat("'{0}',",item.ToString());
+                primaryKeys.AppendFormat("'{0}',", item.ToString());
             }
             StringBuilder sql = new StringBuilder();
             sql.AppendLine("update [T_SalesReturn] set  isdelete=1 where SalesReturnID in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
             //执行语句
-            int result = 0;   
+            int result = 0;
             if (pTran == null)
                 result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), null);
             else
-                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran,CommandType.Text, sql.ToString());       
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString());
         }
         #endregion
 
@@ -523,16 +523,42 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns></returns>
         public PagedQueryResult<T_SalesReturnEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
+          
             //组织SQL
             StringBuilder pagedSql = new StringBuilder();
             StringBuilder totalCountSql = new StringBuilder();
+
+            string sql = "";
+            //如果是后台账户登录，就取登录账户的信息能看到的门店信息
+            if (this.CurrentUserInfo != null && !string.IsNullOrEmpty(this.CurrentUserInfo.UserID) && !string.IsNullOrEmpty(this.CurrentUserInfo.ClientID))
+            {
+                pagedSql.AppendFormat(@"DECLARE @AllUnit NVARCHAR(200)
+
+                CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))   
+                 INSERT #UnitSET (UnitID)                  
+                   SELECT DISTINCT R.UnitID                   
+                   FROM T_User_Role  UR CROSS APPLY dbo.FnGetUnitList  ('{0}',UR.unit_id,205)  R                  
+                   WHERE user_id='{1}'       ---根据账户的角色去查角色对应的  所有门店unit_id
+                      ", this.CurrentUserInfo.ClientID, this.CurrentUserInfo.UserID);
+
+                totalCountSql.AppendFormat(@"DECLARE @AllUnit NVARCHAR(200)
+
+                CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))   
+                 INSERT #UnitSET (UnitID)                  
+                   SELECT DISTINCT R.UnitID                   
+                   FROM T_User_Role  UR CROSS APPLY dbo.FnGetUnitList  ('{0}',UR.unit_id,205)  R                  
+                   WHERE user_id='{1}'       ---根据账户的角色去查角色对应的  所有门店unit_id
+                      ", this.CurrentUserInfo.ClientID, this.CurrentUserInfo.UserID);
+            }
+
+
             //分页SQL
             pagedSql.AppendFormat("select * from (select row_number()over( order by ");
             if (pOrderBys != null && pOrderBys.Length > 0)
             {
                 foreach (var item in pOrderBys)
                 {
-                    if(item!=null)
+                    if (item != null)
                     {
                         pagedSql.AppendFormat(" {0} {1},", StringUtils.WrapperSQLServerObject(item.FieldName), item.Direction == OrderByDirections.Asc ? "asc" : "desc");
                     }
@@ -544,26 +570,45 @@ namespace JIT.CPOS.BS.DataAccess
                 pagedSql.AppendFormat(" [SalesReturnID] desc"); //默认为主键值倒序
             }
             pagedSql.AppendFormat(@") as ___rn,r.*,t.paymentcenter_id,p.Payment_Type_Name from [T_SalesReturn] as r left join t_inout as t on r.OrderID=t.order_id  
-                                    left join T_Payment_Type as p on t.pay_id=p.Payment_Type_Id and p.IsDelete=0  where 1=1  and r.isdelete=0 ");
+                                    left join T_Payment_Type as p on t.pay_id=p.Payment_Type_Id and p.IsDelete=0   ");
+
+            if (this.CurrentUserInfo != null && !string.IsNullOrEmpty(this.CurrentUserInfo.UserID) && !string.IsNullOrEmpty(this.CurrentUserInfo.ClientID))
+            {
+                pagedSql.AppendFormat(@" inner join #UnitSET b on   (t.purchase_unit_id=b.UnitID or t.sales_unit_id=b.UnitID) ");
+            }
+                pagedSql.AppendFormat(@" where 1=1  and r.isdelete=0 ");
 
             //总记录数SQL
             totalCountSql.AppendFormat(@"select count(1) from [T_SalesReturn] as r left join t_inout as t on r.OrderID=t.order_id 
-                                          left join T_Payment_Type as p on t.pay_id=p.Payment_Type_Id and p.IsDelete=0  where 1=1  and r.isdelete=0 ");
+                                          left join T_Payment_Type as p on t.pay_id=p.Payment_Type_Id and p.IsDelete=0   ");
+            if (this.CurrentUserInfo != null && !string.IsNullOrEmpty(this.CurrentUserInfo.UserID) && !string.IsNullOrEmpty(this.CurrentUserInfo.ClientID))
+            {
+                totalCountSql.AppendFormat(@" inner join #UnitSET b on   (t.purchase_unit_id=b.UnitID or t.sales_unit_id=b.UnitID) ");
+            }
+            totalCountSql.AppendFormat(@" where 1=1  and r.isdelete=0 ");
+
             //过滤条件
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)
                 {
-                    if(item!=null)
+                    if (item != null)
                     {
                         pagedSql.AppendFormat(" and {0}", item.GetExpression());
-                        totalCountSql.AppendFormat(" and {0}", item.GetExpression());
+                        totalCountSql.AppendFormat(" and {0}", item.GetExpression());//分别加上条件
                     }
                 }
             }
             pagedSql.AppendFormat(") as A ");
             //取指定页的数据
-            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex-1), pPageSize * (pCurrentPageIndex));
+            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex - 1), pPageSize * (pCurrentPageIndex));
+            //删除临时表
+            if (this.CurrentUserInfo != null && !string.IsNullOrEmpty(this.CurrentUserInfo.UserID) && !string.IsNullOrEmpty(this.CurrentUserInfo.ClientID))
+            {
+                pagedSql.AppendFormat("  drop table #UnitSET;");
+                totalCountSql.AppendFormat("  drop table #UnitSET;");
+            }
+
             //执行语句并返回结果
             PagedQueryResult<T_SalesReturnEntity> result = new PagedQueryResult<T_SalesReturnEntity>();
             List<T_SalesReturnEntity> list = new List<T_SalesReturnEntity>();
@@ -605,7 +650,7 @@ namespace JIT.CPOS.BS.DataAccess
         public T_SalesReturnEntity[] QueryByEntity(T_SalesReturnEntity pQueryEntity, OrderBy[] pOrderBys)
         {
             IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
-            return Query(queryWhereCondition,  pOrderBys);            
+            return Query(queryWhereCondition, pOrderBys);
         }
 
         /// <summary>
@@ -616,7 +661,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns>符合条件的实体集</returns>
         public PagedQueryResult<T_SalesReturnEntity> PagedQueryByEntity(T_SalesReturnEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
-            IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity( pQueryEntity);
+            IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
             return PagedQuery(queryWhereCondition, pOrderBys, pPageSize, pCurrentPageIndex);
         }
 
@@ -628,60 +673,60 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <returns></returns>
         protected IWhereCondition[] GetWhereConditionByEntity(T_SalesReturnEntity pQueryEntity)
-        { 
+        {
             //获取非空属性数量
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
-            if (pQueryEntity.SalesReturnID!=null)
+            if (pQueryEntity.SalesReturnID != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "SalesReturnID", Value = pQueryEntity.SalesReturnID });
-            if (pQueryEntity.SalesReturnNo!=null)
+            if (pQueryEntity.SalesReturnNo != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "SalesReturnNo", Value = pQueryEntity.SalesReturnNo });
-            if (pQueryEntity.VipID!=null)
+            if (pQueryEntity.VipID != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipID", Value = pQueryEntity.VipID });
-            if (pQueryEntity.ServicesType!=null)
+            if (pQueryEntity.ServicesType != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ServicesType", Value = pQueryEntity.ServicesType });
-            if (pQueryEntity.DeliveryType!=null)
+            if (pQueryEntity.DeliveryType != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "DeliveryType", Value = pQueryEntity.DeliveryType });
-            if (pQueryEntity.OrderID!=null)
+            if (pQueryEntity.OrderID != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "OrderID", Value = pQueryEntity.OrderID });
-            if (pQueryEntity.ItemID!=null)
+            if (pQueryEntity.ItemID != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ItemID", Value = pQueryEntity.ItemID });
-            if (pQueryEntity.SkuID!=null)
+            if (pQueryEntity.SkuID != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "SkuID", Value = pQueryEntity.SkuID });
-            if (pQueryEntity.Qty!=null)
+            if (pQueryEntity.Qty != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Qty", Value = pQueryEntity.Qty });
-            if (pQueryEntity.ActualQty!=null)
+            if (pQueryEntity.ActualQty != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ActualQty", Value = pQueryEntity.ActualQty });
-            if (pQueryEntity.RefundAmount!=null)
+            if (pQueryEntity.RefundAmount != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "RefundAmount", Value = pQueryEntity.RefundAmount });
-            if (pQueryEntity.ConfirmAmount!=null)
+            if (pQueryEntity.ConfirmAmount != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ConfirmAmount", Value = pQueryEntity.ConfirmAmount });
-            if (pQueryEntity.UnitID!=null)
+            if (pQueryEntity.UnitID != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "UnitID", Value = pQueryEntity.UnitID });
-            if (pQueryEntity.UnitName!=null)
+            if (pQueryEntity.UnitName != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "UnitName", Value = pQueryEntity.UnitName });
-            if (pQueryEntity.UnitTel!=null)
+            if (pQueryEntity.UnitTel != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "UnitTel", Value = pQueryEntity.UnitTel });
-            if (pQueryEntity.Address!=null)
+            if (pQueryEntity.Address != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Address", Value = pQueryEntity.Address });
-            if (pQueryEntity.Contacts!=null)
+            if (pQueryEntity.Contacts != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Contacts", Value = pQueryEntity.Contacts });
-            if (pQueryEntity.Phone!=null)
+            if (pQueryEntity.Phone != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Phone", Value = pQueryEntity.Phone });
-            if (pQueryEntity.Reason!=null)
+            if (pQueryEntity.Reason != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Reason", Value = pQueryEntity.Reason });
-            if (pQueryEntity.Status!=null)
+            if (pQueryEntity.Status != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Status", Value = pQueryEntity.Status });
-            if (pQueryEntity.CustomerID!=null)
+            if (pQueryEntity.CustomerID != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = pQueryEntity.CustomerID });
-            if (pQueryEntity.CreateTime!=null)
+            if (pQueryEntity.CreateTime != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
-            if (pQueryEntity.CreateBy!=null)
+            if (pQueryEntity.CreateBy != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateBy", Value = pQueryEntity.CreateBy });
-            if (pQueryEntity.LastUpdateTime!=null)
+            if (pQueryEntity.LastUpdateTime != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
-            if (pQueryEntity.LastUpdateBy!=null)
+            if (pQueryEntity.LastUpdateBy != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
-            if (pQueryEntity.IsDelete!=null)
+            if (pQueryEntity.IsDelete != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
 
             return lstWhereCondition.ToArray();
@@ -698,114 +743,114 @@ namespace JIT.CPOS.BS.DataAccess
             pInstance.PersistenceHandle = new PersistenceHandle();
             pInstance.PersistenceHandle.Load();
 
-			if (pReader["SalesReturnID"] != DBNull.Value)
-			{
-				pInstance.SalesReturnID =  (Guid)pReader["SalesReturnID"];
-			}
-			if (pReader["SalesReturnNo"] != DBNull.Value)
-			{
-				pInstance.SalesReturnNo =  Convert.ToString(pReader["SalesReturnNo"]);
-			}
-			if (pReader["VipID"] != DBNull.Value)
-			{
-				pInstance.VipID =  Convert.ToString(pReader["VipID"]);
+            if (pReader["SalesReturnID"] != DBNull.Value)
+            {
+                pInstance.SalesReturnID = (Guid)pReader["SalesReturnID"];
+            }
+            if (pReader["SalesReturnNo"] != DBNull.Value)
+            {
+                pInstance.SalesReturnNo = Convert.ToString(pReader["SalesReturnNo"]);
+            }
+            if (pReader["VipID"] != DBNull.Value)
+            {
+                pInstance.VipID = Convert.ToString(pReader["VipID"]);
                 var vipDao = new VipDAO(this.CurrentUserInfo);
-                var vipInfo=vipDao.GetByID(pInstance.VipID);
+                var vipInfo = vipDao.GetByID(pInstance.VipID);
                 if (vipInfo != null)
                     pInstance.VipName = vipInfo.VipName;
-			}
-			if (pReader["ServicesType"] != DBNull.Value)
-			{
-				pInstance.ServicesType =   Convert.ToInt32(pReader["ServicesType"]);
-			}
-			if (pReader["DeliveryType"] != DBNull.Value)
-			{
-				pInstance.DeliveryType =   Convert.ToInt32(pReader["DeliveryType"]);
-			}
-			if (pReader["OrderID"] != DBNull.Value)
-			{
-				pInstance.OrderID =  Convert.ToString(pReader["OrderID"]);
-			}
-			if (pReader["ItemID"] != DBNull.Value)
-			{
-				pInstance.ItemID =  Convert.ToString(pReader["ItemID"]);
-			}
-			if (pReader["SkuID"] != DBNull.Value)
-			{
-				pInstance.SkuID =  Convert.ToString(pReader["SkuID"]);
-			}
-			if (pReader["Qty"] != DBNull.Value)
-			{
-				pInstance.Qty =   Convert.ToInt32(pReader["Qty"]);
-			}
-			if (pReader["ActualQty"] != DBNull.Value)
-			{
-				pInstance.ActualQty =   Convert.ToInt32(pReader["ActualQty"]);
-			}
-			if (pReader["RefundAmount"] != DBNull.Value)
-			{
-				pInstance.RefundAmount =  Convert.ToDecimal(pReader["RefundAmount"]);
-			}
-			if (pReader["ConfirmAmount"] != DBNull.Value)
-			{
-				pInstance.ConfirmAmount =  Convert.ToDecimal(pReader["ConfirmAmount"]);
-			}
-			if (pReader["UnitID"] != DBNull.Value)
-			{
-				pInstance.UnitID =  Convert.ToString(pReader["UnitID"]);
-			}
-			if (pReader["UnitName"] != DBNull.Value)
-			{
-				pInstance.UnitName =  Convert.ToString(pReader["UnitName"]);
-			}
-			if (pReader["UnitTel"] != DBNull.Value)
-			{
-				pInstance.UnitTel =  Convert.ToString(pReader["UnitTel"]);
-			}
-			if (pReader["Address"] != DBNull.Value)
-			{
-				pInstance.Address =  Convert.ToString(pReader["Address"]);
-			}
-			if (pReader["Contacts"] != DBNull.Value)
-			{
-				pInstance.Contacts =  Convert.ToString(pReader["Contacts"]);
-			}
-			if (pReader["Phone"] != DBNull.Value)
-			{
-				pInstance.Phone =  Convert.ToString(pReader["Phone"]);
-			}
-			if (pReader["Reason"] != DBNull.Value)
-			{
-				pInstance.Reason =  Convert.ToString(pReader["Reason"]);
-			}
-			if (pReader["Status"] != DBNull.Value)
-			{
-				pInstance.Status =   Convert.ToInt32(pReader["Status"]);
-			}
-			if (pReader["CustomerID"] != DBNull.Value)
-			{
-				pInstance.CustomerID =  Convert.ToString(pReader["CustomerID"]);
-			}
-			if (pReader["CreateTime"] != DBNull.Value)
-			{
-				pInstance.CreateTime =  Convert.ToDateTime(pReader["CreateTime"]);
-			}
-			if (pReader["CreateBy"] != DBNull.Value)
-			{
-				pInstance.CreateBy =  Convert.ToString(pReader["CreateBy"]);
-			}
-			if (pReader["LastUpdateTime"] != DBNull.Value)
-			{
-				pInstance.LastUpdateTime =  Convert.ToDateTime(pReader["LastUpdateTime"]);
-			}
-			if (pReader["LastUpdateBy"] != DBNull.Value)
-			{
-				pInstance.LastUpdateBy =  Convert.ToString(pReader["LastUpdateBy"]);
-			}
-			if (pReader["IsDelete"] != DBNull.Value)
-			{
-				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
-			}
+            }
+            if (pReader["ServicesType"] != DBNull.Value)
+            {
+                pInstance.ServicesType = Convert.ToInt32(pReader["ServicesType"]);
+            }
+            if (pReader["DeliveryType"] != DBNull.Value)
+            {
+                pInstance.DeliveryType = Convert.ToInt32(pReader["DeliveryType"]);
+            }
+            if (pReader["OrderID"] != DBNull.Value)
+            {
+                pInstance.OrderID = Convert.ToString(pReader["OrderID"]);
+            }
+            if (pReader["ItemID"] != DBNull.Value)
+            {
+                pInstance.ItemID = Convert.ToString(pReader["ItemID"]);
+            }
+            if (pReader["SkuID"] != DBNull.Value)
+            {
+                pInstance.SkuID = Convert.ToString(pReader["SkuID"]);
+            }
+            if (pReader["Qty"] != DBNull.Value)
+            {
+                pInstance.Qty = Convert.ToInt32(pReader["Qty"]);
+            }
+            if (pReader["ActualQty"] != DBNull.Value)
+            {
+                pInstance.ActualQty = Convert.ToInt32(pReader["ActualQty"]);
+            }
+            if (pReader["RefundAmount"] != DBNull.Value)
+            {
+                pInstance.RefundAmount = Convert.ToDecimal(pReader["RefundAmount"]);
+            }
+            if (pReader["ConfirmAmount"] != DBNull.Value)
+            {
+                pInstance.ConfirmAmount = Convert.ToDecimal(pReader["ConfirmAmount"]);
+            }
+            if (pReader["UnitID"] != DBNull.Value)
+            {
+                pInstance.UnitID = Convert.ToString(pReader["UnitID"]);
+            }
+            if (pReader["UnitName"] != DBNull.Value)
+            {
+                pInstance.UnitName = Convert.ToString(pReader["UnitName"]);
+            }
+            if (pReader["UnitTel"] != DBNull.Value)
+            {
+                pInstance.UnitTel = Convert.ToString(pReader["UnitTel"]);
+            }
+            if (pReader["Address"] != DBNull.Value)
+            {
+                pInstance.Address = Convert.ToString(pReader["Address"]);
+            }
+            if (pReader["Contacts"] != DBNull.Value)
+            {
+                pInstance.Contacts = Convert.ToString(pReader["Contacts"]);
+            }
+            if (pReader["Phone"] != DBNull.Value)
+            {
+                pInstance.Phone = Convert.ToString(pReader["Phone"]);
+            }
+            if (pReader["Reason"] != DBNull.Value)
+            {
+                pInstance.Reason = Convert.ToString(pReader["Reason"]);
+            }
+            if (pReader["Status"] != DBNull.Value)
+            {
+                pInstance.Status = Convert.ToInt32(pReader["Status"]);
+            }
+            if (pReader["CustomerID"] != DBNull.Value)
+            {
+                pInstance.CustomerID = Convert.ToString(pReader["CustomerID"]);
+            }
+            if (pReader["CreateTime"] != DBNull.Value)
+            {
+                pInstance.CreateTime = Convert.ToDateTime(pReader["CreateTime"]);
+            }
+            if (pReader["CreateBy"] != DBNull.Value)
+            {
+                pInstance.CreateBy = Convert.ToString(pReader["CreateBy"]);
+            }
+            if (pReader["LastUpdateTime"] != DBNull.Value)
+            {
+                pInstance.LastUpdateTime = Convert.ToDateTime(pReader["LastUpdateTime"]);
+            }
+            if (pReader["LastUpdateBy"] != DBNull.Value)
+            {
+                pInstance.LastUpdateBy = Convert.ToString(pReader["LastUpdateBy"]);
+            }
+            if (pReader["IsDelete"] != DBNull.Value)
+            {
+                pInstance.IsDelete = Convert.ToInt32(pReader["IsDelete"]);
+            }
             //if (pReader["paymentcenter_id"] != DBNull.Value)
             //{
             //    pInstance.paymentcenterId = Convert.ToString(pReader["paymentcenter_id"]);

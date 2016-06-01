@@ -38,13 +38,14 @@ namespace JIT.CPOS.Web.OnlineShopping.data
         private string customerId = "29E11BDC6DAC439896958CC6866FF64E";
         private string customerId_Lj = "e703dbedadd943abacf864531decdac1";
 
-
-
+        private DateTime processStartTime;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             Response.Clear();
             string content = string.Empty;
+            //接口接入时间
+            processStartTime = DateTime.Now;
 
             try
             {
@@ -576,6 +577,13 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 content = ex.Message;
             }
 
+            //埋点
+            try
+            {
+                new JIT.CPOS.BS.BLL.BuryingPoint_Aspx(HttpContext.Current, processStartTime, parseCommonParameters, content);
+            }
+            catch { }
+
             Response.ContentEncoding = Encoding.UTF8;
             Response.Write(content);
             Response.End();
@@ -620,7 +628,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 //查询参数
                 string userId = reqObj.common.userId;
 
-                if(!string.IsNullOrWhiteSpace(reqObj.special.OwnerVipID))//店主vipid
+                if (!string.IsNullOrWhiteSpace(reqObj.special.OwnerVipID))//店主vipid
                     userId = reqObj.special.OwnerVipID;
 
                 string itemName = reqObj.special.itemName; //模糊查询商品名称
@@ -3229,7 +3237,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 {
                     customerId = reqObj.common.customerId;
                 }
-                 var loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
+                var loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
 
                 //查询参数
                 string userId = reqObj.common.userId;
@@ -16789,6 +16797,24 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public string eventId { get; set; }
         }
 
+        #endregion
+
+        #region 解析公共参数
+        private void parseCommonParameters(BuryingPointEntity buryingPoint)
+        {
+            var commonRequest = buryingPoint.RequstParameters.DeserializeJSONTo<ReqData>();   //将请求反序列化为空接口请求,获得接口的公共参数
+            if (commonRequest != null)
+            {
+                //商户
+                buryingPoint.CustomerID = commonRequest.common.customerId;
+                //用户
+                buryingPoint.UserID = commonRequest.common.userId;
+                //OpenID
+                buryingPoint.OpenID = commonRequest.common.openId;
+                //频道
+                buryingPoint.ChannelID = commonRequest.common.channelId;
+            }
+        }
         #endregion
     }
 

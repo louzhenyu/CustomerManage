@@ -33,7 +33,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.SalesReturn
             List<OrderBy> lstOrder = new List<OrderBy> { };
             lstOrder.Add(new OrderBy() { FieldName = "r.CreateTime", Direction = OrderByDirections.Desc });
 
-            var tempList = salesReturnBLL.PagedQuery(complexCondition.ToArray(), lstOrder.ToArray(), para.PageSize, para.PageIndex+1);
+            var tempList = salesReturnBLL.PagedQuery(complexCondition.ToArray(), lstOrder.ToArray(), para.PageSize, para.PageIndex+1);//没有当前用户，就传空
             rd.TotalPageCount = tempList.PageCount;
             rd.TotalCount = tempList.RowCount;
 

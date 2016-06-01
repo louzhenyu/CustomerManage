@@ -49,12 +49,14 @@
     <Reference Include="JdSoft.Apns.Notifications">
       <HintPath>..\ReferenceDll\JdSoft.Apns.Notifications.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\ReferenceDll\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferenceDll\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RedisOpenAPIClient, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="RedisOpenAPIClient">
       <HintPath>..\ReferenceDll\RedisOpenAPIClient.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -123,6 +125,9 @@
     <Compile Include="BrowseHistoryBLL.cs" />
     <Compile Include="BuryingPoint\BaseBuryingPoint.cs" />
     <Compile Include="BuryingPoint\BuryingPointEntity.cs" />
+    <Compile Include="BuryingPoint\BuryingPoint_Aspx.cs" />
+    <Compile Include="BuryingPoint\BuryingPoint_BSGateway.cs" />
+    <Compile Include="BuryingPoint\BuryingPoint_BSAjaxHandler.cs" />
     <Compile Include="BuryingPoint\BuryingPoint_Gateway.cs" />
     <Compile Include="CardChannelInfoBLL.cs" />
     <Compile Include="CardCouponMappingBLL.cs" />
@@ -394,46 +399,11 @@
     <Compile Include="CodeGeneration\QuesOptionBLL.cs" />
     <Compile Include="CodeGeneration\QuesQuestionsBLL.cs" />
     <Compile Include="CodeGeneration\QuestionnaireBLL.cs" />
-    <Compile Include="CodeGeneration\Questionnaire\T_QN_ActivityQuestionnaireMappingBLL.cs" />
-    <Compile Include="CodeGeneration\Questionnaire\T_QN_OptionBLL.cs" />
-    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionBLL.cs" />
-    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionnaireAnswerRecordBLL.cs" />
-    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionnaireBLL.cs" />
-    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionnaireOptionCountBLL.cs" />
-    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionNaireQuestionMappingBLL.cs" />
-    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionPicBLL.cs" />
-    <Compile Include="CodeGeneration\Questionnaire\T_QN_ScoreRecoveryInformationBLL.cs" />
     <Compile Include="CodeGeneration\RechargeStrategyBLL.cs" />
     <Compile Include="CodeGeneration\RegisterRequiredPageBLL.cs" />
     <Compile Include="CodeGeneration\RegisterValidationCodeBLL.cs" />
     <Compile Include="CodeGeneration\Report\R_HomePageStatsBLL.cs" />
     <Compile Include="CodeGeneration\Report\R_UnitMonthlyAchievementRankingBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_Unit3MonthNoBackVipBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitActiveVipBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitBirthdayNoBackVipBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitDailyBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitDaily_EmplBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitDaily_VipCardTypeBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitHighValueVipBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitMonthlyBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitMonthly_EmplBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitMonthly_VipCardTypeBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitNowBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitNow_EmplBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitNow_VipCardTypeBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitOldBackVipBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitPotentialVipBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitWeeklyBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitWeekly_EmplBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitWeekly_VipCardTypeBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitYearlyBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitYearly_EmplBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitYearly_VipCardTypeBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\R_UnitProductDaySalesTopBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\R_UnitProductMonthSalesTopBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\R_UnitProductNowSalesTopBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\R_UnitProductWeekSalesTopBLL.cs" />
-    <Compile Include="CodeGeneration\Report\StoreManagerReport\R_UnitProductYearSalesTopBLL.cs" />
     <Compile Include="CodeGeneration\ReservationPositionBLL.cs" />
     <Compile Include="CodeGeneration\ReservationServiceBigClassTermBLL.cs" />
     <Compile Include="CodeGeneration\ReservationServiceBigClassTermStatusBLL.cs" />
@@ -449,6 +419,7 @@
     <Compile Include="CodeGeneration\ReservationStoreServiceMappingBLL.cs" />
     <Compile Include="CodeGeneration\ReservationWorkCalendarBLL.cs" />
     <Compile Include="CodeGeneration\RetailTraderItemMappingBLL.cs" />
+    <Compile Include="CodeGeneration\Menu\t_roleBLL.cs" />
     <Compile Include="CodeGeneration\RouteBLL.cs" />
     <Compile Include="CodeGeneration\RouteCycleMappingBLL.cs" />
     <Compile Include="CodeGeneration\RoutePOPMappingBLL.cs" />
@@ -523,6 +494,8 @@
     <Compile Include="CodeGeneration\T_HierarchySystemExNodeBLL.cs" />
     <Compile Include="CodeGeneration\T_InoutBLL.cs" />
     <Compile Include="CodeGeneration\T_Inout_DetailBLL.cs" />
+    <Compile Include="CodeGeneration\T_ItemBLL.cs" />
+    <Compile Include="CodeGeneration\T_ItemSkuPropBLL.cs" />
     <Compile Include="CodeGeneration\T_Item_CategoryBLL.cs" />
     <Compile Include="CodeGeneration\T_Item_PriceBLL.cs" />
     <Compile Include="CodeGeneration\T_Item_Price_TypeBLL.cs" />
@@ -531,9 +504,16 @@
     <Compile Include="CodeGeneration\T_LEventsSharePersonLogBLL.cs" />
     <Compile Include="CodeGeneration\T_Payment_detailBLL.cs" />
     <Compile Include="CodeGeneration\T_Payment_TypeBLL.cs" />
-    <Compile Include="CodeGeneration\T_ItemBLL.cs" />
-    <Compile Include="CodeGeneration\T_ItemSkuPropBLL.cs" />
     <Compile Include="CodeGeneration\T_PropBLL.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_ActivityQuestionnaireMappingBLL.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_OptionBLL.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionBLL.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionnaireAnswerRecordBLL.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionnaireBLL.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionnaireOptionCountBLL.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionNaireQuestionMappingBLL.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionPicBLL.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_ScoreRecoveryInformationBLL.cs" />
     <Compile Include="CodeGeneration\T_RewardConfigBLL.cs" />
     <Compile Include="CodeGeneration\T_RewardRecordBLL.cs" />
     <Compile Include="CodeGeneration\T_SkuBLL.cs" />
@@ -690,17 +670,23 @@
     <Compile Include="CodeGeneration\AP\ZMBA\T_ZMBA_CourseBLL.cs" />
     <Compile Include="CodeGeneration\AP\ZMBA\T_ZMBA_CourseDetailBLL.cs" />
     <Compile Include="CodeGeneration\AP\ZMBA\T_ZMBA_CourseDetailReadLogBLL.cs" />
+    <Compile Include="Menu\T_RoleBLL.cs" />
     <Compile Include="RedisOperationBLL\BasicSetting\BasicSettingBLL.cs" />
     <Compile Include="RedisOperationBLL\BasicSetting\SetBasicSettingJobBLL.cs" />
     <Compile Include="RedisOperationBLL\Connection\RedisConnectionBLL.cs" />
-    <Compile Include="RedisOperationBLL\Connection\RedisConnectionOP.cs" />
-    <Compile Include="RedisOperationBLL\Connection\SetConnectionJobBLL.cs" />
     <Compile Include="RedisOperationBLL\Contact\RedisContactBLL.cs" />
     <Compile Include="RedisOperationBLL\Coupon\RedisCouponBLL.cs" />
     <Compile Include="RedisOperationBLL\Coupon\RedisVipMappingCouponBLL.cs" />
     <Compile Include="RedisOperationBLL\CustomerBLL.cs" />
     <Compile Include="RedisOperationBLL\PrizePools\RedisPrizePoolsBLL.cs" />
     <Compile Include="RedisOperationBLL\PrizePools\SetRedisPrizePoolsJobBLL.cs" />
+    <Compile Include="RedisOperationBLL\OrderReward\ProcessOrderRewardMsgJobBLL.cs" />
+    <Compile Include="RedisOperationBLL\OrderReward\SendOrderRewardMsgBLL.cs" />
+    <Compile Include="RedisOperationBLL\OrderSend\ProcessOrderSendMsgJobBLL.cs" />
+    <Compile Include="RedisOperationBLL\OrderSend\SendOrderSendMsgBLL.cs" />
+    <Compile Include="RedisOperationBLL\RoleMenu\RedisRoleBLL.cs" />
+    <Compile Include="RedisOperationBLL\Connection\SetConnectionJobBLL.cs" />
+    <Compile Include="RedisOperationBLL\CustomerOperation.cs" />
     <Compile Include="ContactEventBLL.cs" />
     <Compile Include="ContactWeBLL.cs" />
     <Compile Include="CouponBLL.cs" />
@@ -854,6 +840,7 @@
     <Compile Include="Marketing\C_PrizesDetailBLL.cs" />
     <Compile Include="Marketing\C_TargetGroupBLL.cs" />
     <Compile Include="MarketNamedApplyBLL.cs" />
+    <Compile Include="RedisOperationBLL\RoleMenu\SetRoleMenuJobBLL.cs" />
     <Compile Include="Menu\T_Menu_FunctionBLL.cs" />
     <Compile Include="Menu\T_Role_Menu_FunctionBLL.cs" />
     <Compile Include="MHCategoryAreaBLL.cs" />
@@ -971,7 +958,6 @@
     <Compile Include="PanicbuyingKJEventJoinBLL.cs" />
     <Compile Include="PanicbuyingKJEventJoinDetailBLL.cs" />
     <Compile Include="PanicbuyingKJEventSkuMappingBLL.cs" />
-    <Compile Include="PGPushIOSMessage.cs" />
     <Compile Include="PosService.cs" />
     <Compile Include="PrizeCouponTypeMappingBLL.cs" />
     <Compile Include="ProductAttachmentMappingBLL.cs" />
@@ -1041,46 +1027,11 @@
     <Compile Include="QuesOptionBLL.cs" />
     <Compile Include="QuesQuestionsBLL.cs" />
     <Compile Include="QuestionnaireBLL.cs" />
-    <Compile Include="Questionnaire\T_QN_ActivityQuestionnaireMappingBLL.cs" />
-    <Compile Include="Questionnaire\T_QN_OptionBLL.cs" />
-    <Compile Include="Questionnaire\T_QN_QuestionBLL.cs" />
-    <Compile Include="Questionnaire\T_QN_QuestionnaireAnswerRecordBLL.cs" />
-    <Compile Include="Questionnaire\T_QN_QuestionnaireBLL.cs" />
-    <Compile Include="Questionnaire\T_QN_QuestionnaireOptionCountBLL.cs" />
-    <Compile Include="Questionnaire\T_QN_QuestionNaireQuestionMappingBLL.cs" />
-    <Compile Include="Questionnaire\T_QN_QuestionPicBLL.cs" />
-    <Compile Include="Questionnaire\T_QN_ScoreRecoveryInformationBLL.cs" />
     <Compile Include="RegisterRequiredPageBLL.cs" />
     <Compile Include="RegisterValidationCodeBLL.cs" />
     <Compile Include="Report\ReportCommonBLL.cs" />
     <Compile Include="Report\R_HomePageStatsBLL.cs" />
     <Compile Include="Report\R_UnitMonthlyAchievementRankingBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_Unit3MonthNoBackVipBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitActiveVipBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitBirthdayNoBackVipBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitDailyBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitDaily_EmplBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitDaily_VipCardTypeBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitHighValueVipBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitMonthlyBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitMonthly_EmplBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitMonthly_VipCardTypeBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitNowBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitNow_EmplBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitNow_VipCardTypeBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitOldBackVipBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitPotentialVipBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitWeeklyBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitWeekly_EmplBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitWeekly_VipCardTypeBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitYearlyBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitYearly_EmplBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\Agg_UnitYearly_VipCardTypeBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\R_UnitProductDaySalesTopBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\R_UnitProductMonthSalesTopBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\R_UnitProductNowSalesTopBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\R_UnitProductWeekSalesTopBLL.cs" />
-    <Compile Include="Report\StoreManagerReport\R_UnitProductYearSalesTopBLL.cs" />
     <Compile Include="ReservationPositionBLL.cs" />
     <Compile Include="ReservationServiceBigClassTermBLL.cs" />
     <Compile Include="ReservationServiceBigClassTermStatusBLL.cs" />
@@ -1171,6 +1122,8 @@
     <Compile Include="t_customerBLL.cs" />
     <Compile Include="T_HierarchySystemExNodeBLL.cs" />
     <Compile Include="T_InoutBLL.cs" />
+    <Compile Include="T_ItemBLL.cs" />
+    <Compile Include="T_ItemSkuPropBLL.cs" />
     <Compile Include="T_Item_CategoryBLL.cs" />
     <Compile Include="T_Item_PriceBLL.cs" />
     <Compile Include="T_Item_Price_TypeBLL.cs" />
@@ -1179,9 +1132,16 @@
     <Compile Include="T_LEventsSharePersonLogBLL.cs" />
     <Compile Include="T_Payment_detailBLL.cs" />
     <Compile Include="T_Payment_TypeBLL.cs" />
-    <Compile Include="T_ItemBLL.cs" />
-    <Compile Include="T_ItemSkuPropBLL.cs" />
     <Compile Include="T_PropBLL.cs" />
+    <Compile Include="Questionnaire\T_QN_ActivityQuestionnaireMappingBLL.cs" />
+    <Compile Include="Questionnaire\T_QN_OptionBLL.cs" />
+    <Compile Include="Questionnaire\T_QN_QuestionBLL.cs" />
+    <Compile Include="Questionnaire\T_QN_QuestionnaireAnswerRecordBLL.cs" />
+    <Compile Include="Questionnaire\T_QN_QuestionnaireBLL.cs" />
+    <Compile Include="Questionnaire\T_QN_QuestionnaireOptionCountBLL.cs" />
+    <Compile Include="Questionnaire\T_QN_QuestionNaireQuestionMappingBLL.cs" />
+    <Compile Include="Questionnaire\T_QN_QuestionPicBLL.cs" />
+    <Compile Include="Questionnaire\T_QN_ScoreRecoveryInformationBLL.cs" />
     <Compile Include="T_RewardConfigBLL.cs" />
     <Compile Include="T_RewardRecordBLL.cs" />
     <Compile Include="T_SkuBLL.cs" />
@@ -1190,6 +1150,8 @@
     <Compile Include="T_UserBLL.cs" />
     <Compile Include="t_unitBLL.cs" />
     <Compile Include="T_VirtualItemTypeSettingBLL.cs" />
+    <Compile Include="Utility\XML\RedisXML.cs" />
+    <Compile Include="Utility\XML\XmlManager.cs" />
     <Compile Include="VipFeedbackInfoBLL.cs" />
     <Compile Include="WXTMConfigBLL.cs" />
     <Compile Include="UnitCommentBLL.cs" />
@@ -1385,16 +1347,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="obj\Debug\build.force" />
-    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <None Include="obj\Debug\ResolveAssemblyReference.cache" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="obj\Debug\CPOS.BS.BLL.csproj.FileListAbsolute.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug\" />
-    <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="Report\StoreManagerReport\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

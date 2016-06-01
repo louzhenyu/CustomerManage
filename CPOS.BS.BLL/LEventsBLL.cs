@@ -881,16 +881,24 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetBootUrlByEventId(eventId);
         }
-
+        /// <summary>
+        /// 处理扫描静态二维码的事件（包含处理上下级关系和推送图文信息）
+        /// </summary>
+        /// <param name="loggingSessionInfo"></param>
+        /// <param name="customerId"></param>
+        /// <param name="weixinId"></param>
+        /// <param name="qrCode"></param>
+        /// <param name="openId"></param>
+        /// <param name="httpContext"></param>
+        /// <param name="requestParams"></param>
+        /// <param name="sendMessageCount"></param>
         public void SendQrCodeWxMessage(LoggingSessionInfo loggingSessionInfo, string customerId,
             string weixinId, string qrCode, string openId, HttpContext httpContext, RequestParams requestParams, out int sendMessageCount)
         {
             sendMessageCount = 0;//有多少条图文信息***
             try
             {
-
                 var qrCodeBll = new WQRCodeManagerBLL(loggingSessionInfo);
-
                 var qrCodeEntity = qrCodeBll.QueryByEntity(new WQRCodeManagerEntity()
                 {
                     CustomerId = customerId,
@@ -905,6 +913,33 @@ namespace JIT.CPOS.BS.BLL
                     {
                         QRCodeTypeId = qrCodeEntity.QRCodeTypeId
                     }, null).FirstOrDefault();
+                    //根据openid获取会员信息
+                    VipBLL vipBll = new VipBLL(loggingSessionInfo);
+                    var vipEntity = vipBll.QueryByEntity(new VipEntity()
+                    {
+                        WeiXinUserId = openId
+                    }, null).FirstOrDefault();
+                    //在这里记录永久二维码的扫描信息                  
+                    QRCodeScanLogEntity qrCodeScanLogEntity = new QRCodeScanLogEntity();
+                    qrCodeScanLogEntity.QRCodeScanLogID = Guid.NewGuid();
+                    qrCodeScanLogEntity.VipID = vipEntity.VIPID;
+                    qrCodeScanLogEntity.OpenID = openId;
+                    qrCodeScanLogEntity.WeiXin = weixinId;
+                    qrCodeScanLogEntity.QRCodeID = qrCodeEntity.QRCodeId.ToString();//记录主键值，而不是二维码code
+                    qrCodeScanLogEntity.CustomerId = customerId;
+                    qrCodeScanLogEntity.QRCodeType = 1;//  二维码类型：1.永久二维码  2.临时二维码
+                    qrCodeScanLogEntity.BusTypeCode = qrCodeTypeInfo.TypeCode;//业务类型编码(记录永久二维码类型表里的场景值)
+                    qrCodeScanLogEntity.ObjectId = qrCodeEntity.ObjectId;//二维码对应的对象
+                    qrCodeScanLogEntity.IsDelete = 0;
+                    qrCodeScanLogEntity.CreateBy = "永久二维码扫描记录";
+                    qrCodeScanLogEntity.CreateTime = DateTime.Now;
+                    qrCodeScanLogEntity.LastUpdateBy = "永久二维码扫描记录";
+                    qrCodeScanLogEntity.LastUpdateTime = DateTime.Now;
+
+                    QRCodeScanLogBLL qrCodeScanLogBll = new QRCodeScanLogBLL(loggingSessionInfo);
+                    qrCodeScanLogBll.Create(qrCodeScanLogEntity);
+
+
                     Loggers.Debug(new DebugLogInfo()
                     {
                         Message = string.Format(@"zk qrCodeTypeInfo != null:{0},
@@ -917,11 +952,7 @@ namespace JIT.CPOS.BS.BLL
                         && qrCodeEntity.ObjectId != null
                         && !qrCodeEntity.ObjectId.ToString().Equals(""))
                     {
-                        VipBLL vipBll = new VipBLL(loggingSessionInfo);
-                        var vipEntity = vipBll.QueryByEntity(new VipEntity()
-                        {
-                            WeiXinUserId = openId
-                        }, null).FirstOrDefault();
+
 
                         string pushContent = string.Empty;//推送内容
 
@@ -981,7 +1012,7 @@ namespace JIT.CPOS.BS.BLL
                             case "retailqrcode"://分销商信息
                                 #region 绑定分销商数据
                                 RetailTraderBLL retailTraderBLL = new RetailTraderBLL(loggingSessionInfo);
-                                    var RetailTraderInfo = retailTraderBLL.GetByID(qrCodeEntity.ObjectId);  //根据分销商ID获取所属的门店信息和销售员信息
+                                var RetailTraderInfo = retailTraderBLL.GetByID(qrCodeEntity.ObjectId);  //根据分销商ID获取所属的门店信息和销售员信息
                                 if (vipEntity != null && (string.IsNullOrEmpty(vipEntity.CouponInfo) || vipEntity.CouponInfo.Length != 32))
                                 {
                                     #region 原分销商业务处理
@@ -1080,7 +1111,7 @@ namespace JIT.CPOS.BS.BLL
                                         #endregion
                                     }
                                     #endregion
-                                
+
                                 }
 
 
@@ -1211,7 +1242,7 @@ namespace JIT.CPOS.BS.BLL
                         {
                             //下面是2016-4-4日新改的
                             //先根据每个员工的二维码的QRCodeId去回复
-                          
+
                             QrCodeHandlerText(qrCodeEntity.QRCodeId.ToString(), loggingSessionInfo,
                                 weixinId, 4, openId, httpContext, requestParams, out  sendMessageCount, qrCodeEntity.ObjectId);
 
@@ -1223,9 +1254,9 @@ namespace JIT.CPOS.BS.BLL
                                 //（因为有多号运营的问题，现在生成图文素材和二维码都是取得第一个公众号的ApplicationId，所以这里加ApplicationId可能会到普通的生成的二维码的关键字出问题，所以只在打赏这里加***）
                                 //***不需要加这个applicationId了，已经通过weixinid做过判断了
                                 QrCodeHandlerText(qrCodeEntity.QRCodeTypeId.ToString(), loggingSessionInfo,
-                                    weixinId, 4, openId, httpContext, requestParams,   out  sendMessageCount, qrCodeEntity.ObjectId);
-                            }                    
-                        
+                                    weixinId, 4, openId, httpContext, requestParams, out  sendMessageCount, qrCodeEntity.ObjectId);
+                            }
+
                         }
                         else
                         {
@@ -1649,7 +1680,7 @@ namespace JIT.CPOS.BS.BLL
             this._currentDAO.UpdateEventIsDelete(strEventId);
 
         }
-        
+
         public JIT.CPOS.BS.BLL.MobileModuleBLL.Field[] GetFieldList(DataSet formDataSet)
         {
             return (from f in formDataSet.Tables[0].AsEnumerable()

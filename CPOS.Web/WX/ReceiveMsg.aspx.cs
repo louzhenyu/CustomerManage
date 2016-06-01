@@ -37,7 +37,7 @@ namespace JIT.CPOS.Web.WX
                 BaseService.WriteLogWeixin("  请求的url:" + url);
                 BaseService.WriteLogWeixin("  请求方式:" + httpContext.Request.HttpMethod.ToLower());
                 //把HTTP请求转换为字符串
-                string postStr = new BaseService().ConvertHttpContextToString(httpContext);
+                string postStr = new BaseService().ConvertHttpContextToString(httpContext);   //获取post传过来的信息
                 BaseService.WriteLogWeixin("  解密前postStr：" + postStr);
                 //延迟几秒执行，看看微信会不会重复推送三次信息
                 //System.Threading.Thread.Sleep(10000);

@@ -88,13 +88,13 @@ namespace JIT.CPOS.Web.Module
                 #endregion
 
                 //#region 判断客户是否扫过活动二维码
-                //QRCodeScanLogBLL qRCodeScanLogBLL = new QRCodeScanLogBLL(loggingSessionInfo);
-                //if (!qRCodeScanLogBLL.CheckVipEventQRCode(reqObj.common.userId, reqObj.special.eventId))
-                //{
-                //    respData.code = "2206";
-                //    respData.description = "请先扫描本次活动的二维码";
-                //    return respData.ToJSON().ToString();
-                //}
+                QRCodeScanLogBLL qRCodeScanLogBLL = new QRCodeScanLogBLL(loggingSessionInfo);
+                if (!qRCodeScanLogBLL.CheckVipEventQRCode(reqObj.common.userId, reqObj.special.eventId))
+                {
+                    respData.code = "2206";
+                    respData.description = "请先扫描本次活动的二维码";
+                    return respData.ToJSON().ToString();
+                }
                 //#endregion
 
                 VipBLL vipBLL = new VipBLL(loggingSessionInfo);

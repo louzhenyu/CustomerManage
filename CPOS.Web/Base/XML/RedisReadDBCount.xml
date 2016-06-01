@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <RedisOperation>
+    <modulename>(模块名称)商户数据库链接或者角色（每一个redisKey都是一个模块）</modulename>
+    <moduleKey>redis的模块key</moduleKey>
+    <!--<BSOrWeb>商户后台还是接口</BSOrWeb>-->
+    <RedisCount>
+			从redis读取次数（在config里加一个开关，在测试的时候记录从redis读取的记录，不测试就不记录了，影响效率）
+		</RedisCount>
+    <LastRedisTime>（最后从redis读取的时间）2016-5-28 12:13:34</LastRedisTime>
+    <DBCount>
+			从数据库读取次数（一直记录）
+		</DBCount>
+    <LastDBTime>（最后从DB读取的时间）2016-5-28 12:13:34</LastDBTime>
+  </RedisOperation>
+  <RedisOperation>
+    <modulename>商户数据库链接</modulename>
+    <modulekey>Connection</modulekey>
+    <RedisCount>3</RedisCount>
+    <LastRedisTime>2016/5/26 19:49:55</LastRedisTime>
+    <DBCount>0</DBCount>
+    <LastDBTime>2016/5/26 19:29:09</LastDBTime>
+  </RedisOperation>
+</Root>

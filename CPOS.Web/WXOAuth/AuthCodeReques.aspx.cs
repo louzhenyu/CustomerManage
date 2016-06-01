@@ -17,6 +17,8 @@ using JIT.CPOS.BS.Entity;
 using System.Net;
 using JIT.CPOS.BS.Entity.Interface;
 using JIT.CPOS.Common;
+using System.Collections.Specialized;
+using System.Text.RegularExpressions;
 
 namespace JIT.CPOS.Web.WXOAuth
 {
@@ -30,6 +32,12 @@ namespace JIT.CPOS.Web.WXOAuth
         public string strAppId = string.Empty;//"wxeebb52e0aa813101"
         public string strAppSecret = string.Empty; //"22ac924a92e6caf176d6ba426d744adb";
         public string strWeiXinId = string.Empty;   //Jermyn20140604 微信公众号码 
+        //会员分享的SourceId，ShareVipID，ObjectID
+
+        public int SourceId = 0;// 1员工，2客服，3会员
+        public string ShareVipID = string.Empty; //分享人的标识（SourceId为1，2时，这个是员工，为3时这个是会员）
+        public string ObjectID = string.Empty;   //分享的链接代表的对象，活动或者商品
+
 
         //public string customerId = "f6a7da3d28f74f2abedfc3ea0cf65c01";
         //public string applicationId = "24F084EDA94648E4BEFBDB11597EC42A";
@@ -37,11 +45,11 @@ namespace JIT.CPOS.Web.WXOAuth
         //public string pageName = "GoodsList";
         //public string strAppId = "wxeebb52e0aa813101";
         //public string strAppSecret = "22ac924a92e6caf176d6ba426d744adb";
-       
+
         public string strState = string.Empty;
         public LoggingSessionInfo loggingSessionInfo = new LoggingSessionInfo();
         JIT.CPOS.BS.BLL.WX.AuthBLL authBll = new BS.BLL.WX.AuthBLL();
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             Response.Write("进入认证界面<br/>");
@@ -83,17 +91,46 @@ namespace JIT.CPOS.Web.WXOAuth
                         byte[] buff1 = Convert.FromBase64String(state);
                         state = Encoding.UTF8.GetString(buff1);
                         state = HttpUtility.UrlDecode(state, Encoding.UTF8);//转码
+
+
+
                         string[] array = state.Split(',');
                         customerId = array[1];
                         applicationId = array[2];
                         goUrl = array[0];
                         scope = array[3];
-                        if(array.Length>=5)
+                        if (array.Length >= 5)
                             this.pageName = array[4];
                         Loggers.Debug(new DebugLogInfo()
                         {
-                            Message = string.Format("3x:解析出回传的state的值：customerid={0};applicationid={1};goUrl={2};pageName={3};",customerId,applicationId,goUrl,pageName)
+                            Message = string.Format("3x:解析出回传的state的值：customerid={0};applicationid={1};goUrl={2};pageName={3};", customerId, applicationId, goUrl, pageName)
                         });
+                        //从goUrl获取SourceId，ShareVipID，ObjectID 的值
+                        #region 取三个新增的Id
+                        string baseUrl = string.Empty;
+                        NameValueCollection collection = new NameValueCollection();
+                        ParseUrl(goUrl, out baseUrl, out collection);
+                        foreach (string k in collection.Keys)
+                        {
+                            var targetValue = collection[k];
+                            if (collection[k].IndexOf(',') > 0)
+                            {
+                                targetValue = collection[k].Split(',')[0];
+                            }
+                            if (k == "objectid")
+                            {
+                                ObjectID = targetValue;
+                            }
+                            if (k == "sourceid")
+                            {
+                                SourceId = Convert.ToInt32(targetValue);
+                            }
+                            if (k == "sharevipid")
+                            {
+                                ShareVipID = targetValue;
+                            }
+                        }
+                        #endregion
                         #endregion
                     }
                     catch (Exception ex)
@@ -101,7 +138,7 @@ namespace JIT.CPOS.Web.WXOAuth
                         Response.Write("<br/>");
                         Response.Write("statex错误:" + ex.ToString());
                     }
-                    #endregion 
+                    #endregion
                 }
 
                 #region
@@ -110,7 +147,7 @@ namespace JIT.CPOS.Web.WXOAuth
 
                 GetKeyByApp();
                 string code = Request["code"];
-                if (code == null || code.Equals(""))
+                if (code == null || code.Equals(""))  //没有获取到相应的openid，sns_userinfo情况下，用户没有授权。
                 {
                     Loggers.Debug(new DebugLogInfo()
                     {
@@ -124,9 +161,9 @@ namespace JIT.CPOS.Web.WXOAuth
                 {
                     Response.Write("存在code:" + code);
                     string token = "";
-                    string openId = authBll.GetAccessToken(code, strAppId, strAppSecret, loggingSessionInfo,iRad,out token);
+                    string openId = authBll.GetAccessToken(code, strAppId, strAppSecret, loggingSessionInfo, iRad, out token);//
                     //scope = ''
-                    
+
                     Response.Write("<br>");
                     Response.Write("OpenID:" + openId);
                     Loggers.Debug(new DebugLogInfo()
@@ -139,6 +176,38 @@ namespace JIT.CPOS.Web.WXOAuth
             }
         }
 
+        /// <summary>
+        /// Url处理工具
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="baseUrl"></param>
+        /// <param name="nvc"></param>
+        public static void ParseUrl(string url, out string baseUrl, out NameValueCollection nvc)
+        {
+            if (url == null)
+                throw new ArgumentNullException("url");
+            nvc = new NameValueCollection();
+            baseUrl = "";
+            if (url == "")
+                return;
+            int questionMarkIndex = url.IndexOf('?');
+            if (questionMarkIndex == -1)
+            {
+                baseUrl = url;
+                return;
+            }
+            baseUrl = url.Substring(0, questionMarkIndex);
+            if (questionMarkIndex == url.Length - 1)
+                return;
+            string ps = url.Substring(questionMarkIndex + 1);
+            // 开始分析参数对  
+            Regex re = new Regex(@"(^|&)?(\w+)=([^&]+)(&|$)?", RegexOptions.Compiled);
+            MatchCollection mc = re.Matches(ps);
+            foreach (Match m in mc)
+            {
+                nvc.Add(m.Result("$2").ToLower(), m.Result("$3"));
+            }
+        }
         #region 获取微信信息
         public void GetKeyByApp()
         {
@@ -161,7 +230,7 @@ namespace JIT.CPOS.Web.WXOAuth
         /// 页面跳转
         /// </summary>
         /// <param name="openId"></param>
-        private void PageRedict(string applicationId, string openId,string token)
+        private void PageRedict(string applicationId, string openId, string token)
         {
 
             //if (goUrl.IndexOf("HtmlApp/Lj/auth.html?pageName=GoodsList")>0)
@@ -208,7 +277,7 @@ namespace JIT.CPOS.Web.WXOAuth
                 });
                 goUrl = goUrl.Replace("_pageName_", pagePath);
             }
-            if (openId == null || openId.Equals(""))
+            if (openId == null || openId.Equals(""))//没有获取到相应的openid，也跳转
             {
                 Random rad = new Random();
                 if (goUrl.IndexOf("?") > 0)
@@ -230,38 +299,39 @@ namespace JIT.CPOS.Web.WXOAuth
                 VipBLL vipServer = new VipBLL(loggingSessionInfo);
                 VipEntity vipInfo = new VipEntity();
 
-                vipInfo = authBll.GetUserIdByOpenId(loggingSessionInfo, openId);
+                vipInfo = authBll.GetUserIdByOpenId(loggingSessionInfo, openId);//根据openid获取会员信息 
                 //Loggers.Debug(new DebugLogInfo()
                 //{
                 //    Message = string.Format("66x: openId：{0};", "进来了" + openId + "--openId")
                 //});
-                if (vipInfo == null || vipInfo.VIPID.Equals("") || vipInfo.Status == 0)
+                #region 本系统中不存在这个会员  或者未关注
+                if (vipInfo == null || vipInfo.VIPID.Equals("") || vipInfo.Status == 0) //会员不存在或没有关注，从微信里查找会员信息，新增一条vip数据
                 {
-                    //Loggers.Debug(new DebugLogInfo()
-                    //{
-                    //    Message = string.Format("77x: openId：{0};", "进来了" + openId + "--openId")
-                    //});
+
                     Response.Write("会员不存在或没有关注");
                     VipEntity vipInfotmp = new VipEntity();
+                    #region snsapi_userinfo 这种模式的
                     if (scope.Equals("1"))
                     {
                         //封装方法，调用第四步，根据第四步的数据，新增一条vip数据
                         if (null == vipInfo || vipInfo.VIPID.Equals(""))
                         {
-                            vipInfotmp.VIPID = authBll.SetVipInfoByToken(token, openId, loggingSessionInfo, this.Response);
+                            vipInfotmp.VIPID = authBll.SetVipInfoByToken(token, openId, loggingSessionInfo, this.Response);//根据token和openid获取会员信息
                         }
-                        else
+                        else   //状态为未关注，vipInfo.Status == 0
                         {
                             vipInfo.IsDelete = 0;
-                            vipInfo.Status = 1;
+                            //   vipInfo.Status = 1;  //潜在用户？这个时候如果没关注，也算潜在用户吗？没关注不算潜在用户，所以不改变他的状态**
                             vipServer.Update(vipInfo);
                             vipInfotmp.VIPID = vipInfo.VIPID;
                         }
                     }
+                    #endregion
+                    #region snsapi_base这种情况下，，获取不到会员的详细信息，只能获取到openid
                     else
                     {
                         #region Jermyn20140604,会员没有关注，先采集信息
-                        
+
                         if (vipInfo == null || vipInfo.VIPID == null)
                         {
                             
@@ -283,14 +353,12 @@ namespace JIT.CPOS.Web.WXOAuth
                         }
                         else
                         {
-                            vipInfotmp.VIPID = vipInfo.VIPID;
+                            vipInfotmp.VIPID = vipInfo.VIPID;//设置vipid
                         }
                         #endregion
                     }
-                    //Loggers.Debug(new DebugLogInfo()
-                    //{
-                    //    Message = string.Format("777x: openId：{0};", "进来了" + openId + "--openId")
-                    //});
+                    #endregion
+
                     Random rad = new Random();
                     if (goUrl.IndexOf("?") > 0)
                     {
@@ -304,14 +372,18 @@ namespace JIT.CPOS.Web.WXOAuth
                     {
                         Message = string.Format("会员没有关注时的跳转URL：{0}", goUrl)
                     });
+                    //在这里建立上下线关系
+                    SetShareVip(vipInfotmp.VIPID);
+
+               
                     Response.Redirect(goUrl);
+                    
                 }
+                #endregion
+                #region  会员已经存在（关注过）
                 else
                 {
-                    //Loggers.Debug(new DebugLogInfo()
-                    //{
-                    //    Message = string.Format("88x: openId：{0};", "进来了" + openId + "--openId")
-                    //});
+
                     Response.Write("获取vip信息");
                     Response.Write("</br>");
                     //
@@ -331,10 +403,142 @@ namespace JIT.CPOS.Web.WXOAuth
                     {
                         Message = string.Format("有会员信息时的跳转URL：{0}", strGotoUrl)
                     });
+                    //在这里建立上下线关系
+                    //SetShareVip(vipInfotmp.VIPID);
+                    SetShareVip(vipInfo.VIPID);
                     Response.Redirect(strGotoUrl);
                 }
+                #endregion
+
             }
 
         }
+
+        //
+        /// <summary>
+        /// 处理会员的上下线关系
+        /// 会员状态        已经有上级关系    有新的附带上级关系  
+        /// 从未关注的Vip          1                  1             重建关系
+        /// 从未关注的Vip          0                  1             重建关系
+        /// 取消关注的Vip          0                  1             重建关系
+
+        /// 从未关注的Vip          0                  0               
+        /// 从未关注的Vip          1                  0
+        /// 取消关注的Vip          1                  0 
+        /// 取消关注的Vip          0                  0 
+        /// 取消关注的Vip          1                  1
+
+        /// ShareVipID 没内容的 return
+        public void SetShareVip(string vipid)
+        {
+            #region 验证
+            if (string.IsNullOrEmpty(ShareVipID))//如果没有上级分享人员
+            {
+                return;
+            }
+            #endregion
+
+            #region Vip实体
+            VipBLL vipBll = new VipBLL(loggingSessionInfo);
+            VipEntity vipInfotmp = null;
+            if (string.IsNullOrEmpty(vipid))
+            {
+                return;
+            }
+            else
+            {
+                vipInfotmp = vipBll.GetByID(vipid);
+            }
+            if (vipInfotmp == null)
+            {
+                return;
+            }
+            #endregion
+
+            #region UnitId
+            string UnitId = "";
+            //获取分享人的门店信息
+            //员工 或者 客服
+            if (SourceId == 1 || SourceId == 2)//获取分享员工的默认门店
+            {
+                UnitId = vipBll.GetUnitByUserId(ShareVipID);//获取员工的默认门店
+            }
+            else
+            {
+                //获取分享会员的门店
+                VipEntity shareVip = vipBll.GetByID(ShareVipID);
+                if (shareVip != null)
+                {
+                    UnitId = shareVip.CouponInfo;//会员的会籍店
+                }
+            }
+            #endregion
+
+            #region 判断用户类型
+
+            #region 关注的
+            if (vipInfotmp.Status >= 1)//关注过的
+            {
+                //当前没有上线，才给他建立一个上线
+                if (string.IsNullOrEmpty(vipInfotmp.SetoffUserId) && string.IsNullOrEmpty(vipInfotmp.HigherVipID) && string.IsNullOrEmpty(vipInfotmp.Col20))
+                {
+                    //会员 或者 客服
+                    if (SourceId == 1 || SourceId == 2)//获取分享员工的默认门店
+                    {
+                        vipInfotmp.SetoffUserId = ShareVipID;
+                    }
+                    //会员
+                    else
+                    {
+                        vipInfotmp.HigherVipID = ShareVipID;
+                    }
+                }
+            }
+            #endregion
+
+            #region 取消关注的
+            else if (vipInfotmp.Status == 0 && vipInfotmp.Col25 == "1")//取消关注的
+            {
+                if (string.IsNullOrEmpty(vipInfotmp.SetoffUserId) && string.IsNullOrEmpty(vipInfotmp.HigherVipID) && string.IsNullOrEmpty(vipInfotmp.Col20))
+                {
+                    if (SourceId == 1 || SourceId == 2)//获取分享员工的默认门店
+                    {
+                        vipInfotmp.SetoffUserId = ShareVipID;
+                    }
+                    else
+                    {
+                        vipInfotmp.HigherVipID = ShareVipID;
+                    }
+                }
+
+            }
+            #endregion
+
+            #region 未关注的
+            else
+            {   //未关注的（oauth认证获取的）
+                //客服 员工
+                if (SourceId == 1 || SourceId == 2)//获取分享员工的默认门店
+                {
+                    vipInfotmp.SetoffUserId = ShareVipID;
+                }
+                //会员
+                else
+                {
+                    vipInfotmp.HigherVipID = ShareVipID;
+                }
+            }
+            #endregion
+
+            #endregion
+
+            vipInfotmp.CouponInfo = UnitId;
+            vipInfotmp.Col24 = ObjectID;
+            vipInfotmp.Col23 = SourceId.ToString();
+            vipBll.Update(vipInfotmp);
+
+
+        }
+
     }
 }

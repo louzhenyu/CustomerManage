@@ -100,6 +100,7 @@
   <ItemGroup>
     <Content Include="ApplicationInterface\NwEvents\Demo.htm" />
     <Content Include="bin\Utility.dll" />
+    <Content Include="Base\XML\RedisReadDBCount.xml" />
     <Content Include="ComingSoon.aspx" />
     <Content Include="Config\config.xml" />
     <Content Include="Config\logger.xml" />
@@ -361,6 +362,9 @@
     <Content Include="Framework\Javascript\Other\editor\themes\default\default.png" />
     <Content Include="Framework\Javascript\Other\editor\themes\simple\simple.css" />
     <Content Include="Framework\Javascript\Other\lightCpos.js" />
+    <Content Include="Framework\Javascript\Piwik\jquery-1.12.3.js" />
+    <Content Include="Framework\Javascript\Piwik\piwik.js" />
+    <Content Include="Framework\Javascript\Piwik\piwik_BI.js" />
     <Content Include="Framework\Javascript\pub\JITVipFrmWindow.js" />
     <Content Include="Framework\swfuploadfile\Change Log.txt" />
     <Content Include="Framework\swfuploadfile\jquery.uploadify.js" />

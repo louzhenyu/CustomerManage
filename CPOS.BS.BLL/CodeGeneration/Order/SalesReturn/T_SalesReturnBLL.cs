@@ -193,10 +193,11 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pOrderBys">排序</param>
         /// <param name="pPageSize">每页的记录数</param>
         /// <param name="pCurrentPageIndex">以0开始的当前页码</param>
+        /// <param name="User_Id">登录后台时当前用户的标识</param>
         /// <returns></returns>
-        public PagedQueryResult<T_SalesReturnEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<T_SalesReturnEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex )
         {
-           return _currentDAO.PagedQuery(pWhereConditions,pOrderBys,pPageSize,pCurrentPageIndex);
+            return _currentDAO.PagedQuery(pWhereConditions, pOrderBys, pPageSize, pCurrentPageIndex );
         }
 
         /// <summary>

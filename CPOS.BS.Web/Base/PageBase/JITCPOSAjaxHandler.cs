@@ -33,6 +33,7 @@ namespace JIT.CPOS.BS.Web.PageBase
     {
         protected int PageSize = 10;
 
+        protected string content = "";
         ///// <summary>
         ///// use for utility log
         ///// </summary>
@@ -57,11 +58,35 @@ namespace JIT.CPOS.BS.Web.PageBase
             this.BTNCode = pContext.Request["btncode"];
             //this.MID = pContext.Request["mid"];
             this.Method = pContext.Request["method"];
-            this.AjaxRequest(pContext);
-           
+
+            JIT.CPOS.BS.BLL.BuryingPoint_BSAjaxHandler bp;
+            try
+            {
+                bp = new JIT.CPOS.BS.BLL.BuryingPoint_BSAjaxHandler(pContext, CurrentUserInfo.CurrentUser);
+            }
+            catch
+            {
+                bp = null;
+            }
+            try
+            {
+                this.AjaxRequest(pContext);
+            }
+            catch (System.Threading.ThreadAbortException ex)
+            {
+                try
+                {
+                    //埋点
+                    bp.Finish(this.content);
+                }
+                catch { }
+            }
+
             //this.RunMethod(this.GetType(), pContext.Request["method"], pContext);
         }
         #endregion
+
+
 
         #region 方法
         protected string Request(string key)
@@ -84,7 +109,7 @@ namespace JIT.CPOS.BS.Web.PageBase
         /// </summary>
         protected override void Authenticate()
         {
-            if (!new JITPage().CheckUserLogin() &&  string.IsNullOrEmpty( Request("CustomerID")))
+            if (!new JITPage().CheckUserLogin() && string.IsNullOrEmpty(Request("CustomerID")))
             {
                 HttpContext.Current.Response.Write("{success:false,msg:'未登录，请先登录'}");
                 HttpContext.Current.Response.End();
@@ -127,7 +152,7 @@ namespace JIT.CPOS.BS.Web.PageBase
             //    HttpContext.Current.Response.End();
             //    return;
             //}
-            
+
             ////验证menu btncode 权限
             //int rightCount = new SessionManager().CurrentUserLoginInfo.UserOPRight.Tables[0].Select(
             //          "ClientMenuID='" + menuId + "'"

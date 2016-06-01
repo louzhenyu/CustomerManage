@@ -17,6 +17,7 @@ using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.Common;
 using System.Configuration;
+using JIT.CPOS.BS.BLL.RedisOperationBLL.OrderReward;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -1760,7 +1761,11 @@ namespace JIT.CPOS.BS.BLL
                 {
                     var orderInfo = inoutBLL.GetInoutInfo(orderId, this.loggingSessionInfo);
                     if (orderInfo != null && orderInfo.status != "700")//完成订单时处理积分、返现、佣金[和确认收货一致]
-                        new VipIntegralBLL(this.loggingSessionInfo).OrderReward(orderInfo, tran);
+                    {
+                        //new VipIntegralBLL(this.loggingSessionInfo).OrderReward(orderInfo, tran);
+                        new SendOrderRewardMsgBLL().OrderReward(orderInfo, this.loggingSessionInfo, tran);////存入到缓存
+                    }
+                        
                 }
                 inoutService.UpdateOrderDeliveryStatus(orderId, status, statusDesc, null, null, tableNo);
                 if (status == "600")

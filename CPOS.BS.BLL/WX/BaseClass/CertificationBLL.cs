@@ -64,6 +64,7 @@ namespace JIT.CPOS.BS.BLL.WX.BaseClass
                 **/
                 //BaseService.WriteLogWeixin("二维码 qrcodeId:  " + qrcodeId);
                 ////保存用户信息///// <param name="isShow">1： 关注  0： 取消关注</param>
+                //这个里面处理临时二维码的信息的代码（建立员工与会员的上下级关系）**
                 commonService.SaveUserInfo(requestParams.OpenId, requestParams.WeixinId, "1", entity.AppID, entity.AppSecret, qrcodeId, requestParams.LoggingSessionInfo);
             }
 
@@ -72,7 +73,7 @@ namespace JIT.CPOS.BS.BLL.WX.BaseClass
             if (eventKey != null && eventKey.InnerText.Contains("qrscene_"))//如果是二维码的就之返回二维码的
             {
                 qrcodeId = eventKey.InnerText.Substring(8);
-
+                //处理扫描静态二维码的事件（包含处理上下级关系和推送图文信息）
                 eventsBll.SendQrCodeWxMessage(requestParams.LoggingSessionInfo, requestParams.LoggingSessionInfo.CurrentLoggingManager.Customer_Id, requestParams.WeixinId, qrcodeId,
                requestParams.OpenId, this.httpContext, requestParams, out sendMessageCount); //保存用户信息时，有推送消息
                 //eventsBll.QrCodeHandlerText(qrcodeId, requestParams.LoggingSessionInfo,

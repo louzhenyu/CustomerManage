@@ -303,6 +303,14 @@
             }
 
         </script>
+        
+    <!--Piwik Start-->
+    <input type="hidden" class="piwik_piwikUrl" value="http://tjtest.chainclouds.com/piwik.php" />
+    <input type="hidden" class="piwik_siteId" value="5"/>
+    <%--<script type="text/javascript" src="../Javascript/Piwik/jquery-1.12.3.js"></script>--%>
+    <script type="text/javascript" src="<%= StaticUrl+"/Framework/Javascript/Piwik/piwik.js" %>"></script>
+    <script type="text/javascript" src="<%= StaticUrl +"/Framework/Javascript/Piwik/piwik_BI.js" %>"></script>
+    <!--Piwik Start-->
     </form>
 <div class="leftsead">
 <div class="index hover" style="padding-bottom:1px;" >

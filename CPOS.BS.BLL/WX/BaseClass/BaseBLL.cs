@@ -674,7 +674,7 @@ namespace JIT.CPOS.BS.BLL.WX
 
             switch (eventStr)
             {
-                //关注
+                //关注(扫描二维码时，如果没有关注的，就会进入到关注事件里，而不会走下面的扫码事件，因此这里也要记录一下扫码记录)
                 case EventType.SUBSCRIBE:
                     BaseService.WriteLogWeixin("用户加关注！"); // /****/虽然是用户关注，但也分为两种情况：搜索关注，扫二维码关注。扫二维码关注，eventkey不为空
                     //和普通的扫码得到的key不一样： qrscene_114，前面带了 qrscene_
@@ -915,6 +915,7 @@ namespace JIT.CPOS.BS.BLL.WX
 
                 //保存用户信息
                 // /// <param name="isShow">1： 关注  0： 取消关注</param>
+                //这个里面处理临时二维码的信息的代码（建立员工与会员的上下级关系）**
                 commonService.SaveUserInfo(requestParams.OpenId, requestParams.WeixinId, "1", entity.AppID, entity.AppSecret, eventKey, requestParams.LoggingSessionInfo);
 
                 #region　微信扫描二维码 回复消息 update by wzq 20140731
@@ -944,6 +945,7 @@ namespace JIT.CPOS.BS.BLL.WX
 
                 #region 注释备注：扫码时始终会调用保存用户信息接口，这里已经推送了消息
                 //BaseService.WriteLogWeixin("开始推送消息Wzq");
+                //处理扫描静态二维码的事件（包含处理上下级关系和推送图文信息）
                 int sendMessageCount = 0;
                 eventsBll.SendQrCodeWxMessage(requestParams.LoggingSessionInfo, requestParams.LoggingSessionInfo.CurrentLoggingManager.Customer_Id, requestParams.WeixinId, eventKey,
                     requestParams.OpenId, this.httpContext, requestParams, out sendMessageCount);

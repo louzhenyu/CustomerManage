@@ -9,6 +9,7 @@ using System.Data;
 using System.Data.SqlClient;
 using JIT.Utility.DataAccess;
 using System.Collections;
+using System.Reflection;
 
 
 namespace JIT.CPOS.BS.DataAccess
@@ -64,6 +65,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="roleId">角色标识</param>
         /// <returns></returns>
+        [Obsolete]
         public DataSet GetRoleMenus(string roleId)
         {
             string sql = "select  a.Menu_Id,"
@@ -94,6 +96,90 @@ namespace JIT.CPOS.BS.DataAccess
             DataSet ds = new DataSet();
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
+        }
+        /// <summary>
+        /// 根据角色获取菜单 V2
+        /// </summary>
+        public List<MenuModel> GetRoleMenus(string customerID, string roleID)
+        {
+            string sql = "select  a.Menu_Id,"
+                      + " a.Reg_App_Id, "
+                      + " a.Menu_Code,"
+                      + " a.Parent_Menu_Id,"
+                      + " a.Menu_Name"
+                      + " ,a.Menu_Level"
+                      + " ,a.Url_Path"
+                      + " ,a.Icon_Path"
+                      + " ,a.Display_Index"
+                      + " ,a.Menu_Name"
+                      + " ,a.User_Flag"
+                      + " ,a.Menu_Eng_Name"
+                      + " ,a.Status"
+                      + " ,a.Create_User_Id"
+                      + " ,a.Create_Time"
+                      + " ,a.Modify_User_id"
+                      + " ,a.Modify_Time"
+                      + " from t_menu a"
+                      + " inner join (select distinct x.menu_id,y.def_app_id from t_role_menu x,T_Role y where x.role_id = y.role_id and x.role_id='" + roleID + "' and x.status = '1' AND y.customer_id='" + customerID + "' ) b "
+                      + " on(a.menu_id = b.menu_id "
+                      + " and a.reg_app_id = b.def_app_id) "
+                      + " where a.status = '1'"
+
+                      //+ " and a.menu_id in (select distinct menu_id from t_role_menu where role_id='"+roleId+"' and status = '1')"
+                      + " order by a.menu_level, a.display_index,a.create_time";
+
+            var ds = this.SQLHelper.ExecuteDataset(sql);
+            if (ds != null && ds.Tables != null && ds.Tables[0] != null && ds.Tables[0].Rows != null && ds.Tables[0].Rows.Count > 0)
+            {
+                return ConvertToList<MenuModel>(ds.Tables[0]);
+            }
+            else
+            {
+                return new List<MenuModel>();
+            }
+        }
+        private List<T> ConvertToList<T>(DataTable dataTable) where T : new()
+        {
+            List<T> list = new List<T>();
+            foreach (DataRow row in dataTable.Rows)
+            {
+                T obj = ConvertToObject<T>(row);
+                list.Add(obj);
+            }
+            return list;
+        }
+        private T ConvertToObject<T>(DataRow row) where T : new()
+        {
+            System.Object obj = new T();
+            if (row != null)
+            {
+                DataTable dataTable = row.Table;
+                GetObject(dataTable.Columns, row, obj);
+            }
+            if (obj != null && obj is T)
+            {
+                return (T)obj;
+            }
+            else
+            {
+                return default(T);
+            }
+        }
+        private void GetObject(DataColumnCollection cols, DataRow dr, System.Object obj)
+        {
+            Type type = obj.GetType();
+            PropertyInfo[] pros = type.GetProperties();
+            foreach (PropertyInfo pro in pros)
+            {
+                if (cols.Contains(pro.Name))
+                {
+                    //added by Willie Yan on 2014-10-09 to avoid exception of non-string type to string type
+                    if ((pro.PropertyType).Name.ToLower() == "string")
+                        pro.SetValue(obj, dr[pro.Name] == DBNull.Value ? "" : dr[pro.Name].ToString(), null);
+                    else
+                        pro.SetValue(obj, dr[pro.Name] == DBNull.Value ? null : dr[pro.Name], null);
+                }
+            }
         }
         #endregion
 

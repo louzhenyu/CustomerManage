@@ -33,6 +33,7 @@ using JIT.CPOS.DTO.Module.VIP.Order.Response;
 using JIT.CPOS.DTO.Module.Order.Order.Response;
 using JIT.Utility.Log;
 using JIT.CPOS.Common;
+using JIT.CPOS.BS.BLL.RedisOperationBLL.OrderSend;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -202,7 +203,8 @@ namespace JIT.CPOS.BS.BLL
                         {
                             //物流公司
                             itemes.carrier_name = "";//inoutService.GetCompanyName(itemes.carrier_id);
-                            CommonBLL.SentShipMessage(itemes, vipInfo.WeiXinUserId, itemes.vip_no, LoggingSessionInfo);
+                      //  CommonBLL.SentShipMessage(itemes, vipInfo.WeiXinUserId, itemes.vip_no, LoggingSessionInfo);
+                        new SendOrderSendMsgBLL().SentShipMessage(itemes, vipInfo.WeiXinUserId, itemes.vip_no, LoggingSessionInfo);
                         }
                     }
                     #endregion

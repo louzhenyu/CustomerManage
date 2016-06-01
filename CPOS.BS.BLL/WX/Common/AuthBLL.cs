@@ -142,12 +142,12 @@ namespace JIT.CPOS.BS.BLL.WX
                         //openOAuthAppid = !string.IsNullOrEmpty(openOAuthAppid) ? openOAuthAppid : "wx691c2f2bbac04b4b";
                         var openOAuthUrl = string.IsNullOrEmpty(ConfigurationManager.AppSettings["openOAuthUrl"]) ? "http://open.chainclouds.com" : ConfigurationManager.AppSettings["openOAuthUrl"];
                         var openuri = openOAuthUrl + "/OpenOAuth/GetComponentAccessToken";
-                        var opendata = CommonBLL.GetRemoteData(openuri, "GET", string.Empty).Replace("\"", "");
+                        var opendata = CommonBLL.GetRemoteData(openuri, "GET", string.Empty).Replace("\"", "");//先获取第三方平台的component_access_token
                         var url2 = "https://api.weixin.qq.com/sns/oauth2/component/access_token?appid="+ strAppId + "&code=" + code + "&grant_type=authorization_code&component_appid=" + openOAuthAppid + "&component_access_token=" + opendata + "";
                         opendata = CommonBLL.GetRemoteData(url2, "GET", string.Empty);
                         data = opendata;
                     }
-                    else
+                    else//未授权的情况下
                     {
                         postData = "appid=" + strAppId + "&secret=" + strAppSecret + "&code=" + code + "&grant_type=authorization_code";
                         sendInfo.LogId = BaseService.NewGuidPub();
@@ -287,19 +287,19 @@ namespace JIT.CPOS.BS.BLL.WX
                 //{
                 //    WeiXinUserId = OpenId
                 //}, null);
-                var vipObjs = server.QueryByEntity(new VipEntity
+                var vipObjs = server.QueryByEntity(new VipEntity   //先从会员表里取
                 {
                     WeiXinUserId = OpenId,
                     ClientID = loggingSessionInfo.ClientID
                 }, null);
 
-                if (vipObjs == null || vipObjs.Length == 0 || vipObjs[0] == null)
+                if (vipObjs == null || vipObjs.Length == 0 || vipObjs[0] == null)//找不到会员信息
                 {
                     //优先从支持多号运营的表中取
                     var wxUserInfo = wxUserInfoBLL.QueryByEntity(new WXUserInfoEntity() { CustomerID = loggingSessionInfo.ClientID, WeiXinUserID = OpenId }, null).FirstOrDefault();
                     if (wxUserInfo != null)
                     {
-                        var vipEntity = server.QueryByEntity(new VipEntity() { ClientID = loggingSessionInfo.ClientID, UnionID = wxUserInfo.UnionID }, null).FirstOrDefault();
+                        var vipEntity = server.QueryByEntity(new VipEntity() { ClientID = loggingSessionInfo.ClientID, UnionID = wxUserInfo.UnionID }, null).FirstOrDefault();//从会员表里取
                         if (vipEntity != null)
                         {
                             vipId = vipEntity.VIPID;
@@ -331,7 +331,7 @@ namespace JIT.CPOS.BS.BLL.WX
                         }
                     }
                 }
-                else
+                else  //查到会员信息了
                 {
                     vipId = vipObjs[0].VIPID;
                     status = vipObjs[0].Status.ToString();
@@ -346,9 +346,10 @@ namespace JIT.CPOS.BS.BLL.WX
                         var appEntity = application.QueryByEntity(new WApplicationInterfaceEntity() { WeiXinID = vipInfo.WeiXin, CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
                         if (appEntity != null)
                         {
-                            //获取调用微信接口的凭证
+                            //获取调用微信接口的凭证(普通的获取accestoken的地方)
                             var accessToken = commonBll.GetAccessTokenByCache(appEntity.AppID, appEntity.AppSecret, loggingSessionInfo);
                             //通过openID获取用户信息
+                          //  （这种情况下，因为已经有会员信息了，并且已经关注了，才能获取到会员信息）
                             var userInfo = commonBll.GetUserInfo(accessToken.access_token, vipInfo.WeiXinUserId);
                             if (!string.IsNullOrEmpty(userInfo.unionid))
                             {

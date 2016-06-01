@@ -31,6 +31,8 @@ using System.Data;
 using JIT.CPOS.BS.DataAccess.Base;
 using System.Collections;
 using JIT.CPOS.BS.BLL.WX;
+using JIT.CPOS.BS.BLL.RedisOperationBLL.OrderSend;
+using JIT.CPOS.BS.BLL.RedisOperationBLL.OrderReward;
 namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 {
     public class ProcessActionAH : BaseActionHandler<ProcessActionRP, ProcessActionRD>
@@ -76,7 +78,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                     if (ActionCode == "700" && entity.status != "700")
                     {
                         //确认收货时处理积分、返现、佣金[完成订单]
-                        vipIntegralBLL.OrderReward(entity, tran);
+                        //vipIntegralBLL.OrderReward(entity, tran);
+                        new SendOrderRewardMsgBLL().OrderReward(entity, this.CurrentUserInfo, tran);//存入到缓存
                     }
 
                     #endregion
@@ -194,8 +197,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                         Field2 = entity.Field2
                     };
 
-                        var CommonBLL = new CommonBLL();
-                        CommonBLL.SentShipMessage(InoutInfo, vipInfo.WeiXinUserId, InoutInfo.vip_no, CurrentUserInfo);
+                      //  var CommonBLL = new CommonBLL();
+                     //   CommonBLL.SentShipMessage(InoutInfo, vipInfo.WeiXinUserId, InoutInfo.vip_no, CurrentUserInfo);                     
+                         new SendOrderSendMsgBLL().SentShipMessage(InoutInfo, vipInfo.WeiXinUserId, InoutInfo.vip_no, CurrentUserInfo);
                         #endregion
                     }
 

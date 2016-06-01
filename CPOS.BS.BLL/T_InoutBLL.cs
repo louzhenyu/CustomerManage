@@ -176,7 +176,6 @@ namespace JIT.CPOS.BS.BLL
             inoutBll.SetStock(orderId, inoutDetailList, 2, loggingSessionInfo);
         }
 
-        #region 处理商品销量库存
         /// <summary>
         /// 处理商品销量库存
         /// </summary>
@@ -241,9 +240,8 @@ namespace JIT.CPOS.BS.BLL
                 }
             }
         }
-        #endregion
+ 
 
-        #region 支付回调/收款处理虚拟商品订单
         /// <summary>
         /// 支付回调/收款处理虚拟商品订单
         /// </summary>
@@ -297,7 +295,7 @@ namespace JIT.CPOS.BS.BLL
                 }
             }
         }
-        #endregion
+   
 
     }
 }

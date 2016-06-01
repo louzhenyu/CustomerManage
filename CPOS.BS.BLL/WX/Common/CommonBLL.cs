@@ -72,6 +72,34 @@ namespace JIT.CPOS.BS.BLL.WX
             resp.Close();
             return respData;
         }
+        public static string GetRemoteDataForRedis(string uri, string method, string content)
+        {
+            string respData = "";
+            method = method.ToUpper();
+            HttpWebRequest req = WebRequest.Create(uri) as HttpWebRequest;
+            req.KeepAlive = false;
+            req.Method = method.ToUpper();
+            req.Credentials = System.Net.CredentialCache.DefaultCredentials;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Ssl3;
+            ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(CheckValidationResult);
+            if (method == "POST")
+            {
+                //byte[] buffer = Encoding.ASCII.GetBytes(content);
+                byte[] buffer = System.Text.Encoding.UTF8.GetBytes(content);
+                req.ContentLength = buffer.Length;
+                req.ContentType = "application/json";
+                Stream postStream = req.GetRequestStream();
+                postStream.Write(buffer, 0, buffer.Length);
+                postStream.Close();
+            }
+            HttpWebResponse resp = req.GetResponse() as HttpWebResponse;//提交参数，获取结果
+            Encoding enc = System.Text.Encoding.GetEncoding("UTF-8");
+            StreamReader loResponseStream = new StreamReader(resp.GetResponseStream(), enc);
+            respData = loResponseStream.ReadToEnd();
+            loResponseStream.Close();
+            resp.Close();
+            return respData;
+        }
 
         public static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
         {
@@ -801,7 +829,9 @@ namespace JIT.CPOS.BS.BLL.WX
 
                 switch (sendMessage.msgtype.ToLower())
                 {
-                    case "image": break;    //图片消息
+                    case "image":
+                        content = "{\"touser\":\"" + sendMessage.touser + "\",\"msgtype\":\"image\",\"image\":{\"mediaid\":\"" + sendMessage.media_id + "\"}}";
+                        break;    //图片消息
                     case "voice": break;    //语音信息
                     case "video": break;    //视频信息
                     case "music": break;    //音乐信息
@@ -1894,7 +1924,10 @@ namespace JIT.CPOS.BS.BLL.WX
         /// <param name="VipID"></param>
         /// <param name="loggingSessionInfo"></param>
         /// <returns></returns>
-        private ResultEntity SendMatchWXTemplateMessage(string TemplateId, CommonData CommonData, Balance balanceData, CashBack CashBackData, PaySuccess PaySuccessData, IntegralChange IntegralChangeData, string code, string openID, string VipID, LoggingSessionInfo loggingSessionInfo)
+        public ResultEntity SendMatchWXTemplateMessage(string TemplateId, CommonData CommonData, Balance balanceData, 
+            CashBack CashBackData, PaySuccess PaySuccessData, IntegralChange IntegralChangeData,
+            CouponsArrival CouponsArrivalData, CouponsUpcomingExpired CouponsUpcomingExpiredData,NotPay NotPayData,
+            string code, string openID, string VipID, LoggingSessionInfo loggingSessionInfo)
         {
             var ResultData = new ResultEntity();
             var WApplicationInterfaceBLL = new WApplicationInterfaceBLL(loggingSessionInfo);
@@ -1913,20 +1946,20 @@ namespace JIT.CPOS.BS.BLL.WX
                     WeiXinId = WAData.WeiXinID;
                 switch (code)
                 {
-                    case "1"://兑换券使用通知
-                        //templateIdShort = "TM00014";
-                        //TemplateId = GetWXTemplateID(WeiXinId, templateIdShort, loggingSessionInfo);
-                        //DataJson = JsonHelper.JsonSerializer<Data>(baseData);
+                    case "1"://礼券即将到期提醒
+                        templateIdShort = "OPENTM206623166";
+                        TemplateId = GetWXTemplateID(WeiXinId, templateIdShort, loggingSessionInfo);
+                        DataJson = JsonHelper.JsonSerializer<CouponsUpcomingExpired>(CouponsUpcomingExpiredData);
                         break;
-                    case "2": //优惠券使用通知
-                        //templateIdShort = "OPENTM202243887";
-                        //TemplateId = GetWXTemplateID(WeiXinId, templateIdShort, loggingSessionInfo);
-                        //DataJson = JsonHelper.JsonSerializer<Data>(baseData);
+                    case "2": //订单未付款通知
+                        templateIdShort = "TM00701";
+                        TemplateId = GetWXTemplateID(WeiXinId, templateIdShort, loggingSessionInfo);
+                        DataJson = JsonHelper.JsonSerializer<NotPay>(NotPayData);
                         break;
-                    case "3": //优惠券领取成功通知
-                        //templateIdShort = "OPENTM200474379";
-                        //TemplateId = GetWXTemplateID(WeiXinId, templateIdShort, loggingSessionInfo);
-                        //DataJson = JsonHelper.JsonSerializer<Data>(baseData);
+                    case "3": //电子券到账提醒
+                        templateIdShort = "OPENTM207444083";
+                        TemplateId = GetWXTemplateID(WeiXinId, templateIdShort, loggingSessionInfo);
+                        DataJson = JsonHelper.JsonSerializer<CouponsArrival>(CouponsArrivalData);
                         break;
                     case "4": //积分即将过期通知
                         //templateIdShort = "OPENTM204537469";
@@ -2061,7 +2094,7 @@ namespace JIT.CPOS.BS.BLL.WX
         {
             var CommonBLL = new JIT.CPOS.BS.BLL.WX.CommonBLL();
 
-            var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "TM00398", CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
+            var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "TM00398", CustomerId = loggingSessionInfo.ClientID, IsDelete = 0 }, null).FirstOrDefault();
             if (WXTMConfigData == null)
                 return new ResultEntity();
             if (WXTMConfigData == null)
@@ -2076,7 +2109,7 @@ namespace JIT.CPOS.BS.BLL.WX
             PaySuccessData.orderName = new DataInfo() { value = Inout.order_no, color = WXTMConfigData.Colour3 };
             PaySuccessData.remark = new DataInfo() { value = WXTMConfigData.RemarkText, color = WXTMConfigData.RemarkColour };
 
-            return SendMatchWXTemplateMessage(WXTMConfigData.TemplateID, null, null, null, PaySuccessData, null, "15", OpenID, VipID, loggingSessionInfo);
+            return SendMatchWXTemplateMessage(WXTMConfigData.TemplateID, null, null, null, PaySuccessData, null,null,null,null, "15", OpenID, VipID, loggingSessionInfo);
         }
         /// <summary>
         /// 发货提醒通知
@@ -2095,7 +2128,8 @@ namespace JIT.CPOS.BS.BLL.WX
             }
 
             var CommonBLL = new JIT.CPOS.BS.BLL.WX.CommonBLL();
-            var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "OPENTM200565259", CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
+            var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() 
+            { TemplateIdShort = "OPENTM200565259", CustomerId = loggingSessionInfo.ClientID, IsDelete = 0 }, null).FirstOrDefault();
             if (WXTMConfigData == null)
                 return new ResultEntity();
             if (WXTMConfigData == null)
@@ -2107,7 +2141,7 @@ namespace JIT.CPOS.BS.BLL.WX
             CommonData.keyword3 = new DataInfo() { value = Inout.Field2, color = WXTMConfigData.Colour3 };
             CommonData.remark = new DataInfo() { value = WXTMConfigData.RemarkText, color = WXTMConfigData.RemarkColour };
 
-            return SendMatchWXTemplateMessage(WXTMConfigData.TemplateID, CommonData, null, null, null, null, "8", OpenID, VipID, loggingSessionInfo);
+            return SendMatchWXTemplateMessage(WXTMConfigData.TemplateID, CommonData, null, null, null, null, null, null, null, "8", OpenID, VipID, loggingSessionInfo);
         }
         /// <summary>
         /// 积分变动通知
@@ -2121,7 +2155,7 @@ namespace JIT.CPOS.BS.BLL.WX
         public ResultEntity PointsChangeMessage(string OldIntegration, VipEntity vipInfo, string ChangeIntegral, string OpenID, LoggingSessionInfo loggingSessionInfo)
         {
             var CommonBLL = new JIT.CPOS.BS.BLL.WX.CommonBLL();
-            var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "TM00230", CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
+            var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "TM00230", CustomerId = loggingSessionInfo.ClientID, IsDelete = 0 }, null).FirstOrDefault();
             if (WXTMConfigData == null)
                 return new ResultEntity();
             if (ChangeIntegral.Equals("0"))
@@ -2135,7 +2169,7 @@ namespace JIT.CPOS.BS.BLL.WX
             IntegralChangeData.CreditTotal = new DataInfo() { value = Convert.ToInt32(Convert.ToDouble(vipInfo.Integration)).ToString(), color = WXTMConfigData.Colour3 };
             IntegralChangeData.Remark = new DataInfo() { value = WXTMConfigData.RemarkText, color = WXTMConfigData.RemarkColour };
 
-            return SendMatchWXTemplateMessage(WXTMConfigData.TemplateID, null, null, null, null, IntegralChangeData, "5", OpenID, vipInfo.VIPID, loggingSessionInfo);
+            return SendMatchWXTemplateMessage(WXTMConfigData.TemplateID, null, null, null, null, IntegralChangeData, null, null, null, "5", OpenID, vipInfo.VIPID, loggingSessionInfo);
         }
         /// <summary>
         /// 账户余额变动
@@ -2150,7 +2184,7 @@ namespace JIT.CPOS.BS.BLL.WX
         public ResultEntity BalanceChangedMessage(string OrderNo, VipAmountEntity vipAmountEntity, VipAmountDetailEntity detailInfo, string OpenID, string VipID, LoggingSessionInfo loggingSessionInfo)
         {
             var CommonBLL = new JIT.CPOS.BS.BLL.WX.CommonBLL();
-            var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "OPENTM205454780", CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
+            var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "OPENTM205454780", CustomerId = loggingSessionInfo.ClientID, IsDelete = 0 }, null).FirstOrDefault();
             if (WXTMConfigData == null)
                 return new ResultEntity();
             if ((vipAmountEntity.EndAmount ?? 0) == 0)
@@ -2164,7 +2198,7 @@ namespace JIT.CPOS.BS.BLL.WX
             BalanceData.keyword5 = new DataInfo() { value = Math.Round(vipAmountEntity.EndAmount ?? 0, 2).ToString(), color = WXTMConfigData.Colour3 };
             BalanceData.remark = new DataInfo() { value = WXTMConfigData.RemarkText, color = WXTMConfigData.RemarkColour };
 
-            return SendMatchWXTemplateMessage(WXTMConfigData.TemplateID, null, BalanceData, null, null, null, "10", OpenID, VipID, loggingSessionInfo);
+            return SendMatchWXTemplateMessage(WXTMConfigData.TemplateID, null, BalanceData, null, null, null, null, null, null, "10", OpenID, VipID, loggingSessionInfo);
         }
         /// <summary>
         /// 返现到账通知
@@ -2178,7 +2212,7 @@ namespace JIT.CPOS.BS.BLL.WX
         public ResultEntity CashBackMessage(string OrderNo, decimal? money, string OpenID, string VipID, LoggingSessionInfo loggingSessionInfo)
         {
             var CommonBLL = new JIT.CPOS.BS.BLL.WX.CommonBLL();
-            var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "TM00211", CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
+            var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "TM00211", CustomerId = loggingSessionInfo.ClientID, IsDelete = 0 }, null).FirstOrDefault();
             if (WXTMConfigData == null)
                 return new ResultEntity();
             if ((money ?? 0) == 0)
@@ -2189,7 +2223,85 @@ namespace JIT.CPOS.BS.BLL.WX
             CashBackData.money = new DataInfo() { value = Math.Round(money ?? 0, 2).ToString(), color = WXTMConfigData.Colour2 };
             CashBackData.remark = new DataInfo() { value = WXTMConfigData.RemarkText + DateTime.Now.ToString("yyyy-MM-dd"), color = WXTMConfigData.RemarkColour };
 
-            return SendMatchWXTemplateMessage(WXTMConfigData.TemplateID, null, null, CashBackData, null, null, "12", OpenID, VipID, loggingSessionInfo);
+            return SendMatchWXTemplateMessage(WXTMConfigData.TemplateID, null, null, CashBackData, null, null, null, null, null, "12", OpenID, VipID, loggingSessionInfo);
+        }
+
+        /// <summary>
+        /// 电子券到账通知
+        /// </summary>
+        /// <param name="CouponCode">券编号</param>
+        /// <param name="CouponName">券名称</param>
+        /// <param name="ValidityData">有效期 例：2015.09.01-2015.10.31</param>
+        /// <param name="Scope">适用范围 例：通用券、门店券、云点券等等</param>
+        /// <param name="loggingSessionInfo"></param>
+        /// <returns></returns>
+        public ResultEntity CouponsArrivalMessage(string CouponCode, string CouponName, string ValidityData, string Scope, string OpenID, LoggingSessionInfo loggingSessionInfo)
+        {
+            var CommonBLL = new JIT.CPOS.BS.BLL.WX.CommonBLL();
+            var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "OPENTM207444083", CustomerId = loggingSessionInfo.ClientID, IsDelete = 0 }, null).FirstOrDefault();
+            if (WXTMConfigData == null)
+                return new ResultEntity();
+            
+            var CouponsArrivalData = new CouponsArrival();
+            CouponsArrivalData.first = new DataInfo() { value = WXTMConfigData.FirstText, color = WXTMConfigData.FirstColour };
+            CouponsArrivalData.keyword1 = new DataInfo() { value = CouponCode, color = WXTMConfigData.Colour1 };//券码
+            CouponsArrivalData.keyword2 = new DataInfo() { value = CouponName, color = WXTMConfigData.Colour1 };//券名称
+            CouponsArrivalData.keyword3 = new DataInfo() { value = "1", color = WXTMConfigData.Colour1 };//可用数量
+            CouponsArrivalData.keyword4 = new DataInfo() { value = ValidityData, color = WXTMConfigData.Colour1 };//有效期
+            CouponsArrivalData.keyword5 = new DataInfo() { value = Scope, color = WXTMConfigData.Colour1 };//
+            CouponsArrivalData.Remark = new DataInfo() { value = WXTMConfigData.RemarkText, color = WXTMConfigData.RemarkColour };
+
+            return SendMatchWXTemplateMessage(WXTMConfigData.TemplateID, null, null, null, null, null, CouponsArrivalData, null, null, "3", OpenID, null, loggingSessionInfo);
+        }
+        /// <summary>
+        /// 礼券即将到期提醒
+        /// </summary>
+        /// <param name="CouponType">券类型</param>
+        /// <param name="CouponCode">券码</param>
+        /// <param name="EffectiveData">生效日期</param>
+        /// <param name="FailData">失效日期</param>
+        /// <param name="OpenID">WeiXinUeserId</param>
+        /// <param name="loggingSessionInfo"></param>
+        /// <returns></returns>
+        public ResultEntity CouponsUpcomingExpiredMessage(string CouponType, string CouponCode, string EffectiveData, string FailData, string OpenID, LoggingSessionInfo loggingSessionInfo)
+        {
+            var CommonBLL = new JIT.CPOS.BS.BLL.WX.CommonBLL();
+            var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "OPENTM206623166", CustomerId = loggingSessionInfo.ClientID, IsDelete = 0 }, null).FirstOrDefault();
+
+            var Data = new CouponsUpcomingExpired();
+            Data.first = new DataInfo() { value = WXTMConfigData.FirstText, color = WXTMConfigData.FirstColour };
+            Data.keyword1 = new DataInfo() { value = CouponType, color = WXTMConfigData.Colour1 };//券类型
+            Data.keyword2 = new DataInfo() { value = CouponCode, color = WXTMConfigData.Colour1 };//券码
+            Data.keyword3 = new DataInfo() { value = EffectiveData, color = WXTMConfigData.Colour1 };//生效日期
+            Data.keyword4 = new DataInfo() { value = FailData, color = WXTMConfigData.Colour1 };//失效日期
+            Data.Remark = new DataInfo() { value = WXTMConfigData.RemarkText, color = WXTMConfigData.RemarkColour };
+
+            return SendMatchWXTemplateMessage(WXTMConfigData.TemplateID, null, null, null, null, null, null, Data, null, "1", OpenID, null, loggingSessionInfo);
+        }
+        /// <summary>
+        /// 订单未付款通知
+        /// </summary>
+        /// <param name="orderProductPrice">订单金额</param>
+        /// <param name="orderProductName">商品详情</param>
+        /// <param name="orderAddress">收货信息</param>
+        /// <param name="orderName">订单编号</param>
+        /// <param name="OpenID">WeiXinUeserId</param>
+        /// <param name="loggingSessionInfo"></param>
+        /// <returns></returns>
+        public ResultEntity NotPayMessage(string orderProductPrice, string orderProductName, string orderAddress, string orderName, string OpenID, LoggingSessionInfo loggingSessionInfo)
+        {
+            var CommonBLL = new JIT.CPOS.BS.BLL.WX.CommonBLL();
+            var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "TM00701", CustomerId = loggingSessionInfo.ClientID, IsDelete = 0 }, null).FirstOrDefault();
+
+            var Data = new NotPay();
+            Data.first = new DataInfo() { value = WXTMConfigData.FirstText, color = WXTMConfigData.FirstColour };
+            Data.orderProductPrice = new DataInfo() { value = orderProductPrice, color = WXTMConfigData.Colour1 };//订单金额
+            Data.orderProductName = new DataInfo() { value = orderProductName, color = WXTMConfigData.Colour1 };//商品详情
+            Data.orderAddress = new DataInfo() { value = orderAddress, color = WXTMConfigData.Colour1 };//收货信息
+            Data.orderName = new DataInfo() { value = orderName, color = WXTMConfigData.Colour1 };//订单编号
+            Data.Remark = new DataInfo() { value = WXTMConfigData.RemarkText, color = WXTMConfigData.RemarkColour };
+
+            return SendMatchWXTemplateMessage(WXTMConfigData.TemplateID, null, null, null, null, null, null, null, Data, "2", OpenID, null, loggingSessionInfo);
         }
         #endregion
 
@@ -2204,6 +2316,7 @@ namespace JIT.CPOS.BS.BLL.WX
         {
             var WApplicationInterfaceData = new WApplicationInterfaceBLL(loggingSessionInfo).GetByID(applicationId);
             var accessToke = GetAccessTokenByCache(WApplicationInterfaceData.AppID, WApplicationInterfaceData.AppSecret, loggingSessionInfo);
+            var WXTMConfigBLL = new WXTMConfigBLL(loggingSessionInfo);
             string TemplateID = "";
             if (accessToke.errcode == null || accessToke.errcode.Equals(string.Empty))
             {
@@ -2211,8 +2324,30 @@ namespace JIT.CPOS.BS.BLL.WX
                 //SetWXTemplateIndustry(accessToke);
                 //#endregion
 
+                #region 移除原模板消息
+                string OldTemplateID = GetTemplateID(templateIdShort, loggingSessionInfo);
+                if (!string.IsNullOrWhiteSpace(OldTemplateID))
+                {
+                    //移除微信设置的模板
+                    string Deluri = "https://api.weixin.qq.com/cgi-bin/template/del_private_template?access_token=" + accessToke.access_token;
+                    string Delmethod = "POST";
+                    string DelJson = "{\"template_id\":\"" + OldTemplateID + "\"}";
+                    string DelResult = GetRemoteData(Deluri, Delmethod, DelJson);
+                    var DelResultData = JsonHelper.JsonDeserialize<ResultEntity>(DelResult);
+                    //删除数据库库中原模板消息
+                    if (DelResultData.errcode.Equals("0"))
+                    {
 
-                #region 获取模板ID
+                        //WXTMConfigBLL.Delete(templateIdShort);
+                        var WXTMConfigData = WXTMConfigBLL.QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = templateIdShort, IsDelete = 0, CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
+                        if (WXTMConfigData != null) 
+                            WXTMConfigBLL.Delete(WXTMConfigData);
+                    }
+                }
+                #endregion
+
+
+                #region 设置模板ID
                 string uri = "https://api.weixin.qq.com/cgi-bin/template/api_add_template?access_token=" + accessToke.access_token;
                 string method = "POST";
                 string Json = "{\"template_id_short\":\"" + templateIdShort + "\"}";
@@ -2228,7 +2363,6 @@ namespace JIT.CPOS.BS.BLL.WX
             {
                 if (!string.IsNullOrWhiteSpace(TemplateID))
                 {
-                    var WXTMConfigBLL = new WXTMConfigBLL(loggingSessionInfo);
                     var AddData = new WXTMConfigEntity()
                     {
                         TemplateID = TemplateID,
@@ -2261,6 +2395,21 @@ namespace JIT.CPOS.BS.BLL.WX
             }
             #endregion
 
+        }
+        /// <summary>
+        /// 根据模板编号找到对应的模板ID
+        /// </summary>
+        /// <param name="templateIdShort"></param>
+        /// <param name="loggingSessionInfo"></param>
+        private string GetTemplateID(string templateIdShort, LoggingSessionInfo loggingSessionInfo)
+        {
+            string GetTemplateID = "";
+
+            var Result = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = templateIdShort, CustomerId = loggingSessionInfo.ClientID,IsDelete=0 },null).FirstOrDefault();
+            if (Result != null)
+                GetTemplateID = Result.TemplateID;
+
+            return GetTemplateID;
         }
         #endregion
 

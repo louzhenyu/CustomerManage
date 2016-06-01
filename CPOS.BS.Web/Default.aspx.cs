@@ -8,6 +8,9 @@ using JIT.CPOS.BS.Web.PageBase;
 using JIT.CPOS.BS.Entity;
 using System.Configuration;
 using JIT.Utility.DataAccess;
+using RedisOpenAPIClient.Models.CC;
+using JIT.CPOS.BS.BLL.RedisOperationBLL.Connection;
+using JIT.CPOS.BS.BLL.Utility;
 
 namespace JIT.CPOS.BS.Web
 {
@@ -129,8 +132,31 @@ namespace JIT.CPOS.BS.Web
         public static LoggingSessionInfo GetBSLoggingSession(string customerId, string userId)
         {
             if (userId == null || userId == string.Empty) userId = "1";
-            string conn = GetCustomerConn(customerId);
-            string name = GetCustomerName(customerId);
+
+            string conn = "";
+            string name = "";
+            CC_Connection connection = new RedisConnectionBLL().GetConnection(customerId);//从redis里获取商户数据库链接
+            RedisXML _RedisXML = new RedisXML();
+            //如果从缓存里获取不到信息，就从数据库读取，并种到缓存里
+            if (connection == null || string.IsNullOrEmpty(connection.ConnectionStr) || string.IsNullOrEmpty(connection.Customer_Name))
+            {
+                //记录redis读取不成功，从数据库里读取数据的情况
+                _RedisXML.RedisReadDBCount("Connection", "商户数据库链接", 2);
+
+                conn = GetCustomerConn(customerId);
+                name = GetCustomerName(customerId);
+                string code = GetCustomerCode(customerId);
+                new RedisConnectionBLL().SetConnection(customerId, conn, name, code);
+            }
+            else
+            {
+                //记录redis读取日志
+                _RedisXML.RedisReadDBCount("Connection", "商户数据库链接", 1);
+                conn = connection.ConnectionStr;
+                name = connection.Customer_Name;
+            }
+
+
 
             LoggingSessionInfo loggingSessionInfo = new LoggingSessionInfo();
             //loggingSessionInfo = new CLoggingSessionService().GetLoggingSessionInfo(customerId, "7d4cda48970b4ed0aa697d8c2c2e4af3");
@@ -184,6 +210,22 @@ namespace JIT.CPOS.BS.Web
             var result = sqlHelper.ExecuteScalar(sql);
             return result == null || result == DBNull.Value ? string.Empty : result.ToString();
         }
+        /// <summary>
+        /// 获取商户编码
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        public static string GetCustomerCode(string customerId)
+        {
+            string sql = string.Format(
+                "select a.customer_code from t_customer a where a.customer_id='{0}' ",
+                customerId);
+            string conn = ConfigurationManager.AppSettings["Conn_ap"];
+            DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
+            var result = sqlHelper.ExecuteScalar(sql);
+            return result == null || result == DBNull.Value ? string.Empty : result.ToString();
+        }
+
         #endregion
 
         #region GetCustomerId

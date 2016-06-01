@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
-using System.Web.Script.Serialization;
 using JIT.CPOS.BS.BLL;
 using JIT.CPOS.BS.Entity;
-using JIT.CPOS.BS.Web.Extension;
 using JIT.CPOS.Common;
 using JIT.Utility.ExtensionMethod;
-using JIT.Utility.Reflection;
-using JIT.Utility.Web;
+using System.Threading.Tasks;
+using JIT.CPOS.BS.BLL;
 
 namespace JIT.CPOS.BS.Web.Module.Basic.Role.Handler
 {
@@ -223,12 +220,12 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Role.Handler
         }
         public void GetSubMenus(MenuModel menu, IList<MenuModel> menulist)
         {
-            menu.leaf_flag =  "true";//默认写为true
-            menu.expanded_flag =  "false";//不展开
+            menu.leaf_flag = "true";//默认写为true
+            menu.expanded_flag = "false";//不展开
             if (menulist != null && menulist.Count > 0)
             {
                 menu.children = new List<MenuModel>();
-                
+
                 foreach (MenuModel subMenu in menulist)//遍历所有的菜单项
                 {
                     if (subMenu.Parent_Menu_Id == menu.Menu_Id)
@@ -334,7 +331,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Role.Handler
                 responseData.msg = "应用系统不能为空";
                 return responseData.ToJSON();
             }
-         
+
             if (obj.Role_Name == null || obj.Role_Name.Trim().Length == 0)
             {
                 responseData.success = false;
@@ -343,7 +340,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Role.Handler
             }
 
             //根据role_id 获取角色信息,系统保留角色的编码不允许修改，主要是admin、administrator等默认角色
-            RoleModel roleOld = new AppSysService(CurrentUserInfo).GetRoleById(CurrentUserInfo, role_id);            
+            RoleModel roleOld = new AppSysService(CurrentUserInfo).GetRoleById(CurrentUserInfo, role_id);
             if (roleOld != null && roleOld.Is_Sys == 1)
             {
                 //throw (new System.Exception("不能删除系统保留的角色"));
@@ -363,7 +360,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Role.Handler
                 //return responseData.ToJSON();
                 obj.Role_Code = obj.Role_Name;
             }
-          
+
 
             if (obj.RoleMenuInfoList != null)
             {
@@ -378,7 +375,16 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Role.Handler
             obj.Modify_Time = Utils.GetNow();
             obj.Modify_User_id = CurrentUserInfo.CurrentUser.User_Id;
             string strError = "";
+
+            //
             roleService.SetRoleInfo(obj, out strError);
+            //
+            var menuList = new JIT.CPOS.BS.DataAccess.AppSysService(CurrentUserInfo).GetRoleMenus(CurrentUserInfo.ClientID, obj.Role_Id);
+            if (menuList != null && menuList.Count > 0)
+            {
+                new RedisRoleBLL().SetRole(CurrentUserInfo.ClientID, obj.Role_Id, menuList);
+            }
+            //roleService.SetRoleInfo(obj, out strError);
 
             if (strError != "" && strError != "成功")
             {
@@ -427,7 +433,17 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Role.Handler
                 {
                     if (tmpId.Trim().Length > 0)
                     {
-                        service.DeleteRoleById(tmpId.Trim());
+                        var tasks = new List<Task>();
+                        tasks.Add(Task.Factory.StartNew(() =>
+                        {
+                            service.DeleteRoleById(tmpId.Trim());
+                        }));
+                        tasks.Add(Task.Factory.StartNew(() =>
+                        {
+                            new RedisRoleBLL().DelRole(CurrentUserInfo.ClientID, tmpId.Trim());
+                        }));
+                        Task.WaitAll(tasks.ToArray());
+                        //service.DeleteRoleById(tmpId.Trim());
                     }
                 }
                 responseData.success = true;

@@ -1,8 +1,11 @@
 ﻿using JIT.CPOS.BS.BLL;
+using JIT.CPOS.BS.BLL.RedisOperationBLL.Connection;
+
 using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.Entity.User;
 using JIT.Utility.DataAccess;
 using JIT.Utility.Log;
+using RedisOpenAPIClient.Models.CC;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,7 +19,7 @@ using System.ServiceModel.Channels;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-
+using JIT.CPOS.BS.BLL.Utility;
 namespace JIT.CPOS.Web
 {
     public partial class Default : Page
@@ -164,8 +167,35 @@ namespace JIT.CPOS.Web
         public static LoggingSessionInfo GetBSLoggingSession(string customerId, string userId)
         {
             if (userId == null || userId == string.Empty) userId = "system";
-            string conn = GetCustomerConn(customerId);
-            string name = GetCustomerName(customerId);
+
+            string conn = "";
+            string name = "";
+            
+            
+            
+            
+            CC_Connection connection = new RedisConnectionBLL().GetConnection(customerId);//从redis里获取商户数据库链接
+            RedisXML _RedisXML = new RedisXML();
+            //如果从缓存里获取不到信息，就从数据库读取，并种到缓存里
+            if (connection == null || string.IsNullOrEmpty(connection.ConnectionStr) || string.IsNullOrEmpty(connection.Customer_Name))
+            {
+                //记录redis读取不成功，从数据库里读取数据的情况
+                _RedisXML.RedisReadDBCount("Connection", "商户数据库链接", 2);
+
+                conn = GetCustomerConn(customerId);
+                name = GetCustomerName(customerId);
+                string code = GetCustomerCode(customerId);
+                new RedisConnectionBLL().SetConnection(customerId, conn, name, code);
+            }
+            else {
+                //记录redis读取日志
+                _RedisXML.RedisReadDBCount("Connection", "商户数据库链接", 1);
+                conn = connection.ConnectionStr;
+                name = connection.Customer_Name;
+            }
+
+
+
 
             LoggingSessionInfo loggingSessionInfo = new LoggingSessionInfo();
             //loggingSessionInfo = new CLoggingSessionService().GetLoggingSessionInfo(customerId, "7d4cda48970b4ed0aa697d8c2c2e4af3");
@@ -218,8 +248,25 @@ namespace JIT.CPOS.Web
             if (userId == null || userId == string.Empty) userId = "1";
             if (isAToC == 1)
                 userId = GetVipIDByALDVipID(customerId, userId);//同步会员，并获取商户库VipID
-            string conn = GetCustomerConn(customerId);
-            string name = GetCustomerName(customerId);
+
+            string conn = "";
+            string name = "";
+            CC_Connection connection = new RedisConnectionBLL().GetConnection(customerId);//从redis里获取商户数据库链接
+
+            //如果从缓存里获取不到信息，就从数据库读取，并种到缓存里
+            if (connection == null || string.IsNullOrEmpty(connection.ConnectionStr) || string.IsNullOrEmpty(connection.Customer_Name))
+            {
+                conn = GetCustomerConn(customerId);
+                name = GetCustomerName(customerId);
+                string code = GetCustomerCode(customerId);
+                new RedisConnectionBLL().SetConnection(customerId, conn, name, code);
+            }
+            else
+            {
+                conn = connection.ConnectionStr;
+                name = connection.Customer_Name;
+            }
+
 
             LoggingSessionInfo loggingSessionInfo = new LoggingSessionInfo();
             //loggingSessionInfo = new CLoggingSessionService().GetLoggingSessionInfo(customerId, "7d4cda48970b4ed0aa697d8c2c2e4af3");
@@ -373,6 +420,22 @@ namespace JIT.CPOS.Web
         {
             string sql = string.Format(
                 "select a.customer_name from t_customer a where a.customer_id='{0}' ",
+                customerId);
+            string conn = ConfigurationManager.AppSettings["Conn_ap"];
+            DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
+            var result = sqlHelper.ExecuteScalar(sql);
+            return result == null || result == DBNull.Value ? string.Empty : result.ToString();
+        }
+
+        /// <summary>
+        /// 获取商户编码
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        public static string GetCustomerCode(string customerId)
+        {
+            string sql = string.Format(
+                "select a.customer_code from t_customer a where a.customer_id='{0}' ",
                 customerId);
             string conn = ConfigurationManager.AppSettings["Conn_ap"];
             DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);

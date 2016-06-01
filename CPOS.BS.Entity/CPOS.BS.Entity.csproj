@@ -226,6 +226,7 @@
     <Compile Include="CodeGeneration\LPrizeLocationEntity.cs" />
     <Compile Include="CodeGeneration\MarketNamedApplyEntity.cs" />
     <Compile Include="CodeGeneration\Menu\T_Menu_FunctionEntity.cs" />
+    <Compile Include="CodeGeneration\Menu\t_roleEntity.cs" />
     <Compile Include="CodeGeneration\Menu\T_Role_Menu_FunctionEntity.cs" />
     <Compile Include="CodeGeneration\MHAdAreaEntity.cs" />
     <Compile Include="CodeGeneration\MHCategoryAreaEntity.cs" />
@@ -570,6 +571,7 @@
     <Compile Include="Marketing\C_TargetGroupEntity.cs" />
     <Compile Include="MarketNamedApplyEntity.cs" />
     <Compile Include="Menu\T_Menu_FunctionEntity.cs" />
+    <Compile Include="Menu\T_RoleEntity.cs" />
     <Compile Include="Menu\T_Role_Menu_FunctionEntity.cs" />
     <Compile Include="MHCategoryAreaGroupEntity.cs" />
     <Compile Include="MHFollowEntity.cs" />

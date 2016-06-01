@@ -400,6 +400,7 @@
     <Compile Include="CodeGeneration\ReservationStoreServiceMappingDAO.cs" />
     <Compile Include="CodeGeneration\ReservationWorkCalendarDAO.cs" />
     <Compile Include="CodeGeneration\RetailTraderItemMappingDAO.cs" />
+    <Compile Include="CodeGeneration\Menu\t_roleDAO.cs" />
     <Compile Include="CodeGeneration\RouteCycleMappingDAO.cs" />
     <Compile Include="CodeGeneration\RouteDAO.cs" />
     <Compile Include="CodeGeneration\RoutePOPMappingDAO.cs" />
@@ -772,6 +773,7 @@
     <Compile Include="Marketing\C_TargetGroupDAO.cs" />
     <Compile Include="MarketNamedApplyDAO.cs" />
     <Compile Include="Menu\T_Menu_FunctionDAO.cs" />
+    <Compile Include="Menu\T_RoleDAO.cs" />
     <Compile Include="Menu\T_Role_Menu_FunctionDAO.cs" />
     <Compile Include="MHCategoryAreaDAO.cs" />
     <Compile Include="MHCategoryAreaGroupDAO.cs" />

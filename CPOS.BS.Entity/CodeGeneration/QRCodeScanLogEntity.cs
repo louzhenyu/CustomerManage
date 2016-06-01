@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/2/20 11:34:32
+ * Create On	:2016/5/21 12:42:09
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -91,6 +91,21 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public Int32? IsDelete { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String BusTypeCode { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String ObjectId { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? QRCodeType { get; set; }
 
 
         #endregion
