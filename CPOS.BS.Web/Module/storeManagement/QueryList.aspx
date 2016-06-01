@@ -17,7 +17,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        <div class="allPage" id="section" data-js="js/queryList.js?ver=0.4">
+        <div class="allPage" id="section" data-js="js/queryList.js?ver=0.5">
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
                 <!--个别信息查询-->

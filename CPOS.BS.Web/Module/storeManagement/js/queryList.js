@@ -329,9 +329,9 @@
 					        var htmlStr = '',
                                 status = row.Status;
 					        switch (status) {
-					            case "1": htmlStr = '<a href="javascript:;" class="handle runningBtn opt" data-index=' + index + '></a>'; break;
+					            case "1": htmlStr = '<a href="javascript:;" title="停用" class="handle runningBtn opt" data-index=' + index + '></a>'; break;
 
-					            case "-1": htmlStr = '<a href="javascript:;" class="handle pauseBtn opt" data-index=' + index + '></a>'; break;
+					            case "-1": htmlStr = '<a href="javascript:;"  title="启用" class="handle pauseBtn opt" data-index=' + index + '></a>'; break;
 					        }
 					        return htmlStr;
 
@@ -447,9 +447,11 @@
                         var $status = $dom.parents('tr').find('td[field="Status"] div');
                         if (tag == 1) {
                             $dom.attr('class', 'handle runningBtn opt');
+							$dom.attr('title', '停用');
                             $status.text('正常');
                         } else {
                             $dom.attr('class', 'handle pauseBtn opt');
+							$dom.attr('title', '启用');
                             $status.text('停用');
                         }
                     } else {
