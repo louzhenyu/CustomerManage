@@ -929,7 +929,13 @@
             if(table.options.columns[0].length==that.elems.skuTable.datagrid("getColumnFields").length) {
                 that.elems.skuTable.datagrid('acceptChanges');  //缓存修改过以后的数据
                 var gridData = that.elems.skuTable.datagrid('getData');//再次去缓存的数据
-
+                if($('[field="barcode"]').find(".datagrid-editable-input").length>0){ //验证不通过时的商品条码的数据取出赋值。
+                    $('[field="barcode"]').find(".datagrid-editable-input").each(function(){
+                        var meDom=$(this);
+                        var index= Number(meDom.parents("[datagrid-row-index]").attr("datagrid-row-index"));
+                        gridData.rows[index]["barcode"]=meDom.val();
+                    })
+                }
                 if (gridData && gridData.rows.length > 0) { //如果数据已经修改。初始化数据不绑定
                     if (table.data.length > 0) {
                         for (var rowIndex = 0; rowIndex <  gridData.rows.length; rowIndex++) {

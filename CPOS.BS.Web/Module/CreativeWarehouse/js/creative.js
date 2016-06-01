@@ -1755,7 +1755,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','js/salesPromotion.j
                                     }
                                 },
                                 {field: 'CouponTypeName', title: '兑换券名称', width: 100, resizable: false, align: 'left'},
-                                {field: 'ValidityPeriod', title: '失效日期', width: 70, align: 'left', resizable: false},
+                                {field: 'ValidityPeriod', title: '有效日期', width: 70, align: 'left', resizable: false},
                                 {field: 'SurplusQty', title: '已有数量', width: 80, align: 'left', resizable: false},
                                 {
                                     field: 'PrizeCount', title: '奖品数量', width: 60, align: 'left', resizable: false,

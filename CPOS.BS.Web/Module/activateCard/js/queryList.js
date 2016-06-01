@@ -247,10 +247,10 @@
                     if(field=="addOpt"||field=="addOptdel"){    //在每一列有操作 而点击行有跳转页面的操作  才使用该功能。 此处不注释 与注释都可以。
                         that.elems.click=false;
                     }else{
-                        var mid = $.util.getUrlParam("mid");
-                        that.elems.tabel.datagrid('selectRow', rowIndex);
+                      // var mid = $.util.getUrlParam("mid");
+                       /* that.elems.tabel.datagrid('selectRow', rowIndex);
                         var row = that.elems.tabel.datagrid('getSelected');
-                        location.href = "activiDetail.aspx?mid=" + mid+"&VipCardTypeID="+row.VipCardTypeID;
+                        $.util.toNewUrlPath("activiDetail.aspx?VipCardTypeID="+row.VipCardTypeID);*/
                         that.elems.click=true;
                     }
                 }
