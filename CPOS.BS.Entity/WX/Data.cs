@@ -58,7 +58,7 @@ namespace JIT.CPOS.BS.Entity.WX
     /// <summary>
     /// 积分变动通知
     /// </summary>
-    public class IntegralChange 
+    public class IntegralChange
     {
         public DataInfo first { get; set; }
         public DataInfo FieldName { get; set; }
@@ -69,6 +69,37 @@ namespace JIT.CPOS.BS.Entity.WX
 
         public DataInfo Remark { get; set; }
     }
+
+    public class CouponsArrival
+    {
+        public DataInfo first { get; set; }
+        public DataInfo keyword1 { get; set; }
+        public DataInfo keyword2 { get; set; }
+        public DataInfo keyword3 { get; set; }
+        public DataInfo keyword4 { get; set; }
+        public DataInfo keyword5 { get; set; }
+        public DataInfo Remark { get; set; }
+    }
+
+    public class CouponsUpcomingExpired {
+        public DataInfo first { get; set; }
+        public DataInfo keyword1 { get; set; }
+        public DataInfo keyword2 { get; set; }
+        public DataInfo keyword3 { get; set; }
+        public DataInfo keyword4 { get; set; }
+        public DataInfo Remark { get; set; }
+    }
+
+    public class NotPay
+    {
+        public DataInfo first { get; set; }
+        public DataInfo orderProductPrice { get; set; }
+        public DataInfo orderProductName { get; set; }
+        public DataInfo orderAddress { get; set; }
+        public DataInfo orderName { get; set; }
+        public DataInfo Remark { get; set; }
+    }
+
     public class DataInfo
     {
         public string value { get; set; }
