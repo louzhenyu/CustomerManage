@@ -36,7 +36,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.Bargain
                 entityPanicbuyingEvent.EventName = para.EventName;
 
                 #region 名称重复处理
-                var Result = bllPanicbuyingEvent.QueryByEntity(new PanicbuyingEventEntity() { EventName = para.EventName, EventTypeId = 4 }, null).ToList();
+                var Result = bllPanicbuyingEvent.QueryByEntity(new PanicbuyingEventEntity() { EventName = para.EventName, EventTypeId = 4,CustomerID=CurrentUserInfo.ClientID }, null).ToList();
                 if (Result.Count() > 0)
                     throw new APIException("已有相同的砍价活动名称,请重新命名！");
                 #endregion
@@ -63,7 +63,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.Bargain
                 #region 名称重复处理
                 if (!UpdateData.EventName.Trim().Equals(para.EventName.Trim()))
                 {
-                    var Result = bllPanicbuyingEvent.QueryByEntity(new PanicbuyingEventEntity() { EventName = para.EventName, EventTypeId = 4 }, null).ToList();
+                    var Result = bllPanicbuyingEvent.QueryByEntity(new PanicbuyingEventEntity() { EventName = para.EventName, EventTypeId = 4, CustomerID = CurrentUserInfo.ClientID }, null).ToList();
                     if (Result.Count() > 0)
                         throw new APIException("已有相同的砍价活动名称,请重新命名！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
                 }

@@ -159,6 +159,9 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
                     foreach (var item in respData.content.itemList)
                     {
+                        //
+                        item.ReturnAmount = 0;
+
                         if (!string.IsNullOrEmpty(item.endTime))
                         {
                             var time = DateTime.Parse(item.endTime);
@@ -186,7 +189,11 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                                     string ReturnAmount = String.Format("{0:F}", item.salesPrice * (decimal.Parse(htSetting["vOrderCommissionPer"].ToString()) / 100));
 
                                     item.salesPrice = salesPrice;
-                                    item.ReturnAmount = ReturnAmount;
+                                    if (!string.IsNullOrWhiteSpace(ReturnAmount))
+                                        item.ReturnAmount = ReturnAmount;
+                                    else
+                                        item.ReturnAmount = 0.00;
+                                    
                                 }
                             }
                             else if (reqObj.common.channelId == "10")//员工小店
