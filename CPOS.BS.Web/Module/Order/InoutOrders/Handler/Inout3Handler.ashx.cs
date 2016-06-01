@@ -20,6 +20,7 @@ using System.Threading;
 using System.Configuration;
 using JIT.CPOS.BS.BLL.WX;
 using JIT.CPOS.DTO.Base;
+using JIT.CPOS.BS.BLL.RedisOperationBLL.OrderPaySuccess;
 using JIT.CPOS.BS.BLL.RedisOperationBLL.OrderSend;
 
 namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
@@ -2849,7 +2850,8 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                                 Field4 = order.Field4,
                                 order_no = order.order_no
                             };
-                            SuccessCommonBLL.SentPaymentMessage(InoutEntity, vipInfo.WeiXinUserId, vipInfo.VIPID, CurrentUserInfo);
+                            //SuccessCommonBLL.SentPaymentMessage(InoutEntity, vipInfo.WeiXinUserId, vipInfo.VIPID, CurrentUserInfo);
+                            new SendOrderPaySuccessMsgBLL().SentPaymentMessage(InoutEntity, vipInfo.WeiXinUserId, vipInfo.VIPID, CurrentUserInfo);
                             #endregion
 
                             //处理库存和销量

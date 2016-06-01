@@ -678,6 +678,8 @@
     <Compile Include="RedisOperationBLL\Coupon\RedisCouponBLL.cs" />
     <Compile Include="RedisOperationBLL\Coupon\RedisVipMappingCouponBLL.cs" />
     <Compile Include="RedisOperationBLL\CustomerBLL.cs" />
+    <Compile Include="RedisOperationBLL\OrderPaySuccess\ProcessOrderPaySuccessMsgJobBLL.cs" />
+    <Compile Include="RedisOperationBLL\OrderPaySuccess\SendOrderPaySuccessMsgBLL.cs" />
     <Compile Include="RedisOperationBLL\PrizePools\RedisPrizePoolsBLL.cs" />
     <Compile Include="RedisOperationBLL\PrizePools\SetRedisPrizePoolsJobBLL.cs" />
     <Compile Include="RedisOperationBLL\OrderReward\ProcessOrderRewardMsgJobBLL.cs" />

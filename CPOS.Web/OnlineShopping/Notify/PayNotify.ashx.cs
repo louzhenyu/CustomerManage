@@ -12,6 +12,7 @@ using System.Data;
 using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.BS.BLL.WX;
+using JIT.CPOS.BS.BLL.RedisOperationBLL.OrderPaySuccess;
 
 
 
@@ -180,7 +181,8 @@ namespace JIT.CPOS.Web.OnlineShopping.Notify
                                 var vipBll = new VipBLL(loggingSessionInfo);
                                 var vipInfo = vipBll.GetByID(loggingSessionInfo.UserID);
                                 var SuccessCommonBLL = new CommonBLL();
-                                SuccessCommonBLL.SentPaymentMessage(inoutInfo, vipInfo.WeiXinUserId,vipInfo.VIPID, loggingSessionInfo);
+                                //SuccessCommonBLL.SentPaymentMessage(inoutInfo, vipInfo.WeiXinUserId,vipInfo.VIPID, loggingSessionInfo);
+                                new SendOrderPaySuccessMsgBLL().SentPaymentMessage(inoutInfo, vipInfo.WeiXinUserId, vipInfo.VIPID, loggingSessionInfo);
                                 #endregion
                                 Loggers.Debug(new DebugLogInfo() { Message = "调用SetOrderPayment方法更新订单成功" });
                             }

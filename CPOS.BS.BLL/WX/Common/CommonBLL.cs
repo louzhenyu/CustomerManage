@@ -1891,7 +1891,7 @@ namespace JIT.CPOS.BS.BLL.WX
         /// <param name="order_id"></param>
         /// <param name="loggingSessionInfo"></param>
         /// <returns></returns>
-        private string GetItemName(string order_id, LoggingSessionInfo loggingSessionInfo)
+        public string GetItemName(string order_id, LoggingSessionInfo loggingSessionInfo)
         {
             var InoutDetailBLL = new T_Inout_DetailBLL(loggingSessionInfo);
             var skuBLL = new T_SkuBLL(loggingSessionInfo);
