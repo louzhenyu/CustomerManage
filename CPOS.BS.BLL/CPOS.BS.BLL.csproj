@@ -670,6 +670,7 @@
     <Compile Include="CodeGeneration\AP\ZMBA\T_ZMBA_CourseBLL.cs" />
     <Compile Include="CodeGeneration\AP\ZMBA\T_ZMBA_CourseDetailBLL.cs" />
     <Compile Include="CodeGeneration\AP\ZMBA\T_ZMBA_CourseDetailReadLogBLL.cs" />
+    <Compile Include="Marketing\ActivityJobBLL.cs" />
     <Compile Include="Menu\T_RoleBLL.cs" />
     <Compile Include="RedisOperationBLL\BasicSetting\BasicSettingBLL.cs" />
     <Compile Include="RedisOperationBLL\BasicSetting\SetBasicSettingJobBLL.cs" />
