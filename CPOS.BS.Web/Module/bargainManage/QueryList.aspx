@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/optimize.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -6,7 +6,7 @@
     <title>活动列表</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <link href="<%=StaticUrl+"/module/bargainManage/css/style.css?v=0.4"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/bargainManage/css/style.css?v=0.6"%>" rel="stylesheet" type="text/css" />
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -39,15 +39,17 @@
 
                                                    <div class="commonSelectWrap">
                                                       <em class="tit">开始时间：</em>
-                                                      <div class="searchInput bordernone">
-                                                         <input id="BeginTime" name="BeginTime" data-options="width:198,height:32" style='border:1px solid #ccc;border-radius:3px;background-color:#fff;background-image:url(images/datebox_arrow.png);background-position:99% center;background-repeat:no-repeat;' />
+                                                      <div class="searchInput bordernone" style="border:1px solid #ccc;border-radius:3px;background-color:#fff;">
+                                                         <input id="BeginTime"  name="BeginTime"  data-options="width:198,height:32"/>
+														 <span class='date'><b></b></span>
                                                       </div>
                                                   </div>
 
                                                   <div class="commonSelectWrap">
                                                       <em class="tit">结束时间：</em>
-                                                      <div class="searchInput bordernone">
-                                                         <input id="EndTime" name="EndTime" data-options="width:198,height:32" style='border:1px solid #ccc;border-radius:3px;background-color:#fff;background-image:url(images/datebox_arrow.png);background-position:99% center;background-repeat:no-repeat;' />
+                                                      <div class="searchInput bordernone" style="border:1px solid #ccc;border-radius:3px;background-color:#fff;">
+                                                         <input id="EndTime" name="EndTime" data-options="width:198,height:32"  />
+														 <span class='date'><b></b></span>
                                                       </div>
                                                   </div>
                            
@@ -136,6 +138,4 @@
         
       </div>
 
-       <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"
-            defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>
 </asp:Content>

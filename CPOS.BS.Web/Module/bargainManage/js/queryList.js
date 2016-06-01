@@ -82,6 +82,13 @@
                 
 
             });
+			that.elems.sectionPage.delegate('.date','click',function(){
+				//alert('aa');
+				var ss = $(this).parents('.searchInput').children('input');
+				console.log(ss);
+				$(this).parents('.searchInput').children('input').focus();
+			})	
+
             that.elems.operation.delegate(".commonBtn","click",function(e){
                 $('#goodsBasic_exit').find('input').val('');
 				$('#goodsBasic_exit').find('input').attr('disabled',false);
@@ -394,7 +401,7 @@
             var that=this;
             if(!data.BargainList){
 
-                return;
+                data.BargainList=[];
             }
             //jQuery easy datagrid  表格处理
             that.elems.tabel.datagrid({
@@ -421,7 +428,7 @@
 
                 columns : [[
 
-                    {field : 'EventName',title : '活动名称',width:300,align:'left',resizable:false,
+                    {field : 'EventName',title : '活动名称',width:300,align:'left',resizable:false,sortable:true,
                         formatter:function(value ,row,index){
                             var long=56;
                             if(value&&value.length>long){

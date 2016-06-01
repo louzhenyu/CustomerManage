@@ -479,6 +479,7 @@
             },
             //显示图文搜索的  进行获取
             showMatrialText: function (flag, type) {
+                console.log(flag,type);
                 if (!!!flag) {
                     this.elems.uiMask.hide();
                     this.elems.addImageMessageDiv.hide();
@@ -1135,7 +1136,12 @@
                             itemList: data.Data.MaterialTextList
                         }
                         var html = bd.template("addImageItemTmpl", obj);
-                        that.elems.imageContentItems.html(html);
+                        if(data.Data.MaterialTextList.length =='0'){
+                            var tml = "<p style='text-align: center;margin-top:30%;font-size:16px;'>搜索无结果</p>"
+                            that.elems.imageContentItems.html(tml);
+                        }else{
+                            that.elems.imageContentItems.html(html);
+                        }
                         that.events.initPagination(1, data.Data.TotalPages, function (page) {
                             that.loadMoreMaterial(page);
                         });

@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <title>卡类型管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="css/activityDetail.css" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/activateCard/css/activityDetail.css?v=0.6"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 

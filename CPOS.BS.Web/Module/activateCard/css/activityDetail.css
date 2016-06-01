@@ -1,6 +1,6 @@
 @charset "utf-8";
 .queryTermArea{ background:none;width:100%;padding: 30px 15px 0 30px; }
-.queryTermArea  .panelList{width:100%;  text-align: center; padding-bottom:25px;border: 1px solid #d8d8d8; border-radius:8px 8px 0 0;}
+.queryTermArea  .panelList{width:100%;  text-align: center;border: 1px solid #d8d8d8; border-radius:8px 8px 0 0;border-bottom:0;}
 .commonSelectWrap .selectBox{ border: 1px solid transparent;}
 .line{border-top: 1px solid #d0d5d8; margin:0 auto; width:95%; display:inline-block}
 .title{ height: 57px; background:#f2f2f2; border-bottom:1px solid #d8d8d8;border-radius:8px 8px 0 0; }
