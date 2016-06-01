@@ -33,13 +33,14 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.MaterialText
                 ApplicationId = para.MaterialText.ApplicationId,
                 CoverImageUrl = para.MaterialText.ImageUrl,
                 PageId = para.MaterialText.PageID,
-
+              
                 PageParamJson = para.MaterialText.PageParamJson,
                 Text = para.MaterialText.Text,
                 TextId = para.MaterialText.TextId,
                 Title = para.MaterialText.Title,
                 TypeId = para.MaterialText.TypeId,
-                Author=para.MaterialText.Abstract//摘要使用原来的字段
+                Author = para.MaterialText.Abstract,//摘要使用原来的字段
+                IsTitlePageImage = para.MaterialText.IsTitlePageImage
             };
             #endregion
 
@@ -82,7 +83,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.MaterialText
                     {
                         scope = (jsonDic["scope"] == null || jsonDic["scope"] == "") ? "snsapi_base" : "snsapi_userinfo";
                     }
-                  
+
 
                     //判断是否有定制,没有则取JSON体中的默认
                     //找出订制内容
@@ -144,7 +145,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.MaterialText
                     if (IsAuth)
                     {
                         //需要认证,并加上scope类型
-                        URL = string.Format("http://{0}/WXOAuth/AuthUniversal.aspx?customerId={1}&applicationId={2}&goUrl={3}&scope={4}", Domain.Trim('/'), CurrentUserInfo.ClientID, para.MaterialText.ApplicationId, HttpUtility.UrlEncode(string.Format("{0}{1}", Domain.Trim('/'), urlTemplate)),scope);
+                        URL = string.Format("http://{0}/WXOAuth/AuthUniversal.aspx?customerId={1}&applicationId={2}&goUrl={3}&scope={4}", Domain.Trim('/'), CurrentUserInfo.ClientID, para.MaterialText.ApplicationId, HttpUtility.UrlEncode(string.Format("{0}{1}", Domain.Trim('/'), urlTemplate)), scope);
                     }
                     else
                     {
@@ -165,6 +166,11 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.MaterialText
 
             #region 保存
             var unionMappingBll = new WModelTextMappingBLL(CurrentUserInfo);
+            //检查图文素材是否重复
+            if (textBll.CheckName(entity.ApplicationId, entity.Title, entity.TextId))
+            {
+                throw new APIException("标题重复,请重新输入.") { ErrorCode = ERROR_CODES.INVALID_REQUEST };
+            }
             if (string.IsNullOrEmpty(entity.TextId))
             {
                 entity.TextId = Guid.NewGuid().ToString("N");

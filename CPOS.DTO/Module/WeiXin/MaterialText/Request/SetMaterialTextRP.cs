@@ -80,6 +80,7 @@ namespace JIT.CPOS.DTO.Module.WeiXin.MaterialText.Request
         /// 页面替换参数JSON	
         /// </summary>
         public string PageParamJson { get; set; }
+        public int? IsTitlePageImage { get; set; }
 
         /// <summary>
         /// 摘要

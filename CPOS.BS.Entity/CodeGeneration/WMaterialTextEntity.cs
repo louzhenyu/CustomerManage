@@ -137,6 +137,7 @@ namespace JIT.CPOS.BS.Entity
 		/// </summary>
 		public Int32? IsAuth { get; set; }
 
+        public int? IsTitlePageImage { get; set; }
         public string Abstract { get; set; }
         #endregion
 

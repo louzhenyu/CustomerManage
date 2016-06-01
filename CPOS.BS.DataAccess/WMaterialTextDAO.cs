@@ -41,6 +41,16 @@ namespace JIT.CPOS.BS.DataAccess
     /// </summary>
     public partial class WMaterialTextDAO : Base.BaseCPOSDAO, ICRUDable<WMaterialTextEntity>, IQueryable<WMaterialTextEntity>
     {
+        public bool CheckName(string appId, string name, string textId)
+        {
+            string sql = "select count(1) from WMaterialText where ApplicationId=@appId and isdelete=0 and Title=@name and TextId!=@textId";
+            List<SqlParameter> pList = new List<SqlParameter>();
+            pList.Add(new SqlParameter("@appId", appId));
+            pList.Add(new SqlParameter("@name", name));
+            pList.Add(new SqlParameter("@textId", textId));
+            int result = (int)this.SQLHelper.ExecuteScalar(CommandType.Text, sql, pList.ToArray());
+            return result > 0;
+        }
         #region 后台Web获取列表
         /// <summary>
         /// 获取列表数量
@@ -167,6 +177,7 @@ namespace JIT.CPOS.BS.DataAccess
 
 
             paras.Add(new SqlParameter() { ParameterName = "@CustomerId", Value = pCustomerID });
+            //   ,咱是
             string sql = string.Format(@"select * from 
                                                 (select ROW_NUMBER()over(order by a.CreateTime) _row,a.*,c.ModelId from 
                                                  WMaterialText a 
@@ -322,7 +333,7 @@ namespace JIT.CPOS.BS.DataAccess
 
             var sql = new StringBuilder();
             sql.Append(
-               // "select isnull(a.Text,'')Text,isnull(a.Title,'')Title from WMaterialText  a,WApplicationInterface b");
+                // "select isnull(a.Text,'')Text,isnull(a.Title,'')Title from WMaterialText  a,WApplicationInterface b");
                "select isnull(a.Text,'')Text,isnull(a.Title,'')Title,a.CoverImageUrl,a.Author from WMaterialText  a,WApplicationInterface b");
             sql.Append(" where a.ApplicationId = b.ApplicationId");
             sql.Append(" and a.IsDelete = 0 and b.IsDelete = 0");

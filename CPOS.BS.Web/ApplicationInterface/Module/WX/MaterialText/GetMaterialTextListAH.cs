@@ -24,7 +24,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.MaterialText
             int? pageIndex = pRequest.Parameters.PageIndex;
 
             var bll = new WMaterialTextBLL(CurrentUserInfo);
-            var entitys = bll.GetWMaterialTextList(this.CurrentUserInfo.ClientID, name, materialTextId,typeId, pageSize, pageIndex);
+            var entitys = bll.GetWMaterialTextList(this.CurrentUserInfo.ClientID, name, materialTextId, typeId, pageSize, pageIndex);
 
             var list = entitys.Select(t => new MaterialTextListInfo
 
@@ -40,10 +40,11 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.MaterialText
                 Text = t.Text,
                 Title = t.Title,
                 TypeId = t.ModelId,
-                UnionTypeId = t.TypeId
+                UnionTypeId = t.TypeId,
+                IsTitlePageImage = t.IsTitlePageImage
             });
             rd.MaterialTextList = list.ToArray();
-            int totalCount = bll.GetWMaterialTextListCount(CurrentUserInfo.ClientID, name, materialTextId,typeId);
+            int totalCount = bll.GetWMaterialTextListCount(CurrentUserInfo.ClientID, name, materialTextId, typeId);
 
 
             rd.TotalPages = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(totalCount * 1.00 / (pageSize ?? 15) * 1.00)));

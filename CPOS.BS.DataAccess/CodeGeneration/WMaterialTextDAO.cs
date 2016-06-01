@@ -80,9 +80,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [WMaterialText](");
-            strSql.Append("[ParentTextId],[Title],[Author],[CoverImageUrl],[Text],[OriginalUrl],[DisplayIndex],[ApplicationId],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[TypeId],[PageId],[PageUrlJson],[PageParamJson],[IsAuth],[TextId],[Abstract])");
+            strSql.Append("[ParentTextId],[Title],[Author],[CoverImageUrl],[Text],[OriginalUrl],[DisplayIndex],[ApplicationId],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[TypeId],[PageId],[PageUrlJson],[PageParamJson],[IsAuth],[TextId],IsTitlePageImage,[Abstract])");
             strSql.Append(" values (");
-            strSql.Append("@ParentTextId,@Title,@Author,@CoverImageUrl,@Text,@OriginalUrl,@DisplayIndex,@ApplicationId,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@TypeId,@PageId,@PageUrlJson,@PageParamJson,@IsAuth,@TextId,@Abstract)");
+            strSql.Append("@ParentTextId,@Title,@Author,@CoverImageUrl,@Text,@OriginalUrl,@DisplayIndex,@ApplicationId,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@TypeId,@PageId,@PageUrlJson,@PageParamJson,@IsAuth,@TextId,@IsTitlePageImage,@Abstract)");
 
             string pkString = pEntity.TextId;
 
@@ -107,6 +107,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@PageParamJson",SqlDbType.NVarChar),
 					new SqlParameter("@IsAuth",SqlDbType.Int),
 					new SqlParameter("@TextId",SqlDbType.NVarChar),
+                    new SqlParameter("@IsTitlePageImage",SqlDbType.NVarChar),
 					new SqlParameter("@Abstract",SqlDbType.NVarChar)
             };
             parameters[0].Value = pEntity.ParentTextId;
@@ -128,7 +129,8 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[16].Value = pEntity.PageParamJson;
             parameters[17].Value = pEntity.IsAuth;
             parameters[18].Value = pkString;
-            parameters[19].Value = pEntity.Abstract;
+            parameters[19].Value = pEntity.IsTitlePageImage;
+            parameters[20].Value = pEntity.Abstract;
 
             //执行并将结果回写
             int result;
@@ -246,7 +248,9 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.Abstract != null)
                 strSql.Append("[Abstract]=@Abstract,");
             if (pIsUpdateNullField || pEntity.IsAuth != null)
-                strSql.Append("[IsAuth]=@IsAuth");
+                strSql.Append("[IsAuth]=@IsAuth,");
+            if (pIsUpdateNullField || pEntity.IsTitlePageImage != null)
+                strSql.Append("[IsTitlePageImage]=@IsTitlePageImage,");
             if (strSql.ToString().EndsWith(","))
                 strSql.Remove(strSql.Length - 1, 1);
             strSql.Append(" where TextId=@TextId ");
@@ -268,7 +272,8 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@PageParamJson",SqlDbType.NVarChar),
 					new SqlParameter("@IsAuth",SqlDbType.Int),
 					new SqlParameter("@Abstract",SqlDbType.NVarChar),
-					new SqlParameter("@TextId",SqlDbType.NVarChar)
+					new SqlParameter("@TextId",SqlDbType.NVarChar),
+                    new SqlParameter("@IsTitlePageImage",SqlDbType.NVarChar)
             };
             parameters[0].Value = pEntity.ParentTextId;
             parameters[1].Value = pEntity.Title;
@@ -287,6 +292,7 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[14].Value = pEntity.IsAuth;
             parameters[15].Value = pEntity.Abstract;
             parameters[16].Value = pEntity.TextId;
+            parameters[17].Value = pEntity.IsTitlePageImage;
 
             //执行语句
             int result = 0;
@@ -686,6 +692,10 @@ namespace JIT.CPOS.BS.DataAccess
             if (pReader["IsDelete"] != DBNull.Value)
             {
                 pInstance.IsDelete = Convert.ToInt32(pReader["IsDelete"]);
+            }
+            if (pReader["IsTitlePageImage"] != DBNull.Value)
+            {
+                pInstance.IsTitlePageImage = Convert.ToInt32(pReader["IsTitlePageImage"]);
             }
             if (pReader["TypeId"] != DBNull.Value)
             {

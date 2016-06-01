@@ -131,5 +131,9 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetMaterialTextTitleList(textId, customerId);
         }
+        public bool CheckName(string appId, string name, string textId)
+        {
+            return this._currentDAO.CheckName(appId, name, textId);
+        }
     }
 }
