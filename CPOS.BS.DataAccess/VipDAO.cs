@@ -2225,8 +2225,8 @@ select @ReturnValue", pCustomerID);
             {
                 //房态表中有信息 花间堂定制
                 //sql += SearchInoutDetailSqlNew(orderSearchInfo);
-                sql.Append(" select * from (");
-                sql.AppendFormat("select ROW_NUMBER()over(order by a.Create_Time {0}) _row,a.order_id,a.order_no,a.create_time,a.status_desc,a.VipCardCode,a.total_amount,", sortType);
+                sql.Append(" select DISTINCT * from (");
+                sql.AppendFormat("select DENSE_RANK() over(order by a.Create_Time {0}) _row,a.order_id,a.order_no,a.create_time,a.status_desc,a.VipCardCode,a.total_amount,", sortType);
                 sql.AppendFormat("((SELECT sum(sis.LowestPrice) AS priceNew FROM T_Inout i LEFT JOIN T_Inout_Detail ind ON i.order_id=ind.order_id LEFT JOIN T_Sku s ON ind.sku_id=s.sku_id LEFT JOIN StoreItemDailyStatus sis ON sis.SkuID=ind.sku_id WHERE (sis.StatusDate BETWEEN ind.Field1 AND DATEADD(DAY,-1,convert(date,ind.Field2)))  AND i.order_id =a.order_id  AND i.customer_id='{0}')* a.total_qty * tid.discount_rate /100) actual_amount, ", customerId);
                 sql.Append(" case a.Field1 when 1 then '已付款' else  '未付款' end PayStatus,");
                 sql.Append(" payTypeName = b.Payment_Type_Name,v.vipsourcename,'UnitName'= c.unit_name");
@@ -2242,8 +2242,8 @@ select @ReturnValue", pCustomerID);
             }
             else
             {
-                sql.Append(" select * from (");
-                sql.AppendFormat("select ROW_NUMBER()over(order by a.Create_Time {0}) _row,a.order_id,a.order_no,a.create_time,a.status_desc,a.actual_amount,a.VipCardCode,a.total_amount,", sortType);
+                sql.Append(" select DISTINCT * from (");
+                sql.AppendFormat("select DENSE_RANK() over(order by a.Create_Time {0}) _row,a.order_id,a.order_no,a.create_time,a.status_desc,a.actual_amount,a.VipCardCode,a.total_amount,", sortType);
                 sql.Append(" case a.Field1 when 1 then '已付款' else  '未付款' end PayStatus,");
                 sql.Append(" payTypeName = b.Payment_Type_Name,v.vipsourcename,'UnitName'= c.unit_name");
                 sql.Append(" from t_inout a left join SysVipSource v on a.data_from_id = v.VipSourceId ");
