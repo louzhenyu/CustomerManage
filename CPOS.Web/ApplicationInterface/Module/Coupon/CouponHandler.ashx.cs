@@ -280,10 +280,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                                 couponUseBll.Create(couponUseEntity);//生成优惠券使用记录
                                 #endregion
                                
-                                #region 修改优惠券数量
-                                couponTypeInfo.IsVoucher = couponTypeInfo.IsVoucher == null ? 1 : couponTypeInfo.IsVoucher + 1;
-                                couponTypeBll.Update(couponTypeInfo, tran);
-                                #endregion
+                                //#region 修改优惠券数量   2016-06-03 使用了redis不用在这里更新数量
+                                //couponTypeInfo.IsVoucher = couponTypeInfo.IsVoucher == null ? 1 : couponTypeInfo.IsVoucher + 1;
+                                //couponTypeBll.Update(couponTypeInfo, tran);
+                                //#endregion
 
                                 respData.ResultCode = "200";
                                 respData.Message = "优惠劵使用成功";

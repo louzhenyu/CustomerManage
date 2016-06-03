@@ -130,6 +130,8 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
                     loggingSessionInfo.ClientID = customer.Key;
                     CurrentLoggingManager.Connection_String = customer.Value;
                     loggingSessionInfo.CurrentLoggingManager = CurrentLoggingManager;
+                    loggingSessionInfo.CurrentUser = new BS.Entity.User.UserInfo();
+                    loggingSessionInfo.CurrentUser.customer_id = customer.Key;
 
                     DataTable dtCoupon = new DataTable();
                     dtCoupon.Columns.Add("CouponID", typeof(string));
@@ -240,13 +242,21 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
 
 
                             dtVipCoupon.Rows.Add(dr_VipCoupon);
-                            ///优惠券到账通知
-                            var CommonBLL = new CommonBLL();
-                            var bllVip=new VipBLL(loggingSessionInfo);
-                            var vip=bllVip.GetByID(response.Result.VipId);
+                            try
+                            {
+                                ///优惠券到账通知
+                                var CommonBLL = new CommonBLL();
+                                var bllVip = new VipBLL(loggingSessionInfo);
+                                var vip = bllVip.GetByID(response.Result.VipId);
 
-                            string strValidityData=Convert.ToDateTime(dr_Coupon["BeginDate"].ToString()).ToShortDateString()+"-" +Convert.ToDateTime(dr_Coupon["EndDate"].ToString()).ToShortDateString() ;
-                            //CommonBLL.CouponsArrivalMessage(response.Result.Coupon.CouponCode, response.Result.Coupon.CouponTypeName, strValidityData, "", vip.WeiXinUserId, loggingSessionInfo);
+                                string strValidityData = Convert.ToDateTime(dr_Coupon["BeginDate"].ToString()).ToShortDateString() + "-" + Convert.ToDateTime(dr_Coupon["EndDate"].ToString()).ToShortDateString();
+                                CommonBLL.CouponsArrivalMessage(response.Result.Coupon.CouponCode, response.Result.Coupon.CouponTypeName, strValidityData, response.Result.Coupon.CouponCategory == null ? "" : response.Result.Coupon.CouponCategory, vip.WeiXinUserId, loggingSessionInfo);
+                            }
+                            catch (Exception ex)
+                            {
+                                BaseService.WriteLog("优惠券到账通知异常：" + ex.Message);
+                                continue;
+                            }
                         }
                     }
                     if (dtCoupon != null && dtCoupon.Rows.Count > 0)

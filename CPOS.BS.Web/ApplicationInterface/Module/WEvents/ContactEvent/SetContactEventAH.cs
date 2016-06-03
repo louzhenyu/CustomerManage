@@ -14,6 +14,8 @@ using JIT.CPOS.DTO.Module.Event.ContactEvent.Request;
 using JIT.CPOS.DTO.Module.Event.ContactEvent.Response;
 
 using System.Data;
+using RedisOpenAPIClient.Models.CC;
+using JIT.CPOS.Common;
 namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
 {
     public class SetContactEventAH : BaseActionHandler<SetContactEventRP, SetContactEventRD>
@@ -80,6 +82,25 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                         entityPrize.CountTotal = para.PrizeCount;
                         entityPrize.LastUpdateBy = loggingSessionInfo.UserID;
                         bllPrize.AppendPrize(entityPrize);
+
+                        //入奖品池队列
+                        LPrizePoolsBLL bllPools = new LPrizePoolsBLL(loggingSessionInfo);
+                        DataSet dsPools = bllPools.GetPrizePoolsByEvent(loggingSessionInfo.ClientID, para.ContactEventId);
+                        if (dsPools != null && dsPools.Tables.Count > 0 && dsPools.Tables[0].Rows.Count > 0)
+                        {
+                            var poolsList = DataTableToObject.ConvertToList<CC_PrizePool>(dsPools.Tables[0]);
+                            if (poolsList != null && poolsList.Count > 0)
+                            {
+
+                                var redisPrizePoolsBLL = new JIT.CPOS.BS.BLL.RedisOperationBLL.PrizePools.RedisPrizePoolsBLL();
+                                CC_PrizePool prizePool = new CC_PrizePool();
+                                prizePool.CustomerId = loggingSessionInfo.ClientID;
+                                prizePool.EventId = para.ContactEventId;
+
+                                redisPrizePoolsBLL.DeletePrizePoolsList(prizePool);
+                                redisPrizePoolsBLL.SetPrizePoolsToRedis(poolsList);
+                            }
+                        }
                     }
                     else
                     {
@@ -257,6 +278,24 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                         bllContactEvent.DeleteContactPrize(entityContactEvent.ContactEventId.ToString());
                         bllContactEvent.AddContactEventPrize(entityPrize);
 
+                        //入奖品池队列
+                        LPrizePoolsBLL bllPools = new LPrizePoolsBLL(loggingSessionInfo);
+                        DataSet dsPools = bllPools.GetPrizePoolsByEvent(loggingSessionInfo.ClientID, entityContactEvent.ContactEventId.ToString());
+                        if (dsPools != null && dsPools.Tables.Count > 0 && dsPools.Tables[0].Rows.Count > 0)
+                        {
+                            var poolsList = DataTableToObject.ConvertToList<CC_PrizePool>(dsPools.Tables[0]);
+                            if (poolsList != null && poolsList.Count > 0)
+                            {
+
+                                var redisPrizePoolsBLL = new JIT.CPOS.BS.BLL.RedisOperationBLL.PrizePools.RedisPrizePoolsBLL();
+                                CC_PrizePool prizePool = new CC_PrizePool();
+                                prizePool.CustomerId = loggingSessionInfo.ClientID;
+                                prizePool.EventId = entityContactEvent.ContactEventId.ToString();
+
+                                redisPrizePoolsBLL.DeletePrizePoolsList(prizePool);
+                                redisPrizePoolsBLL.SetPrizePoolsToRedis(poolsList);
+                            }
+                        }
                   
                     rd.ContactEventId = entityContactEvent.ContactEventId.ToString();
                     rd.ErrMsg="操作成功";

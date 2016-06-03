@@ -19,6 +19,7 @@ using System.Data;
 using System.Drawing;
 using System.Net;
 using System.IO;
+using RedisOpenAPIClient.Models.CC;
 namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.MarketingActivity
 {
     public class SetCTWEventAH : BaseActionHandler<SetCTWEventRP, SetCTWEventRD>
@@ -338,9 +339,18 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                 }
                 //奖品信息
                 var entityPrize = new LPrizesEntity();
+                var redisPrizePoolsBLL = new JIT.CPOS.BS.BLL.RedisOperationBLL.PrizePools.RedisPrizePoolsBLL();
+
                 if (!string.IsNullOrEmpty(para.GameEventInfo.LeventId))
                 {
-                    bllPrize.Delete(new LPrizesEntity() { EventId = para.GameEventInfo.LeventId });
+                    //bllPrize.Delete(new LPrizesEntity() { EventId = para.GameEventInfo.LeventId });
+                    bllPrize.DeletePrizesByEventId(para.GameEventInfo.LeventId);
+
+                    CC_PrizePool prizePool = new CC_PrizePool();
+                    prizePool.CustomerId = loggingSessionInfo.ClientID;
+                    prizePool.EventId = para.GameEventInfo.LeventId;
+                    redisPrizePoolsBLL.DeletePrizePoolsList(prizePool);
+
                 }
                 if (para.GameEventInfo.PrizeList.Count > 0)
                 {
@@ -356,6 +366,25 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                         entityPrize.PrizesID = Guid.NewGuid().ToString();
 
                         bllPrize.SavePrize(entityPrize);
+                    }
+
+                    //入奖品池队列
+                    LPrizePoolsBLL bllPools = new LPrizePoolsBLL(loggingSessionInfo);
+                    DataSet dsPools = bllPools.GetPrizePoolsByEvent(loggingSessionInfo.ClientID, strGameEventGuid);
+                    if (dsPools != null && dsPools.Tables.Count > 0 && dsPools.Tables[0].Rows.Count > 0)
+                    {
+                        var poolTemp = DataTableToObject.ConvertToList<CC_PrizePool>(dsPools.Tables[0]);
+                        var poolsList = Utils.GetRandomList<CC_PrizePool>(poolTemp);//随机列表
+                        if (poolsList != null && poolsList.Count > 0)
+                        {
+
+                            CC_PrizePool prizePool = new CC_PrizePool();
+                            prizePool.CustomerId = loggingSessionInfo.ClientID;
+                            prizePool.EventId = strGameEventGuid;
+
+                            redisPrizePoolsBLL.DeletePrizePoolsList(prizePool);
+                            redisPrizePoolsBLL.SetPrizePoolsToRedis(poolsList);
+                        }
                     }
                 }
                 if (!string.IsNullOrEmpty(para.CTWEventId))

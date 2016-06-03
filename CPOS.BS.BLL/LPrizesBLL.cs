@@ -528,6 +528,8 @@ namespace JIT.CPOS.BS.BLL
 
                     LLotteryLogBLL bllLottery = new LLotteryLogBLL(loggingSessionInfo);
                     LLotteryLogEntity lotteryEntity = null;
+                    var redisPrizePoolsBLL = new JIT.CPOS.BS.BLL.RedisOperationBLL.PrizePools.RedisPrizePoolsBLL();
+                    LPrizePoolsBLL bllPrizePools = new LPrizePoolsBLL(this.CurrentUserInfo);
 
                     List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
                     complexCondition.Add(new EqualsCondition() { FieldName = " EventId", Value = contactEvent.ContactEventId });
@@ -600,15 +602,49 @@ namespace JIT.CPOS.BS.BLL
                     {
                         if (contactEvent.UnLimited == 0)
                         {
-                            entityPrizePool = bllPrizePool.QueryByEntity(new LPrizePoolsEntity() { EventId = contactEvent.ContactEventId.ToString(), PrizeID = entityPrize.PrizesID, Status = 1 }, null).FirstOrDefault();
-                            if (entityPrizePool == null)
+                            CC_PrizePool prizePool = new CC_PrizePool();
+                            prizePool.CustomerId = this.CurrentUserInfo.ClientID;
+                            prizePool.EventId = strEventId;
+
+                            var resultPrizePool = redisPrizePoolsBLL.GetPrizePoolsFromRedis(prizePool);
+                            if (resultPrizePool.Code == ResponseCode.Success && resultPrizePool.Result.PrizePoolsID == null)
                             {
-                                rd.PrizeName = "奖品已发完！";
-                                return rd;
+                                DataSet dsPrizePools = bllPrizePools.GetRandomPrizeByEventId(strEventId);
+                                if (dsPrizePools != null && dsPrizePools.Tables[0].Rows.Count > 0)
+                                {
+                                    entityPrizePool = DataTableToObject.ConvertToObject<LPrizePoolsEntity>(dsPrizePools.Tables[0].Rows[0]);
+                                    //PrizePools状态更新
+                                    entityPrizePool.PrizePoolsID = entityPrizePool.PrizePoolsID;
+                                    entityPrizePool.Status = 0;
+                                    bllPrizePool.Update(entityPrizePool, false);
+                                }
+                                else
+                                {
+                                    rd.PrizeName = "奖品已发完！";
+                                    return rd;
+                                }
                             }
-                            ///改变奖品池状态
-                            entityPrizePool.Status = 2;
-                            bllPrizePool.Update(entityPrizePool);
+                            else
+                            {
+                                //PrizePools状态更新
+                                entityPrizePool.PrizePoolsID = resultPrizePool.Result.PrizePoolsID;
+                                entityPrizePool.PrizeID = resultPrizePool.Result.PrizeID;
+                                entityPrizePool.EventId = resultPrizePool.Result.EventId;
+                                entityPrizePool.Status = 0;
+                                bllPrizePools.Update(entityPrizePool, false);
+                            }
+                            //else
+                            //{
+                            //    entityPrizePool = bllPrizePool.QueryByEntity(new LPrizePoolsEntity() { EventId = contactEvent.ContactEventId.ToString(), PrizeID = entityPrize.PrizesID, Status = 1 }, null).FirstOrDefault();
+                            //    if (entityPrizePool == null)
+                            //    {
+                            //        rd.PrizeName = "奖品已发完！";
+                            //        return rd;
+                            //    }
+                            //    ///改变奖品池状态
+                            //    entityPrizePool.Status = 2;
+                            //    bllPrizePool.Update(entityPrizePool);
+                            //}
                         }
                         DataSet ds = this._currentDAO.GetAllCouponTypeByPrize(entityPrize.PrizesID);
                         if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
@@ -627,15 +663,46 @@ namespace JIT.CPOS.BS.BLL
                     {
                         if (contactEvent.UnLimited == 0)
                         {
-                            entityPrizePool = bllPrizePool.QueryByEntity(new LPrizePoolsEntity() { EventId = contactEvent.ContactEventId.ToString(), PrizeID = entityPrize.PrizesID, Status = 1 }, null).FirstOrDefault();
-                            if (entityPrizePool == null)
+                            CC_PrizePool prizePool = new CC_PrizePool();
+                            prizePool.CustomerId = this.CurrentUserInfo.ClientID;
+                            prizePool.EventId = strEventId;
+
+                            var resultPrizePool = redisPrizePoolsBLL.GetPrizePoolsFromRedis(prizePool);
+                            if (resultPrizePool.Code == ResponseCode.Success && resultPrizePool.Result.PrizePoolsID == null)
                             {
-                                rd.PrizeName = "奖品已发完！";
-                                return rd;
+                                DataSet dsPrizePools = bllPrizePools.GetRandomPrizeByEventId(strEventId);
+                                if (dsPrizePools != null && dsPrizePools.Tables[0].Rows.Count > 0)
+                                {
+                                    entityPrizePool = DataTableToObject.ConvertToObject<LPrizePoolsEntity>(dsPrizePools.Tables[0].Rows[0]);
+                                    //PrizePools状态更新
+                                    entityPrizePool.PrizePoolsID = entityPrizePool.PrizePoolsID;
+                                    entityPrizePool.Status = 0;
+                                    bllPrizePool.Update(entityPrizePool, false);
+                                }
+                                else
+                                {
+                                    rd.PrizeName = "奖品已发完！";
+                                    return rd;
+                                }
                             }
-                            ///改变奖品池状态
-                            entityPrizePool.Status = 2;
-                            bllPrizePool.Update(entityPrizePool);
+                            else
+                            {
+                                //PrizePools状态更新
+                                entityPrizePool.PrizePoolsID = resultPrizePool.Result.PrizePoolsID;
+                                entityPrizePool.PrizeID = resultPrizePool.Result.PrizeID;
+                                entityPrizePool.EventId = resultPrizePool.Result.EventId;
+                                entityPrizePool.Status = 0;
+                                bllPrizePools.Update(entityPrizePool, false);
+                            }
+                            //entityPrizePool = bllPrizePool.QueryByEntity(new LPrizePoolsEntity() { EventId = contactEvent.ContactEventId.ToString(), PrizeID = entityPrize.PrizesID, Status = 1 }, null).FirstOrDefault();
+                            //if (entityPrizePool == null)
+                            //{
+                            //    rd.PrizeName = "奖品已发完！";
+                            //    return rd;
+                            //}
+                            /////改变奖品池状态
+                            //entityPrizePool.Status = 2;
+                            //bllPrizePool.Update(entityPrizePool);
                         }
                         LEventsVipObjectEntity entityEventsVipObject = new LEventsVipObjectEntity();
                         LEventsVipObjectBLL bllEventsVipObject = new LEventsVipObjectBLL(loggingSessionInfo);
@@ -1544,6 +1611,10 @@ namespace JIT.CPOS.BS.BLL
         public DataSet GetAllCouponTypeByPrize(string strPrizeId)
         {
             return this._currentDAO.GetAllCouponTypeByPrize(strPrizeId);
+        }
+        public void DeletePrizesByEventId(string strEventId)
+        {
+            this._currentDAO.DeletePrizesByEventId(strEventId);
         }
     }
 }

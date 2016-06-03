@@ -326,5 +326,12 @@ namespace JIT.CPOS.BS.DataAccess
             string strSql = string.Format("SELECT  CouponTypeID  FROM  dbo.PrizeCouponTypeMapping p WITH(NOLOCK) where p.IsDelete=0 and p.PrizesID='{0}'  ", strPrizeId);
             return this.SQLHelper.ExecuteDataset(strSql);
         }
+        public void DeletePrizesByEventId(string strEventId)
+        {
+            string strSql = string.Format(@" DELETE dbo.LPrizePools  WHERE  EventId='{0}' 
+                                                DELETE [LPrizes] WHERE EventId='{0}'", strEventId);
+            this.SQLHelper.ExecuteNonQuery(strSql);
+
+        }
     }
 }

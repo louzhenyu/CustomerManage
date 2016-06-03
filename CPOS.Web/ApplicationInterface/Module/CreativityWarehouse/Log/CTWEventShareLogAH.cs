@@ -36,6 +36,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.CreativityWarehouse.Log
                 entityLeventShareLog.BusTypeCode = "CTW";
                 entityLeventShareLog.ObjectId = para.CTWEventId;
                 entityLeventShareLog.ShareURL = para.ShareURL;
+                entityLeventShareLog.ShareVipType = 3;
                 bllLeventShareLog.Create(entityLeventShareLog);
                 //是否分享给自己
                 if(para.Sender==para.BEsharedUserId)
