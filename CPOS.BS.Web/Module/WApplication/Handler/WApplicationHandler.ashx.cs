@@ -231,14 +231,14 @@ namespace JIT.CPOS.BS.Web.Module.Basic.WApplication.Handler
             var responseData = new ResponseData();
             string ApplicationId = Request("ApplicationId").ToString();
 
-            var Result = WXTMConfigBLL.QueryByEntity(new WXTMConfigEntity() { CustomerId = CurrentUserInfo.ClientID }, null).ToList();
-            if (Result.Count > 0)
-            {
-                responseData.success = status;
-                responseData.msg = "已设置微信消息模板！";
-                content = responseData.ToJSON();
-                return content;
-            }
+            //var Result = WXTMConfigBLL.QueryByEntity(new WXTMConfigEntity() { CustomerId = CurrentUserInfo.ClientID }, null).ToList();
+            //if (Result.Count > 0)
+            //{
+            //    responseData.success = status;
+            //    responseData.msg = "已设置微信消息模板！";
+            //    content = responseData.ToJSON();
+            //    return content;
+            //}     
 
 
             if (!string.IsNullOrWhiteSpace(ApplicationId))
@@ -246,7 +246,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.WApplication.Handler
                 string FirstText = "连锁掌柜欢迎你！";
                 string RemarkText = "连锁掌柜谢谢你！";
 
-                var ArrayList = (new string[15] { "TM00014", "OPENTM202243887", "OPENTM200474379", "OPENTM204537469", "TM00230", "TM00232", "OPENTM202354605", "OPENTM200565259", "OPENTM206706184", "OPENTM205454780", "TM00184", "TM00211", "OPENTM202723917", "OPENTM202849987", "TM00398" }).ToList();
+                var ArrayList = (new string[8] { "OPENTM200565259", "TM00211", "TM00398", "TM00230", "OPENTM205454780", "OPENTM207444083", "TM00701", "OPENTM206623166" }).ToList();
 
                 foreach (var item in ArrayList)
                 {
@@ -272,6 +272,18 @@ namespace JIT.CPOS.BS.Web.Module.Basic.WApplication.Handler
                         case "OPENTM205454780"://账户余额变动通知
                             FirstText = "您的账户余额发生变动如下。";
                             RemarkText = "如对上述余额变动有异议，请联系客服人员协助处理。";
+                            break;
+                        case "OPENTM207444083"://电子券到账提醒 
+                            FirstText = "您有一张新优惠券到账啦";
+                            RemarkText = "如此厚爱给特别的你，还不快去享用~";
+                            break;
+                        case "TM00701":
+                            FirstText = "您有一笔订单未支付，即将关闭。";
+                            RemarkText = "未付款订单24时内将关闭，请及时付款。点击查看详情。";
+                            break;
+                        case "OPENTM206623166":
+                            FirstText = "您的优惠券即将过期。";
+                            RemarkText = "请合理使用优惠券";
                             break;
                     }
                     #endregion
