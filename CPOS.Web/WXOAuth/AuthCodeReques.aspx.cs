@@ -360,14 +360,24 @@ namespace JIT.CPOS.Web.WXOAuth
                     #endregion
 
                     Random rad = new Random();
+                    //if (goUrl.IndexOf("?") > 0)
+                    //{
+                    //    goUrl = goUrl + "&customerId=" + customerId + "&applicationId=" + applicationId + "&openId=" + openId + "&userId=" + vipInfotmp.VIPID + "&CheckOAuth=unAttention" + "&rid=" + rad.Next(1000, 100000) + "";
+                    //}
+                    //else
+                    //{
+                    //    goUrl = goUrl + "?customerId=" + customerId + "&applicationId=" + applicationId + "&openId=" + openId + "&userId=" + vipInfotmp.VIPID + "&CheckOAuth=unAttention" + "&rid=" + rad.Next(1000, 100000) + "";
+                    //}
                     if (goUrl.IndexOf("?") > 0)
                     {
-                        goUrl = goUrl + "&customerId=" + customerId + "&applicationId=" + applicationId + "&openId=" + openId + "&userId=" + vipInfotmp.VIPID + "&CheckOAuth=unAttention" + "&rid=" + rad.Next(1000, 100000) + "";
+                        goUrl = goUrl + "&customerId=" + customerId + "&applicationId=" + applicationId + "&CheckOAuth=unAttention" + "&rid=" + rad.Next(1000, 100000) + "";
                     }
                     else
                     {
-                        goUrl = goUrl + "?customerId=" + customerId + "&applicationId=" + applicationId + "&openId=" + openId + "&userId=" + vipInfotmp.VIPID + "&CheckOAuth=unAttention" + "&rid=" + rad.Next(1000, 100000) + "";
+                        goUrl = goUrl + "?customerId=" + customerId + "&applicationId=" + applicationId + "&CheckOAuth=unAttention" + "&rid=" + rad.Next(1000, 100000) + "";
                     }
+                    Response.Cookies["openId_" + customerId].Value = openId;
+                    Response.Cookies["userId_" + customerId].Value = vipInfo.VIPID;
                     Loggers.Debug(new DebugLogInfo()
                     {
                         Message = string.Format("会员没有关注时的跳转URL：{0}", goUrl)
@@ -375,9 +385,9 @@ namespace JIT.CPOS.Web.WXOAuth
                     //在这里建立上下线关系
                     SetShareVip(vipInfotmp.VIPID);
 
-               
+
                     Response.Redirect(goUrl);
-                    
+
                 }
                 #endregion
                 #region  会员已经存在（关注过）
@@ -390,14 +400,24 @@ namespace JIT.CPOS.Web.WXOAuth
                     string strGotoUrl = "";//"/OnlineClothing/tmpGoUrl.html?customerId=" + customerId + "&openId=" + OpenId + "&userId=" + vipId + "&backUrl=" + HttpUtility.UrlEncode(goUrl) + "";
                     Random rad = new Random();
 
+                    //if (goUrl.IndexOf("?") > 0)
+                    //{
+                    //    strGotoUrl = goUrl + "&customerId=" + customerId + "&applicationId=" + applicationId + "&openId=" + openId + "&userId=" + vipInfo.VIPID + "&rid=" + rad.Next(1000, 100000) + "";
+                    //}
+                    //else
+                    //{
+                    //    strGotoUrl = goUrl + "?customerId=" + customerId + "&applicationId=" + applicationId + "&openId=" + openId + "&userId=" + vipInfo.VIPID + "&rid=" + rad.Next(1000, 100000) + "";
+                    //}
                     if (goUrl.IndexOf("?") > 0)
                     {
-                        strGotoUrl = goUrl + "&customerId=" + customerId + "&applicationId=" + applicationId + "&openId=" + openId + "&userId=" + vipInfo.VIPID + "&rid=" + rad.Next(1000, 100000) + "";
+                        strGotoUrl = goUrl + "&customerId=" + customerId + "&applicationId=" + applicationId + "&rid=" + rad.Next(1000, 100000) + "";
                     }
                     else
                     {
-                        strGotoUrl = goUrl + "?customerId=" + customerId + "&applicationId=" + applicationId + "&openId=" + openId + "&userId=" + vipInfo.VIPID + "&rid=" + rad.Next(1000, 100000) + "";
+                        strGotoUrl = goUrl + "?customerId=" + customerId + "&applicationId=" + applicationId + "&rid=" + rad.Next(1000, 100000) + "";
                     }
+                    Response.Cookies["openId_" + customerId].Value = openId;
+                    Response.Cookies["userId_" + customerId].Value = vipInfo.VIPID;
                     Response.Write(strGotoUrl);
                     Loggers.Debug(new DebugLogInfo()
                     {
