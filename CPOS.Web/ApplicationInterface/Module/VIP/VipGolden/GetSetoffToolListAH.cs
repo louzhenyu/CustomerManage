@@ -41,7 +41,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
                     NoticePlatType = "2";
                 }
             }
-            var setOffEventInfo = setoffEventBLL.QueryByEntity(new SetoffEventEntity() { Status = "10", IsDelete = 0, SetoffType = Convert.ToInt32(para.ApplicationType == "3" ? NoticePlatType : para.ApplicationType), CustomerId = CurrentUserInfo.CurrentUser.customer_id }, null);
+            var setOffEventInfo = setoffEventBLL.QueryByEntity(new SetoffEventEntity() { Status = "10", IsDelete = 0, SetoffType = Convert.ToInt32(para.ApplicationType == "3" ? "2" : para.ApplicationType), CustomerId = CurrentUserInfo.CurrentUser.customer_id }, null);
             int SetoffToolsTotalCount=0;
             DataSet SetoffToolsList=null;
             if (setOffEventInfo.Length != 0)
