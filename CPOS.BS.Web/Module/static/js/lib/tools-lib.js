@@ -207,7 +207,12 @@
           if($(".tableWrap").find(".loading").length>0){    //$(".tableWrap").find(".Refresh").length==0防止一个页面多个接口调用多吃
              var dom=$(".tableWrap").find(".loading").parent();
              // $(".tableWrap").find(".loading").remove();
-              $.util.partialRefresh(dom);
+              if(window.dom&&window.dom!==dom){
+                  $.util.partialRefresh(window.dom);
+              }else{
+                  $.util.partialRefresh(dom);
+              }
+
 
           }
 
@@ -347,7 +352,8 @@
                   }
               })
           }
-        if(dom.length>0&&dom.parents(".panel-body").length>0&&$(".datagrid-body").length>0&&$(".datagrid-body").find(".loading").length==0&&$(".datagrid-body").html().length>0) {
+        window.dom=dom;  //如果在内部调用该函数，且必须是在ajax之前。
+        if(dom.length>0&&dom.parents(".datagrid-view").length>0&&$(".datagrid-body").length>0&&$(".datagrid-body").find(".loading").length==0&&$(".datagrid-body").html().length>0) {
             var _701 = dom.datagrid("getPanel");
             if (!_701.children("div.datagrid-mask").length) {
                 $("<div class=\"datagrid-mask\" style=\"display:block\"></div>").appendTo(_701);
