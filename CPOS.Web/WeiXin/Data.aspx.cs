@@ -222,12 +222,12 @@ namespace JIT.CPOS.Web.WeiXin
                             //vipInfo.CouponInfo = qrcode;//CouponInfo已作为会籍店使用                         
                             vipInfo.HeadImgUrl = headimgurl;
                             vipInfo.Col25 = "";
-                            //couponInfo字段保存总部门店ID
-                            UnitService unitServer = new UnitService(loggingSessionInfo);
-                            vipInfo.CouponInfo = unitServer.GetUnitByUnitTypeForWX("总部", null).Id; //获取总部门店标识
+                            
                             if (vipObj == null || vipObj.Length == 0 || vipObj[0] == null)
                             {
-
+                                //couponInfo字段保存总部门店ID
+                                UnitService unitServer = new UnitService(loggingSessionInfo);
+                                vipInfo.CouponInfo = unitServer.GetUnitByUnitTypeForWX("总部", null).Id; //获取总部门店标识
 
                                 vipInfo.Status = 1;
                                 vipInfo.VIPID = Guid.NewGuid().ToString().Replace("-", "");

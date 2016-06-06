@@ -955,14 +955,15 @@ namespace JIT.CPOS.BS.BLL
 
 
                         string pushContent = string.Empty;//推送内容
-
+                        UnitService unitInfoServer = new UnitService(loggingSessionInfo);
+                        string strConponInfo = unitInfoServer.GetUnitByUnitTypeForWX("总部", null).Id; //获取总部门店标识
                         switch (qrCodeTypeInfo.TypeCode.ToString().ToLower())
                         {
 
                             case "userqrcode"://店员二维码
                                 #region 绑定会籍店
 
-                                if (vipEntity != null && (string.IsNullOrEmpty(vipEntity.CouponInfo) || vipEntity.CouponInfo.Length != 32))
+                                if (vipEntity != null && (string.IsNullOrEmpty(vipEntity.CouponInfo) || vipEntity.CouponInfo.Length != 32 || vipEntity.CouponInfo == strConponInfo))
                                 {
                                     UnitService unitServer = new UnitService(loggingSessionInfo);
                                     var userOnUnit = unitServer.GetUnitListByUserId(qrCodeEntity.ObjectId);
@@ -987,7 +988,7 @@ namespace JIT.CPOS.BS.BLL
                             case "unitqrcode"://门店二维码
                                 #region 绑定会籍店
 
-                                if (vipEntity != null && (string.IsNullOrEmpty(vipEntity.CouponInfo) || vipEntity.CouponInfo.Length != 32))
+                                if (vipEntity != null && (string.IsNullOrEmpty(vipEntity.CouponInfo) || vipEntity.CouponInfo.Length != 32 || vipEntity.CouponInfo == strConponInfo))
                                 {
                                     Loggers.Debug(new DebugLogInfo() { Message = string.Format("vipInfo!=null:{0},openid:{1},vipInfo.CouponInfo:{2}", vipEntity != null, openId, vipEntity.CouponInfo) });
 

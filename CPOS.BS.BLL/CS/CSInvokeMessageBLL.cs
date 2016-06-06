@@ -710,51 +710,51 @@ namespace JIT.CPOS.BS.BLL
                         {
                             
                         #region 处理发送时的分享记录
-                             var t_LEventsSharePersonLog = new T_LEventsSharePersonLogEntity();
-                            t_LEventsSharePersonLog.SharePersonLogId = Guid.NewGuid();
-                            switch(objectType.ToLower())
-                            {
-                                case "product":
-                                    t_LEventsSharePersonLog.BusTypeCode = "Goods";
-                                    break;
-                                case "ctw":
-                                    t_LEventsSharePersonLog.BusTypeCode = "CTW";
-                                    break;
-                                case "coupon":
-                                    t_LEventsSharePersonLog.BusTypeCode = "Coupon";
-                                    break;
-                                case "setoffposter":
-                                    t_LEventsSharePersonLog.BusTypeCode = "SetoffPoster";
-                                    break;
-                            }
-                            t_LEventsSharePersonLog.ObjectId = objectId;
-                            if (isCS == 1)
-                            {
-                                t_LEventsSharePersonLog.ShareVipType = 2;
-                            }
-                            else
-                            {
-                                t_LEventsSharePersonLog.ShareVipType = 1;
-                            }
-                            t_LEventsSharePersonLog.ShareVipID = user.User_Id;
-                            t_LEventsSharePersonLog.ShareOpenID = "";
-                            t_LEventsSharePersonLog.BeShareVipID = VipIDInit;
-                            if (personInfo != null && !string.IsNullOrEmpty(personInfo.WeiXinUserId))
-                            {
-                                t_LEventsSharePersonLog.BeShareOpenID = personInfo.WeiXinUserId;
-                            }
-                            else
-                            {
-                                t_LEventsSharePersonLog.BeShareOpenID = "";
-                            }                            
-                            t_LEventsSharePersonLog.ShareURL = Url;
-                            t_LEventsSharePersonLog.CreateTime =System.DateTime.Now;
-                            t_LEventsSharePersonLog.CreateBy = user.User_Id;
-                            t_LEventsSharePersonLog.LastUpdateBy = user.User_Id;
-                            t_LEventsSharePersonLog.LastUpdateTime = System.DateTime.Now;
-                            t_LEventsSharePersonLog.CustomerId = loggingSessionInfo.CurrentUser.customer_id;
-                            t_LEventsSharePersonLog.IsDelete = 0;
-                            t_LEventsSharePersonLogBLL.Create(t_LEventsSharePersonLog);
+                            // var t_LEventsSharePersonLog = new T_LEventsSharePersonLogEntity();
+                            //t_LEventsSharePersonLog.SharePersonLogId = Guid.NewGuid();
+                            //switch(objectType.ToLower())
+                            //{
+                            //    case "product":
+                            //        t_LEventsSharePersonLog.BusTypeCode = "Goods";
+                            //        break;
+                            //    case "ctw":
+                            //        t_LEventsSharePersonLog.BusTypeCode = "CTW";
+                            //        break;
+                            //    case "coupon":
+                            //        t_LEventsSharePersonLog.BusTypeCode = "Coupon";
+                            //        break;
+                            //    case "setoffposter":
+                            //        t_LEventsSharePersonLog.BusTypeCode = "SetoffPoster";
+                            //        break;
+                            //}
+                            //t_LEventsSharePersonLog.ObjectId = objectId;
+                            //if (isCS == 1)
+                            //{
+                            //    t_LEventsSharePersonLog.ShareVipType = 2;
+                            //}
+                            //else
+                            //{
+                            //    t_LEventsSharePersonLog.ShareVipType = 1;
+                            //}
+                            //t_LEventsSharePersonLog.ShareVipID = user.User_Id;
+                            //t_LEventsSharePersonLog.ShareOpenID = "";
+                            //t_LEventsSharePersonLog.BeShareVipID = VipIDInit;
+                            //if (personInfo != null && !string.IsNullOrEmpty(personInfo.WeiXinUserId))
+                            //{
+                            //    t_LEventsSharePersonLog.BeShareOpenID = personInfo.WeiXinUserId;
+                            //}
+                            //else
+                            //{
+                            //    t_LEventsSharePersonLog.BeShareOpenID = "";
+                            //}                            
+                            //t_LEventsSharePersonLog.ShareURL = Url;
+                            //t_LEventsSharePersonLog.CreateTime =System.DateTime.Now;
+                            //t_LEventsSharePersonLog.CreateBy = user.User_Id;
+                            //t_LEventsSharePersonLog.LastUpdateBy = user.User_Id;
+                            //t_LEventsSharePersonLog.LastUpdateTime = System.DateTime.Now;
+                            //t_LEventsSharePersonLog.CustomerId = loggingSessionInfo.CurrentUser.customer_id;
+                            //t_LEventsSharePersonLog.IsDelete = 0;
+                            //t_LEventsSharePersonLogBLL.Create(t_LEventsSharePersonLog);
                         #endregion
                         }
                         break;

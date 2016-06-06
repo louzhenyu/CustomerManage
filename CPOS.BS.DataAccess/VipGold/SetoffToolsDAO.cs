@@ -79,7 +79,19 @@ namespace JIT.CPOS.BS.DataAccess
         {
             StringBuilder sbSql = new StringBuilder();
             string CustomerID= this.CurrentUserInfo.CurrentUser.customer_id;
-
+            string strApplicationType = string.Empty;
+            switch (ApplicationType)
+            {
+                case "1":
+                    strApplicationType = "3";//会员
+                    break;
+                case "2":
+                    strApplicationType = "1";//员工
+                    break;
+                case "3":
+                    strApplicationType = "2";//客服
+                    break;
+            }
             sbSql.AppendFormat(@"select DisplayIndex = row_number() over(order by StartTime desc), * into #tmp from
                          (SELECT distinct ST.SetoffEventID,ST.CustomerId, ST.SetoffToolID AS 'SetoffToolID' ,ST.ObjectId, Name As 'SetOffToolName',CONVERT(varchar(100),cast(T.StartDate as datetime),23) AS 'StartTime',CONVERT(varchar(100),cast(T.EndDate as datetime),23) AS 'EndTime',ST.ToolType,T.OfflineRedirectUrl AS 'URL',
                          SUW.NoticePlatformType,ISNULL(NULL,0) AS 'ServiceLife',ISNULL(SP.BeShareVipID,0) as IsPush,ISNULL(IsOpen,0)as IsRead FROM SetoffTools ST
@@ -99,7 +111,7 @@ namespace JIT.CPOS.BS.DataAccess
                         LEFT JOIN SetoffToolUserView SUW ON SUW.SetoffToolID=ST.SetoffToolID AND  UserID='{0}' AND NoticePlatformType='{1}'
                         LEFT JOIN T_LEventsSharePersonLog SP ON SP.ObjectId=ST.ObjectId AND SP.ShareVipID='{0}' AND SP.BeShareVipID='{2}' AND SP.ShareVipType='{1}' WHERE 1=1 AND ST.ToolType='SetoffPoster' AND ST.[Status]='10'
                         )AS a where 1=1 and SetoffEventID='{3}'
-                        ", CurrentUserInfo.UserID, ApplicationType, pBeShareVipID, pSetoffEventID);
+                        ", CurrentUserInfo.UserID, strApplicationType, pBeShareVipID, pSetoffEventID);
             if (CustomerID != null && CustomerID != "")
             {
                 sbSql.Append( " AND CustomerID='" + CustomerID + "' ");
