@@ -155,10 +155,12 @@
                             colors:
                                 ['#5cbfc9', '#ff9517', '#03a2e9','#7cc442'],
                             legend: {
-                                align: 'right',
-                                layout: 'horizontal',
-                                floating: 'ture',
-                                verticalAlign: 'top'
+                                verticalAlign: 'top',
+                                itemDistance: 40,
+                                itemMarginBottom: 10,
+                                itemStyle: { cursor: 'pointer', color: '#999999' },
+                                x: 300,
+                                y:15
                             },
                             credits: {
                                 enabled: false

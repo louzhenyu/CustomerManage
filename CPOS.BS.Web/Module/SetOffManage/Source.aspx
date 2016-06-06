@@ -121,7 +121,7 @@
                            <div class="commonSelectWrap" >
                                 <em class="tit">开始时间：</em>
                                 <div class="selectBox" >
-                                      <input id="reserveDateBegin"  name="ReserveDateBegin" class="easyui-datebox"  data-options="width:200,height:32" />
+                                      <input id="reserveDateBegin"  name="ReserveDateBegin" class="easyui-datebox"  data-options="width:200,height:32" validType="compareEqualityDate[$('#reserveDateEnd').datebox('getText'),'当前选择的时间必须早于前面选择的时间']"/>
                                  </div>
                             </div>
                          <div class="commonSelectWrap">
@@ -140,6 +140,7 @@
             <!--发送通知-->
              <!--表格无数据显示内容-->
             <div class="tableWrap" id="tableWrap">
+            	<div class="cursorDef">
                     <div class="dataTable" id="gridTable">
                          <div  class="loading">
                                <span><img src="../static/images/loading.gif"></span>
@@ -149,7 +150,8 @@
                         <div class="dataMessage" >没有符合条件的查询记录</div>
                         <div id="kkpager" ></div>
                     </div>
-                </div>
+                </div>    
+           </div>
          </div>
     </div>
 

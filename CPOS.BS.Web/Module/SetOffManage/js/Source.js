@@ -220,10 +220,12 @@
                             colors:
                                 ['#5cbfc9', '#ff9517', '#03a2e9'],
                             legend: {
-                                align: 'right',
-                                layout: 'horizontal',
-                                floating: 'ture',
-                                verticalAlign: 'top'
+                                verticalAlign: 'top',
+                                itemDistance: 40,
+                                itemMarginBottom: 10,
+                                itemStyle: { cursor: 'pointer', color: '#999999' },
+                                x: 300,
+                                y:15
                             },
                             credits: {
                                 enabled: false
@@ -446,7 +448,7 @@
                     PageIndex: this.args.PageIndex,
                     SetoffRoleId: this.args.Status,                 //集客来源
                     starttime: this.args.ReserveDateBegin,          //开始时间
-                    enime: this.args.ReserveDateEnd,               //结束时间
+                    endtime: this.args.ReserveDateEnd,               //结束时间
                     unitid: this.args.source,   //门店ID
                     SortName: this.args.OrderBy,//排序名称
                     SortOrder: this.args.SortType//排序方式

@@ -96,7 +96,6 @@
 					$('.onlineVipCountPerFor30DayOrderM2M').addClass('up');
 				}
 				
-				
 				$('.onlineVipSalesFor30Day em').text(data.OnlineVipSalesFor30Day);//String	注册会员近30天销量贡献(额)
 				$('.onlineVipSalesFor30DayM2M em').text(Math.abs(parseFloat(data.OnlineVipSalesFor30DayM2M)));//String注册会员近30天销量贡献增比
 				if(data.OnlineVipSalesFor30DayM2M<0){
