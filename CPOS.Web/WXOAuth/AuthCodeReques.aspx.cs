@@ -571,9 +571,25 @@ namespace JIT.CPOS.Web.WXOAuth
             vipInfotmp.Col23 = SourceId.ToString();
             vipBll.Update(vipInfotmp);
 
-
             //分享记录
             T_LEventsSharePersonLogBLL t_LEventsSharePersonLogBLL = new T_LEventsSharePersonLogBLL(loggingSessionInfo);
+
+            //先查看这个会员之前是否已经打开这个图文素材
+            var t_LEventsSharePersonLogTemp = new T_LEventsSharePersonLogEntity();
+            t_LEventsSharePersonLogTemp.BusTypeCode = objectType;
+            t_LEventsSharePersonLogTemp.ObjectId = ObjectID;////分享的链接代表的对象，活动或者商品
+            t_LEventsSharePersonLogTemp.ShareVipType = SourceId;// 1员工，2客服，3会员           
+            t_LEventsSharePersonLogTemp.ShareVipID = ShareVipID;
+            t_LEventsSharePersonLogTemp.BeShareVipID = vipid;//被分享人
+            var t_LEventsSharePersonLogOld = t_LEventsSharePersonLogBLL.QueryByEntity(t_LEventsSharePersonLogTemp,null);
+            //如果已经有这样的记录，就不要再写了
+            if (t_LEventsSharePersonLogOld != null && t_LEventsSharePersonLogOld.Length > 0)
+            {
+                return;
+            }
+
+
+         //第一次打开的时候才创建
             var t_LEventsSharePersonLog = new T_LEventsSharePersonLogEntity();
             t_LEventsSharePersonLog.SharePersonLogId = Guid.NewGuid();
             t_LEventsSharePersonLog.BusTypeCode = objectType;         
