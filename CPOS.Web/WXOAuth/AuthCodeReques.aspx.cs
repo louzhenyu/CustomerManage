@@ -323,6 +323,30 @@ namespace JIT.CPOS.Web.WXOAuth
                         if (null == vipInfo || vipInfo.VIPID.Equals(""))
                         {
                             vipInfotmp.VIPID = authBll.SetVipInfoByToken(token, openId, loggingSessionInfo, this.Response);//根据token和openid获取会员信息
+
+
+                            if (objectType.Equals("Coupon"))//如果是优惠券根据给定的VipSourceId=27给定
+                            {
+                                vipInfotmp.VipSourceId = "26";
+                                //   vipInfo.VipSourceName = "优惠券二维码";
+                            }
+                            else if (objectType.Equals("SetOffPoster"))//如果是海报根据给定的VipSourceId=29给定
+                            {
+                                vipInfotmp.VipSourceId = "28";
+                                //  vipInfo.VipSourceName = "集客海报二维码";
+                            }
+                            else if (objectType.Equals("Goods"))
+                            {
+                                vipInfotmp.VipSourceId = "31";
+                                //vipInfo.VipSourceName = "员工集客";
+                            }
+                            else if (objectType.Equals("CTW"))
+                            {
+                                vipInfotmp.VipSourceId = "24";
+                            }
+
+                            vipServer.Update(vipInfotmp);
+
                         }
                         else   //状态为未关注，vipInfo.Status == 0
                         {
@@ -356,6 +380,30 @@ namespace JIT.CPOS.Web.WXOAuth
                             vipServer.Create(vipInfotmp);
                             ********/
                             #endregion
+
+                            if (objectType.Equals("Coupon"))//如果是优惠券根据给定的VipSourceId=27给定
+                            {
+                                vipInfo.VipSourceId = "26";
+                                //   vipInfo.VipSourceName = "优惠券二维码";
+                            }
+                            else if (objectType.Equals("SetOffPoster"))//如果是海报根据给定的VipSourceId=29给定
+                            {
+                                vipInfo.VipSourceId = "28";
+                                //  vipInfo.VipSourceName = "集客海报二维码";
+                            }
+                            else if (objectType.Equals("Goods"))
+                            {
+                                vipInfo.VipSourceId = "31";
+                                //vipInfo.VipSourceName = "员工集客";
+                            }
+                            else if (objectType.Equals("CTW"))
+                            {
+                                vipInfo.VipSourceId = "24";
+                            }
+
+                            vipServer.Update(vipInfotmp);
+
+
                         }
                         else
                         {
@@ -388,6 +436,11 @@ namespace JIT.CPOS.Web.WXOAuth
                     {
                         Message = string.Format("会员没有关注时的跳转URL：{0}", goUrl)
                     });
+
+
+                 
+
+
                     //在这里建立上下线关系
                     SetShareVip(vipInfotmp.VIPID, vipInfo.WeiXinUserId);
 

@@ -32,11 +32,16 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
             GetSetoffToolsRD setoffToolsRD = new GetSetoffToolsRD();
             var setoffEventBLL=new SetoffEventBLL(CurrentUserInfo);
             //获取集客活动信息
+            string NoticePlatType = string.Empty;
             if (string.IsNullOrEmpty(para.ApplicationType))
             {
                 para.ApplicationType = "0";
+                if (para.ApplicationType == "3")
+                {
+                    NoticePlatType = "2";
+                }
             }
-            var setOffEventInfo = setoffEventBLL.QueryByEntity(new SetoffEventEntity() { Status="10",IsDelete=0,SetoffType=Convert.ToInt32(para.ApplicationType),CustomerId=CurrentUserInfo.CurrentUser.customer_id},null);
+            var setOffEventInfo = setoffEventBLL.QueryByEntity(new SetoffEventEntity() { Status = "10", IsDelete = 0, SetoffType = Convert.ToInt32(para.ApplicationType == "3" ? NoticePlatType : para.ApplicationType), CustomerId = CurrentUserInfo.CurrentUser.customer_id }, null);
             int SetoffToolsTotalCount=0;
             DataSet SetoffToolsList=null;
             if (setOffEventInfo.Length != 0)

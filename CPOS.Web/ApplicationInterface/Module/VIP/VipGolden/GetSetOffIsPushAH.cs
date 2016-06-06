@@ -26,7 +26,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
             {
                 para.ShareVipType = "2";
             }
-            var setoffEventInfo = setoffEventBLL.QueryByEntity(new SetoffEventEntity() { Status = "10", SetoffType = Convert.ToInt32(para.ShareVipType), CustomerId = CurrentUserInfo.CurrentUser.customer_id }, null).FirstOrDefault();
+            var setoffEventInfo = setoffEventBLL.QueryByEntity(new SetoffEventEntity() { Status = "10", SetoffType = Convert.ToInt32(para.ShareVipType == "3" ? "1" : para.ShareVipType), CustomerId = CurrentUserInfo.CurrentUser.customer_id }, null).FirstOrDefault();
             if (setoffEventInfo!=null)
             {
                 setOffIsPushRD.CTW_EventIsPush = setOffToolsBLL.GetIsPushCount(para.ShareVipType, para.BeShareVipID, "CTW",setoffEventInfo.SetoffEventID.ToString());
