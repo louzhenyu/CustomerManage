@@ -115,7 +115,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                             series: [{
                                 type: 'pie',
                                 name: '总览',
-                                data: [['粉丝',chartsData1[0]],['注册会员',chartsData1[1]]
+                                data: [['粉丝(未注册)',chartsData1[0]],['注册会员',chartsData1[1]]
                                 ]
                             }]
                         });
@@ -171,7 +171,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                             series: [{
                                 type: 'pie',
                                 name: '总览',
-                                data: [['粉丝',chartsData2[0]],['注册会员',chartsData2[1]]
+                                data: [['粉丝(未注册)',chartsData2[0]],['注册会员',chartsData2[1]]
                                 ]
                             }]
                         });
@@ -1743,7 +1743,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     if(data.rows.length>0) {
                         that.elems.dataNoticeList.hide();
                     }else{
-                        //that.elems.tabelWrap.find('.datagrid').eq(0).hide();
+                        $('#gridTable1').parents('.datagrid').hide();
                         that.elems.dataNoticeList.show();
                     }
                 },
@@ -1818,7 +1818,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     if(data.rows.length>0) {
                         that.elems.dataNoticeList.hide();
                     }else{
-                        //that.elems.tabelWrap.find('.datagrid').eq(1).hide();
+                        $('#gridTable2').parents('.datagrid').hide();
                         that.elems.dataNoticeList.show();
                     }
                 },

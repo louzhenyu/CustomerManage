@@ -23,7 +23,8 @@
                     </div>
                 </div>
                 <div class="contents">
-                    <div class="charts" id="staffCharts"></div>
+                    <div class="charts" id="staffCharts">
+                    </div>
                     <div class="noContents">
                         <p>
                             点击<a>设置集客行动</a>，开启您的集客行动。

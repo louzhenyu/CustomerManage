@@ -366,7 +366,7 @@
                     { field: 'UserName', title: '名称', width: 100, align: 'left', resizable: false },
                     {field: 'PushMessageCount', title: '推送次数', width: 100, align: 'center', sortable: true, remotesort: true},
                     { field: 'ShareCount', title: '分享次数', width: 100, align: 'center', sortable: true, remotesort: true },
-                    { field: 'SetoffCount', title: '会员人数', width: 100, align: 'center', sortable: true, remotesort: true },
+                    { field: 'SetoffCount', title: '集客人数', width: 100, align: 'center', sortable: true, remotesort: true },
                     { field: 'OrderAmount', title: '会员销量', width: 100, align: 'center', sortable: true, remotesort: true }
                 ]],
                 onLoadSuccess: function (data) {

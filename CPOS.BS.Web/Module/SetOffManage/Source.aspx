@@ -26,7 +26,7 @@
                             <div class="numTitle"><span>分享计划</span></div>
                             <div class="numNow" ><span ></span></div>
                             <div class="border"></div>
-                            <div class="numTitle"><span>新增会员总数</span></div>
+                            <div class="numTitle"><span>集客总数</span></div>
                             <div class="numNow">
                                  <span></span>
                                  <img src="" class="incoB" />
@@ -43,7 +43,7 @@
                             <div class="numTitle"><span>会员分享</span></div>
                             <div class="numNow2"><span></span></div>
                             <div class="border"></div>
-                            <div class="numTitle"><span>新增会员</span></div>
+                            <div class="numTitle"><span>集客</span></div>
                             <div class="numNow2">
                                 <span></span>
                                  <img src="" class="incoB" />
@@ -60,7 +60,7 @@
                             <div class="numTitle"><span>客服分享</span></div>
                             <div class="numNow2"><span></span></div>
                             <div class="border"></div>
-                            <div class="numTitle"><span>新增会员</span></div>
+                            <div class="numTitle"><span>集客</span></div>
                             <div class="numNow2">
                                 <span></span>
                                  <img src="" class="incoB" />
@@ -77,7 +77,7 @@
                             <div class="numTitle"><span>店员分享</span></div>
                             <div class="numNow2"><span></span></div>
                             <div class="border"></div>
-                            <div class="numTitle"><span>新增会员</span></div>
+                            <div class="numTitle"><span>集客</span></div>
                             <div class="numNow2">
                                 <span></span>
                                  <img src="" class="incoB" />
@@ -90,7 +90,7 @@
                 <div class="soruceChart" style="margin-bottom:20px" >
                     <div class="chartTitle">
                          <img src="images/2.1_30.png" class="incos" />
-                        <span>最近5天新增会员趋势</span>
+                        <span>最近5天集客趋势</span>
                     </div>
                     <div id="staffCharts" class="chart"></div>
                 </div>
