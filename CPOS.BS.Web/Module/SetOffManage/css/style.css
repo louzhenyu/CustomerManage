@@ -30,11 +30,12 @@
 .ModuleContent .contents .editArea input[readonly='readonly']{background:#ccc;}
 .ModuleContent .contents .editArea select:disabled{background:#ccc;}
 .ModuleContent .contents .editArea select{height:30px;width:140px;border:1px solid #ccc;border-radius:3px;}
-.ModuleContent .contents .editArea p{display:inline-block;margin-left:5px;}
+.ModuleContent .contents .editArea p{display:inline-block;margin-left:5px;cursor:pointer;}
 .ModuleContent .contents .editArea.ml label{color:#038efe;}
 .ModuleContent .footer{border-top:1px solid #ccc;padding:10px 0;}
 .ModuleContent .footer .commonBtn{width:100px;margin:0 auto;background-color:#00a0e8;bordr-radius:3px;}
 .blockModul{display:none}
+#opt{margin-left:40px;background:none;border:none;}
 /*lock */
 .lock .lockBack{background-color:#038efe;float:left;height:20px;width:40px;border-radius:10px;margin:7px 0;position:relative;}
 .lock .lockBack a{display: inline-block;width:50%;float:left;height:20px;cursor:pointer;}
@@ -47,10 +48,10 @@
 .panelDiv{padding:0;float:none;padding:5px;}
 .panelDiv .title{font-size:18px;width:auto;}
 .radio{  height: 28px;   width: 28px; background: url("../images/radio.png") center center no-repeat; float: left; }
-.radio.on{ background-image: url("../images/radioOn.png")}
+.on .radio{ background-image: url("../images/radioOn.png")}
 
 /*弹层，添加工具*/
-
+.panel.window {position: fixed !important;}
 .jui-dialog.jui-dialog-addTools{width:600px;height:600px;margin:470px 0 0 -300px;}
 .jui-dialog.jui-dialog-addRule{width:820px;height:500px;margin:-250px 0 0 -410px;}
 .jui-dialog.jui-dialog-addGoogs{width:440px;height:302px;margin:-151px 0 0 -220px;}
@@ -67,10 +68,23 @@
 .jui-dialog-addRule-info .quotaBox p:nth-of-type(2){font-size:13px;color:#999;}
 .jui-dialog-addRule-info .quotaBox input{width:56px;height:32px;border:1px solid #ccc;border-radius:4px;color:#333;margin-right:3px;text-align:center;}
 
+.setInfoMoudle{width:46%;float:left;margin-top:40px;}
+.setInfoMoudle:nth-of-type(1){border-right:1px solid #ccc}
+.setInfoMoudle .panelDiv{margin-left:40px;}
+.setInfoMoudle .editArea{margin:5px 0 5px 40px;}
+.setInfoMoudle .editArea em{width:130px;display:inline-block;}
+.setInfoMoudle .editArea p{display:inline-block;}
 .btnWrap{padding:20px 0 0;margin:30px 0 0;border-top:1px solid #ccc;clear:both;}
 .btnWrap .cancelBtn{display:inline-block;height:36px;line-height:36px;}
 .btnWrap .message{height:39px;line-height:33px;border:3px solid #00a0e8;border-radius:38px;width:110px;background:#fff;color:#00a0e8;}
-
+.checkBox{float:left;width:20px;height:28px;margin-right:13px;background:url(../images/checkBox01.png) no-repeat center center;}
+.checkBox.on{background:url(../images/checkBox02.png) no-repeat center center;}
+#tpl_Message .contents{clear:both;}
+.editCheck{height:28px;}
+.editCheck p{height:28px;line-height:28px;}
+.editCheck:nth-of-type(odd){margin-top:20px;}
+.editCheck:nth-of-type(even){margin-top:5px;}
+.editMessage textarea{border:1px solid #ccc;width:450px;height:50px;margin-left:40px;}
 .tableWrap{max-height:440px;}
 
 /*集客行动工具*/
@@ -85,16 +99,20 @@
 .toolData .contentsData li p:nth-of-type(2){margin-left:15px;}
 .toolData .contentsData li p{line-height:26px;}
 .toolData .contentsData li b{margin-right:5px;}
-.toolData .contentsData li .remove{float: right;background:#00a0e8;padding:4px 5px ;border-radius:3px;color:#fff;margin-top:8px;}
-
+.tplPoster li p{line-height:50px;}
+.toolData .contentsData li .remove{float: right;background:#00a0e8;padding:4px 5px ;border-radius:3px;color:#fff;margin-top:8px;cursor:pointer;}
+.toolData .contentsData li .exitPoster{float: right;background:#00a0e8;padding:4px 5px ;border-radius:3px;color:#fff;margin-top:8px;margin-right:10px;cursor:pointer;}
 /*上传图片*/
 #setOfferPoster{height:440px;clear:both;}
-#setOfferPoster .editArea{margin-left:130px;}
+#setOfferPoster .editArea{margin-left:50px;margin-bottom:10px;}
+#setOfferPoster .editArea em{letter-spacing: 1.5px;margin-right:10px;}
+#setOfferPoster .editArea em i{color:red;}
+#setOfferPoster .editArea p{color:#ccc;}
 #setOfferPoster .upImageModul .commonBtn{position:absolute;margin: 40px 27px;}
 #setOfferPoster .upImageModul .qrCodeModul{width:120px;height:140px;position:absolute;bottom:40px;margin:0 37px;}
 #setOffBack{position:absolute;}
 .upImage{width:194px;height:296px;background-color:#f7f7fa;margin:30px auto;position:relative;}
-.upImage a{cursor:pointer;}
+.upImage a{cursor:pointer;color:#fff;}
 .ke-upload-area .ke-upload-file{position:absolute;cursor:pointer;}
 .qrCodeModul .title{text-align: center;margin-bottom:10px;}
 .qrCodeModul .imageContents{width:100px;height:100px;margin:0 auto;background:#fff;}

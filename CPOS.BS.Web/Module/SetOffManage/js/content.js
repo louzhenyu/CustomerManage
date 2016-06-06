@@ -43,6 +43,10 @@
                 {
                     "SetoffRoleId": "Goods",
                     "text": "商品"
+                },
+				{
+                    "SetoffRoleId": "",
+                    "text": "全部"
                 }]
             });
             //近7天集客来源
@@ -94,44 +98,48 @@
                                 //活动分享
                                 $('#activityshare').find('span').text(data.Data.roletoolsources[i].ShareCount + '次');
                                 $('#activitysetoff').find('span').eq(0).text(data.Data.roletoolsources[i].SetoffCount + '人');
-                                $('#activitysetoff').find('span').eq(1).text(data.Data.roletoolsources[i].DiffCount + '人');
                                 if (data.Data.roletoolsources[i].DiffCount >= 0) {
                                     $('#activitysetoff').find('img').attr("src", "images/2.1_24.png");
+                                    $('#activitysetoff').find('span').eq(1).text(data.Data.roletoolsources[i].DiffCount + '人');
                                 } else {
                                     $('#activitysetoff').find('img').attr("src", "images/down.png");
+                                    $('#activitysetoff').find('span').eq(1).text(data.Data.roletoolsources[i].DiffCount.toString().substr(1) + '人');
                                 }
                             }
                             if (data.Data.roletoolsources[i].SetoffRole == "SetoffPoster") {
                                 //海报
                                 $('#sharePoster').find('span').text(data.Data.roletoolsources[i].ShareCount + '次');
                                 $('#SetoffPoster').find('span').eq(0).text(data.Data.roletoolsources[i].SetoffCount + '人');
-                                $('#SetoffPoster').find('span').eq(1).text(data.Data.roletoolsources[i].DiffCount + '人');
                                 if (data.Data.roletoolsources[i].DiffCount >= 0) {
                                     $('#SetoffPoster').find('img').attr("src", "images/2.1_24.png");
+                                    $('#SetoffPoster').find('span').eq(1).text(data.Data.roletoolsources[i].DiffCount + '人');
                                 } else {
                                     $('#SetoffPoster').find('img').attr("src", "images/down.png");
+                                    $('#SetoffPoster').find('span').eq(1).text(data.Data.roletoolsources[i].DiffCount.toString().substr(1) + '人');
                                 }
                             }
                             if (data.Data.roletoolsources[i].SetoffRole == 'Coupon') {
                                 //优惠券
                                 $('#Couponshare').find('span').text(data.Data.roletoolsources[i].ShareCount + '次');
                                 $('#Couponsetoff').find('span').eq(0).text(data.Data.roletoolsources[i].SetoffCount + '人');
-                                $('#Couponsetoff').find('span').eq(1).text(data.Data.roletoolsources[i].DiffCount + '人');
                                 if (data.Data.roletoolsources[i].DiffCount >= 0) {
                                     $('#Couponsetoff').find('img').attr("src", "images/2.1_24.png");
+                                    $('#Couponsetoff').find('span').eq(1).text(data.Data.roletoolsources[i].DiffCount + '人');
                                 } else {
                                     $('#Couponsetoff').find('img').attr("src", "images/down.png");
+                                    $('#Couponsetoff').find('span').eq(1).text(data.Data.roletoolsources[i].DiffCount.toString().substr(1) + '人');
                                 }
                             }
                             if (data.Data.roletoolsources[i].SetoffRole == 'Goods') {
                                 //商品
                                 $('#Goodshare').find('span').text(data.Data.roletoolsources[i].ShareCount + '次');
                                 $('#Goodssetoff').find('span').eq(0).text(data.Data.roletoolsources[i].SetoffCount + '人');
-                                $('#Goodssetoff').find('span').eq(1).text(data.Data.roletoolsources[i].DiffCount + '人');
                                 if (data.Data.roletoolsources[i].DiffCount >= 0) {
                                     $('#Goodssetoff').find('img').attr("src", "images/2.1_24.png");
+                                    $('#Goodssetoff').find('span').eq(1).text(data.Data.roletoolsources[i].DiffCount + '人');
                                 } else {
                                     $('#Goodssetoff').find('img').attr("src", "images/down.png");
+                                    $('#Goodssetoff').find('span').eq(1).text(data.Data.roletoolsources[i].DiffCount.toString().substr(1) + '人');
                                 }
                             }
                         }
@@ -168,16 +176,15 @@
                                 ]
                             },
                             yAxis: {
-                                labels: {
-                                    enabled: false
-                                },
-                                gridLineWidth: 0,
-                                showEmpty: false
+                                min: 0,
+                                title: {
+                                    text: '集客趋势 (人数)'
+                                }
                             },
                             tooltip: {
                                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                                 pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                                    '<td style="padding:0"><b>{point.y}人</b></td></tr>',
                                 footerFormat: '</table>',
                                 shared: true,
                                 useHTML: true
@@ -210,7 +217,7 @@
                                    ]
                                },
                                {
-                                   name: '集客报',
+                                   name: '集客海报',
                                    data: [
                                        data.Data.lst[0].RoleContent[2].PeopleCount,
                                        data.Data.lst[1].RoleContent[2].PeopleCount,
@@ -275,6 +282,7 @@
                 striped: true, //奇偶行颜色不同
                 collapsible: true,//可折叠
                 data: data.Data.aggsetoffforToollist,// 数据来源 排序的列
+				sortName:'ShareCount',
                 sortOrder : 'desc', //倒序
                 remoteSort : true, // 服务器排序*/
                 idField: 'ID', //主键字段
@@ -299,7 +307,19 @@
                         that.elems.dataMessage.html("没有符合条件的查询记录");
                         that.elems.dataMessage.show();
                     }
-                }
+                },
+                onSortColumn: function (sort, order) {
+                    that.loadData.args.OrderBy = sort;
+                    if (order == "desc") {
+                        that.loadData.args.SortType = 2;
+                    } else {
+                        that.loadData.args.SortType = 1;
+                    }
+                    that.loadData.getActivityList(function (data) {
+                        that.renderTable(data);
+                        that.elems.tabel.datagrid({ sortOrder: that.loadData.args.SortType == 1 ? "asc" : "desc" });
+                    });
+                },
             });
             //分页
             kkpager.generPageHtml({
@@ -342,7 +362,7 @@
                 ReserveDateEnd: "",    //结束时间
                 source: "",             //来源
                 OrderBy: "",           //排序字段
-                SortType: 'DESC'    //如果有提供OrderBy，SortType默认为'ASC'
+                SortType: null    //如果有提供OrderBy，SortType默认为'ASC'
             },
             opertionField: {},
             getActivityList: function (callback) {
@@ -354,6 +374,8 @@
                     SetoffRoleId: this.args.source,                   //来源
                     starttime: this.args.ReserveDateBegin,               //开始时间
                     endtime: this.args.ReserveDateEnd,               //结束时间
+                    SortName: this.args.OrderBy,//排序名称
+                    SortOrder: this.args.SortType//排序方式
                 };
                 $.util.ajax({
                     url: "/ApplicationInterface/Gateway.ashx",

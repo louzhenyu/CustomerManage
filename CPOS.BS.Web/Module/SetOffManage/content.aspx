@@ -2,7 +2,7 @@
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <title>集客行动</title>
+    <title>集客内容</title>
     <link href="<%=StaticUrl+"/module/SetOffManage/css/content.css?v=0.1"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -12,13 +12,13 @@
             <!--集客数据方块展示-->
             <div class="contentTotal">
                 <!--集客来源-->
-                <div class="contentTitle">
-                   <span>集客来源</span>
+                <div class="contentTitle borderRadiu">
+                   <span>内容贡献分析</span>
                    <a href="javascript:;" class="checkDay" id="checkDThi">近30天</a>
                    <a href="javascript:;" class="checkDay" id="checkDSeven">近7天</a>
                 </div>
-                <div class="contentData">
-                    <div class="sourcebase ">
+                <div class="contentData ">
+                    <div class="sourcebase borderRadiu">
                        <div class="totalTitle">
                            <img src="images/2.1_08.png" class="incos" />
                            <span>总计</span>
@@ -34,17 +34,17 @@
                             <div class="numTitle"><span>新增会员总数</span></div>
                             <div class="numcenter colorred font24" id="setofftotal" >
                                 <span></span>
-                                <img src="images/icon-arr-top.png" class="incoB" />
+                                <img src="" class="incoB" />
                                 <span class="colorgrey font18"></span>
                             </div>
                         </div>
                     </div>
                     <div class="sourcebase" >
-                           <div class="title">
+                           <div class="title borderRadiu">
                                <img src="images/3.1_03.png" class="incos" />
                                <span>活动</span>
                            </div>
-                            <div class="bordergrey total2" style="margin-bottom:10px">
+                            <div class="bordergrey total2 borderRadiu" style="margin-bottom:10px">
                                 <div class="col2">
                                     <div class="numTitle"><span>活动分享</span></div>
                                     <div class="numleft font24 colorblue" id="activityshare"><span></span></div>
@@ -59,11 +59,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="title">
+                            <div class="title borderRadiu">
                                <img src="images/3.1_09.png" class="incos" />
                                <span>集客海报</span>
                            </div>
-                            <div class="bordergrey total2" >
+                            <div class="bordergrey total2 borderRadiu" >
                                 <div class="col2">
                                     <div class="numTitle"><span>集客海报分享</span></div>
                                     <div class="numleft font24 colorblue" id="sharePoster"><span></span></div>
@@ -80,11 +80,11 @@
                             </div>
                      </div>
                     <div class="sourcebase" style="width:33.3%;">
-                            <div class="title">
+                            <div class="title borderRadiu">
                                <img src="" class="incos" />
                                <span>优惠券</span>
                            </div>
-                            <div class="bordergrey total2" style="margin-bottom:10px">
+                            <div class="bordergrey total2 borderRadiu" style="margin-bottom:10px">
                                 <div class="col2">
                                     <div class="numTitle"><span>优惠券分享</span></div>
                                     <div class="numleft font24 colorblue" id="Couponshare"><span></span></div>
@@ -99,11 +99,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="title">
+                            <div class="title borderRadiu">
                                <img src="" class="incos" />
                                <span>商品</span>
                            </div>
-                            <div class="bordergrey total2">
+                            <div class="bordergrey total2 borderRadiu">
                                 <div class="col2">
                                     <div class="numTitle"><span>商品分享</span></div>
                                     <div class="numleft font24 colorblue" id="Goodshare"><span></span></div>
@@ -136,8 +136,8 @@
                    <form id="seach">
                           <div class="commonSelectWrap" ">
                                <em class="tit">类型筛选：</em>
-                               <label class="searchInput selectBox">
-                                    <input id="filterSource" class="easyui-combobox" data-options="width:200,height:32" data-text="来源筛选"  data-flag="source" name="source" type="text" >
+                               <label class=" selectBox">
+                                    <input id="filterSource" class="easyui-combobox" data-options="width:200,height:32" name="source" >
                                </label>
                            </div>
                          <div class="commonSelectWrap" >

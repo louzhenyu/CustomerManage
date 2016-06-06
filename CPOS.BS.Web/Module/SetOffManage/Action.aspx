@@ -3,7 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>集客行动</title>
-    <link href="<%=StaticUrl+"/module/SetOffManage/css/action.css?v=1.4"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/SetOffManage/css/action.css?v=1.5"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="allPage" id="section" data-js="js/action.js?ver=0.1" >
@@ -266,21 +266,20 @@
                                </ul>
                             </div>
                             <div class="toolList">
-
                                 <div class="commonBtn">新建优惠券</div>
                                 <div class="reload"><em>刷新</em></div>
                             </div>
                             <div id="notice" style="text-align:center;display:none; ">暂无活动，请新增相关活动</div>
                             <div class="dataTable" id="gridTable1" style="display:none">
-
-                                <div  class="loading" style="padding-top: 50px;">
-                                     <span><img src="../static/images/loading.gif"></span>
+                                <div class="loading" style="padding-top: 0px;">
+                                     <span>
+                                   <img src="../static/images/loading.gif"></span>
                                 </div>
                             </div>
-                            <div class="dataTable" id="gridTable2" style="display:none;">
-
-                                <div  class="loading" style="padding-top: 50px;">
-                                     <span><img src="../static/images/loading.gif"></span>
+                            <div class="dataTable" id="gridTable2" style="display:none">
+                                <div class="loading" style="padding-top: 0px;">
+                                     <span>
+                                   <img src="../static/images/loading.gif"></span>
                                 </div>
                             </div>
                             <div id="setOfferPoster" style="display:none;">
@@ -352,7 +351,7 @@
             <ol>
             <#for(var i=0;i<list.length;i++){ var item=list[i];#>
                 <#if(item.ToolType=="Coupon"){#>
-                    <li data-id="<#=item.ObjectId#>" data-new="true" data-type="2" data-toolid="<#=item.SetoffToolID#>">
+                    <li data-id="<#=item.ObjectId#>" data-time="<#=item.ValidityPeriod#>" data-new="true" data-type="2" data-toolid="<#=item.SetoffToolID#>">
                         <label>
                             <p><b><#=i+1#>.</b><span class="name"><#=item.Name#></span><span class="till">剩余<#=item.SurplusCount#>张</span> </p>
                             <#if(item.BeginData==null){#>

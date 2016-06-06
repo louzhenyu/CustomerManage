@@ -2,7 +2,7 @@
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <title>集客行动</title>
+    <title>集客来源</title>
     <link href="<%=StaticUrl+"/module/SetOffManage/css/source.css?v=0.2"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -18,11 +18,11 @@
                 </div>
                 <div class="dourcedata">
                     <div class="sourcebase" >
-                       <div class="totalTitle num">
+                       <div class="totalTitle num borderR2">
                            <img src="images/2.1_08.png" class="incos" />
                            <span>总计</span>
                         </div>
-                        <div class="num bordergrey">
+                        <div class="num bordergrey borderR2">
                             <div class="numTitle"><span>分享计划</span></div>
                             <div class="numNow" ><span ></span></div>
                             <div class="border"></div>
@@ -35,11 +35,11 @@
                         </div>
                     </div>
                     <div class="sourcebase1">
-                       <div class="title num">
+                       <div class="title num borderR2">
                            <img src="images/2.1_03.png" class="incos" />
                            <span>会员</span>
                        </div>
-                        <div class="num bordergrey">
+                        <div class="num bordergrey borderR2">
                             <div class="numTitle"><span>会员分享</span></div>
                             <div class="numNow2"><span></span></div>
                             <div class="border"></div>
@@ -52,11 +52,11 @@
                         </div>
                     </div>
                     <div class="sourcebase1" >
-                        <div class="title num">
+                        <div class="title num borderR2">
                            <img src="images/2.1_05.png" class="incos" />
                            <span>客服</span>
                        </div>
-                        <div class="num bordergrey">
+                        <div class="num bordergrey borderR2">
                             <div class="numTitle"><span>客服分享</span></div>
                             <div class="numNow2"><span></span></div>
                             <div class="border"></div>
@@ -69,11 +69,11 @@
                         </div>
                     </div>
                     <div class="sourcebase1">
-                        <div class="title num">
+                        <div class="title num borderR2">
                            <img src="images/2.1_11.png" class="incos" />
                            <span>店员</span>
                        </div>
-                        <div class="num bordergrey">
+                        <div class="num bordergrey borderR2">
                             <div class="numTitle"><span>店员分享</span></div>
                             <div class="numNow2"><span></span></div>
                             <div class="border"></div>
@@ -96,7 +96,7 @@
                 </div>
             </div>
             <!--查询表格数据-->
-            <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;">
+            <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;border-top:1px solid #f0f0f2">
                 <div class="moreQueryWrap">
                    <form></form>
                    <form id="seach">
@@ -109,8 +109,8 @@
                             </div>
                            <div class="commonSelectWrap"">
                                  <em class="tit">来源筛选：</em>
-                                 <label class="searchInput selectBox">
-                                     <input id="StatusList" class="easyui-combobox" data-options="width:200,height:32" data-text="门店筛选" data-flag="Status" name="Status" type="text">
+                                 <label class="selectBox">
+                                     <input id="StatusList" name="Status" class="easyui-combobox" data-options="width:200,height:32"  >
                                  </label>
                            </div>
                            <div class="moreQueryWrap">
@@ -131,7 +131,7 @@
                                    </div>
                          </div>
                          <div class="moreQueryWrap" style="margin-left: 160px;">
-                              <a href="javascript:;" class="commonBtn" id="sendmessage">发送通知</a>
+                              <a href="javascript:;" class="commonBtn" id="sendmessage" style=" width:90px">发送通知</a>
                          </div>
                        </div>
                     </form>
@@ -159,19 +159,21 @@
                 <div class="easyui-layout" data-options="fit:true" id="panlconent">
       			    <div data-options="region:'center'" class="messagediv">
                           <div class="textdiv" >
-                            <div class="radio on" data-name="r1" data-UsableRange="1"><em></em><span>连锁掌柜APP-总部消息</span></div>
+                            <div class="checkBox l on" data-flag="ConditionValue" ><em></em></div>
+                            <div class="linetext msgTitle">通知员工-发送到连锁掌柜APP-总部消息</div>
                             <div style="width:478px; margin:0px auto 10px">
-                                <textarea id="textApp" class="textareastyle">集客行动已发布,快来参加获取半富福利！</textarea>
+                                <textarea id="textApp" class="textareastyle">集客行动已发布,快来参加获取丰厚福利！</textarea>
                             </div>
-                            <div  style="margin-bottom:5px;" class="radio on" data-name="r1" data-UsableRange="1"><em></em><span>微信商城-会员中心</span></div>
+                            <div class="checkBox l on" data-flag="ConditionValue" ><em></em></div>
+                            <div class="linetext msgTitle">通知员工-发送到微信会员中心-通知</div>
                             <div style="width:478px; margin:auto">
-                                <textarea id="textwebCat" class="textareastyle">集客行动已发布,快来参加获取半富福利！</textarea>
+                                <textarea id="textwebCat" class="textareastyle">集客行动已发布,快来参加获取丰厚福利！</textarea>
                             </div>
                           </div>
       			    </div>
       			    <div class="btnWrap messageBtn" id="btnWrap" data-options="region:'south'">
-                        <a class="easyui-linkbutton commonBtn saveBtn"  >确定</a>
-      				    <a class="easyui-linkbutton commonBtn cancelBtn cancel" href="javascript:void(0)" onclick="javascript:$('#winmessage').window('close')" >取消</a>
+                        <a class="easyui-linkbutton commonBtn saveBtn">确定</a>
+      				    <a class="easyui-linkbutton commonBtn cancelBtn cancel" style="height:35px;line-height:35px;" href="javascript:void(0)" onclick="javascript:$('#winmessage').window('close')" >取消</a>
       			    </div>
       		    </div>
             </div>

@@ -59,7 +59,7 @@
                     	<p class="exp"></p>
                         <div class="dataBox">
                         	<p class="actualBox onlineVipCountFor30DayOrder"><em>0</em><span>人</span></p>
-                            <p class="elevator up onlineVipCountPerFor30DayOrder"><em>0</em>%</p>
+                            <p class="elevator onlineVipCountPerFor30DayOrder"><em>0</em>%</p>
                         </div>
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                     	<p class="exp">占注册会员总数</p>
                         <div class="dataBox">
                         	<p class="actualBox onlineVipCountFor30DayOrderM2M"><em>0</em><span> %</span></p>
-                            <p class="elevator up onlineVipCountPerFor30DayOrderM2M"><em>0</em>%</p>
+                            <p class="elevator onlineVipCountPerFor30DayOrderM2M"><em>0</em>%</p>
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                     	<p class="exp"></p>
                         <div class="dataBox">
                         	<p class="actualBox onlineVipSalesFor30Day"><span>￥</span><em>0</em></p>
-                            <p class="elevator up onlineVipSalesFor30DayM2M"><em>0</em>%</p>
+                            <p class="elevator onlineVipSalesFor30DayM2M"><em>0</em>%</p>
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                     	<p class="exp">占注册会员总贡献</p>
                         <div class="dataBox">
                         	<p class="actualBox onlineVipSalesPerFor30Day"><em>0</em><span> %</span></p>
-                            <p class="elevator up onlineVipSalesPerFor30DayM2M"><em>0</em>%</p>
+                            <p class="elevator onlineVipSalesPerFor30DayM2M"><em>0</em>%</p>
                         </div>
                     </div>
                 </div>

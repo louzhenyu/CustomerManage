@@ -15,7 +15,7 @@
         },
 		init: function () {
             var that = this;
-            
+            $.util.isLoading(false);
 
             that.loadPageData();
 			that.initEvent();
@@ -80,18 +80,40 @@
 				
 				
 				$('.onlineVipCountFor30DayOrder em').text(data.OnlineVipCountFor30DayOrder);	//Int	近30天会员活跃人数
-				$('.onlineVipCountPerFor30DayOrder em').text(data.OnlineVipCountPerFor30DayOrder);
+				$('.onlineVipCountPerFor30DayOrder em').text(Math.abs(parseFloat(data.OnlineVipCountPerFor30DayOrder)));
+				if(data.OnlineVipCountPerFor30DayOrder<0){
+					$('.onlineVipCountPerFor30DayOrder').addClass('dn');
+				}else{
+					$('.onlineVipCountPerFor30DayOrder').addClass('up');
+				}
 				
 				
 				$('.onlineVipCountFor30DayOrderM2M em').text(data.OnlineVipCountFor30DayOrderM2M);//String	近30天活跃会员占比{占注册会员总数}
-				$('.onlineVipCountPerFor30DayOrderM2M em').text(data.OnlineVipCountPerFor30DayOrderM2M);//String	近30天活跃会员占比增减
+				$('.onlineVipCountPerFor30DayOrderM2M em').text(Math.abs(parseFloat(data.OnlineVipCountPerFor30DayOrderM2M)));//String	近30天活跃会员占比增减
+				if(data.OnlineVipCountPerFor30DayOrderM2M<0){
+					$('.onlineVipCountPerFor30DayOrderM2M').addClass('dn');
+				}else{
+					$('.onlineVipCountPerFor30DayOrderM2M').addClass('up');
+				}
+				
 				
 				$('.onlineVipSalesFor30Day em').text(data.OnlineVipSalesFor30Day);//String	注册会员近30天销量贡献(额)
-				$('.onlineVipSalesFor30DayM2M em').text(data.OnlineVipSalesFor30DayM2M);//String注册会员近30天销量贡献增比
+				$('.onlineVipSalesFor30DayM2M em').text(Math.abs(parseFloat(data.OnlineVipSalesFor30DayM2M)));//String注册会员近30天销量贡献增比
+				if(data.OnlineVipSalesFor30DayM2M<0){
+					$('.onlineVipSalesFor30DayM2M').addClass('dn');
+				}else{
+					$('.onlineVipSalesFor30DayM2M').addClass('up');
+				}
 				
 				
 				$('.onlineVipSalesPerFor30Day em').text(data.OnlineVipSalesPerFor30Day);//String	注册会员近30天销量贡献
-				$('.onlineVipSalesPerFor30DayM2M em').text(data.OnlineVipSalesPerFor30DayM2M);//String	注册会员近30天销量贡献增比
+				$('.onlineVipSalesPerFor30DayM2M em').text(Math.abs(parseFloat(data.OnlineVipSalesPerFor30DayM2M)));//String	注册会员近30天销量贡献增比
+				if(data.OnlineVipSalesPerFor30DayM2M<0){
+					$('.onlineVipSalesPerFor30DayM2M').addClass('dn');
+				}else{
+					$('.onlineVipSalesPerFor30DayM2M').addClass('up');
+				}
+				
 
 			});
             //$.util.stopBubble(e);
@@ -105,10 +127,12 @@
 				},
 				success: function (data) {
 					if (data.IsSuccess && data.ResultCode == 0) {
+						$.util.isLoading(true);
 						if (callback) {
 							callback(data.Data);
 						}
 					} else {
+						$.util.isLoading(true);
 						$.messager.alert("提示", data.Message);
 					}
 				}

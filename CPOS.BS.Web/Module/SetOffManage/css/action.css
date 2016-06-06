@@ -12,7 +12,7 @@
 .ModuleContent .heads .title span{line-height:16px;margin-left:5px;font-weight: 400;float:left;}
 .ModuleContent .heads  .point{float:right;cursor:pointer;}
 .ModuleContent .heads  .point span{display:inline-block;float:left;}
-.ModuleContent .contents{height:410px;position:relative;width:500px;}
+.ModuleContent .contents{height:410px;position:relative;}
 #VipTool{height:400px;overflow-y: hidden;}
 .ModuleContent .contents .charts{}
 .ModuleContent .contents .noContents{height:100%;display:table;width:100%;}

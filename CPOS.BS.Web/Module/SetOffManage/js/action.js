@@ -63,7 +63,6 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                             chartsData1.push(listData.OnlyFansCount,listData.VipCount);
                         }else if(list[i].SetoffType=="员工集客"){
                             var listData = list[i];
-
                             var html="<ul><li>会员转化率:"+list[i].VipPer+"%</li></ul>";
                             $('.setOffStaffModule').find('.chartsData').html(html);
                             chartsData2.push(listData.OnlyFansCount,listData.VipCount);
@@ -83,7 +82,11 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                                 ['#f3bc47','#ed7d31','#5b9bd5']
                             ,
                             title: {
-                                text: '新增集客来源占数比'
+                                text: '新增集客来源占数比',
+                                style:{fontFamily:"Microsoft YaHei",
+                                color:'#666',
+                                fontSize:'18px'
+                                }
                             },
                             legend:{
                                 align:'right',
@@ -135,7 +138,11 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                                 ['#f3bc47','#ed7d31','#5b9bd5']
                             ,
                             title: {
-                                text: '新增集客来源占数比'
+                                text: '新增集客来源占数比',
+                                style:{fontFamily:"Microsoft YaHei",
+                                    color:'#666',
+                                    fontSize:'18px'
+                                }
                             },
                             legend:{
                                 align:'right',
@@ -208,8 +215,8 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                 //var html = "<div class='notice' style='text-align:center;'>暂无活动，请新增相关活动</div>";
                 if(value=='900'){
                     $('#winTool').find('.datagrid').hide();
-                    that.elems.dataNoticeList.hide();
                     $('#winTool').find('.toolList').hide();
+                    that.elems.dataNoticeList.hide();
                     $('#winTool').find('#setOfferPoster').show();
                 }else if(value=='0'){
                     $.util.partialRefresh($('#gridTable1'));
@@ -515,26 +522,6 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     $(cirle).animate({left:"1"});
                     $(parConents).find('input').attr('readonly',true);
                     var name =undefined;
-                    that.updateCanel(name,isCheck);
-                    //$.messager.alert('提示','确认发布后禁用生效');
-                    $(parConents).find('.editArea').find("p[class='on']").addClass('disab');
-                   // $(parConents).find('.editArea').find("p[class='on']").removeClass('on');
-                    //$.messager.alert('提示','确认发布后生效');
-                }else{
-                   $(parConents).find('#rewardRule').combobox({disabled:false});
-                    $(this).parents('.lockBack').attr('data-eabled','10');
-                    $(this).parents('.lockBack').addClass('on');
-                    $(cirle).animate({left:'20'});
-                    $(parConents).find('input').removeAttr('readonly');
-                    $(parConents).find('select').removeAttr('readonly');
-                    //$.messager.alert('提示','确认发布后生效');
-                }else{
-                    $(parConents).find('#rewardRule').combobox({disabled:true});
-                    $(this).parents('.lockBack').attr('data-eabled','90');
-                    $(this).parents('.lockBack').removeClass('on');
-                    $(cirle).animate({left:"1"});
-                    $(parConents).find('input').attr('readonly',true);
-                    var name =undefined;
                     //that.updateCanel(name,isCheck);
                     alert('确认发布后禁用生效');
                     $(parConents).find('.editArea').find("p[class='on']").addClass('disab');
@@ -826,10 +813,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     "text":"现金"
                 },{
                     "id":2,
-                    "text":"积分"
-                },{
-                    "id":0,
-                    "text":"选择奖励模式",
+                    "text":"积分",
                     "selected":true
                 }]
             });
@@ -1269,7 +1253,6 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
         updateTool:function(id){
             debugger;
             var that=this;
-            console.log(id);
             if(id!=undefined){
                 $('#winTool').window({title:"编辑集客海报",width:600,height:600,top:($(window).height()-600) * 0.5,
                     left:($(window).width() - 600) * 0.5});
