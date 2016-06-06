@@ -128,35 +128,31 @@ function SetLogoInfo() {
                 var mid =window.mid;// $.util.getUrlParam("mid");
                 //判断对于没有传PMenuID的情况根据mid去找相应的实体，然后查找出来
                 var PMenuID = window.PMenuID;
+                if (PMenuID) {
+                    $("#" + mid).parent().addClass("on");
+                    $("#" + PMenuID).parent().addClass("on");
 
-                if (!PMenuID) {
-
+                } else{
                     $("#leftMenu").css("width", 0);
-                    $("#contentArea").css("margin-left", 0); ;
-                    return;
-                }
+                    $("#contentArea").css("margin-left", 0);
 
-                $("#" + mid).parent().addClass("on");
-                $("#" + PMenuID).parent().addClass("on");
-                console.log(mid+")))))"+PMenuID);
+                }
                 //$("#" + mid).parent().parent().show().siblings('.menu').show();
                 //$("#" + mid).parent().parent().parent().addClass("current");
                 //$("#" + mid).parent().parent().parent().find("a:eq(0)").addClass("aCurrent");
                 window.alert = function (content, autoHide) {
-                    if (dialog) {//不是所有页面都有弹框
-                        var d = dialog({
-                            title: '提示',
-                            cancelValue: '关闭',
-                            skin: "black",
-                            content: content
-                        });
-                        window.d = d;
-                        d.showModal();
-                        if (!autoHide) {
-                            setTimeout(function () {
-                                window.d.close();
-                            }, 2000);
-                        }
+                    var d = dialog({
+                        title: '提示',
+                        cancelValue: '关闭',
+                        skin: "black",
+                        content: content
+                    });
+                    window.d = d;
+                    d.showModal();
+                    if (!autoHide) {
+                        setTimeout(function () {
+                            window.d.close();
+                        }, 2000);
                     }
                 };
 
@@ -228,16 +224,23 @@ function SetLogoInfo() {
                     $(this).stop().hide();
                 });
 
-
-                $("#section").delegate(".datagrid-header-check", "mousedown", function (e) {
-                    var dom = $(this);
+                $("body").delegate(".datagrid-header-check", "mousedown", function (e) {
+                  /*  var dom = $(this);
                     if (!dom.find("input").get(0).checked) {
                         $(this).addClass("on");
                     } else {
                         $(this).removeClass("on");
                     }
-                    return false;
-                }).delegate(".datagrid-cell-check", "mousedown", function (e) {
+                    return false;*/
+                }).delegate(".datagrid-header-check", "mousedown", function (e) {
+                        var dom = $(this);
+                        if (!dom.find("input").get(0).checked) {
+                            $(this).addClass("on");
+                        } else {
+                            $(this).removeClass("on");
+                        }
+                        return false;
+                    }).delegate(".datagrid-cell-check", "mousedown", function (e) {
                     var dom = $(this);
                     var nondes = dom.parents(".datagrid-body-inner").find(".datagrid-cell-check input");
                     //验证是否是全选
@@ -256,16 +259,29 @@ function SetLogoInfo() {
                     }
 
                     if (isSeletAll) {
-                        var allCheckBox = dom.parents(".datagrid-body").siblings(".datagrid-header").find(".datagrid-header-check").addClass("on")
+                        var allCheckBox = dom.parents(".datagrid-body").siblings(".datagrid-header").find(".datagrid-header-check").addClass("on");
                         allCheckBox.find("input").get(0).checked = true;
                     } else {
-                        var allCheckBox = dom.parents(".datagrid-body").siblings(".datagrid-header").find(".datagrid-header-check").removeClass("on")
-                        allCheckBox.find("input").get(0).checked = true;
+                        var allCheckBox = dom.parents(".datagrid-body").siblings(".datagrid-header").find(".datagrid-header-check").removeClass("on");
+                        allCheckBox.find("input").get(0).checked = false;
                     }
 
 
 
                     return false;
+                }).delegate("[datagrid-row-index]", "mousedown", function (e){
+                    var  parents=$(this).parents(".datagrid-view"),index=$(this).attr("datagrid-row-index");
+                    var dom =parents.find('[datagrid-row-index='+index+']').find(".datagrid-cell-check");
+                    if(dom){
+                        dom.trigger("mousedown");
+                    }
+
+                }).delegate(".datagrid-header-check input", "change", function (e){
+                   if($(this).is(":checked")){
+                       $(this).parents(".datagrid-header-check").addClass("on");
+                   }  else{
+                       $(this).parents(".datagrid-header-check").removeClass("on");
+                   }
                 });
                 $.util.ajax({
                     url: "/ApplicationInterface/Gateway.ashx",
