@@ -633,8 +633,8 @@ namespace JIT.CPOS.BS.BLL
                         if (objectType != null && objectType.ToLower() == "product")
                         {
                             //如果是商品则需要查找出商品
-                            goUrl = goItemUrl + loggingSessionInfo.CurrentUser.customer_id + "&pushType=IsAppPush&giverId=" + giverID + "&objectType=Goods&goodsId=" + objectId;
-                            Url = OAuthUrl + loggingSessionInfo.CurrentUser.customer_id + "&ShareVipID=" + user.User_Id + "&goUrl=" + System.Web.HttpUtility.UrlEncode(goUrl);
+                            goUrl = goItemUrl + loggingSessionInfo.CurrentUser.customer_id + "&pushType=IsAppPush&giverId=" + giverID + "&goodsId=" + objectId;
+                            Url = OAuthUrl + loggingSessionInfo.CurrentUser.customer_id + "&objectType=Goods&ObjectID=" + objectId + "&ShareVipID=" + user.User_Id + "&goUrl=" + System.Web.HttpUtility.UrlEncode(goUrl);
                             var GoodsShareInfo = t_LEventsSharePersonLogBLL.QueryByEntity(new T_LEventsSharePersonLogEntity() { ObjectId = objectId, ShareVipID = user.User_Id, BeShareVipID = VipIDInit, BusTypeCode = "Goods" }, null);
                             if (GoodsShareInfo.Length == 0)
                             {
@@ -651,7 +651,7 @@ namespace JIT.CPOS.BS.BLL
                             {
                                 CTWUrl = T_CTW_LEventInfo[0].OnLineRedirectUrl;//活动不用拼goUrl 需加Oauth认证；
                             }
-                            Url = OAuthUrl + loggingSessionInfo.CurrentUser.customer_id + "&objectType=CTW&ShareVipID=" + user.User_Id + "&goUrl=" + System.Web.HttpUtility.UrlEncode(CTWUrl + "&pushType=IsAppPush&giverId=" + giverID);
+                            Url = OAuthUrl + loggingSessionInfo.CurrentUser.customer_id + "&objectType=CTW&ObjectID=" + objectId + "&ShareVipID=" + user.User_Id + "&goUrl=" + System.Web.HttpUtility.UrlEncode(CTWUrl + "&pushType=IsAppPush&giverId=" + giverID);
                             var CTWShareInfo = t_LEventsSharePersonLogBLL.QueryByEntity(new T_LEventsSharePersonLogEntity() { ObjectId = objectId, ShareVipID = user.User_Id, BeShareVipID = VipIDInit, BusTypeCode = "CTW" }, null);
                             if (CTWShareInfo.Length == 0)
                             {
@@ -669,7 +669,7 @@ namespace JIT.CPOS.BS.BLL
                         if (objectType != null && objectType.ToLower() == "coupon")
                         {
                             goUrl = goCouponUrl + loggingSessionInfo.CurrentUser.customer_id + "&pushType=IsAppPush&giverId=" + giverID + "&ShareVipId=" + user.User_Id + "&couponId=" + objectId + "&version=";
-                            Url = OAuthUrl + loggingSessionInfo.CurrentUser.customer_id + "&objectType=Coupon&ShareVipID=" + user.User_Id + "&goUrl=" + System.Web.HttpUtility.UrlEncode(goUrl);
+                            Url = OAuthUrl + loggingSessionInfo.CurrentUser.customer_id + "&objectType=Coupon&ObjectID=" + objectId + "&ShareVipID=" + user.User_Id + "&goUrl=" + System.Web.HttpUtility.UrlEncode(goUrl);
                             newsItem.picurl = strHost + "/Images/CouponImage.jpg";
                             //查找优惠券种相关信息
                             var CouponTypeBLL = new CouponTypeBLL(loggingSessionInfo);
@@ -687,7 +687,7 @@ namespace JIT.CPOS.BS.BLL
                         if (objectType != null && objectType.ToLower() == "setoffposter")
                         {
                             goUrl = goPosterUrl + loggingSessionInfo.CurrentUser.customer_id + "&pushType=IsAppPush&giverId=" + giverID + "&ShareVipId=" + user.User_Id + "&ObjectId=" + objectId + "&version=";
-                            Url = OAuthUrl + loggingSessionInfo.CurrentUser.customer_id + "&objectType=SetoffPoster&ShareVipID=" + user.User_Id + "&goUrl=" + System.Web.HttpUtility.UrlEncode(goUrl);
+                            Url = OAuthUrl + loggingSessionInfo.CurrentUser.customer_id + "&objectType=SetoffPoster&ObjectID=" + objectId + "&ShareVipID=" + user.User_Id + "&goUrl=" + System.Web.HttpUtility.UrlEncode(goUrl);
                             //海报目前推送图文时用的是一张静态图片
                             newsItem.picurl = strHost + "/Images/SetOffPosterImg.jpg";
                             newsItem.title = "快来成为我的集客小伙伴！";
