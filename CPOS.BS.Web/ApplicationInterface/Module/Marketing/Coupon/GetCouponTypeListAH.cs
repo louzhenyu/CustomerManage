@@ -33,7 +33,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                 complexCondition.Add(new LikeCondition() { FieldName = "ParValue", Value = para.ParValue.ToString() });
             if (IsEffective)
             {
-                complexCondition.Add(new DirectCondition("ServiceLife=0 or (ServiceLife=1 and BeginTime<=GETDATE() and EndTime>=GETDATE()) "));
+                complexCondition.Add(new DirectCondition("ServiceLife >0 or (BeginTime<=GETDATE() and EndTime>=GETDATE()) "));
             }
             //排序参数
             List<OrderBy> lstOrder = new List<OrderBy> { };
@@ -54,6 +54,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                 ValidityPeriod = t.BeginTime == null ? ("领取后" + (t.ServiceLife == 0 ? "1天内有效" : t.ServiceLife.ToString() + "天内有效")) : (t.BeginTime.Value.ToString("yyyy-MM-dd") + "至" + t.EndTime.Value.ToString("yyyy-MM-dd")),
                 BeginTime = t.BeginTime,
                 EndTime = t.EndTime,
+                BeginTimeDate = t.BeginTime == null ? "" : t.BeginTime.Value.ToString("yyyy年MM月dd日"),
+                EndTimeDate = t.EndTime == null ? "" : t.EndTime.Value.ToString("yyyy年MM月dd日"),
                 ServiceLife = t.ServiceLife
             }).ToArray();
             return rd;

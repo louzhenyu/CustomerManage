@@ -29,7 +29,8 @@ namespace JIT.CPOS.BS.Entity
     public partial class InnerGroupNewsEntity : BaseEntity 
     {
         #region 属性集
-
+        public string IsRead { get; set; }   //是否已读
+        public int PageIndex { get; set; } //详情页索引
         #endregion
     }
 }

@@ -130,6 +130,7 @@ define(['tools', 'template', 'kkpager', 'artDialog', 'json2', 'ajaxform','easyui
 					$this.addClass('on');
 					if($this.hasClass('unstartUs')){
 						$this.parents('.dispatchingContent').find('.formInputBox').attr('disabled','disabled').parent().css({'border':'none'});
+						$this.parents('.dispatchingContent').find('.checkBox').removeClass('on');
 					}else{
 						$this.parents('.dispatchingContent').find('.formInputBox').attr('disabled',false).parent().css({'border':'1px solid #ddd'});
 					}

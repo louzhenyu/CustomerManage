@@ -36,7 +36,9 @@ namespace JIT.CPOS.Web.WXOAuth
 
         public int SourceId = 0;// 1员工，2客服，3会员
         public string ShareVipID = string.Empty; //分享人的标识（SourceId为1，2时，这个是员工，为3时这个是会员）
-        public string ObjectID = string.Empty;   //分享的链接代表的对象，活动或者商品
+        public string ObjectID = string.Empty;   //分享的链接代表的对象，活动或者商品、海报
+        public string objectType = string.Empty; //分享的链接代表的对象的类型
+        
 
 
         //public string customerId = "f6a7da3d28f74f2abedfc3ea0cf65c01";
@@ -128,6 +130,10 @@ namespace JIT.CPOS.Web.WXOAuth
                             if (k == "sharevipid")
                             {
                                 ShareVipID = targetValue;
+                            }
+                            if (k == "objecttype") //专程小写了
+                            {
+                                objectType = targetValue;
                             }
                         }
                         #endregion
@@ -383,7 +389,7 @@ namespace JIT.CPOS.Web.WXOAuth
                         Message = string.Format("会员没有关注时的跳转URL：{0}", goUrl)
                     });
                     //在这里建立上下线关系
-                    SetShareVip(vipInfotmp.VIPID);
+                    SetShareVip(vipInfotmp.VIPID, vipInfo.WeiXinUserId);
 
 
                     Response.Redirect(goUrl);
@@ -425,7 +431,7 @@ namespace JIT.CPOS.Web.WXOAuth
                     });
                     //在这里建立上下线关系
                     //SetShareVip(vipInfotmp.VIPID);
-                    SetShareVip(vipInfo.VIPID);
+                    SetShareVip(vipInfo.VIPID,vipInfo.WeiXinUserId);
                     Response.Redirect(strGotoUrl);
                 }
                 #endregion
@@ -449,7 +455,7 @@ namespace JIT.CPOS.Web.WXOAuth
         /// 取消关注的Vip          1                  1
 
         /// ShareVipID 没内容的 return
-        public void SetShareVip(string vipid)
+        public void SetShareVip(string vipid,string openId)
         {
             #region 验证
             if (string.IsNullOrEmpty(ShareVipID))//如果没有上级分享人员
@@ -479,6 +485,8 @@ namespace JIT.CPOS.Web.WXOAuth
             string UnitId = "";
             //获取分享人的门店信息
             //员工 或者 客服
+
+           string shareVipOpenid="";
             if (SourceId == 1 || SourceId == 2)//获取分享员工的默认门店
             {
                 UnitId = vipBll.GetUnitByUserId(ShareVipID);//获取员工的默认门店
@@ -490,6 +498,7 @@ namespace JIT.CPOS.Web.WXOAuth
                 if (shareVip != null)
                 {
                     UnitId = shareVip.CouponInfo;//会员的会籍店
+                    shareVipOpenid=shareVip.WeiXinUserId;
                 }
             }
             #endregion
@@ -552,10 +561,39 @@ namespace JIT.CPOS.Web.WXOAuth
 
             #endregion
 
+            if (string.IsNullOrEmpty(UnitId))
+            {
+                UnitService unitServer = new UnitService(loggingSessionInfo);
+                UnitId=unitServer.GetUnitByUnitTypeForWX("总部", null).Id; //获取总部门店标识                
+            }
             vipInfotmp.CouponInfo = UnitId;
             vipInfotmp.Col24 = ObjectID;
             vipInfotmp.Col23 = SourceId.ToString();
             vipBll.Update(vipInfotmp);
+
+
+            //分享记录
+            T_LEventsSharePersonLogBLL t_LEventsSharePersonLogBLL = new T_LEventsSharePersonLogBLL(loggingSessionInfo);
+            var t_LEventsSharePersonLog = new T_LEventsSharePersonLogEntity();
+            t_LEventsSharePersonLog.SharePersonLogId = Guid.NewGuid();
+            t_LEventsSharePersonLog.BusTypeCode = objectType;         
+            t_LEventsSharePersonLog.ObjectId = ObjectID;////分享的链接代表的对象，活动或者商品
+            t_LEventsSharePersonLog.ShareVipType = SourceId;// 1员工，2客服，3会员           
+            t_LEventsSharePersonLog.ShareVipID = ShareVipID;
+
+            t_LEventsSharePersonLog.ShareOpenID =shareVipOpenid;//如果是会员，取出来
+            t_LEventsSharePersonLog.BeShareVipID = vipid;//新建的会员会员的vipid
+             t_LEventsSharePersonLog.BeShareOpenID = openId;//本分享人的id
+          
+            t_LEventsSharePersonLog.ShareURL = goUrl;//分享的链接
+            t_LEventsSharePersonLog.CreateTime = System.DateTime.Now;
+            t_LEventsSharePersonLog.CreateBy = "";
+            t_LEventsSharePersonLog.LastUpdateBy = "";
+            t_LEventsSharePersonLog.LastUpdateTime = System.DateTime.Now;
+            t_LEventsSharePersonLog.CustomerId = loggingSessionInfo.ClientID;
+            t_LEventsSharePersonLog.IsDelete = 0;
+            t_LEventsSharePersonLogBLL.Create(t_LEventsSharePersonLog);
+
 
 
         }

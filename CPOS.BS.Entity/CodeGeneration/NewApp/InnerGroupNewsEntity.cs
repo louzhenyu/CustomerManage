@@ -87,6 +87,28 @@ namespace JIT.CPOS.BS.Entity
 		/// </summary>
 		public String DeptID { get; set; }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? SentType { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? NoticePlatformType { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? BusType { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String ObjectId { get; set; }
+
+		
+
 
         #endregion
 

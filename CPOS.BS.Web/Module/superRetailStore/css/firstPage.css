@@ -1,0 +1,61 @@
+﻿@charset "utf-8";
+
+    /*页面整体布局*/
+.firstpage{width:1024px;margin:auto;padding-top:35px;overflow:auto;zoom:1}
+.firstpage .col{margin-bottom:25px;overflow:auto;zoom:1}
+/*两列布局*/
+.firstpage .rowTwo{width:50%;}
+/*三列布局*/
+.firstpage .rowThree{width:33.3333333%;}
+.firstpage .marginCommon{margin-right:22px;}
+.firstpage .paddigcommon{padding-left:12px}
+     /*页面模块具体布局*/
+/*页面第一列 图表*/
+.firstpage .chartBase{height:345px;width:100%}
+
+/*页面第二列  方块*/
+.firstpage .squreBase{height:150px}
+    /*总标题*/
+.firstpage .allTitle{height:39px;padding:0px 10px 0px 19px;line-height:39px;border-bottom:1px solid #f0f0f2}
+    /*数据*/
+.firstpage .currentData{margin:24px 0px;height:62px;}
+.firstpage .dataDiv{height:46px;padding-top:20px;}
+
+/*页面第三列  链接其他页面*/
+.firstpage .linkBase{height:410px; position:relative}
+.firstpage .linkTitleDiv{padding:20px 0px}
+.firstpage .steps{width:45px;height:45px;line-height:45px;text-align:center; border-top-right-radius:25px;border-bottom-right-radius:25px;}
+.firstpage .linkTitle{margin-left:20px}
+.firstpage .iconimgs{height:80px;width:80px;margin:20px auto 33px; border-radius:80px;}
+.firstpage .imgs{margin-top:30px; margin-left:23px;width:35px;}
+.firstpage .text{margin:0px 30px 0px 20px}
+.firstpage .line2{margin:30px 0px}
+.firstpage .linkBtn{position:absolute;top:345px;left:100px}
+.firstpage .linkBtn a {height:35px}
+    /*通用样式设置*/
+.firstpage .borderGrey{border:1px solid #f0f0f2;border-radius:3px; }
+.firstpage .borRight{border-right:1px solid #f0f0f2;height:62px}
+.firstpage .borderBlue{border:2px solid #00a0e8; border-radius:16px}
+
+.firstpage .floatleft{float:left;}
+.firstpage .floatright{float:right;}
+
+
+.firstpage .colorgrey{color:#999999}
+.firstpage .colorred{color:#ff4d4d}
+.firstpage .colorwhite{color:#ffffff}
+.firstpage .colorblue{color:#00a0e8}
+
+.firstpage .font20{font-size:20px;}
+.firstpage .font16{font-size:16px;}
+.firstpage .font14{font-size:14px;}
+.firstpage .font10{font-size:10px}
+
+.firstpage .textRight{text-align:right}
+
+.firstpage .bgwhite{background-color:#ffffff}
+.firstpage .bgGrey{background-color:#f7f7fa}
+.firstpage .bgblue{background-color:#01a1ff}
+.firstpage .bgyellow{background-color:#ffb80d}
+.firstpage .bgorange{background-color:#ff8a00}
+.firstpage .bgred{background-color:#ff4d4d}

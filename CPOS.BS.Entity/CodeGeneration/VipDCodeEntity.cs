@@ -127,6 +127,10 @@ namespace JIT.CPOS.BS.Entity
         /// </summary>
         public int DCodeType { get; set; } // add by donal 2014-9-22 10:00:24
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public String OwnerUserId { get; set; }
 
         #endregion
 

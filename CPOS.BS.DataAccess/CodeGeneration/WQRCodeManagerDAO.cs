@@ -25,8 +25,8 @@ using JIT.Utility.Entity;
 using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess;
 using JIT.Utility.Log;
-using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess.Query;
+using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.DataAccess.Base;
 
 namespace JIT.CPOS.BS.DataAccess
@@ -72,11 +72,12 @@ namespace JIT.CPOS.BS.DataAccess
                 throw new ArgumentNullException("pEntity");
             
             //³õÊ¼»¯¹Ì¶¨×Ö¶Î
-            pEntity.CreateTime = DateTime.Now;
-            pEntity.CreateBy = CurrentUserInfo.UserID;
-            pEntity.LastUpdateTime = pEntity.CreateTime;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
-            pEntity.IsDelete = 0;
+			pEntity.IsDelete=0;
+			pEntity.CreateTime=DateTime.Now;
+			pEntity.LastUpdateTime=pEntity.CreateTime;
+			pEntity.CreateBy=CurrentUserInfo.UserID;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [WQRCodeManager](");

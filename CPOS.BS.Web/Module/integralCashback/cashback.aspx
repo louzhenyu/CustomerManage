@@ -1,16 +1,13 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/optimize.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta charset="UTF-8" />
     <title>积分配置</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
-    <style type="text/css">
+     <link href="<%=StaticUrl+"/module/integralCashback/css/style.css?v=0.1"%>" rel="stylesheet" type="text/css" />
 
 
-    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -63,7 +60,5 @@
 
 
                        </div>
-        </div>
-       <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"
-            defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>
+
 </asp:Content>

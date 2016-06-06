@@ -11,6 +11,7 @@
 .panlDiv .commonSelectWrap .tit .checkBox{float: right}
 .pl_45{padding-left:45px;}
 /*.commonSelectWrap .tit{ text-align: left; padding-left: 28px;} */  /*左对齐文本框 */
+.moreQueryWrap{margin-top:12px;}
 .panlDiv .commonSelectWrap .searchInput  .explain{ color: #999}
 #goodsBasic_exit .btnWrap{padding:15px;}
 #goodsBasic_exit .optionclass .searchInput{display:inline;float:none;}
@@ -19,7 +20,7 @@
 .commonSelectWrap .searchInput{border:1px solid #ccc;border-radius:3px;background-color:#fff;}
 .commonSelectWrap .searchInput span.date{cursor:pointer;width:24px;height:30px;float:right;margin-top:-30px;}
 .commonSelectWrap .searchInput span.date:hover{background:#e6e6e6;}
-.commonSelectWrap .searchInput span.date b{position:absolute;top:7px;right:5px;width:17px;height:17px;background-image:url(../images/datebox_arrow.png);background-position:99% center;background-repeat:no-repeat;}
+.commonSelectWrap .searchInput span.date b{position:absolute;top:7px;right:10px;width:17px;height:17px;background-image:url(../images/datebox_arrow.png);background-position:99% center;background-repeat:no-repeat;}
 .listItem{padding-top:12px; padding-left: 126px;}
 .listItem .icon{ background:url(../images/iconDel.png) no-repeat 0 0; width: 30px; height: 30px; position: absolute;display: none;cursor: pointer;}
 .listItem .unitBtn{cursor: pointer; min-width: 32px; height: 32px; padding:0 8px; border: 1px solid #07c8cf; position: relative; float: left; margin-right:30px; line-height: 32px; color: #07c8cf; font-size: 15px;}

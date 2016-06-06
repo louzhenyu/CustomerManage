@@ -13,6 +13,8 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Response
         /// 会员信息
         /// </summary>
         public MemberInfo MemberInfo { get; set; }
+
+        public MessageInfo MessageInfo { get; set; }
         public TagsInfo[] IdentityTagsList { get; set; }
 
         public MemberControlInfo[] MemberControlList { get; set; }
@@ -48,6 +50,10 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Response
         public IList<InoutDetailInfo> DetailList { get; set; }
 
     }
-
+    public class MessageInfo
+    {
+        public int InnerGroupNewsCount { get; set; }
+        public int SetoffToolsCount { get; set; }
+    }
 
 }

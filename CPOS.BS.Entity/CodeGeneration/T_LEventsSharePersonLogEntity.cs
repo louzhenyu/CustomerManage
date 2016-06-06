@@ -117,6 +117,7 @@ namespace JIT.CPOS.BS.Entity
 		/// </summary>
 		public Int32? ShareVipType { get; set; }
 
+
         #endregion
 
     }

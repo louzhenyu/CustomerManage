@@ -2253,6 +2253,9 @@
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionnaireAH.cs" />
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\SetQuestionnaireAnswerRecordAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Sys\InnerGroupNews\GetInnerGroupNewsByIdAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Sys\InnerGroupNews\GetInnerGroupNewsCountAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Sys\InnerGroupNews\GetInnerGroupNewsListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Test\Test\TestAH.cs" />
     <Compile Include="ApplicationInterface\Module\UnitAndItem\Item\Item.ashx.cs">
       <DependentUpon>Item.ashx</DependentUpon>
@@ -2313,6 +2316,10 @@
     <Compile Include="ApplicationInterface\Module\VIP\Reward\SetRewardOrderAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipAmount\GetVipAmountDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipCard\GetVipCardAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGolden\GetSetoffIncentiveInfoAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGolden\GetSetOffIsPushAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGolden\GetSetoffToolDetailAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGolden\GetSetoffToolListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipListNum\GetVipListNumAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipList\GetVipListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\WifiSign\WifiSignAH.cs" />

@@ -6783,6 +6783,10 @@
     <Compile Include="ApplicationInterface\Module\Report\MailReport\GetLast7DaysOperationDataAH.cs" />
     <Compile Include="ApplicationInterface\Module\Report\StoresReport\GetDayReconciliationAH.cs" />
     <Compile Include="ApplicationInterface\Module\Report\StoresReport\GetDayVendingCountAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\VipGoldReport\GetAggSetoffForSourceListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\VipGoldReport\GetAggSetoffForToolListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\VipGoldReport\GetRSetoffHomeListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\VipGoldReport\GetVipGoldHomeListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Report\VipReport\GetVipBirthdayCountAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\BasicSet\DeleteHolidayAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\BasicSet\GetHolidayListAH.cs" />
@@ -6803,6 +6807,15 @@
     <Compile Include="ApplicationInterface\Module\VIP\VIPCard\SetVipCardAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\Tags\GetTagsByTypeNameAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VIPCard\OpenVipCardAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGold\GetAggSetoffForToolListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGold\GetCTWLEventListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGold\GetSetOffActionEffectAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGold\GetSetOffActionAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGold\GetAggSetoffForSourceListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGold\SendNoticeAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGold\SetOffActionAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGold\SetoffPosterAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGold\UpdateSetoffToolsStatusAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipIntegral\SetVipIntegralAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipManager\GetVipListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipManager\UpdateVipAH.cs" />
@@ -8909,7 +8922,7 @@
       <Name>CPOS.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\CPOS.DTO\CPOS.DTO.csproj">
-      <Project>{E90B49C0-4C8E-42EC-88EF-DACCFD56F2B5}</Project>
+      <Project>{e90b49c0-4c8e-42ec-88ef-daccfd56f2b5}</Project>
       <Name>CPOS.DTO</Name>
     </ProjectReference>
   </ItemGroup>

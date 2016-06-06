@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [InnerGroupNews](");
-            strSql.Append("[Title],[Text],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerID],[DeptID],[GroupNewsId])");
+            strSql.Append("[Title],[Text],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerID],[DeptID],[SentType],[NoticePlatformType],[BusType],[ObjectId],[GroupNewsId])");
             strSql.Append(" values (");
-            strSql.Append("@Title,@Text,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerID,@DeptID,@GroupNewsId)");            
+            strSql.Append("@Title,@Text,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerID,@DeptID,@SentType,@NoticePlatformType,@BusType,@ObjectId,@GroupNewsId)");            
 
 			string pkString = pEntity.GroupNewsId;
 
@@ -98,6 +98,10 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@IsDelete",SqlDbType.Int),
 					new SqlParameter("@CustomerID",SqlDbType.NVarChar),
 					new SqlParameter("@DeptID",SqlDbType.NVarChar),
+					new SqlParameter("@SentType",SqlDbType.Int),
+					new SqlParameter("@NoticePlatformType",SqlDbType.Int),
+					new SqlParameter("@BusType",SqlDbType.Int),
+					new SqlParameter("@ObjectId",SqlDbType.NVarChar),
 					new SqlParameter("@GroupNewsId",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.Title;
@@ -109,7 +113,11 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[6].Value = pEntity.IsDelete;
 			parameters[7].Value = pEntity.CustomerID;
 			parameters[8].Value = pEntity.DeptID;
-			parameters[9].Value = pkString;
+			parameters[9].Value = pEntity.SentType;
+			parameters[10].Value = pEntity.NoticePlatformType;
+			parameters[11].Value = pEntity.BusType;
+			parameters[12].Value = pEntity.ObjectId;
+			parameters[13].Value = pkString;
 
             //执行并将结果回写
             int result;
@@ -214,7 +222,17 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.CustomerID!=null)
                 strSql.Append( "[CustomerID]=@CustomerID,");
             if (pIsUpdateNullField || pEntity.DeptID!=null)
-                strSql.Append( "[DeptID]=@DeptID");
+                strSql.Append( "[DeptID]=@DeptID,");
+            if (pIsUpdateNullField || pEntity.SentType!=null)
+                strSql.Append( "[SentType]=@SentType,");
+            if (pIsUpdateNullField || pEntity.NoticePlatformType!=null)
+                strSql.Append( "[NoticePlatformType]=@NoticePlatformType,");
+            if (pIsUpdateNullField || pEntity.BusType!=null)
+                strSql.Append( "[BusType]=@BusType,");
+            if (pIsUpdateNullField || pEntity.ObjectId!=null)
+                strSql.Append( "[ObjectId]=@ObjectId");
+            if (strSql.ToString().EndsWith(","))
+                strSql.Remove(strSql.Length - 1, 1);
             strSql.Append(" where GroupNewsId=@GroupNewsId ");
             SqlParameter[] parameters = 
             {
@@ -224,6 +242,10 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@CustomerID",SqlDbType.NVarChar),
 					new SqlParameter("@DeptID",SqlDbType.NVarChar),
+					new SqlParameter("@SentType",SqlDbType.Int),
+					new SqlParameter("@NoticePlatformType",SqlDbType.Int),
+					new SqlParameter("@BusType",SqlDbType.Int),
+					new SqlParameter("@ObjectId",SqlDbType.NVarChar),
 					new SqlParameter("@GroupNewsId",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.Title;
@@ -232,7 +254,11 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[3].Value = pEntity.LastUpdateTime;
 			parameters[4].Value = pEntity.CustomerID;
 			parameters[5].Value = pEntity.DeptID;
-			parameters[6].Value = pEntity.GroupNewsId;
+			parameters[6].Value = pEntity.SentType;
+			parameters[7].Value = pEntity.NoticePlatformType;
+			parameters[8].Value = pEntity.BusType;
+			parameters[9].Value = pEntity.ObjectId;
+			parameters[10].Value = pEntity.GroupNewsId;
 
             //执行语句
             int result = 0;
@@ -443,7 +469,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [GroupNewsId] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,* from [InnerGroupNews] where 1=1  and isdelete=0 ");
+            pagedSql.AppendFormat(") as ___rn,*,IsRead=0 from [InnerGroupNews] where 1=1  and isdelete=0 ");
             //总记录数SQL
             totalCountSql.AppendFormat("select count(1) from [InnerGroupNews] where 1=1  and isdelete=0 ");
             //过滤条件
@@ -538,6 +564,14 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = pQueryEntity.CustomerID });
             if (pQueryEntity.DeptID!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "DeptID", Value = pQueryEntity.DeptID });
+            if (pQueryEntity.SentType!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "SentType", Value = pQueryEntity.SentType });
+            if (pQueryEntity.NoticePlatformType!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "NoticePlatformType", Value = pQueryEntity.NoticePlatformType });
+            if (pQueryEntity.BusType!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "BusType", Value = pQueryEntity.BusType });
+            if (pQueryEntity.ObjectId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ObjectId", Value = pQueryEntity.ObjectId });
 
             return lstWhereCondition.ToArray();
         }
@@ -589,9 +623,26 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.CustomerID =  Convert.ToString(pReader["CustomerID"]);
 			}
+
 			if (pReader["DeptID"] != DBNull.Value)
 			{
 				pInstance.DeptID =  Convert.ToString(pReader["DeptID"]);
+			}
+			if (pReader["SentType"] != DBNull.Value)
+			{
+				pInstance.SentType =   Convert.ToInt32(pReader["SentType"]);
+			}
+			if (pReader["NoticePlatformType"] != DBNull.Value)
+			{
+				pInstance.NoticePlatformType =   Convert.ToInt32(pReader["NoticePlatformType"]);
+			}
+			if (pReader["BusType"] != DBNull.Value)
+			{
+				pInstance.BusType =   Convert.ToInt32(pReader["BusType"]);
+			}
+			if (pReader["ObjectId"] != DBNull.Value)
+			{
+				pInstance.ObjectId =  Convert.ToString(pReader["ObjectId"]);
 			}
 
         }

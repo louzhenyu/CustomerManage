@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/optimize.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -6,7 +6,7 @@
     <title>假日管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <link href="css/style.css?v=0.4" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/holidayManage/css/style.css?v=0.1"%>" rel="stylesheet" type="text/css" />
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -81,6 +81,4 @@
                    </div>
            </form>
           </script>
-       <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"
-            defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>
 </asp:Content>

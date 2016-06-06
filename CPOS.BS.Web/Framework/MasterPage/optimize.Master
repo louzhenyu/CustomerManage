@@ -48,11 +48,6 @@
       <%--模板 样式strart 切换模板样式只要更改/alading/skin02.css?v=0.5  alading qixin  college 只要三个模板 --%>
     <link href="<%=StaticUrl+"/module/styles/css/newYear/skin02.css?v=0.1"%>" rel="stylesheet" />
       <%--模板 样式End--%>
-       <%--<script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/jquery-1.8.3.min.js" %>"></script>
-       <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/plugin/artDialog.js" %>"></script>
---%>
-    <link href="<%=StaticUrl+"/Framework/Css/cpos.css"%>" rel="stylesheet" type="text/css" />
-   <%-- <script src="<%=StaticUrl+"/Framework/javascript/Other/lightCpos.js?v=0.4"%>" type="text/javascript"></script>--%>
 	<script src="http://kefu.qycn.com/vclient/state.php?webid=112929" language="javascript" type="text/javascript"></script>
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
 </head>

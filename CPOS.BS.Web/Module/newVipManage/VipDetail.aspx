@@ -1,14 +1,14 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/optimize.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta charset="UTF-8" />
     <title>会员详情</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="css/detail.css?v=0.5" rel="stylesheet" type="text/css" />
+   <link href="<%=StaticUrl+"/module/newVipManage/css/detail.css?v=0.1"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="allPage" id="section" data-js="js/vipDetail">
+    <div class="allPage" id="section" data-js="js/vipDetail.js">
         <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;">
                        <div class="optBtn commonBtn" data-authority="Activation" data-optionType="10" data-show="0">激活</div>
                              <div class="optBtn commonBtn" data-authority="Upgrade" data-optionType="2" data-show="1">升级</div>
@@ -1136,9 +1136,4 @@
 <#}#>
     </script>
 
-
-
-
-   <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"
-        defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>
 </asp:Content>

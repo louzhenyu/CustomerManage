@@ -21,8 +21,29 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.Customer
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var customerBasicSettingBLL = new CustomerBasicSettingBLL(loggingSessionInfo);
+
+            var setoffEventBLL = new SetoffEventBLL(loggingSessionInfo);    //集客行动业务层
+            var iincentiveRuleBLL = new IincentiveRuleBLL(loggingSessionInfo); //集客奖励业务层
+
             ResponseData res = new ResponseData();
             List<CustomerBasicSettingEntity> list = new List<CustomerBasicSettingEntity>();
+
+            //获取集客行动信息
+            var setoffEventList = setoffEventBLL.QueryByEntity(new SetoffEventEntity() { CustomerId = loggingSessionInfo.ClientID, Status = "10" }, null);
+            SetoffEventEntity setoffEventUser = setoffEventList.Where(t => t.SetoffType == 2).FirstOrDefault(); //员工集客活动设置
+            SetoffEventEntity setoffEventVip = setoffEventList.Where(t => t.SetoffType == 1).FirstOrDefault();  //会员集客活动设置
+
+            var iincentiveRuleList = iincentiveRuleBLL.QueryByEntity(new IincentiveRuleEntity() { CustomerId = loggingSessionInfo.ClientID, Status = "10" }, null);
+            IincentiveRuleEntity iincentiveRuleUser = null; //员工奖励
+            IincentiveRuleEntity iincentiveRuleVip = null;  //会员奖励
+
+            //获取员工奖励规则
+            if (setoffEventUser != null)
+                iincentiveRuleUser = iincentiveRuleList.Where(t => t.SetoffEventID==setoffEventUser.SetoffEventID && t.SetoffType == 2 ).FirstOrDefault();
+            //获取会员奖励规则
+            if (setoffEventVip != null)
+                iincentiveRuleVip = iincentiveRuleList.Where(t => t.SetoffEventID == setoffEventVip.SetoffEventID && t.SetoffType == 1).FirstOrDefault();
+
             if (!string.IsNullOrEmpty(para.SocialSalesType.ToString()))
             {
                 list.Add(new CustomerBasicSettingEntity()
@@ -86,6 +107,13 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.Customer
                     SettingCode = "GetVipUserOrderPer",
                     SettingValue = para.GetVipUserOrderPer.ToString()
                 });
+                //同步到集客行动奖励设置(集客销售提成） 
+                if (iincentiveRuleUser != null)
+                {
+                    iincentiveRuleUser.SetoffOrderPer =Convert.ToDecimal(para.GetVipUserOrderPer);
+                    iincentiveRuleBLL.Update(iincentiveRuleUser);
+                }
+
             }
             if (!string.IsNullOrEmpty(para.InvitePartnersPoints.ToString()))
             {
@@ -93,9 +121,16 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.Customer
                {
                    SettingCode = "InvitePartnersPoints",
                    SettingValue = para.InvitePartnersPoints.ToString()
+
                });
+                //同步到集客行动奖励设置（分享获得积分）   
+                if (iincentiveRuleVip != null)
+                {
+                    iincentiveRuleVip.SetoffRegPrize = Convert.ToDecimal(para.InvitePartnersPoints);
+                    iincentiveRuleBLL.Update(iincentiveRuleVip);
+                }
             }
-            int i = customerBasicSettingBLL.SaveCustomerBasicInfo(loggingSessionInfo.ClientID,list);
+            int i = customerBasicSettingBLL.SaveCustomerBasicInfo(loggingSessionInfo.ClientID, list);
 
             return rd;
         }

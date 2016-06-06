@@ -479,7 +479,7 @@ namespace JIT.CPOS.BS.BLL
                                 string OldIntegral = (vipInfo.Integration ?? 0).ToString();
                                 //变动积分
                                 string ChangeIntegral = (IntegralDetail.Integral ?? 0).ToString();
-                                String vipIntegralDetailId = this.AddIntegral(ref vipInfo, unitInfo,IntegralDetail, tran, this.CurrentUserInfo);
+                                String vipIntegralDetailId = this.AddIntegral(ref vipInfo, unitInfo, IntegralDetail, tran, this.CurrentUserInfo);
                                 //发送微信积分变动通知模板消息
                                 if (!string.IsNullOrWhiteSpace(vipIntegralDetailId))
                                 {
@@ -537,7 +537,7 @@ namespace JIT.CPOS.BS.BLL
                                 ObjectId = orderInfo.order_id,
                                 AmountSourceId = "2"
                             };
-                            var vipAmountDetailId= vipAmountBll.AddReturnAmount(vipInfo, unitInfo, vipAmountEntity,ref detailInfo, tran, CurrentUserInfo);
+                            var vipAmountDetailId = vipAmountBll.AddReturnAmount(vipInfo, unitInfo, vipAmountEntity, ref detailInfo, tran, CurrentUserInfo);
                             if (!string.IsNullOrWhiteSpace(vipAmountDetailId))
                             {//发送返现到账通知微信模板消息
                                 var CommonBLL = new CommonBLL();
@@ -616,7 +616,7 @@ namespace JIT.CPOS.BS.BLL
                             ObjectId = orderInfo.order_id
                         };
 
-                        var employeeSalesUserInfo= userBLL.GetByID(orderInfo.sales_user);
+                        var employeeSalesUserInfo = userBLL.GetByID(orderInfo.sales_user);
                         vipInfo.VIPID = employeeSalesUserInfo.user_id;
                         vipInfo.VipCode = employeeSalesUserInfo.user_code;
                         //账户余额和返现
@@ -627,7 +627,13 @@ namespace JIT.CPOS.BS.BLL
                 }
             }
             #endregion
+
+            #region 会员金矿、订单集客奖励
+            vipBll.SetOffActionSales(vipInfo, orderInfo);
+            #endregion
         }
+       
+        
         /// <summary>
         /// 退换货-确认收货时退回订单奖励积分、返现和佣金
         /// </summary>
@@ -680,7 +686,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="tran">事物</param>
         /// <param name="loggingSessionInfo">登录信息</param>
         /// <returns></returns>
-        public string AddIntegral(ref VipEntity vipInfo, t_unitEntity unitInfo,VipIntegralDetailEntity detailInfo, SqlTransaction tran, LoggingSessionInfo loggingSessionInfo)
+        public string AddIntegral(ref VipEntity vipInfo, t_unitEntity unitInfo, VipIntegralDetailEntity detailInfo, SqlTransaction tran, LoggingSessionInfo loggingSessionInfo)
         {
             string vipIntegralDetailId = string.Empty;//变更明细ID
             //更新个人账户的可使用余额 

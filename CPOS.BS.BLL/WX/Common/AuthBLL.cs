@@ -456,7 +456,8 @@ namespace JIT.CPOS.BS.BLL.WX
                     vipInfo.ClientID = loggionSesionInfo.ClientID;		//客户标识
                     vipInfo.Status = 0;			//客户没有关注
                     vipInfo.VipPasswrod = "e10adc3949ba59abbe56e057f20f883e";  //初始密码123456
-
+                    UnitService unitServer = new UnitService(loggionSesionInfo);
+                    vipInfo.CouponInfo = unitServer.GetUnitByUnitTypeForWX("总部", null).Id; //获取总部门店标识
 
                     var wappBll = new WApplicationInterfaceBLL(loggionSesionInfo);
                     string weixinId = "";

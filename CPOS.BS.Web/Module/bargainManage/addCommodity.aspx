@@ -6,7 +6,7 @@
     <title>砍价列表信息</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <link href="<%=StaticUrl+"/module/bargainManage/css/addCoupon.css?v=0.4"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/bargainManage/css/addCoupon.css?v=0.6"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="allPage" id="section" data-js="js/addBargin.js" >
@@ -115,11 +115,10 @@
                   <em></em>
                   <p id="categoryText">全部</p>
                     <div id="category" class="dropList">
-                      
                     </div>
                 </div>
                 <label class="inputBox"><input type="text" id="keyword" placeholder="商品名称"></label>
-                <a href="javascript:;" id="searchBtn" class="commonBtn searchBtn" style="margin:0;">查询</a>
+                <a href="javascript:;" id="searchBtn" class="commonBtn searchBtn" style="margin-left:0;">查询</a>
             </div>
             <div class="searchResult clearfix">
               <div class="title">
@@ -129,7 +128,6 @@
                 <div id="searchList" class="searchList">
                   
                 </div>
-                
             </div>
             <div id="kkpager1" style="text-align:right;"></div>
         </div>

@@ -34,6 +34,16 @@ namespace JIT.CPOS.BS.BLL
     public partial class T_CTW_LEventBLL
     {
         /// <summary>
+        /// 获取线下二维码URL
+        /// </summary>
+        /// <param name="OnfflineQRCodeId"></param>
+        /// <returns></returns>
+        public string GetOnlineQRCodeUrl(string OnfflineQRCodeId)
+        {
+            return this._currentDAO.GetOnlineQRCodeUrl(OnfflineQRCodeId);
+        }
+
+        /// <summary>
         /// 根据商户CTWEventId获取信息
         /// </summary>
         /// <param name="strCTWEventId"></param>

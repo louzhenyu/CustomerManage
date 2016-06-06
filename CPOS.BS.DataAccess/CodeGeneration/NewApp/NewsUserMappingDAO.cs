@@ -77,6 +77,7 @@ namespace JIT.CPOS.BS.DataAccess
 			pEntity.LastUpdateTime=pEntity.CreateTime;
 			pEntity.CreateBy=CurrentUserInfo.UserID;
 			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+            pEntity.MappingID = NewGuid();
 
 
             StringBuilder strSql = new StringBuilder();

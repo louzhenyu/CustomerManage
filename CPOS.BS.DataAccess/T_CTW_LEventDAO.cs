@@ -42,6 +42,28 @@ namespace JIT.CPOS.BS.DataAccess
     /// </summary>
     public partial class T_CTW_LEventDAO : Base.BaseCPOSDAO, ICRUDable<T_CTW_LEventEntity>, IQueryable<T_CTW_LEventEntity>
     {
+
+
+        /// <summary>
+        /// 获取线下二维码URL
+        /// </summary>
+        /// <param name="OnfflineQRCodeId"></param>
+        /// <returns></returns>
+        public string GetOnlineQRCodeUrl(string OnfflineQRCodeId)
+        {
+            string Url = "";
+            if (!string.IsNullOrWhiteSpace(OnfflineQRCodeId))
+            {
+                string sql = string.Format(@"select ImageURL from WQRCodeManager  
+                where IsDelete=0 and CustomerId='{0}' and QRCodeId='{1}'", CurrentUserInfo.ClientID, OnfflineQRCodeId);
+
+                var Result = this.SQLHelper.ExecuteScalar(sql);
+                if (Result != null)
+                    Url = Result.ToString();
+            }
+            return Url;
+        }
+
         /// <summary>
         /// 根据商户CTWEventId获取信息
         /// </summary>
@@ -196,15 +218,15 @@ namespace JIT.CPOS.BS.DataAccess
             string strColumn = "";
             if (!string.IsNullOrEmpty(EventName))
             {
-                ls.Add(new SqlParameter("@EventName", "%" + EventName+"%"));
+                ls.Add(new SqlParameter("@EventName", "%" + EventName + "%"));
                 sqlWhere += " and temp.Name like @EventName";
             }
-            if (!string.IsNullOrEmpty(EventStatus) && EventStatus!="-1")
+            if (!string.IsNullOrEmpty(EventStatus) && EventStatus != "-1")
             {
                 ls.Add(new SqlParameter("@EventStatus", EventStatus));
                 sqlWhere += " and temp.status=@EventStatus";
             }
-            if (!string.IsNullOrEmpty(ActivityGroupId) )
+            if (!string.IsNullOrEmpty(ActivityGroupId))
             {
                 ls.Add(new SqlParameter("@ActivityGroupId", ActivityGroupId));
                 sqlWhere += " and temp.ActivityGroupId=@ActivityGroupId";
@@ -213,8 +235,8 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 ls.Add(new SqlParameter("@BeginTime", BeginTime));
                 sqlWhere += " and temp.startdate>=@BeginTime";
-              // strColumn = " CONVERT(VARCHAR(50), f.CreateTime, 23) AS UseTime ,";
-              //  strSql += " INNER JOIN CouponUse f ON a.CouponID = f.CouponID  AND f.UnitID = @RetailTraderID"; //内链接的****
+                // strColumn = " CONVERT(VARCHAR(50), f.CreateTime, 23) AS UseTime ,";
+                //  strSql += " INNER JOIN CouponUse f ON a.CouponID = f.CouponID  AND f.UnitID = @RetailTraderID"; //内链接的****
             }
             if (!string.IsNullOrEmpty(EndTime))//已核销
             {
@@ -223,7 +245,7 @@ namespace JIT.CPOS.BS.DataAccess
                 // strColumn = " CONVERT(VARCHAR(50), f.CreateTime, 23) AS UseTime ,";
                 //  strSql += " INNER JOIN CouponUse f ON a.CouponID = f.CouponID  AND f.UnitID = @RetailTraderID"; //内链接的****
             }
-          
+
             //总数据表
             string sql = @"  SELECT Count(1) TotalCount
                         FROM     T_CTW_LEvent temp
@@ -341,7 +363,7 @@ WHERE a.interactiontype = 2
                   where tout._row>{1}*{2} and tout._row<=({1}+1)*{2}";
 
             sql = string.Format(sql, OrderBy, PageIndex - 1, PageSize, sortType, sqlWhere, strSql, strColumn);
-      
+
             DataSet ds = this.SQLHelper.ExecuteDataset(CommandType.Text, sql, ls.ToArray());    //计算总行数
             return ds;
 
@@ -370,7 +392,7 @@ WHERE a.interactiontype = 2
                 ls.Add(new SqlParameter("@CTWEventId", CTWEventId));
                 // sqlWhere += " and a.EventId=@LeventId";
                 sqlWhere += " and a.EventId   in (  select leventid from T_CTW_LEventInteraction where CTWEventId= @CTWEventId)";
-            }        
+            }
             //if (!string.IsNullOrEmpty(BeginTime))//已核销
             //{
             //    ls.Add(new SqlParameter("@BeginTime", EventName));
@@ -380,10 +402,10 @@ WHERE a.interactiontype = 2
 
 
 
-                //(select count(1) from coupon x 
-                //           inner join PrizeCouponTypeMapping y on x.coupontypeid=y.coupontypeid
-                //           inner join vipcouponmapping z on x.couponid=z.couponid 
-                //              where y.PrizesID=a.PrizesID    and z.objectid=a.EventId  and x.status=0  ) as NotUsedCount 
+            //(select count(1) from coupon x 
+            //           inner join PrizeCouponTypeMapping y on x.coupontypeid=y.coupontypeid
+            //           inner join vipcouponmapping z on x.couponid=z.couponid 
+            //              where y.PrizesID=a.PrizesID    and z.objectid=a.EventId  and x.status=0  ) as NotUsedCount 
             //总数据表
             string sql = @"  SELECT Count(1) TotalCount                   
                                 from LPrizes   a
@@ -446,17 +468,17 @@ from LPrizes   a
             //  if (string.IsNullOrEmpty(sortType))
             string sortType = "DESC";
             List<SqlParameter> ls = new List<SqlParameter>();
-          //  ls.Add(new SqlParameter("@CustomerId", customerid));
+            //  ls.Add(new SqlParameter("@CustomerId", customerid));
             string sqlWhere = "";
             string strSql = "";
             string strColumn = "";
             if (!string.IsNullOrEmpty(CTWEventId))
             {
                 ls.Add(new SqlParameter("@CTWEventId", CTWEventId));
-               // sqlWhere += " and a.EventId=@LeventId";
+                // sqlWhere += " and a.EventId=@LeventId";
                 sqlWhere += " and a.EventId   in (  select leventid from T_CTW_LEventInteraction where CTWEventId= @CTWEventId)";
-            }        
-        
+            }
+
 
             //总数据表
             string sql = @"    SELECT Count(1) TotalCount                   
@@ -523,11 +545,11 @@ from LPrizes   a
         /// <returns></returns>
         public DataSet GetCTW_LEventStats(string strCTWEventId)
         {
-            
+
             List<SqlParameter> ls = new List<SqlParameter>();
             ls.Add(new SqlParameter("@CTWEventId", strCTWEventId));
 
-            DataSet ds = this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "Proc_CTW_LEventStats", ls.ToArray());    
+            DataSet ds = this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "Proc_CTW_LEventStats", ls.ToArray());
             return ds;
         }
         /// <summary>
@@ -566,9 +588,9 @@ from LPrizes   a
             if (!string.IsNullOrEmpty(CTWEventId))
             {
                 ls.Add(new SqlParameter("@CTWEventId", CTWEventId));
-               // sqlWhere += " and ps.EventId=@LeventId";
+                // sqlWhere += " and ps.EventId=@LeventId";
                 sqlWhere += " and ps.EventId   in (  select leventid from T_CTW_LEventInteraction where CTWEventId= @CTWEventId)";
-            }        
+            }
             //if (!string.IsNullOrEmpty(BeginTime))//已核销
             //{
             //    ls.Add(new SqlParameter("@BeginTime", EventName));
@@ -728,7 +750,7 @@ from LPrizes   a
                 ls.Add(new SqlParameter("@CTWEventId", CTWEventId));
                 // sqlWhere += " and ps.EventId=@LeventId";
                 sqlWhere += " and ps.EventId   in (  select leventid from T_CTW_LEventInteraction where CTWEventId= @CTWEventId)";
-            }        
+            }
 
             //if (!string.IsNullOrEmpty(BeginTime))//已核销
             //{

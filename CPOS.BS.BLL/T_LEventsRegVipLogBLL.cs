@@ -139,5 +139,43 @@ namespace JIT.CPOS.BS.BLL
                 BaseService.WriteLogWeixin(" 创意仓库日志：" + ex.ToString() + "+");
             }
         }
+
+
+        public void CouponRegOrFocusLog(string strCTWEventId, string strRegVipId, string strFocusVipId, LoggingSessionInfo loggingSession, string strType)
+        {
+            string strVipId = string.Empty;
+            if (strType == "Reg")
+            {
+                strVipId = strRegVipId;
+            }
+            if (strType == "Focus")
+            {
+                strVipId = strFocusVipId;
+            }
+            BaseService.WriteLogWeixin(" 创意仓库日志：" + strCTWEventId + "+" + strVipId + "+" + strType);
+            try
+            {
+
+
+                int intResult = this._currentDAO.IsExistsLog(strCTWEventId, strVipId, strType, loggingSession.ClientID);
+                if (intResult == 0)
+                {
+
+                    T_LEventsRegVipLogEntity entityRegVipLog = new T_LEventsRegVipLogEntity();
+
+                    entityRegVipLog.BusTypeCode = "Coupon";
+                    entityRegVipLog.ObjectId = strCTWEventId;
+                    entityRegVipLog.RegVipId = strRegVipId;
+                    entityRegVipLog.FocusVipId = strFocusVipId;
+                    entityRegVipLog.CustomerId = loggingSession.ClientID;
+                    this._currentDAO.Create(entityRegVipLog);                   
+                }
+            }
+            catch (Exception ex)
+            {
+
+                BaseService.WriteLogWeixin(" 优惠券注册日志：" + ex.ToString() + "+");
+            }
+        }
     }
 }

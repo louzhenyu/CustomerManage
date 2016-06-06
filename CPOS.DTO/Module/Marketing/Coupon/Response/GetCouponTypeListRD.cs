@@ -25,6 +25,14 @@ namespace JIT.CPOS.DTO.Module.Marketing.Coupon.Response
 
         public DateTime? BeginTime { get; set; }
         public DateTime? EndTime { get; set; }
+        /// <summary>
+        /// 年月日格式
+        /// </summary>
+        public string BeginTimeDate { get; set; }
+        /// <summary>
+        /// 年月日格式
+        /// </summary>
+        public string EndTimeDate { get; set; }
         public int? ServiceLife { get; set; }
 
     }

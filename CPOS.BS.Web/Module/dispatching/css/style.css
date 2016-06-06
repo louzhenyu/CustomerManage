@@ -11,6 +11,7 @@
 .jui-dialog-dispatching .searchInput .textbox{width:420px;height:32px;}
 .jui-dialog-dispatching .searchInput input[disabled='disabled'],
 .jui-dialog-dispatching .searchInput textarea[disabled='disabled']{background:#ccc;}
+.jui-dialog-dispatching .searchInput input[readonly='readonly']{background:#ccc;}
 
 .jui-dialog-dispatching .radioBox{float:left;height:24px;line-height:24px;margin:6px 0 0 24px;padding-left:30px;background:url(../../styles/images/newYear/radio.png) no-repeat left center;cursor:pointer;}
 .jui-dialog-dispatching .radioBox.on{background:url(../../styles/images/newYear/radioOn.png) no-repeat left center;}

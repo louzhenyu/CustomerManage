@@ -145,15 +145,15 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
 					if(page.commodityStatus=='2'){
 						$('#goodsBasic_exit').find('input').attr('disabled',true);
 						$('#campaignName').attr('disabled',false);
-						$('#campaignBegin').css('background','#ccc');
-						$('#campaignEnd').css('background','#ccc');
+						$('#campaignBegin').addClass('disab');
+						$('#campaignEnd').addClass('disab');
 						
 					}
 					else if(page.commodityStatus=='3'){
 						$('#goodsBasic_exit').find('input').attr('disabled',true);
 						$('#campaignName').attr('disabled',false);
-						$('#campaignBegin').css('background','#ccc');
-						$('#campaignEnd').css('background','#ccc');
+						$('#campaignBegin').addClass('disab');
+						$('#campaignEnd').addClass('disab');
 					}
                     
                 })
@@ -320,9 +320,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                 that.loadData.sku.SinglePurchaseQty = singlePurchaseQtyInput.val()||0;
                 that.loadData.sku.BargaingingInterval = BargaingingIntervalInput.val();
 				that.loadData.sku.mappingId=itemMappingId;
-                $('#goodsInfo .quotaBox').find('input').click(function(){
-                   $(this).css('border','1px solid #ccc');
-                })
+                
                 if(items.length==0){
                     alert("请至少选择一个规格后再提交!");
                     return;
@@ -578,8 +576,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                 var CouponTypeName = $(this).data("typename");
                 that.elems.tabel.datagrid('selectRow', rowIndex);
                 var row = that.elems.tabel.datagrid('getSelected');
-                that.loadData.args.EventItemMappingID = row.EventItemMappingID;
-				
+                that.loadData.args.EventItemMappingID = row.EventItemMappingID
                 if(optType=="exit"){
                     var $t=$(this);
                     var itemId=$t.data("itemid"),shopName=$t.data("name");  //商品id 和商品名称
@@ -618,8 +615,8 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
 									
 								})
 							  $("#rules").attr('data_itemMappingId',row.EventItemMappingID);
-							  $('#goodsInfo').find('.quotaBox').eq(1).find('input').val(BargaingingInterval);
-							  $('#goodsInfo').find('.quotaBox').eq(0).find('input').val(SinglePurchaseQty);
+							  $('#singleCount').val(SinglePurchaseQty);
+							  $('#barginTime').val(BargaingingInterval);
 							  $('#goodsInfo .quotaBox').find('input').addClass('disab');
 							  $('#goodsInfo .quotaBox').find('input').attr('disabled',true);
                               var data_id = $('#rules').find('.item');
@@ -637,8 +634,6 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                               }
                               $("#goodsInfo .shopName").html(shopName);
                               $("#rules .editArea .shopName").html(shopName);
-                              $("#singleCount").css({border:"1px solid ccc"});
-                              $("#barginTime").css({border:"1px solid ccc"});
                               that.showElements("#addNewRules");
                           }
                       });

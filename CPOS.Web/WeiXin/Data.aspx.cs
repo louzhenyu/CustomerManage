@@ -222,8 +222,9 @@ namespace JIT.CPOS.Web.WeiXin
                             //vipInfo.CouponInfo = qrcode;//CouponInfo已作为会籍店使用                         
                             vipInfo.HeadImgUrl = headimgurl;
                             vipInfo.Col25 = "";
-
-
+                            //couponInfo字段保存总部门店ID
+                            UnitService unitServer = new UnitService(loggingSessionInfo);
+                            vipInfo.CouponInfo = unitServer.GetUnitByUnitTypeForWX("总部", null).Id; //获取总部门店标识
                             if (vipObj == null || vipObj.Length == 0 || vipObj[0] == null)
                             {
 
@@ -1380,7 +1381,7 @@ namespace JIT.CPOS.Web.WeiXin
                 vipInfo.WeiXin = WeiXin;
                 vipInfo.VipSourceId = "3";
                 vipInfo.HeadImgUrl = headimgurl;
-
+                
                 var vipObj = vipServiceUnion.QueryByEntity(vipQueryInfo, null);
 
                 //取消关注做一个标识，以和未关注的oauth认证做区别***
@@ -1404,7 +1405,8 @@ namespace JIT.CPOS.Web.WeiXin
                     //if(qrcode_id != null && !qrcode_id.Equals(""))
                     vipInfo.Col50 = iRad.ToString();
                     vipInfo.RegistrationTime = DateTime.Now;
-
+                    UnitService unitServer = new UnitService(tmpUser);
+                    vipInfo.CouponInfo = unitServer.GetUnitByUnitTypeForWX("总部", null).Id; //获取总部门店标识
                     //根据UnionID判断已关注其他绑定公众号
                     if (!string.IsNullOrEmpty(vipInfo.UnionID))
                     {

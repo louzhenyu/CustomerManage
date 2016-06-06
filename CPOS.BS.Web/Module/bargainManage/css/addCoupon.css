@@ -7,7 +7,7 @@
 
 .listBtn.show{ border-color: #07c8cf}
 .listBtn.show .on{ display: block;}
-.queryTermArea{height:50px;padding: 0;line-height: 50px;min-height:50px;padding-left:20px;color:#666;font-size: 16px;}
+.queryTermArea{height:50px;padding: 0;line-height: 50px;min-height:50px;padding-left:20px;color:#666;font-size: 16px;border-top:1px solid #e1e7ea;border-bottom:1px solid #e1e7ea;}
 .queryTermArea .panelDiv{padding:0;}
 .panlDiv{ display: block;  border-bottom: 1px solid #d0d5d8;padding-top:5px; padding-bottom: 5px; position: relative; }
 .panlDiv .commonSelectWrap{ display: block; float: none; margin-top: 20px;}
@@ -16,7 +16,7 @@
 #goodsBasic_exit .optionclass .borderNone .numberbox{width:260px;}
 #goodsBasic_exit .optionclass select{border:1px solid #ddd;border-radius:3px;height:32px;margin-left:9px;}
 
-.barginManageTitle{margin:40px auto 40px 40px;height:68px;}
+.barginManageTitle{margin:35px auto 40px 40px;height:70px;}
 .barginManageTitle .title{color:#666;}
 .barginManageTitle .title h3{float:left;font-size:15px;line-height:30px;}
 .barginManageTitle .title p{font-size:15px;float:left;margin-left:4px;line-height:30px;}
@@ -35,6 +35,7 @@
 .panlDiv .commonSelectWrap .searchInput .linetext span{  margin-left:5px; }
 .panlDiv .commonSelectWrap .tit .checkBox{float: right}
 .pl_45{padding-left:45px;}
+.searchInput input.disab{background-color:#ddd;opacity:0.7;}
 /*.commonSelectWrap .tit{ text-align: left; padding-left: 28px;} */  /*左对齐文本框 */
 .panlDiv .commonSelectWrap .searchInput  .explain{ color: #999}
 
@@ -47,7 +48,8 @@
 .panlDiv .listTable .datagrid { border-color:#d0d5d8 }
 .panlDiv .listTable .datagrid .panel-header{ border-bottom: none}
 .panlDiv .listTable .datagrid-header{border-bottom: none;}
-
+.panelDiv .title{margin:18px 0;}
+.dataMessage{width:1100px;}
 #Tooltip .treeNode { width: 222px;min-height: 65px; max-height: 150px; overflow: auto;}
 .btnlist{ padding-top:5px; padding-bottom: 15px;width: 100%;  height: auto; float: left;}
 .addunitBtn {height: 32px; float: left; cursor: pointer; border: #ccc 1px solid;font-size: 15px; color:#07c8cf; width: 160px; line-height: 32px; text-align: center;}
@@ -89,7 +91,7 @@
 .jui-dialog-addRule-info .quotaBox input{width:56px;height:32px;border:1px solid #ccc;border-radius:4px;color:#333;margin-right:3px;text-align:center;}
 
 .jui-dialog .cancelBtn{margin-left:35px;background:#949ca7;}
-.jui-dialog-addRule-edit .item{height:100px;padding-top:20px;*padding-top:0px;}
+.jui-dialog-addRule-edit .item{height:160px;padding-top:20px;*padding-top:0px;border-bottom:1px solid #e1e7ea;}
 .jui-dialog-addRule-edit .editArea{height:28px;}
 .jui-dialog-addRule-edit .checkBox{float:left;width:240px;height:28px;line-height:28px;}
 .jui-dialog-addRule-edit .checkBox span{float:left;width:20px;height:28px;margin-right:13px;background:url(../images/checkBox01.png) no-repeat center center;}
@@ -114,7 +116,7 @@
 .jui-dialog-addShop .contentArea{width:730px;min-height:300px;margin:0 auto;border-left: 0px;}
 .jui-dialog-addShop .searchWrap{height:35px;margin:30px 0 25px 0;}
 .jui-dialog-addShop .searchWrap .tit{float:left;font:16px/35px "黑体";color:#404853;}
-.jui-dialog-addShop .selectBox{position:relative;float:left;width:152px;height:35px;margin:0 25px;border:1px solid #ccc;cursor:pointer;}
+.jui-dialog-addShop .selectBox{position:relative;float:left;width:152px;height:35px;margin:0 25px;border:1px solid #ccc;cursor:pointer;border-radius:4px;}
 .jui-dialog-addShop .selectBox em{float:right;width:28px;height:23px;margin-top:6px;border-left:1px solid #ccc;background:url(../images/selectIcon.png) no-repeat center center;}
 .jui-dialog-addShop .selectBox p{margin-right:28px;line-height:35px;text-indent:8px;font-size:14px;}
 .jui-dialog-addShop .selectBox:hover .dropList{display:block;}

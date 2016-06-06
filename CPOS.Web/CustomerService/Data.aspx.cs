@@ -118,7 +118,28 @@ namespace JIT.CPOS.Web.CustomerService
                     var reqObj = requestData.DeserializeJSONTo<SendMessageReqData>();
                     var loggingSessionInfo = Default.GetBSLoggingSession(reqObj.common.customerId, "1");
                     CSInvokeMessageBLL bll = new CSInvokeMessageBLL(loggingSessionInfo);
-                    bll.SendMessage(reqObj.special.csPipelineId
+                    if (!string.IsNullOrEmpty(reqObj.special.objectType))
+                    {
+                        bll.SendMessage(reqObj.special.csPipelineId
+                        , reqObj.common.userId
+                        , reqObj.special.isCS, reqObj.special.messageId
+                        , reqObj.special.messageContent
+                        , reqObj.special.serviceTypeId
+                        , reqObj.special.objectId
+                        , reqObj.special.messageTypeId
+                        , reqObj.special.Articles
+                        , reqObj.special.Title
+                        , reqObj.special.Description
+                        , reqObj.special.PicUrl
+                        , reqObj.special.Url
+                        , reqObj.special.objectType
+                        , reqObj.special.contetTypeId
+                        , reqObj.special.sign
+                        , reqObj.special.mobileNo, reqObj.special.VipIDInit);
+                    }
+                    else
+                    {
+                        bll.SendMessage(reqObj.special.csPipelineId
                         , reqObj.common.userId
                         , reqObj.special.isCS, reqObj.special.messageId
                         , reqObj.special.messageContent
@@ -128,6 +149,8 @@ namespace JIT.CPOS.Web.CustomerService
                         , reqObj.special.contetTypeId
                         , reqObj.special.sign
                         , reqObj.special.mobileNo, reqObj.special.VipIDInit);
+                    }
+                    
                 }
             }
             catch (Exception ex)
@@ -158,7 +181,12 @@ namespace JIT.CPOS.Web.CustomerService
             public string sign;
             public string mobileNo;
             public string VipIDInit;//员工主动向会员发起会话的vipID
-            
+            public string Articles;
+            public string Title;
+            public string Description;
+            public string PicUrl;
+            public string Url;
+            public string objectType;
         }
         public class SendMessageRespData : Default.LowerRespData
         {

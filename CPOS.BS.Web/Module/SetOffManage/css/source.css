@@ -1,0 +1,45 @@
+﻿@charset "utf-8";
+
+
+/*集客来源界面*/
+
+/*集客来源展示数据*/
+.sourceTotal{margin:30px 15px 0px;width:100%}
+/*查看天数选择*/
+.soruceTitle{height:15px;border-left:3px solid #00a0e8;margin-bottom:25px;padding-left:7px;}
+.soruceTitle span {color:#666666}
+.checkDay{display:inline-block;float:right}
+#checkDSeven{color:#038efe;margin-right:15px;}
+#checkDThi {color:#999999 }
+/*查看数据*/
+.dourcedata{width:100%;height:230px;margin-bottom:15px}
+.sourcebase{height:228px;width:27%;float:left;}
+.sourcebase1{height:228px;width:23%;float:left;}
+.totalTitle{background-color:#ff4d4d;height:40px;line-height:38px;color:#ffffff;padding-left:15px}
+.title{background-color:#f7f7fa;height:40px;line-height:40px;color:#999999;padding-left:15px}
+.num{margin:0px 7.5px; padding:0px 15px}
+.numTitle{height:40px;line-height:40px;}
+.numNow{height:40px;margin:10px auto 0px;width:200px;text-align:center; color:#ff4d4d;font-size:18px; }
+.numNow2{height:40px;margin:10px auto 0px;width:200px;text-align:center; color:#01a1ff;font-size:18px; }
+/*集客趋势图表*/
+.soruceChart{border:1px solid #f0f0f2;width:95%; border-radius:2px;height:345px;margin-left:7px;}
+.chartTitle{background-color:#f7f7fa;color:#999999;padding-left:12px;height:40px;line-height:40px;}
+.chart{height:300px;width:95%;}
+/*通知框*/
+.messagediv{padding:10px;margin:30px 20px 40px;}
+.textdiv{border-bottom:1px solid #eeeeee;width: 540px;height: 295px;}
+.textareastyle{border:1px solid #e5e5e5;width:476px;height:82px;border-radius:2px;}
+.messageBtn{height:60px;text-align:center;padding:5px 0 0; border-top:1px solid #e5e5e5}
+.messageBtn .cancel{display:inline-block; background-color:#ffffff;color:#00a0e8;border:1px #00a0e8 solid;}
+/*icon*/
+.incos{vertical-align: top;}
+.incoB{vertical-align: middle;}
+/*通用样式*/
+.border{border-top:1px solid #eeeeee}
+.bordergrey{border:1px solid #f0f0f2;}
+.fontcolor{color:#999999;font-size:14px;}
+.colorred{color:#ff4d4d}
+.colorgrey{color:#999999}
+.colorblue{color:#01a1ff}
+.font18{font-size:18px}
+.font24{font-size:24px;}

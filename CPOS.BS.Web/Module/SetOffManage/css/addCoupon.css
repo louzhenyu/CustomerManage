@@ -1,0 +1,135 @@
+@charset "utf-8";
+.ui-pc-mask{display:none;position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:#000;opacity:0.7;filter:alpha(opacity=70);z-index:999;}
+
+
+.listBtn{ width: 170px; height: 50px; border-radius: 2px; float: left;cursor: pointer; text-align: center; line-height: 50px; color: #666; font-size: 16px; background: #fff; position: relative; margin-left: 50px; border:1px solid #e1e1e1 }
+.listBtn .on{ background:url("../images/duihao.png") no-repeat; width: 18px; height: 18px; position:absolute; right: 0; bottom: 0;display: none}
+
+.listBtn.show{ border-color: #07c8cf}
+.listBtn.show .on{ display: block;}
+.queryTermArea{height:50px;padding: 0;line-height: 50px;min-height:50px;padding-left:20px;color:#666;font-size: 16px;}
+.queryTermArea .panelDiv{padding:0;}
+.panlDiv{ display: block;  border-bottom: 1px solid #d0d5d8;padding-top:5px; padding-bottom: 5px; position: relative; }
+.panlDiv .commonSelectWrap{ display: block; float: none; margin-top: 20px;}
+#goodsBasic_exit .btnWrap{padding:15px;}
+#goodsBasic_exit .optionclass .searchInput{display:inline;float:none;}
+#goodsBasic_exit .optionclass .borderNone .numberbox{width:260px;}
+#goodsBasic_exit .optionclass select{border:1px solid #ddd;border-radius:3px;height:32px;margin-left:9px;}
+
+.barginManageTitle{margin:40px auto 40px 40px;height:68px;}
+.barginManageTitle .title{color:#666;}
+.barginManageTitle .title h3{float:left;font-size:15px;line-height:30px;}
+.barginManageTitle .title p{font-size:15px;float:left;margin-left:4px;line-height:30px;}
+.barginManageTitle .optionBtn{width:auto;padding:0;height:auto;}
+.barginManageTitle .optionBtn .commonBtn{width:70px;}
+.barginManageTitle .commonSelectWrap{height:auto;margin:20px 20px 0 0;width:200px;font-size:14px;color:#999;}
+.barginManageTitle .commonSelectWrap .tit{text-align:left;font-size:14px;}
+.barginManageTitle .commonSelectWrap p{line-height: 30px;}
+
+#goodsInfo .disab{border:none;background:none;}
+/*.panlDiv .commonSelectWrap .searchInput{ width: 238px;}*/
+.panlDiv .commonSelectWrap .searchInput.whauto{ width: auto; height: auto;}
+.panlDiv .commonSelectWrap .searchInput .line{ height: 46px;}
+.panlDiv .commonSelectWrap .searchInput .linetext{ height: 28px; line-height: 28px; padding-left:10px;   color: #666; float: left; display: inline;}
+.panlDiv .commonSelectWrap .searchInput .linetext input{ width: 100px; height: 28px; }
+.panlDiv .commonSelectWrap .searchInput .linetext span{  margin-left:5px; }
+.panlDiv .commonSelectWrap .tit .checkBox{float: right}
+.pl_45{padding-left:45px;}
+/*.commonSelectWrap .tit{ text-align: left; padding-left: 28px;} */  /*左对齐文本框 */
+.panlDiv .commonSelectWrap .searchInput  .explain{ color: #999}
+
+.listItem{padding-top:12px; padding-left: 126px;}
+.listItem .icon{ background:url(../images/iconDel.png) no-repeat 0 0; width: 30px; height: 30px; position: absolute;display: none;cursor: pointer;}
+.listItem .unitBtn{cursor: pointer; min-width: 32px; height: 32px; padding:0 8px; border: 1px solid #07c8cf; position: relative; float: left; margin-right:30px; line-height: 32px; color: #07c8cf; font-size: 15px;}
+.listItem .unitBtn .icon{ top: -16px; right: -16px;}
+.listItem .unitBtn:last-of-type { margin-right: 12px;}
+.panlDiv .listTable{padding-left: 80px;  float: left; width: 640px;}
+.panlDiv .listTable .datagrid { border-color:#d0d5d8 }
+.panlDiv .listTable .datagrid .panel-header{ border-bottom: none}
+.panlDiv .listTable .datagrid-header{border-bottom: none;}
+
+#Tooltip .treeNode { width: 222px;min-height: 65px; max-height: 150px; overflow: auto;}
+.btnlist{ padding-top:5px; padding-bottom: 15px;width: 100%;  height: auto; float: left;}
+.addunitBtn {height: 32px; float: left; cursor: pointer; border: #ccc 1px solid;font-size: 15px; color:#07c8cf; width: 160px; line-height: 32px; text-align: center;}
+.btnWrap{padding:25px 0;text-align:center;}
+.btnWrap a{display:inline-block;}
+#Tooltip{padding-bottom: 45px;}
+#Tooltip .tooltip-content{height: 180px;}
+.btnList{ position:absolute; border-top: 1px solid #ccc; padding-top: 10px;  left: 0; bottom: 0; width: 100%; height:45px; background-color: #fff; border-radius: 0;}
+.btnList .commonBtn{ color: #00cccc; width: 50px;height: 25px; border-color: #07c8cf; border-width:1px; border-style: solid; line-height: 25px; background-color:inherit;}
+.btnList .commonBtn{ float: left; margin-left: 40px;}
+.btnList .commonBtn.r{ border-color:#ccc; color: #ccc; }
+.optionclass {text-align: center; padding: 10px;}
+.optionclass .title{display: inline-block;}
+.optionclass .borderNone{display: inline-block;}
+
+.bordernone{ border: none;}
+.searchBtn{float: left;width: 88px; margin-left: 346px;height: 33px;line-height: 33px;}
+.searchGrid{ width: 338px; height: 280px; border:#00cccc solid 1px; margin: 0 auto; margin-top: 10px;}
+.radio { float: left;}
+.r{ float: right;width:100px;vertical-align: inherit;}
+.r img{vertical-align: inherit;}
+.checkBox.r{ margin-left: 25px; margin-top: 10px;}
+.texlist{ line-height: 30px; text-align: left;width: 88%}
+.texlist img{ float: right; margin-right: 35px; margin-top: 5px;}
+.panlDiv .datagrid-header-row{ display: none}
+/*弹层，活动产品新规则*/
+.jui-dialog.jui-dialog-addGoogs{width:440px;height:302px;margin:-151px 0 0 -220px;}
+.jui-dialog.jui-dialog-addRule{width:820px;height:500px;margin:-250px 0 0 -410px;}
+.jui-dialog-addRule-edit{padding:0;font-size:14px;color:#333;overflow-y:auto;height:300px;}
+.jui-dialog-addRule .ruleTitText{padding:10px 0 5px 53px;font:16px/1.2em "黑体";color:#666;}
+.jui-dialog-addRule-info{height:70px;padding:0 40px 0 33px;font:16px/1.2em "黑体";background:#fafafa;border-bottom: 1px solid #e1e7ea}
+.jui-dialog-addRule-info .shopTit{padding:20px 0 26px 0;color:#666;}
+.jui-dialog-addRule-info .shopName{float:left;width:320px;height:50px;line-height:50px;font-weight:bold;overflow:hidden;color:#666;}
+.jui-dialog-addRule-info .quotaBox{float:right;}
+.jui-dialog-addRule-info .quotaBox:nth-of-type(1){margin-left:50px;}
+.jui-dialog-addRule-info .quotaBox em{float:left;line-height:49px;color:#666;font-size:14px;}
+.jui-dialog-addRule-info .quotaBox .inputBox{float:left;}
+.jui-dialog-addRule-info .quotaBox p:nth-of-type(2){font-size:13px;color:#999;}
+.jui-dialog-addRule-info .quotaBox input{width:56px;height:32px;border:1px solid #ccc;border-radius:4px;color:#333;margin-right:3px;text-align:center;}
+
+.jui-dialog .cancelBtn{margin-left:35px;background:#949ca7;}
+.jui-dialog-addRule-edit .item{height:100px;padding-top:20px;*padding-top:0px;}
+.jui-dialog-addRule-edit .editArea{height:28px;}
+.jui-dialog-addRule-edit .checkBox{float:left;width:240px;height:28px;line-height:28px;}
+.jui-dialog-addRule-edit .checkBox span{float:left;width:20px;height:28px;margin-right:13px;background:url(../images/checkBox01.png) no-repeat center center;}
+.jui-dialog-addRule-edit .editArea label{float:left;white-space: nowrap;}
+.jui-dialog-addRule-edit .editArea p{line-height:28px;}
+.jui-dialog-addRule-edit .item input{float:left;width:76px;height:32px;font-family:"Arial";border:1px solid #ccc;border-radius:5px;background:#f3f3f6;color:#666;text-align:center;}
+.jui-dialog-addRule-edit .item.on input{background:#fff;}
+.jui-dialog-addRule-edit .item.on .checkBox span{background:url(../images/checkBox02.png) no-repeat center center;}
+.jui-dialog-addRule-edit .item.on.disab .checkBox span{background:url(../images/checkBox03.png) no-repeat center center;}
+.jui-dialog-addRule-edit .editArea input:disabled{background:none;}
+.jui-dialog-addRule-edit .editArea em{float:left;width:115px;line-height:32px;text-align:right;}
+.jui-dialog-addRule-edit .editArea em:nth-of-type(2){width:auto;margin-left:5px;}
+.jui-dialog-addRule-edit .editArea .ml{margin-left:2px;}
+.jui-dialog-addRule-edit .editArea .ml input{border:none;background:#fff;}
+.jui-dialog-addRule-edit .editArea .base input{border:1px solid #ccc;background:none;}
+.jui-dialog-addRule-edit .mtmb{margin-bottom:8px;line-height: 45px;}
+.jui-dialog-addRule-edit .mtmb em:last-child{width:auto;margin-left:5px;}
+.jui-dialog-addRule-edit .editArea.pl{height:45px;line-height: 45px;margin-top:15px;}
+.jui-dialog-addRule-edit .editArea.pl label:nth-of-type(2){margin-left:170px;}
+/*弹层，添加商品*/
+.jui-dialog.jui-dialog-addShop{width:820px;height:600px;margin:-300px 0 0 -410px;}
+.jui-dialog-addShop .contentArea{width:730px;min-height:300px;margin:0 auto;border-left: 0px;}
+.jui-dialog-addShop .searchWrap{height:35px;margin:30px 0 25px 0;}
+.jui-dialog-addShop .searchWrap .tit{float:left;font:16px/35px "黑体";color:#404853;}
+.jui-dialog-addShop .selectBox{position:relative;float:left;width:152px;height:35px;margin:0 25px;border:1px solid #ccc;cursor:pointer;}
+.jui-dialog-addShop .selectBox em{float:right;width:28px;height:23px;margin-top:6px;border-left:1px solid #ccc;background:url(../images/selectIcon.png) no-repeat center center;}
+.jui-dialog-addShop .selectBox p{margin-right:28px;line-height:35px;text-indent:8px;font-size:14px;}
+.jui-dialog-addShop .selectBox:hover .dropList{display:block;}
+.jui-dialog-addShop .dropList{display:none;position:absolute;top:34px;*top:36px;left:-1px;width:152px;border-left:1px solid #ccc;border-right:1px solid #ccc;background:#f1f1f1;overflow-y: auto;}
+.jui-dialog-addShop .dropList span{display:block;height:35px;line-height:35px;text-align:center;font-size:14px;border-bottom:1px solid #ccc;}
+.jui-dialog-addShop .dropList span:hover{background:#f8f8f8;}
+.jui-dialog-addShop .inputBox{float:left;height:35px;margin-right:25px;border:1px solid #ccc;border-radius:5px;}
+.jui-dialog-addShop .inputBox input{display:block;width:308px;height:32px;border:none;border-radius:5px;padding-left:5px;}
+.jui-dialog-addShop .searchBtn{float:left;width:72px;height:30px;line-height:32px;margin-top:3px;font-size:12px;}
+.jui-dialog-addShop .searchResult{min-height:300px;border:1px solid #ccc;}
+.jui-dialog-addShop .searchResult h2{height:56px;background:#f6f6f7;border-bottom:1px solid #e9e9ea;font-size:16px;line-height:56px;}
+.jui-dialog-addShop .searchResult .classify{float:left;width:251px;text-indent:62px;border-right:1px solid #e9e9ea;overflow:hidden;}
+.jui-dialog-addShop .searchResult .shopName{margin-left:251px;text-indent:60px;}
+.jui-dialog-addShop .searchList{height:345px;overflow-y:auto;}
+.jui-dialog-addShop .searchList li{height:35px; cursor: pointer}
+.jui-dialog-addShop .searchList li p{height:35px;line-height:35px;font-size:14px;}
+
+.jui-dialog-addShop .searchList li:nth-of-type(even){background:#fafafa;}

@@ -237,9 +237,28 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                 rd.OrderList = orderList;
             }
 
+            MessageInfo message = new MessageInfo();
 
 
+            InnerGroupNewsBLL InnerGroupNewsService = new InnerGroupNewsBLL(CurrentUserInfo);
+            SetoffToolsBLL setofftoolsService = new SetoffToolsBLL(CurrentUserInfo);
+
+            //1=微信用户 2=APP员工
+            int UnReadInnerMessageCount = InnerGroupNewsService.GetVipInnerGroupNewsUnReadCount(CurrentUserInfo.UserID, pRequest.CustomerID, 1,null);
+            var setofftoolsMessageCount = setofftoolsService.GetUnReadSetoffToolsCount(CurrentUserInfo.UserID, pRequest.CustomerID, 1, 1);
+            message.InnerGroupNewsCount = UnReadInnerMessageCount;
+            message.SetoffToolsCount = setofftoolsMessageCount;
+            rd.MessageInfo = message;
             return rd;
         }
+        //public class InnerGroupNewsInfo
+        //{
+        //    public string GroupNewsId { get; set; }
+        //    public string Title { get; set; }
+        //    public string Text { get; set; }
+        //    public DateTime CreateTime { get; set; }
+        //    public string IsRead { get; set; } //是否已读
+
+        //}
     }
 }

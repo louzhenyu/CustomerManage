@@ -55,5 +55,16 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GrantCoupon(strGiver, strGrantee, strCouponId);
         }
+        /// <summary>
+        /// 判断同种券的优惠券是否已领取(如果做限制需要加)
+        /// </summary>
+        /// <param name="pVipID">领取人ID</param>
+        /// <param name="pCouponTypeID">券种ID</param>
+        /// <param name="pSourceType">券来源类型</param>
+        /// <returns>0=表示此种券未领取过，>0表示已领取过</returns>
+        public int GetReceiveCouponCount(string pVipID, string pCouponTypeID, string pSourceType)
+        {
+            return this._currentDAO.GetReceiveCouponCount(pVipID, pCouponTypeID, pSourceType    );
+        }
     }
 }

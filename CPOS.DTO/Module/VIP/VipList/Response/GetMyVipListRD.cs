@@ -74,5 +74,6 @@ namespace JIT.CPOS.DTO.Module.VIP.VipList.Response
         /// 会员状态
         /// </summary>
         public int? Status { get; set; }
+        public string RegistrationTime { get; set; }
     }
 }

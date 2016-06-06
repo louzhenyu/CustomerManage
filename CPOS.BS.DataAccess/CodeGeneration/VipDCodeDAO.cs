@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [VipDCode](");
-            strSql.Append("[CustomerId],[UnitId],[OpenId],[Status],[ImageUrl],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[SalesAmount],[IsReturn],[ArriveDate],[ReturnAmount],[ObjectId],[VipId],[DCodeId],[DCodeType])");
+            strSql.Append("[CustomerId],[UnitId],[OpenId],[Status],[ImageUrl],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[SalesAmount],[IsReturn],[ArriveDate],[ReturnAmount],[ObjectId],[VipId],[DCodeType],[OwnerUserId],[DCodeId])");
             strSql.Append(" values (");
-            strSql.Append("@CustomerId,@UnitId,@OpenId,@Status,@ImageUrl,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@SalesAmount,@IsReturn,@ArriveDate,@ReturnAmount,@ObjectId,@VipId,@DCodeId,@DCodeType)");            
+            strSql.Append("@CustomerId,@UnitId,@OpenId,@Status,@ImageUrl,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@SalesAmount,@IsReturn,@ArriveDate,@ReturnAmount,@ObjectId,@VipId,@DCodeType,@OwnerUserId,@DCodeId)");            
 
 			string pkString = pEntity.DCodeId;
 
@@ -105,8 +105,9 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@ReturnAmount",SqlDbType.Decimal),
 					new SqlParameter("@ObjectId",SqlDbType.NVarChar),
 					new SqlParameter("@VipId",SqlDbType.NVarChar),
-					new SqlParameter("@DCodeId",SqlDbType.NVarChar),
-                    new SqlParameter("@DCodeType",SqlDbType.NVarChar)
+					new SqlParameter("@DCodeType",SqlDbType.Int),
+					new SqlParameter("@OwnerUserId",SqlDbType.NVarChar),
+					new SqlParameter("@DCodeId",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.CustomerId;
 			parameters[1].Value = pEntity.UnitId;
@@ -124,8 +125,9 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[13].Value = pEntity.ReturnAmount;
 			parameters[14].Value = pEntity.ObjectId;
 			parameters[15].Value = pEntity.VipId;
-			parameters[16].Value = pkString;
-            parameters[17].Value = pEntity.DCodeType;
+			parameters[16].Value = pEntity.DCodeType;
+			parameters[17].Value = pEntity.OwnerUserId;
+			parameters[18].Value = pkString;
 
             //执行并将结果回写
             int result;
@@ -244,7 +246,13 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.ObjectId!=null)
                 strSql.Append( "[ObjectId]=@ObjectId,");
             if (pIsUpdateNullField || pEntity.VipId!=null)
-                strSql.Append( "[VipId]=@VipId");
+                strSql.Append( "[VipId]=@VipId,");
+            if (pIsUpdateNullField || pEntity.DCodeType!=null)
+                strSql.Append( "[DCodeType]=@DCodeType,");
+            if (pIsUpdateNullField || pEntity.OwnerUserId!=null)
+                strSql.Append( "[OwnerUserId]=@OwnerUserId");
+            if (strSql.ToString().EndsWith(","))
+                strSql.Remove(strSql.Length - 1, 1);
             strSql.Append(" where DCodeId=@DCodeId ");
             SqlParameter[] parameters = 
             {
@@ -261,6 +269,8 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@ReturnAmount",SqlDbType.Decimal),
 					new SqlParameter("@ObjectId",SqlDbType.NVarChar),
 					new SqlParameter("@VipId",SqlDbType.NVarChar),
+					new SqlParameter("@DCodeType",SqlDbType.Int),
+					new SqlParameter("@OwnerUserId",SqlDbType.NVarChar),
 					new SqlParameter("@DCodeId",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.CustomerId;
@@ -276,7 +286,9 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[10].Value = pEntity.ReturnAmount;
 			parameters[11].Value = pEntity.ObjectId;
 			parameters[12].Value = pEntity.VipId;
-			parameters[13].Value = pEntity.DCodeId;
+			parameters[13].Value = pEntity.DCodeType;
+			parameters[14].Value = pEntity.OwnerUserId;
+			parameters[15].Value = pEntity.DCodeId;
 
             //执行语句
             int result = 0;
@@ -596,6 +608,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ObjectId", Value = pQueryEntity.ObjectId });
             if (pQueryEntity.VipId!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipId", Value = pQueryEntity.VipId });
+            if (pQueryEntity.OwnerUserId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "OwnerUserId", Value = pQueryEntity.OwnerUserId });
 
             return lstWhereCondition.ToArray();
         }
@@ -679,10 +693,14 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.VipId =  Convert.ToString(pReader["VipId"]);
 			}
-            if (pReader["DCodeType"] != DBNull.Value)
-            {
-                pInstance.DCodeType = Convert.ToInt32(pReader["DCodeType"]);
-            }
+			if (pReader["DCodeType"] != DBNull.Value)
+			{
+				pInstance.DCodeType =   Convert.ToInt32(pReader["DCodeType"]);
+			}
+			if (pReader["OwnerUserId"] != DBNull.Value)
+			{
+				pInstance.OwnerUserId =  Convert.ToString(pReader["OwnerUserId"]);
+			}
 
         }
         #endregion

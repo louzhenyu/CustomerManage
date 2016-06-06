@@ -1,4 +1,4 @@
-﻿define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialog'], function ($) {
+﻿define(['jquery', 'tools','langzh_CN','easyui', 'kkpager', 'artDialog'], function ($) {
     var page = {
         elems: {
             sectionPage:$("#section"),
@@ -143,26 +143,6 @@
             });
             /**************** -------------------列表操作事件用例 End****************/
         },
-
-
-        //收款
-        addNumber:function(data){
-            debugger;
-            var that=this;
-            that.elems.optionType="add";
-            $('#win').window({title:"优惠券追加",width:430,height:230});
-
-            //改变弹框内容，调用百度模板显示不同内容
-            $('#panlconent').layout('remove','center');
-            var html=bd.template('tpl_AddNumber');
-            var options = {
-                region: 'center',
-                content:html
-            };
-            $('#panlconent').layout('add',options);
-            $('#win').window('open')
-        },
-
         //设置查询条件   取得动态的表单查询参数
         setCondition:function(){
 

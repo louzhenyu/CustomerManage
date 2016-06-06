@@ -64,7 +64,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
 
             //排序参数
             List<OrderBy> lstOrder = new List<OrderBy> { };
-            lstOrder.Add(new OrderBy() { FieldName = "MembershipTime", Direction = OrderByDirections.Desc });
+            lstOrder.Add(new OrderBy() { FieldName = "LastUpdateTime", Direction = OrderByDirections.Desc });
             //调用会员卡管理列表查询
             var tempList = VipCardBLL.GetVipCardList(para.VIPID, para.Phone, complexCondition.ToArray(), lstOrder.ToArray(), para.PageSize, para.PageIndex);
             rd.TotalPageCount = tempList.PageCount;

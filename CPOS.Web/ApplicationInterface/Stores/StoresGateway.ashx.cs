@@ -168,6 +168,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                         , wxObj.AppSecret
                         , rpVipDCode.ToString("")//二维码类型  0： 临时二维码  1：永久二维码
                         , iResult, loggingSessionInfo);//iResult作为场景值ID，临时二维码时为32位整型，永久二维码时只支持1--100000
+                        //"https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQGN7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL1dreENCS1htX0xxQk94SEJ6MktIAAIEUk88VwMECAcAAA==";
+                        //"https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQGN7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL1dreENCS1htX0xxQk94SEJ6MktIAAIEUk88VwMECAcAAA==";
                     if (imageUrl != null && !imageUrl.Equals(""))
                     {
                         CPOS.Common.DownloadImage downloadServer = new DownloadImage();
@@ -396,9 +398,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     string UserStatus = "";
                     if (UserEntity != null)
                         UserStatus = UserEntity.user_status;
-
+                    
                     #region 会员会籍店、集客员工变动处理
-                    if (string.IsNullOrWhiteSpace(vipInfo.CouponInfo) || string.IsNullOrWhiteSpace(vipInfo.SetoffUserId))
+                    //string.IsNullOrWhiteSpace(vipInfo.CouponInfo) || string.IsNullOrWhiteSpace(vipInfo.SetoffUserId) 目前未用到
+                    if (string.IsNullOrWhiteSpace(vipInfo.HigherVipID) && string.IsNullOrWhiteSpace(vipInfo.SetoffUserId) && string.IsNullOrWhiteSpace(vipInfo.Col20))
                     {//当会员会籍店、集客员工为空时
                         if (!string.IsNullOrEmpty(tt))
                         {
@@ -416,7 +419,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                             vipInfo.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//集客时间*****
                         }
                     }
-                    else if (tempUnit.type_id == "2F35F85CF7FF4DF087188A7FB05DED1D")//是总部标识
+                    else if (tempUnit!=null&&tempUnit.type_id == "2F35F85CF7FF4DF087188A7FB05DED1D")//是总部标识
                     {// 总部会员可以被门店集客
                         if (!string.IsNullOrEmpty(tt))
                         {
@@ -434,14 +437,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                         {
                             //if (!vipInfo.HigherVipID.Equals(RP.UserID))
                             //{
-                                vipInfo.HigherVipID = RP.UserID;
-                                vipInfo.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//集客时间*****
+                            vipInfo.HigherVipID = RP.UserID;
+                            vipInfo.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//集客时间*****
                             //}
                         }
                     }
                     #endregion
 
-                    vipBll.Update(vipInfo);
+
 
                     //if (vipInfo != null && !string.IsNullOrEmpty(vipInfo.CouponInfo) && vipInfo.SetoffUserId != RP.UserID)
                     //{
@@ -466,10 +469,219 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     else if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID)
                     {
                         rsp.Message = "恭喜你集客成功。会员需要用心经营才会有订单哦！";
-                    }
+                    }     
+                    
+                    vipBll.Update(vipInfo);
 
                 }
-                content = rsp.ToJSON();
+                //处理面对面、优惠券、海报的集客处理
+                if (!string.IsNullOrEmpty(RP.Parameters.special.Mode) && (RP.Parameters.special.Mode.Equals("Coupon") || RP.Parameters.special.Mode.Equals("SetOffPoster") || RP.Parameters.special.Mode.Equals("ToFace")) && !string.IsNullOrEmpty(info.VipId))//如果通过优惠券或海报扫码
+                {
+                    VipBLL vipBll = new VipBLL(loggingSessionInfo);
+                    var unitBll = new t_unitBLL(loggingSessionInfo);
+                    var UserBll = new T_UserBLL(loggingSessionInfo);
+
+                    var vipInfo = vipBll.GetByID(info.VipId);
+                    var tt = vipBll.GetUnitByUserId(RP.UserID);//获取员工的会集店****
+                    var UserEntity = UserBll.GetByID(vipInfo.SetoffUserId);//当前会员集客员工
+                    var tempUnit = unitBll.GetByID(vipInfo.CouponInfo);//获取会员目前的会籍店
+                    //UnitService unitServer = new UnitService(loggingSessionInfo);
+
+                    //
+                    string UserStatus = "";
+                    if (UserEntity != null)
+                        UserStatus = UserEntity.user_status;
+                    string PlatformType = RP.Parameters.special.PlatformType;
+                    #region 会员会籍店、集客员工变动处理
+                    //当会员的HigherVipID、SetoffUserId、Col20都为空时可以进行处理
+                    if (string.IsNullOrWhiteSpace(vipInfo.HigherVipID) && string.IsNullOrWhiteSpace(vipInfo.SetoffUserId) && string.IsNullOrWhiteSpace(vipInfo.Col20))
+                    {
+                        var HigherVipInfo = vipBll.QueryByEntity(new VipEntity() { ClientID=loggingSessionInfo.CurrentUser.customer_id,VIPID=RP.UserID},null).FirstOrDefault();
+                        if (PlatformType != "" && PlatformType != null)//当为员工或会员时
+                        {
+                            switch (PlatformType)
+                            {
+                                case "1":
+                                    vipInfo.SetoffUserId = RP.UserID;//设为门店员工
+                                    vipInfo.Col23 = "1";
+                                    if (!string.IsNullOrEmpty(tt))
+                                    {
+                                        vipInfo.CouponInfo = tt;//设为门店  1=员工;2=客服;3=会员;
+                                    }
+                                    break;
+                                case "2":
+                                    vipInfo.SetoffUserId = RP.UserID;//设为2=客服
+                                    vipInfo.Col23 = "2";
+                                    if (!string.IsNullOrEmpty(tt))
+                                    {
+
+                                        vipInfo.CouponInfo = tt;//设为门店  1=员工;2=客服;3=会员;
+                                    }
+                                    break;
+                                case "3":
+                                    vipInfo.HigherVipID = RP.UserID;//设为3=会员
+                                    if (HigherVipInfo != null&&!string.IsNullOrEmpty(HigherVipInfo.CouponInfo))
+                                    {
+                                        vipInfo.CouponInfo = HigherVipInfo.CouponInfo;
+                                    }
+                                    vipInfo.Col23 = "3";
+                                    break;
+                                default:
+                                    if (HigherVipInfo != null && !string.IsNullOrEmpty(HigherVipInfo.CouponInfo))
+                                    {
+                                        vipInfo.CouponInfo = HigherVipInfo.CouponInfo;
+                                    }
+                                    vipInfo.SetoffUserId = RP.UserID;
+                                    break;
+                            }
+                        }
+                        if (RP.Parameters.special.Mode.Equals("Coupon"))//如果是优惠券根据给定的VipSourceId=27给定
+                        {
+                            vipInfo.VipSourceId = "27";
+                            vipInfo.VipSourceName = "优惠券二维码";
+                        }
+                        if (RP.Parameters.special.Mode.Equals("SetoffPoster"))//如果是海报根据给定的VipSourceId=29给定
+                        {
+                            vipInfo.VipSourceId = "29";
+                            vipInfo.VipSourceName = "集客海报二维码";
+                        }
+                        vipInfo.Col24 = RP.Parameters.special.ObjectID;
+                        vipInfo.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//集客时间*****         
+                        //如果集客成功给出提示
+                        if (vipInfo != null && ((!string.IsNullOrEmpty(vipInfo.CouponInfo) && vipInfo.SetoffUserId == RP.UserID) || (!string.IsNullOrEmpty(vipInfo.HigherVipID) && vipInfo.HigherVipID == RP.UserID)))
+                        {
+                            if (PlatformType == "1" || PlatformType == "2")
+                            {
+                                rsp.ResultCode = 306;
+                                rsp.Message = "恭喜你集客成功。会员需要用心经营才会有订单哦！";
+                            }
+                            else
+                            {
+                                rsp.ResultCode = 307;
+                                rsp.Message = "恭喜您集客成功，集客注册成功后才能获得奖励哦!";
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        //如果已经集客给出提示
+                        if (vipInfo != null && ((!string.IsNullOrEmpty(vipInfo.CouponInfo) && vipInfo.SetoffUserId != RP.UserID) || (!string.IsNullOrEmpty(vipInfo.HigherVipID) && vipInfo.HigherVipID != RP.UserID)))
+                        {
+                            rsp.ResultCode = 312;
+                            rsp.Message = "此客户已是会员，无需再集客。老会员更要服务好哦！";
+                        }
+                        else if (vipInfo != null && ((!string.IsNullOrEmpty(vipInfo.CouponInfo) && vipInfo.SetoffUserId == RP.UserID) || (!string.IsNullOrEmpty(vipInfo.HigherVipID) && vipInfo.HigherVipID == RP.UserID)) && !string.IsNullOrEmpty(vipInfo.Col21) && Convert.ToDateTime(vipInfo.Col21).AddSeconds(3) < DateTime.Now)  //col21：员工集客/或者分销商集客时间
+                        {
+                            rsp.ResultCode = 313;
+                            rsp.Message = "此客户此前已经被您集客，无需重复集客。！";
+                        }
+                    }
+                    if (UserStatus.Trim().Equals("-1"))//判断员工状态
+                    {// 当前会员的集客员工离职时
+
+                        if (PlatformType != "" && PlatformType != null)//1=员工;2=客服;3=会员;
+                        {
+                            switch (PlatformType)
+                            {
+                                case "1":
+                                    vipInfo.SetoffUserId = RP.UserID;//设为门店员工
+                                    vipInfo.Col23 = "1";
+                                    if (!string.IsNullOrEmpty(tt))
+                                    {
+                                        vipInfo.CouponInfo = tt;//设为门店  
+                                    }
+                                    break;
+                                case "2":
+                                    vipInfo.SetoffUserId = RP.UserID;//设为2=客服
+                                    vipInfo.Col23 = "2";
+                                    if (!string.IsNullOrEmpty(tt))
+                                    {
+                                        vipInfo.CouponInfo = tt;//设为门店  1=员工;2=客服;3=会员;
+                                    }
+                                    break;
+                                case "3":
+                                    vipInfo.HigherVipID = RP.UserID;//设为3=会员
+                                    vipInfo.Col23 = "3";
+                                    break;
+                                default:
+                                    vipInfo.SetoffUserId = RP.UserID;
+                                    break;
+                            }
+                        }
+                        if (RP.Parameters.special.Mode.Equals("Coupon"))
+                        {
+                            vipInfo.VipSourceId = "27";
+                            vipInfo.VipSourceName = "优惠券二维码";
+                        }
+                        if (RP.Parameters.special.Mode.Equals("SetOffPoster"))
+                        {
+                            vipInfo.VipSourceId = "29";
+                            vipInfo.VipSourceName = "集客海报二维码";
+                        }
+                        if (RP.Parameters.special.Mode.Equals("ToFace"))
+                        {
+                            vipInfo.VipSourceId = "13";
+                            vipInfo.VipSourceName = "员工集客";
+                        }
+                        vipInfo.Col24 = RP.Parameters.special.ObjectID;
+                        vipInfo.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//集客时间*****
+
+                    }
+                    else if (tempUnit != null && tempUnit.type_id == "2F35F85CF7FF4DF087188A7FB05DED1D")//是总部标识
+                    {
+                        if (PlatformType != "" && PlatformType != null)
+                        {
+                            switch (PlatformType)
+                            {
+                                case "1":
+                                    if (!string.IsNullOrEmpty(tt))//需判断当前员工或客服所属门店是否为空
+                                    {
+                                        vipInfo.CouponInfo = tt;//设为门店  1=员工;2=客服;3=会员;
+                                    }
+                                    vipInfo.SetoffUserId = RP.UserID;//设为门店员工
+                                    vipInfo.Col23 = "1";
+                                    break;
+                                case "2":
+                                    if (!string.IsNullOrEmpty(tt))
+                                    {
+                                        vipInfo.CouponInfo = tt;//设为门店  1=员工;2=客服;3=会员;
+                                    }
+                                    vipInfo.SetoffUserId = RP.UserID;//设为2=客服
+                                    vipInfo.Col23 = "2";
+                                    break;
+                                case "3":
+                                    vipInfo.HigherVipID = RP.UserID;//设为3=会员
+                                    vipInfo.Col23 = "3";
+                                    break;
+                                default:
+                                    vipInfo.SetoffUserId = RP.UserID;
+                                    break;
+                            }
+                        }
+                        if (RP.Parameters.special.Mode.Equals("Coupon"))
+                        {
+                            vipInfo.VipSourceId = "27";
+                            vipInfo.VipSourceName = "优惠券二维码";
+                        }
+                        if (RP.Parameters.special.Mode.Equals("SetoffPoster"))
+                        {
+                            vipInfo.VipSourceId = "29";
+                            vipInfo.VipSourceName = "集客海报二维码";
+                        }
+                        if (RP.Parameters.special.Mode.Equals("ToFace"))
+                        {
+                            vipInfo.VipSourceId = "13";
+                            vipInfo.VipSourceName = "员工集客";
+                        }
+                        vipInfo.Col24 = RP.Parameters.special.ObjectID;
+                        vipInfo.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//集客时间*****
+
+                    }
+                    #endregion                  
+                    
+                    vipBll.Update(vipInfo);
+                }
                 #endregion
             }
             catch (Exception ex)
@@ -482,6 +694,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
             {
                 Message = string.Format("setSignUp content: {0}", temp)
             });
+            content = rsp.ToJSON();
             return content;
         }
         public class getPollRespData : IAPIResponseData
@@ -511,6 +724,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
             public string unitId { get; set; }
             public string paraTmp { get; set; }
             public string Mode { get; set; }
+            public string PlatformType { get; set; }//1=员工;2=客服;3=会员;类型
+            public string ObjectID { get; set; }//优惠券或集客海报对象ID
 
         }
         #endregion

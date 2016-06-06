@@ -42,7 +42,11 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Request
         /// 创意活动参数
         /// </summary>
         public string CTWEventId { get; set; }
-
+        
+        /// <summary>
+        /// 优惠券种ID (区分优惠券与活动)
+        /// </summary>
+        public string couponId { get; set; }
         public void Validate()
         {
 

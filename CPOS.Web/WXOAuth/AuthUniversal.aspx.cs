@@ -206,6 +206,59 @@ namespace JIT.CPOS.Web.WXOAuth
                                 goUrl = goUrl + "?channelId=" + strChannelID + "";
                             }
                         }
+                        var pObjectID = Request["ObjectID"];
+                        var pSourceID = Request["SourceID"];
+                        var pShareVipID = Request["ShareVipID"];
+                        var objectType = Request["objectType"];
+                        
+                        if (!string.IsNullOrWhiteSpace(pObjectID))
+                        {
+                            if (goUrl.IndexOf("?") > 0)
+                            {
+                                goUrl = goUrl + "&ObjectID=" + pObjectID + "";
+                            }
+                            else
+                            {
+                                goUrl = goUrl + "?ObjectID=" + pObjectID + "";
+                            }
+                        }
+                        if (!string.IsNullOrWhiteSpace(pSourceID))
+                        {
+                            if (goUrl.IndexOf("?") > 0)
+                            {
+                                goUrl = goUrl + "&SourceID=" + pSourceID + "";
+                            }
+                            else
+                            {
+                                goUrl = goUrl + "?SourceID=" + pSourceID + "";
+                            }
+                        }
+                        if (!string.IsNullOrWhiteSpace(pShareVipID))
+                        {
+                            if (goUrl.IndexOf("?") > 0)
+                            {
+                                goUrl = goUrl + "&ShareVipID=" + pShareVipID + "";
+                            }
+                            else
+                            {
+                                goUrl = goUrl + "?ShareVipID=" + pShareVipID + "";
+                            }
+                        }
+                        if (!string.IsNullOrWhiteSpace(objectType))
+                        {
+                            if (goUrl.IndexOf("?") > 0)
+                            {
+                                goUrl = goUrl + "&objectType=" + objectType + "";
+                            }
+                            else
+                            {
+                                goUrl = goUrl + "?objectType=" + objectType + "";
+                            }
+                        }
+
+                        ////会员分享的SourceId，ShareVipID，ObjectID
+
+
                         //同样可以把商品的标识也这样处理goodsId,因为如下：
                       //  string itemUrl = weixinDomain + "/WXOAuth/AuthUniversal.aspx?customerId=" + CurrentUserInfo.ClientID
                       //+ "&applicationId=" + applicationId

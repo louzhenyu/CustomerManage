@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/optimize.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -11,7 +11,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        <div class="allPage" id="section" data-js="js/viptaglist.js?ver=0.3">
+        <div class="allPage" id="section" data-js="js/viptaglist.js">
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
                     <div class="tableWrapText" id="tableWrap">
@@ -78,7 +78,4 @@
                         <div class="optBtn"> <div class="btn del" data-flag="del"></div></div>
                        </div>
      </script>
-
-       <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"
-            defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>
 </asp:Content>

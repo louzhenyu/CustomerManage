@@ -1,0 +1,107 @@
+﻿/*模板页样式修改*/
+#leftMenu{ display: none;}   /*隐藏左边菜单栏*/
+#contentArea{ margin: 0; border: none}   /*取消右边边距和右边边框*/
+/*模块*/
+
+.indexMemberGoldore{width:1030px;margin:0px auto;padding:30px 0;}
+.titBar{margin-bottom:20px;padding-left:4px;line-height:14px;font-size:14px;border-left:3px solid #00a0e8;color:#666;}
+.totalArea{height:188px;margin-bottom:23px;}
+.totalArea .infoBox{float:left;width:120px;margin-left:25px;padding-top:25px;}
+.totalArea .infoBox .tinyTit{margin-bottom:14px;font-size:14px;color:#999;}
+.totalArea .countBox{font-size:30px;font-family:arial;color:#71ba36;}
+.totalArea .countBox span{font-size:18px;font-family:"Microsoft YaHei";}
+.totalArea .starBox{height:105px;}
+.totalArea .iconEqual,.totalArea .iconAdd{float:left;width:27px;height:100%;}
+.totalArea .iconEqual{background:url(../images/icon-equal.png) no-repeat center center;}
+.totalArea .iconAdd{background:url(../images/icon-add.png) no-repeat center center;}
+
+.wxTotalBox,.userTotalBox{float:left;width:506px;height:188px;border-radius:5px;border:1px solid #f0f0f2;overflow:hidden;}
+.userTotalBox{float:right;}
+.wxTotalBox .minTit{height:80px;line-height:79px;padding-left:92px;font-size:18px;background:#71ba36 url(../images/icon-wx.png) no-repeat 21px center;color:#fff;}
+.userTotalBox .minTit{height:80px;line-height:79px;padding-left:80px;font-size:18px;border-bottom:1px solid #f0f0f2;background:#ff4d4d url(../images/icon-user.png) no-repeat 21px center;color:#fff;}
+.userTotalBox .minTit span{padding-left:8px;font-size:12px;}
+
+.day30Area{height:140px;margin-bottom:23px;}
+.day30Area .itemBox{float:left;width:245px;height:140px;margin-right:16px;border:1px solid #e1e7ea;border-radius:5px;overflow:hidden;}
+.day30Area .itemBox:nth-last-of-type(1){margin-right:0;}
+.day30Area .minTit{height:42px;line-height:41px;padding-left:20px;font-size:14px;border-bottom:1px solid #e1e7ea;background:#f7f7fa;color:#999;}
+.day30Area .infoBox{padding-top:21px;}
+.day30Area .exp{height:18px;margin-bottom:10px;padding-left:75px;font-size:12px;color:#999;}
+
+.day30Area .dataBox{height:25px;line-height:25px;font-family:arial;color:#999;}
+.day30Area .actualBox{float:left;width:115px;font-size:23px;text-align:right;white-space: nowrap;overflow:hidden;}
+
+.day30Area .actualBox span{font-size:18px;}
+.day30Area .elevator{float:left;margin:5px 0 0 10px;padding-left:18px;font-size:14px;}
+.day30Area .elevator.up{background:url(../images/icon-arr-top.png) no-repeat left center;}
+.day30Area .elevator.dn{background:url(../images/icon-arr-bottom.png) no-repeat left center;}
+
+.operateArea{height:411px;}
+.operateArea .itemBox{float:left;width:327px;height:411px;margin-right:23px;padding:20px;border:1px solid #e1e7ea;border-radius:5px;background:#f7f7fa;overflow:hidden;}
+.operateArea .itemBox:nth-last-of-type(1){margin-right:0;}
+.operateArea .minTit{line-height:16px;margin-bottom:15px;font-size:16px;color:#666;}
+.operateArea .picBox{height:80px;margin-bottom:25px;text-align:center;}
+.operateArea .picBox img{display:inline-block;}
+.operateArea .textBox{line-height:20px;font-size:12px;color:#999;}
+.operateArea .textBox p{margin-bottom:15px;}
+.operateArea .btnBox{margin-bottom:10px;text-align:center;}
+.operateArea .btnBox a{display:inline-block;width:120px;height:36px;line-height:32px;text-align:center;border:2px solid #00a0e8;border-radius:18px;background:#fff;color:#00a0e8;}
+
+
+
+
+
+
+
+
+
+
+
+
+/*导出窗口样式*/
+.qb_member{ width:740px; }
+.member{ width:740px; padding-bottom:2px; float:left; background:#fff;border-radius:5px;}
+.menber_top{ width:740px; height:50px; font-size:16px; color:#666;  font-weight:700; line-height:50px; padding-left:15px; background:#f3f3f3;border-radius:5px 5px 0px 0px;}
+.menber_top img{ width:30px; height:30px; margin-right:10px; margin-top:8px; _margin-top:-40px; float:right;}
+.menber_title{ width:100%;height:80px;text-align:center;background:#f4f8fa;}
+.menber_title img{width: 470px;height: 53px;margin: 15px 95px;}
+.menber_center{ width:672px;font-size:14px; color:#666; background:#ccc; margin:0 auto;}
+.menber_centernr{ width:100%; float:left;}
+.menber_centernrt{width:672px; float:left; padding-bottom:20px;margin-top:10px; border-bottom:1px solid #ededed;}
+.menber_centernrt p{line-height:30px;}
+.menber_centernrt .btnWrapBox{display:inline-block;}
+.menber_centernrt a{ color:#09f;}
+.menber_centernrb{width:672px;float:left; margin-top:18px; padding-bottom:18px;border-bottom:1px solid #ededed;font-size:12px;}
+.menber_centernrb p{ color:#ccc; line-height:42px;}
+.menber_centernrb span{font-size:14px;background:#00a0e8;padding:10px 20px;cursor:pointer; border-radius:6px; text-align:center; color:#fff; line-height:32px; }
+.menber_centernrb1{width:672px;float:left; color:#999;   padding-bottom:20px; padding-left:20px; border-bottom:1px solid #ededed;}
+.menber_centernrb1 p{ color:#666; line-height:50px;}
+.menber_centernrt .downModelBtn{display:block;width:90px;height:30px;margin-top:12px;line-height:30px;text-align:center;font-size:12px;border-radius:4px;background:#00a0e8;color:#fff;}
+
+.import{ width:100%; float:left; margin-top:20px; }
+.import a{ font-size:14px;background:#fc7a52;padding:6px 30px;cursor:pointer; border-radius:16px; text-align:center; color:#fff;line-height:32px;float:right;}
+.import a:hover{background:#f00; text-decoration:none;}
+
+.attention{ width:100%;line-height:24px;font-size:12px;color:#999;float:left;}
+.attention span{font-size:13px;line-height:30px; color:#666; display:block;}
+.attention .textBox p{line-height:20px;}
+.memberloading{ width:100%; height:50px; padding-top:80px; background:url(../images/loading.gif) no-repeat center center; line-height:40px; text-align:center; float:left;}
+.succeed{ width:100%; padding-top:60px; padding-bottom:40px; background:url(../images/chenggong.png) no-repeat  top 30px center; line-height:20px; text-align:center; float:left;}
+.succeed p{ color:#999;}
+.succeed .red{ color:#fc7a52;}
+
+
+
+/* 上传文件按钮 */
+ .uploadCSVFileBtn{float:left; position: relative; width: 90px; height: 30px; background:url(../images/selectFileBtn.png) no-repeat; cursor:pointer;margin-right: 20px;}
+ .uploadCSVFileBtn .ke-button-common {width:50px;height:50px;opacity:0;filter:Alpha(opacity=0);}
+ .uploadCSVFileBtn span{display:block;width:50px;height:50px;opacity:0;filter:Alpha(opacity=0);position:absolute;top:0;left:0;}
+ .uploadCSVFileBtn input{float:left; position: relative; width: 50px; height: 50px; background:url(../images/upload.png); cursor:pointer;margin-right: 20px;}
+ .ke-upload-area .ke-upload-file {position: absolute;top: 0;right: 0;height: 25px;padding: 0;	margin: 0;z-index: 811212;border: 0 none;	opacity: 0;	filter: alpha(opacity=0);}
+.panel-body {overflow-x: hidden;}
+
+/*对话框样式重构*/
+#btnWrap1{height:50px !important;}
+#win1,#Div2{height:575px !important;}
+.panel-body.panel-body-noheader.layout-body{height:506px;}
+.panel.layout-panel.layout-panel-south{top:518px !important;}

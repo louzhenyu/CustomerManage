@@ -1,20 +1,15 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/optimize.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta charset="UTF-8" />
     <title>积分配置</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
-    <style type="text/css">
-
-
-    </style>
+<link href="<%=StaticUrl+"/module/integralCashback/css/style.css?v=0.1"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        <div class="allPage" id="section" data-js="js/vipConfig.js?ver=0.3">
+        <div class="allPage" id="section" data-js="js/vipConfig.js">
               <div class="queryTermArea" id="simpleQuery" style="display:none;width:100%;  background:#ebf1f4;">
                              <div class="listBtn" data-show="nav01" data-hide="nav02"  data-rewardstype="0"> 订单   </div>
                           <!--   <div class="listBtn" data-show="nav02" data-hide="nav01"  data-rewardstype="1"> 商品 <div class="on"></div></div>-->
@@ -71,7 +66,4 @@
 
 
                        </div>
-        </div>
-       <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"
-            defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>
 </asp:Content>

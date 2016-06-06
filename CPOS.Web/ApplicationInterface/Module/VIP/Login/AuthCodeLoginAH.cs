@@ -178,6 +178,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                                 VipId = CurrentUserInfo.UserID
                             });
                             #endregion
+
+                            #region 会员金矿、注册集客奖励
+                            bll.SetOffActionReg(vipByID);
+                            #endregion
                         }
 
                         #endregion
@@ -343,7 +347,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             {
                 lEventRegVipLogBll.CTWRegOrFocusLog(pRequest.Parameters.CTWEventId, pRequest.UserID, "",CurrentUserInfo,"Reg");
             }
-
+            //如果是通过优惠券进来的就有couponId 新注册的需要加记录
+            if (!string.IsNullOrEmpty(pRequest.Parameters.couponId))
+            {
+                lEventRegVipLogBll.CouponRegOrFocusLog(pRequest.Parameters.couponId, pRequest.UserID, "", CurrentUserInfo, "Reg");
+            }
 
 
 

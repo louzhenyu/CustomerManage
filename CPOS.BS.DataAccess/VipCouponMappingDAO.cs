@@ -69,5 +69,21 @@ namespace JIT.CPOS.BS.DataAccess
             ", strGrantee,strGiver,strCouponId);
             return this.SQLHelper.ExecuteNonQuery(strSql);
         }
+        /// <summary>
+        /// 判断同种券的优惠券是否已领取(如果做限制需要加)
+        /// </summary>
+        /// <param name="pVipID">领取人ID</param>
+        /// <param name="pCouponTypeID">券种ID</param>
+        /// <param name="pSourceType">券来源类型</param>
+        /// <returns></returns>
+        public int GetReceiveCouponCount(string pVipID,string pCouponTypeID,string pSourceType)
+        {
+            string strSql = string.Empty;
+            strSql = string.Format(@"select Count(VCM.VipCouponMapping) from VipCouponMapping VCM
+                                    inner join Coupon C ON VCM.CouponID=C.CouponID AND VCM.VipID='{0}'
+                                    inner join CouponType CT on CT.CouponTypeID=C.CouponTypeID AND CT.CouponTypeID='{1}'
+                                    inner join CouponSource CS ON CS.CouponSourceID=VCM.CouponSourceId", pVipID, pCouponTypeID);
+            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
+        }
     }
 }

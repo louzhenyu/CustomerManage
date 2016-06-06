@@ -312,6 +312,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
                     amountmonth.GetVipAmount = decimal.Parse(dt.Tables[0].Rows[i]["GetVipAmount"].ToString());
                     amountmonth.OrderAmount = decimal.Parse(dt.Tables[0].Rows[i]["OrderAmount"].ToString());
                     amountmonth.RetailAmount = decimal.Parse(dt.Tables[0].Rows[i]["RetailAmount"].ToString());
+                    amountmonth.RegAmount = decimal.Parse(dt.Tables[0].Rows[i]["RegAmount"].ToString());
                     amountmonth.TotalAmount = decimal.Parse(dt.Tables[0].Rows[i]["TotalAmount"].ToString());
                     AmountMonthList.Add(amountmonth);
 
@@ -697,7 +698,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
                 City = (string.IsNullOrEmpty(t.City) && t.City == "0") ? "" : t.City,
                 SetOffTime = t.Col21 == null ? null : t.Col21.ToString(),
                 CreateTime = t.CreateTime.ToString(),
-                Status = t.Status
+                Status = t.Status,
+                RegistrationTime=t.RegistrationTime.ToString()
             }).ToArray();
             #endregion
             return rsp.ToJSON();
@@ -1042,6 +1044,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
         public decimal GetVipAmount { get; set; }
         public decimal OrderAmount { get; set; }
         public decimal RetailAmount { get; set; }
+        public decimal RegAmount { get; set; }
         public decimal TotalAmount { get; set; }
     }
     /// <summary>

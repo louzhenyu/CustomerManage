@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [T_LEventsSharePersonLog](");
-            strSql.Append("[BusTypeCode],[ObjectId],[ShareVipID],[ShareOpenID],[ShareCount],[BeShareVipID],[BeShareOpenID],[ShareURL],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[CustomerId],[IsDelete],[SharePersonLogId])");
+            strSql.Append("[BusTypeCode],[ObjectId],[ShareVipID],[ShareOpenID],[ShareCount],[BeShareVipID],[BeShareOpenID],[ShareURL],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[CustomerId],[IsDelete],[ShareVipType],[SharePersonLogId])");
             strSql.Append(" values (");
-            strSql.Append("@BusTypeCode,@ObjectId,@ShareVipID,@ShareOpenID,@ShareCount,@BeShareVipID,@BeShareOpenID,@ShareURL,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@CustomerId,@IsDelete,@SharePersonLogId)");            
+            strSql.Append("@BusTypeCode,@ObjectId,@ShareVipID,@ShareOpenID,@ShareCount,@BeShareVipID,@BeShareOpenID,@ShareURL,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@CustomerId,@IsDelete,@ShareVipType,@SharePersonLogId)");            
 
 			Guid? pkGuid;
 			if (pEntity.SharePersonLogId == null)
@@ -107,6 +107,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@CustomerId",SqlDbType.VarChar),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
+					new SqlParameter("@ShareVipType",SqlDbType.Int),
 					new SqlParameter("@SharePersonLogId",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.BusTypeCode;
@@ -123,7 +124,8 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[11].Value = pEntity.LastUpdateTime;
 			parameters[12].Value = pEntity.CustomerId;
 			parameters[13].Value = pEntity.IsDelete;
-			parameters[14].Value = pkGuid;
+			parameters[14].Value = pEntity.ShareVipType;
+			parameters[15].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -238,7 +240,9 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
             if (pIsUpdateNullField || pEntity.CustomerId!=null)
-                strSql.Append( "[CustomerId]=@CustomerId");
+                strSql.Append( "[CustomerId]=@CustomerId,");
+            if (pIsUpdateNullField || pEntity.ShareVipType!=null)
+                strSql.Append( "[ShareVipType]=@ShareVipType");
             strSql.Append(" where SharePersonLogId=@SharePersonLogId ");
             SqlParameter[] parameters = 
             {
@@ -253,6 +257,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@CustomerId",SqlDbType.VarChar),
+					new SqlParameter("@ShareVipType",SqlDbType.Int),
 					new SqlParameter("@SharePersonLogId",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.BusTypeCode;
@@ -266,7 +271,8 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[8].Value = pEntity.LastUpdateBy;
 			parameters[9].Value = pEntity.LastUpdateTime;
 			parameters[10].Value = pEntity.CustomerId;
-			parameters[11].Value = pEntity.SharePersonLogId;
+			parameters[11].Value = pEntity.ShareVipType;
+			parameters[12].Value = pEntity.SharePersonLogId;
 
             //执行语句
             int result = 0;
@@ -582,6 +588,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerId", Value = pQueryEntity.CustomerId });
             if (pQueryEntity.IsDelete!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
+            if (pQueryEntity.ShareVipType!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ShareVipType", Value = pQueryEntity.ShareVipType });
 
             return lstWhereCondition.ToArray();
         }
@@ -656,6 +664,10 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["IsDelete"] != DBNull.Value)
 			{
 				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
+			}
+			if (pReader["ShareVipType"] != DBNull.Value)
+			{
+				pInstance.ShareVipType =   Convert.ToInt32(pReader["ShareVipType"]);
 			}
 
         }

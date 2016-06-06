@@ -48,6 +48,347 @@ namespace JIT.CPOS.BS.BLL
     public partial class VipBLL
     {
 
+        #region 会员金矿
+        /// <summary>
+        /// 根据会员来源获取注册会员具体营销工具来源
+        /// </summary>
+        /// <param name="VipSourceID"></param>
+        /// <returns></returns>
+        public string GetSourceByVipSourceID(string VipSourceID)
+        {
+            string AmountSourceID = "5";
+
+            if (VipSourceID.Equals("22") || VipSourceID.Equals("24") || VipSourceID.Equals("25"))
+                AmountSourceID = "29";
+            else if (VipSourceID.Equals("26") || VipSourceID.Equals("27"))
+                AmountSourceID = "30";
+            else if (VipSourceID.Equals("28") || VipSourceID.Equals("29"))
+                AmountSourceID = "31";
+            else if (VipSourceID.Equals("30") || VipSourceID.Equals("31"))
+                AmountSourceID = "32";
+
+
+            return AmountSourceID;
+        }
+        /// <summary>
+        /// 集客销售奖励
+        /// </summary>
+        public void SetOffActionSales(VipEntity vipInfo, T_InoutEntity orderInfo)
+        {
+            decimal actualAmount = orderInfo.actual_amount ?? 0;    //实付金额
+            decimal deliveryAmount = orderInfo.DeliveryAmount;      //运费
+
+            actualAmount = actualAmount - deliveryAmount;           //实付金额-运费
+
+            //集客行动
+            var SetoffEvent = new SetoffEventBLL(CurrentUserInfo).QueryByEntity(new SetoffEventEntity() { Status = "10", CustomerId = CurrentUserInfo.ClientID }, null).ToList();
+            if (SetoffEvent.Count > 0)
+            {
+                foreach (var item in SetoffEvent)
+                {
+                    //集客奖励规则
+                    var IincentiveRuleData = new IincentiveRuleBLL(CurrentUserInfo).QueryByEntity(new IincentiveRuleEntity() { Status = "10", SetoffEventID = item.SetoffEventID, CustomerId = CurrentUserInfo.ClientID }, null).FirstOrDefault();
+                    decimal ResultPer = IincentiveRuleData.SetoffOrderPer ?? 0;
+                    if (IincentiveRuleData != null)
+                    {
+                        if (item.SetoffType == 1)
+                        {
+                            if (!string.IsNullOrEmpty(vipInfo.HigherVipID))
+                            {
+                                #region 会员奖励
+                                //获取奖励的会员
+                                var VipData = this._currentDAO.GetByID(vipInfo.HigherVipID);
+                                switch (IincentiveRuleData.SetoffRegAwardType)
+                                {
+                                    case 1:
+                                        #region 现金奖励
+                                        
+
+                                        if (ResultPer > 0)
+                                        {
+                                            //计算后的奖励金额
+                                            decimal ResultMonery = (actualAmount * ResultPer) / 100;
+
+                                            if (IincentiveRuleData.SetoffOrderTimers == 0)
+                                            {
+                                                #region 单单有效
+                                                AddVipGoldAmount(ResultMonery, vipInfo.HigherVipID, orderInfo.order_id, "20", "集客行动销售奖励", VipData.VipCode);
+                                                #endregion
+                                            }
+                                            if (IincentiveRuleData.SetoffOrderTimers == 1)
+                                            {
+                                                #region 首单有效
+                                                var OrderResult = new T_InoutBLL(CurrentUserInfo).QueryByEntity(new T_InoutEntity() { vip_no = orderInfo.vip_no, status = "700" }, null).ToList();
+                                                if (OrderResult.Count() > 0)
+                                                {
+                                                    break;
+                                                }
+                                                else
+                                                {
+                                                    AddVipGoldAmount(ResultMonery, vipInfo.HigherVipID, orderInfo.order_id, "20", "集客行动销售奖励", VipData.VipCode);
+                                                }
+                                                #endregion
+                                            }
+                                        }
+                                        #endregion
+
+                                        break;
+                                    case 2:
+                                        #region 积分奖励
+                                        if (ResultPer > 0)
+                                        {
+                                            int ResultIntergral = Convert.ToInt32((actualAmount * ResultPer) / 100);
+
+                                            if (IincentiveRuleData.SetoffOrderTimers == 0)
+                                            {//单单有效
+                                                AddVipGoldIntegral(ResultIntergral, vipInfo.HigherVipID, orderInfo.order_id, "25", "集客行动销售奖励",VipData.VipCode);
+                                            }
+                                            if (IincentiveRuleData.SetoffOrderTimers == 1)
+                                            {//首单有效
+                                                var OrderResult = new T_InoutBLL(CurrentUserInfo).QueryByEntity(new T_InoutEntity() { vip_no = orderInfo.vip_no, status = "700" }, null).ToList();
+                                                if (OrderResult.Count() > 0)
+                                                {
+                                                    break;
+                                                }
+                                                else
+                                                {
+                                                    AddVipGoldIntegral(ResultIntergral, vipInfo.HigherVipID, orderInfo.order_id, "25", "集客行动销售奖励", VipData.VipCode);
+                                                }
+                                            }
+                                        }
+                                        #endregion
+                                        break;
+                                }
+                                #endregion
+
+                            }
+                        }
+                        else if (item.SetoffType == 2)
+                        {
+                            if (!string.IsNullOrEmpty(vipInfo.SetoffUserId))
+                            {
+                                #region 员工奖励
+                                #region 现金奖励
+
+                                if (ResultPer > 0)
+                                {
+                                    //计算后的奖励金额
+                                    decimal ResultMonery = (actualAmount * ResultPer) / 100;
+
+                                    if (IincentiveRuleData.SetoffOrderTimers == 0)
+                                    {
+                                        #region 单单有效
+                                        AddVipGoldAmount(ResultMonery, vipInfo.SetoffUserId, orderInfo.order_id, "20", "集客行动销售奖励", "");
+                                        #endregion
+                                    }
+                                    if (IincentiveRuleData.SetoffOrderTimers == 1)
+                                    {
+                                        #region 首单有效
+                                        var OrderResult = new T_InoutBLL(CurrentUserInfo).QueryByEntity(new T_InoutEntity() { vip_no = orderInfo.vip_no, status = "700" }, null).ToList();
+                                        if (OrderResult.Count() > 0)
+                                        {
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            AddVipGoldAmount(ResultMonery, vipInfo.SetoffUserId, orderInfo.order_id, "20", "集客行动销售奖励", "");
+                                        }
+                                        #endregion
+                                    }
+                                }
+                                #endregion
+                                #endregion
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        /// <summary>
+        /// 集客注册奖励 
+        /// </summary>
+        public void SetOffActionReg(VipEntity vipInfo)
+        {
+            //获取奖励来源
+            string SysAmountSourceID = GetSourceByVipSourceID(vipInfo.VipSourceId);
+            //集客行动
+            var SetoffEvent = new SetoffEventBLL(CurrentUserInfo).QueryByEntity(new SetoffEventEntity() { Status = "10", CustomerId = CurrentUserInfo.ClientID }, null).ToList();
+            if (SetoffEvent.Count > 0)
+            {
+                foreach (var item in SetoffEvent)
+                {
+                    //集客奖励规则
+                    var IincentiveRuleData = new IincentiveRuleBLL(CurrentUserInfo).QueryByEntity(new IincentiveRuleEntity() { Status = "10", SetoffEventID = item.SetoffEventID, CustomerId = CurrentUserInfo.ClientID }, null).FirstOrDefault();
+                    if (IincentiveRuleData != null)
+                    {
+                        //集客注册奖励
+                        int SetoffRegPrize = Convert.ToInt32(IincentiveRuleData.SetoffRegPrize ?? 0);
+                        if (item.SetoffType == 1)
+                        {
+                            if (!string.IsNullOrEmpty(vipInfo.HigherVipID))
+                            {
+                                #region 会员奖励
+                                //获取奖励的会员
+                                var VipData = this._currentDAO.GetByID(vipInfo.HigherVipID);
+                                switch (IincentiveRuleData.SetoffRegAwardType)
+                                {
+                                    case 1:
+                                        #region 现金奖励
+                                        AddVipGoldAmount(SetoffRegPrize, vipInfo.HigherVipID, vipInfo.VIPID, SysAmountSourceID, "集客行动注册奖励", VipData.VipCode);
+                                        #endregion
+
+                                        break;
+                                    case 2:
+                                        #region 积分奖励
+                                        AddVipGoldIntegral(SetoffRegPrize, vipInfo.HigherVipID, vipInfo.VIPID, SysAmountSourceID, "集客行动注册奖励", VipData.VipCode);
+                                        #endregion
+                                        break;
+                                }
+                                #endregion
+
+                            }
+                        }
+                        else if (item.SetoffType == 2)
+                        {
+                            if (!string.IsNullOrEmpty(vipInfo.SetoffUserId))
+                            {
+                                #region 员工奖励
+                                AddVipGoldAmount(SetoffRegPrize, vipInfo.SetoffUserId, vipInfo.VIPID, SysAmountSourceID, "集客行动注册奖励", "");
+                                #endregion
+
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        /// <summary>
+        /// 会员金矿现金奖励
+        /// </summary>
+        /// <param name="ResultMonery"></param>
+        /// <param name="HigherVipID"></param>
+        /// <param name="OrderId"></param>
+        private void AddVipGoldAmount(decimal ResultMonery, string HigherVipID, string ObjectId, string SysAmountSourceID, string Remark,string VipCode)
+        {
+            var vipAmountBll = new VipAmountBLL(CurrentUserInfo);
+
+            //明细
+            var VipAmountDetail = new VipAmountDetailEntity();
+            VipAmountDetail.VipAmountDetailId = System.Guid.NewGuid();
+            VipAmountDetail.VipId = HigherVipID;
+            VipAmountDetail.Amount = ResultMonery;
+            VipAmountDetail.Reason = Remark;
+            VipAmountDetail.AmountSourceId = SysAmountSourceID;
+            VipAmountDetail.ObjectId = ObjectId;
+            VipAmountDetail.Remark = Remark;
+            VipAmountDetail.IsValid = 1;
+            VipAmountDetail.IsWithdrawCash = 1;
+            VipAmountDetail.CustomerID = CurrentUserInfo.ClientID;
+            VipAmountDetail.UsedReturnAmount = 0;
+            new VipAmountDetailBLL(CurrentUserInfo).Create(VipAmountDetail);
+
+            var VipAmount = vipAmountBll.GetByID(HigherVipID);
+            if (VipAmount != null)
+            {
+                //更新
+                VipAmount.ReturnAmount = VipAmount.ReturnAmount ?? 0;
+                VipAmount.ReturnAmount += ResultMonery;//余额
+                VipAmount.ValidReturnAmount = VipAmount.ValidReturnAmount ?? 0;
+                VipAmount.ValidReturnAmount += ResultMonery;//累计金额
+                VipAmount.TotalReturnAmount = VipAmount.TotalReturnAmount ?? 0;
+                VipAmount.TotalReturnAmount += ResultMonery;//累计金额
+                VipAmount.VipCardCode = VipCode;
+                vipAmountBll.Update(VipAmount);
+            }
+            else
+            {
+                //创建
+                var NewVipAmountData = new VipAmountEntity();
+                NewVipAmountData.VipId = HigherVipID;
+                NewVipAmountData.VipCardCode = VipCode;
+                NewVipAmountData.BeginAmount = 0;
+                NewVipAmountData.InAmount = 0;
+                NewVipAmountData.OutAmount = 0;
+                NewVipAmountData.EndAmount = 0;
+                NewVipAmountData.TotalAmount = 0;
+                NewVipAmountData.BeginReturnAmount = ResultMonery;
+                NewVipAmountData.InReturnAmount = ResultMonery;
+                NewVipAmountData.OutReturnAmount = 0;
+                NewVipAmountData.ReturnAmount = ResultMonery;
+                NewVipAmountData.ImminentInvalidRAmount = 0;
+                NewVipAmountData.InvalidReturnAmount = 0;
+                NewVipAmountData.ValidReturnAmount = ResultMonery;
+                NewVipAmountData.TotalReturnAmount = ResultMonery;
+                NewVipAmountData.PayPassword = "";
+                NewVipAmountData.IsLocking = 0;
+                NewVipAmountData.CustomerID = CurrentUserInfo.ClientID;
+                vipAmountBll.Create(NewVipAmountData);//
+            }
+        }
+        /// <summary>
+        /// 会员金矿积分奖励
+        /// </summary>
+        /// <param name="ResultIntegral"></param>
+        /// <param name="HigherVipID"></param>
+        /// <param name="OrderId"></param>
+        private void AddVipGoldIntegral(int ResultIntegral, string HigherVipID, string ObjectId, string SysIntergralSourceID, string Remark, string VipCode)
+        {
+            var vipBLL = new VipBLL(CurrentUserInfo);
+            var VipIntegralDeatil = new VipIntegralDetailEntity();
+            VipIntegralDeatil.VipIntegralDetailID = System.Guid.NewGuid().ToString();
+            VipIntegralDeatil.VIPID = HigherVipID;
+            VipIntegralDeatil.VipCardCode = VipCode;
+            VipIntegralDeatil.Integral = ResultIntegral;
+            VipIntegralDeatil.UsedIntegral = ResultIntegral;
+            VipIntegralDeatil.Reason = Remark;
+            VipIntegralDeatil.IntegralSourceID = SysIntergralSourceID;
+            VipIntegralDeatil.IsAdd = 1;
+            VipIntegralDeatil.ObjectId = ObjectId;
+            VipIntegralDeatil.Remark = Remark;
+            VipIntegralDeatil.CustomerID = CurrentUserInfo.ClientID;
+            //new VipIntegralDetailBLL(CurrentUserInfo).Create(VipIntegralDeatil);//
+            var vipinfo = vipBLL.QueryByEntity(new VipEntity() { ClientID=CurrentUserInfo.ClientID,VIPID=HigherVipID},null).FirstOrDefault();
+            var VipIntegral = new VipIntegralBLL(CurrentUserInfo).GetByID(HigherVipID); //vipAmountBll.GetByID(HigherVipID);
+            if (VipIntegral != null)
+            {
+                //更新
+                VipIntegral.InIntegral = VipIntegral.InIntegral ?? 0;
+                VipIntegral.EndIntegral = VipIntegral.EndIntegral ?? 0;
+                VipIntegral.ValidIntegral = VipIntegral.ValidIntegral ?? 0;
+                VipIntegral.CumulativeIntegral = VipIntegral.CumulativeIntegral ?? 0;
+                //赋值
+                VipIntegral.InIntegral += ResultIntegral;
+                VipIntegral.EndIntegral += ResultIntegral;
+                VipIntegral.ValidIntegral += ResultIntegral;
+                VipIntegral.CumulativeIntegral += ResultIntegral;
+                VipIntegral.VipCardCode = VipCode;
+                //new VipIntegralBLL(CurrentUserInfo).Update(VipIntegral);//
+            }
+            else
+            {
+                var NewVipIntegral = new VipIntegralEntity();
+                NewVipIntegral.VipID = HigherVipID;
+                NewVipIntegral.VipCardCode = VipCode;
+                NewVipIntegral.BeginIntegral = 0;
+                NewVipIntegral.InIntegral = ResultIntegral;
+                NewVipIntegral.OutIntegral = 0;
+                NewVipIntegral.EndIntegral = ResultIntegral;
+                NewVipIntegral.ImminentInvalidIntegral = 0;
+                NewVipIntegral.InvalidIntegral = 0;
+                NewVipIntegral.ValidIntegral = ResultIntegral;
+                NewVipIntegral.CumulativeIntegral = ResultIntegral;
+                NewVipIntegral.ValidNotIntegral = 0;
+                NewVipIntegral.CustomerID = CurrentUserInfo.ClientID;
+                //new VipIntegralBLL(CurrentUserInfo).Create(NewVipIntegral);//
+            }
+            var VipIntegralbll = new VipIntegralBLL(CurrentUserInfo);
+            VipIntegralbll.AddIntegral(ref vipinfo, null, VipIntegralDeatil,null,CurrentUserInfo);
+        }
+
+        #endregion
+
         /// <summary>
         /// 根据标识符获取实例
         /// </summary>
