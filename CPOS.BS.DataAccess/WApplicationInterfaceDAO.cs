@@ -265,9 +265,15 @@ namespace JIT.CPOS.BS.DataAccess
                 StringBuilder sql = new StringBuilder();
                 sql.Append("select menuurl from wmenu where pageid in ");
                 sql.AppendFormat("(SELECT pageid from vwPageInfo WHERE customerid='{0}' AND pagekey='GetVipCard' and IsDelete=0) ", CurrentUserInfo.ClientID);
-                sql.AppendFormat("and isdelete=0 and weixinid='{0}' AND ISNULL(parentid,'')!=''", OpenID);
+                sql.AppendFormat("and isdelete=0 and weixinid='{0}'", OpenID);
 
-                Url = (this.SQLHelper.ExecuteScalar(sql.ToString())).ToString();
+                var Result =this.SQLHelper.ExecuteScalar(sql.ToString());
+
+                if (Result != null)
+                {
+                    Url = Result.ToString();
+                }
+
             }
             return Url;
         }
