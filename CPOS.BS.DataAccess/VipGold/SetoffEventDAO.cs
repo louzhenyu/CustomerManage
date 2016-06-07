@@ -46,9 +46,10 @@ namespace JIT.CPOS.BS.DataAccess
         /// 设置集客行动状态为失效状态
         /// </summary>
         /// <param name="Type"></param>
-        public void SetFailStatus(int Type)
+        /// <param name="customerId">商户ID</param>
+        public void SetFailStatus(int Type,string customerId)
         {
-            string sql = string.Format("update SetoffEvent set Status='90' where SetoffType={0}", Type);
+            string sql = string.Format("update SetoffEvent set Status='90' where SetoffType={0} and customerID={1}", Type,customerId);
             this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql);
         }
 

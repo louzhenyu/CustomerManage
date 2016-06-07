@@ -58,7 +58,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipGold
                                     item.SetoffOrderTimers != RuleData.SetoffOrderTimers || item.IsEnabled != Convert.ToInt32(RuleData.Status))
                                 {
                                     //原集客行动状态设置为失效
-                                    SetoffEventBll.SetFailStatus(item.SetoffType);
+                                    SetoffEventBll.SetFailStatus(item.SetoffType,loggingSessionInfo.ClientID);
 
                                     #region 规则变动，重新新建集客行动
                                     //集客行动
@@ -225,7 +225,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipGold
                             else
                             {
                                 //原集客行动状态设置为失效
-                                SetoffEventBll.SetFailStatus(item.SetoffType);
+                                SetoffEventBll.SetFailStatus(item.SetoffType,loggingSessionInfo.ClientID);
 
                                 #region 新建集客行动
                                 //集客行动

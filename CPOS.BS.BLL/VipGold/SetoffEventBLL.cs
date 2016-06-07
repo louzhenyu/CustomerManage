@@ -46,9 +46,10 @@ namespace JIT.CPOS.BS.BLL
         /// 设置集客行动状态为失效状态
         /// </summary>
         /// <param name="Type"></param>
-        public void SetFailStatus(int Type)
+        /// <param name="customerId">商户ID</param>
+        public void SetFailStatus(int Type,string customerId)
         {
-            this._currentDAO.SetFailStatus(Type);
+            this._currentDAO.SetFailStatus(Type,customerId);
         }
         /// <summary>
         /// 判断添加集客工具是否重复
