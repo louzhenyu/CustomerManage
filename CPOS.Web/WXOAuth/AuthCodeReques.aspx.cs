@@ -431,7 +431,7 @@ namespace JIT.CPOS.Web.WXOAuth
                         goUrl = goUrl + "?customerId=" + customerId + "&applicationId=" + applicationId + "&CheckOAuth=unAttention" + "&rid=" + rad.Next(1000, 100000) + "";
                     }
                     Response.Cookies["openId_" + customerId].Value = openId;
-                    Response.Cookies["userId_" + customerId].Value = vipInfo.VIPID;
+                    Response.Cookies["userId_" + customerId].Value = vipInfotmp.VIPID;//vipInfo.VIPID;
                     Loggers.Debug(new DebugLogInfo()
                     {
                         Message = string.Format("会员没有关注时的跳转URL：{0}", goUrl)
@@ -442,7 +442,7 @@ namespace JIT.CPOS.Web.WXOAuth
 
 
                     //在这里建立上下线关系
-                    SetShareVip(vipInfotmp.VIPID, vipInfo.WeiXinUserId);
+                    SetShareVip(vipInfotmp.VIPID, openId);
 
 
                     Response.Redirect(goUrl);
@@ -484,7 +484,7 @@ namespace JIT.CPOS.Web.WXOAuth
                     });
                     //在这里建立上下线关系
                     //SetShareVip(vipInfotmp.VIPID);
-                    SetShareVip(vipInfo.VIPID,vipInfo.WeiXinUserId);
+                    SetShareVip(vipInfo.VIPID, openId);
                     Response.Redirect(strGotoUrl);
                 }
                 #endregion
