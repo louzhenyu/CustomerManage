@@ -3,7 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>集客行动</title>
-    <link href="<%=StaticUrl+"/module/SetOffManage/css/action.css?v=1.6"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/SetOffManage/css/action.css?v=1.7"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="allPage" id="section" data-js="js/action.js?ver=0.1" >

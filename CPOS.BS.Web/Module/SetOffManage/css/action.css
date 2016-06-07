@@ -17,8 +17,9 @@
 .ModuleContent .contents .charts{height:100%;display:table;width:100%;}
 .ModuleContent .contents .noContents{}
 .ModuleContent .contents .noContents:nth-of-type(2){height:400px;}
-.ModuleContent .contents .noContents:nth-of-type(3){height:280px;}
+.ModuleContent .contents .noContents:nth-of-type(3){height:280px;display:table;width:100%;}
 .ModuleContent .contents .charts p{text-align:center;display:table-cell;vertical-align: middle;}
+.ModuleContent .contents .noContents p{text-align:center;display:table-cell;vertical-align: middle;}
 .ModuleContent .contents .charts p {font-size:14px;color:#999;}
 .ModuleContent .contents .charts p a{color:#00a0e8;cursor: pointer;}
 .ModuleContent .contents .panelDiv{height:40px;}
