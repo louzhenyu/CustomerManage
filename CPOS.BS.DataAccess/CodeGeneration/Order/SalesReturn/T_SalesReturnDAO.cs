@@ -574,7 +574,7 @@ namespace JIT.CPOS.BS.DataAccess
 
             if (this.CurrentUserInfo != null && !string.IsNullOrEmpty(this.CurrentUserInfo.UserID) && !string.IsNullOrEmpty(this.CurrentUserInfo.ClientID))
             {
-                pagedSql.AppendFormat(@" inner join #UnitSET b on   (t.purchase_unit_id=b.UnitID or t.sales_unit_id=b.UnitID) ");
+                pagedSql.AppendFormat(@" left join #UnitSET b on   (t.purchase_unit_id=b.UnitID or t.sales_unit_id=b.UnitID) ");
             }
                 pagedSql.AppendFormat(@" where 1=1  and r.isdelete=0 ");
 
@@ -583,7 +583,7 @@ namespace JIT.CPOS.BS.DataAccess
                                           left join T_Payment_Type as p on t.pay_id=p.Payment_Type_Id and p.IsDelete=0   ");
             if (this.CurrentUserInfo != null && !string.IsNullOrEmpty(this.CurrentUserInfo.UserID) && !string.IsNullOrEmpty(this.CurrentUserInfo.ClientID))
             {
-                totalCountSql.AppendFormat(@" inner join #UnitSET b on   (t.purchase_unit_id=b.UnitID or t.sales_unit_id=b.UnitID) ");
+                totalCountSql.AppendFormat(@" left join #UnitSET b on   (t.purchase_unit_id=b.UnitID or t.sales_unit_id=b.UnitID) ");
             }
             totalCountSql.AppendFormat(@" where 1=1  and r.isdelete=0 ");
 

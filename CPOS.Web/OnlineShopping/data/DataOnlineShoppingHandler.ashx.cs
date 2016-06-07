@@ -2433,16 +2433,16 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                             {
                                 if (int.Parse(htSetting["enableVipSales"].ToString()) > 0)//启用会员小店
                                 {
-                                    item.salesPrice = (decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["vDistributionPricePer"].ToString()) / 100)).ToString();
-                                    item.ReturnCash = (decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["vOrderCommissionPer"].ToString()) / 100)).ToString();
+                                    item.salesPrice = Math.Round((decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["vDistributionPricePer"].ToString()) / 100)),2).ToString();
+                                    item.ReturnCash = Math.Round((decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["vOrderCommissionPer"].ToString()) / 100)),2).ToString();
                                 }
                             }
                             else if (reqObj.common.channelId == "10")//员工小店
                             {
                                 if (int.Parse(htSetting["enableEmployeeSales"].ToString()) > 0)//启用员工小店
                                 {
-                                    item.salesPrice = (decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["eDistributionPricePer"].ToString()) / 100)).ToString();
-                                    item.ReturnCash = (decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["eOrderCommissionPer"].ToString()) / 100)).ToString();
+                                    item.salesPrice = Math.Round((decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["eDistributionPricePer"].ToString()) / 100)),2).ToString();
+                                    item.ReturnCash = Math.Round((decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["eOrderCommissionPer"].ToString()) / 100)),2).ToString();
                                 }
                             }
                             if (reqObj.common.channelId == "7")//一起发码
@@ -2457,7 +2457,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                                     //--如果渠道是一起发码，当前价格取一起发码价
                                     if (ds.ItemSalesPriceRate > 0)
                                     {
-                                        item.salesPrice = ((decimal.Parse(item.salesPrice) * (decimal)ds.ItemSalesPriceRate) / 100).ToString();
+                                        item.salesPrice = Math.Round(((decimal.Parse(item.salesPrice) * (decimal)ds.ItemSalesPriceRate) / 100),2).ToString();
                                     }
                                 }
                             }
