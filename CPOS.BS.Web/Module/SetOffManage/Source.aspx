@@ -167,7 +167,7 @@
                                 <textarea id="textApp" class="textareastyle">集客行动已发布,快来参加获取丰厚福利！</textarea>
                             </div>
                             <div class="checkBox l on" data-flag="ConditionValue" ><em></em></div>
-                            <div class="linetext msgTitle">通知员工-发送到微信会员中心-通知</div>
+                            <div class="linetext msgTitle">通知会员-发送到微信会员中心-通知</div>
                             <div style="width:478px; margin:auto">
                                 <textarea id="textwebCat" class="textareastyle">集客行动已发布,快来参加获取丰厚福利！</textarea>
                             </div>

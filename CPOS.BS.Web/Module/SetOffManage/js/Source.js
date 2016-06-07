@@ -97,11 +97,11 @@
                 //只设置一个
                 if (($($(".checkBox")[0]).hasClass("on")==true && $('#textApp').val().length > 0)||($($(".checkBox")[1]).hasClass("on")==true&&$('#textwebCat').val().length > 0)){
                     if ($('#textApp').val().length > 0 && $('#textwebCat').val().length > 0 ) {
-                        var NoticeInfoList = [{ "NoticePlatformType": 1, "Title": "集客通知", "Text": $('#textApp').val() },{ "NoticePlatformType": 2, "Title": "集客通知", "Text": $('#textwebCat').val() }];
+                        var NoticeInfoList = [{ "NoticePlatformType": 2, "Title": "集客通知", "Text": $('#textApp').val() },{ "NoticePlatformType": 1, "Title": "集客通知", "Text": $('#textwebCat').val() }];
                     } else if ($('#textApp').val().length > 0) {
-                        var NoticeInfoList = [{ "NoticePlatformType": 1, "Title": "集客通知", "Text": $('#textApp').val() }];
+                        var NoticeInfoList = [{ "NoticePlatformType": 2, "Title": "集客通知", "Text": $('#textApp').val() }];
                     } else {
-                        var NoticeInfoList = [{ "NoticePlatformType": 2, "Title": "集客通知", "Text": $('#textwebCat').val() }];
+                        var NoticeInfoList = [{ "NoticePlatformType": 1, "Title": "集客通知", "Text": $('#textwebCat').val() }];
                     }
                     $('#winmessage').window('close');
                     that.setmessage(NoticeInfoList);
