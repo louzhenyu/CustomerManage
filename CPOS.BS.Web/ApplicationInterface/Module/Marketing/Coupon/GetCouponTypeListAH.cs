@@ -33,7 +33,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                 complexCondition.Add(new LikeCondition() { FieldName = "ParValue", Value = para.ParValue.ToString() });
             if (IsEffective)
             {
-                complexCondition.Add(new DirectCondition("ServiceLife >0 or (BeginTime<=GETDATE() and EndTime>=GETDATE()) "));
+                complexCondition.Add(new DirectCondition(" (ServiceLife >0 or (BeginTime<=GETDATE() and EndTime>=GETDATE()))"));
             }
             //排序参数
             List<OrderBy> lstOrder = new List<OrderBy> { };
