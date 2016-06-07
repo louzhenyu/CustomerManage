@@ -214,7 +214,7 @@
                                         <div class="succeed">导入完成<p>共<span id="inputTotalCount" class="inputCount"> 0</span> 条，成功导入<span  id="inputErrCount" class="red inputCount"> 0</span> 条</p></div>
                                         <div class="menber_centernrb1">
                 	                        下载错误报告，查看失败原因
-                                            <p><a id="error_report" href="javascipt:void(0)">error_report.xlsx<span class="commonBtn w100">选择文件</span></a></p>
+                                            <p><a id="error_report" href="javascipt:void(0)">error_report.xlsx<span class="commonBtn w100">下载文件</span></a></p>
                     
                                         </div>
         	                        </div>

@@ -85,9 +85,9 @@
                     if (data.IsSuccess && data.ResultCode == 0) {
                         $('#sharetotal').find('span').text(data.Data.ShareTotal + '次');
                         $('#setofftotal').find('span').eq(0).text(data.Data.TotalSetOff + '人');
-                        $('#setofftotal').find('span').eq(1).text(data.Data.AddTotalSetOff + '人');
                         if (data.Data.AddTotalSetOff >= 0) {
                             $('#setofftotal').find('img').attr("src", "images/2.1_24.png");
+                            $('#setofftotal').find('span').eq(1).text(data.Data.AddTotalSetOff + '人');
                         } else {
                             $('#setofftotal').find('img').attr("src", "images/down.png");
                             $('#setofftotal').find('span').eq(1).text(Math.abs(data.Data.AddTotalSetOff) + '人');
@@ -160,7 +160,7 @@
                                 itemMarginBottom: 10,
                                 itemStyle: { cursor: 'pointer', color: '#999999' },
                                 x: 300,
-                                y:15
+                                y: 15
                             },
                             credits: {
                                 enabled: false
@@ -206,7 +206,17 @@
                                         data.Data.lst[2].RoleContent[0].PeopleCount,
                                         data.Data.lst[3].RoleContent[0].PeopleCount,
                                         data.Data.lst[4].RoleContent[0].PeopleCount
-                                    ]
+                                    ],
+                                    dataLabels: {
+                                        enabled: true,
+                                        color: '#999999',
+                                        align: 'center',
+                                        y: -15,
+                                        style: {
+                                            fontSize: '8px',
+                                            fontFamily: 'Verdana, sans-serif'
+                                        }
+                                    }
                                 },
                                {
                                    name: '优惠券',
@@ -216,7 +226,17 @@
                                        data.Data.lst[2].RoleContent[1].PeopleCount,
                                        data.Data.lst[3].RoleContent[1].PeopleCount,
                                        data.Data.lst[4].RoleContent[1].PeopleCount
-                                   ]
+                                   ],
+                                   dataLabels: {
+                                       enabled: true,
+                                       color: '#999999',
+                                       align: 'center',
+                                       y: -15,
+                                       style: {
+                                           fontSize: '8px',
+                                           fontFamily: 'Verdana, sans-serif'
+                                       }
+                                   }
                                },
                                {
                                    name: '集客海报',
@@ -226,7 +246,17 @@
                                        data.Data.lst[2].RoleContent[2].PeopleCount,
                                        data.Data.lst[3].RoleContent[2].PeopleCount,
                                        data.Data.lst[4].RoleContent[2].PeopleCount
-                                   ]
+                                   ],
+                                   dataLabels: {
+                                       enabled: true,
+                                       color: '#999999',
+                                       align: 'center',
+                                       y: -15,
+                                       style: {
+                                           fontSize: '8px',
+                                           fontFamily: 'Verdana, sans-serif'
+                                       }
+                                   }
                                },
                                 {
                                     name: '商品',
@@ -236,7 +266,17 @@
                                         data.Data.lst[2].RoleContent[3].PeopleCount,
                                         data.Data.lst[3].RoleContent[3].PeopleCount,
                                         data.Data.lst[4].RoleContent[3].PeopleCount
-                                    ]
+                                    ],
+                                    dataLabels: {
+                                        enabled: true,
+                                        color: '#999999',
+                                        align: 'center',
+                                        y: -15,
+                                        style: {
+                                            fontSize: '8px',
+                                            fontFamily: 'Verdana, sans-serif'
+                                        }
+                                    }
                                 }]
                         });
                     }
@@ -289,7 +329,7 @@
                 remoteSort : true, // 服务器排序*/
                 idField: 'ID', //主键字段
                 columns: [[
-                    { field: 'SetoffRole', title: '类型', width: 100, align: 'center', resizable: false },
+                    { field: 'SetoffRole', title: '类型', width: 100, align: 'center',     resizable: false },
                     { field: 'ObjectName', title: '活动名称', width: 100, align: 'center', resizable: false,
 						formatter:function (value, row, index) {
 							//SuperRetailTraderID

@@ -138,7 +138,6 @@
             /**************** -------------------列表操作事件用例 End****************/
         },
         //获取门店下拉框信息
-
         getshopDate: function (callback) {
             $.util.oldAjax({
                 url: "/ApplicationInterface/Module/Basic/UnitAndType/UnitTypeTreeHandler.ashx",
@@ -174,7 +173,7 @@
                         // data.Data.addTotalSetOff
                         var len = data.Data.roletoolsources.length;
                         for (var i = 0; i < len; i++) {
-                            if (data.Data.roletoolsources[i].SetoffRole == 1) {
+                            if (data.Data.roletoolsources[i].SetoffRole == 3) {
                                 $($('.numNow2')[0]).text(data.Data.roletoolsources[i].ShareCount + '次');
                                 $($('.numNow2')[1]).find('span').eq(0).text(data.Data.roletoolsources[i].SetoffCount + '人');
                                 if (data.Data.roletoolsources[i].DiffCount >= 0) {
@@ -196,7 +195,7 @@
                                     $($('.numNow2')[3]).find('span').eq(1).text(data.Data.roletoolsources[i].DiffCount.toString().substr(1) + '人');
                                 }
                             }
-                            if (data.Data.roletoolsources[i].SetoffRole == '3') {
+                            if (data.Data.roletoolsources[i].SetoffRole == 1) {
                                 $($('.numNow2')[4]).text(data.Data.roletoolsources[i].ShareCount + '次');
                                 $($('.numNow2')[5]).find('span').eq(0).text(data.Data.roletoolsources[i].SetoffCount + '人');
                                 if (data.Data.roletoolsources[i].DiffCount >=0) {
@@ -240,12 +239,7 @@
                                 ]
                             },
                             title: {
-                                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                                    '<td style="padding:0"><b>{point.y} 人</b></td></tr>',
-                                footerFormat: '</table>',
-                                useHTML: true,
-                                text:null
+                                text:""
                             },
                             yAxis: {
                                 min: 0,
@@ -276,7 +270,17 @@
                                         data.Data.lst[2].RoleContent[0].PeopleCount,
                                         data.Data.lst[3].RoleContent[0].PeopleCount,
                                         data.Data.lst[4].RoleContent[0].PeopleCount
-                                    ]
+                                    ],
+                                    dataLabels: {
+                                        enabled: true,
+                                        color: '#999999',
+                                        align: 'center',
+                                        y: -15,
+                                        style: {
+                                            fontSize: '8px',
+                                            fontFamily: 'Verdana, sans-serif'
+                                        }
+                                    }
                                 },
                                {
                                    name: '客服',
@@ -286,7 +290,17 @@
                                        data.Data.lst[2].RoleContent[1].PeopleCount,
                                        data.Data.lst[3].RoleContent[1].PeopleCount,
                                        data.Data.lst[4].RoleContent[1].PeopleCount
-                                   ]
+                                   ],
+                                   dataLabels: {
+                                       enabled: true,
+                                       color: '#999999',
+                                       align: 'center',
+                                       y: -15,
+                                       style: {
+                                           fontSize: '8px',
+                                           fontFamily: 'Verdana, sans-serif'
+                                       }
+                                   }
                                },
                                {
                                    name: '店员',
@@ -296,7 +310,17 @@
                                        data.Data.lst[2].RoleContent[2].PeopleCount,
                                        data.Data.lst[3].RoleContent[2].PeopleCount,
                                        data.Data.lst[4].RoleContent[2].PeopleCount
-                                   ]
+                                   ],
+                                   dataLabels: {
+                                       enabled: true,
+                                       color: '#999999',
+                                       align: 'center',
+                                       y: -15,
+                                       style: {
+                                           fontSize: '8px',
+                                           fontFamily: 'Verdana, sans-serif'
+                                       }
+                                   }
                                }]
                         });
                     }

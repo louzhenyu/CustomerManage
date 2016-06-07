@@ -69,7 +69,6 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                         }
 
                     }
-
                     if(chartsData1[0]!='0'||chartsData1[1]!='0'){
                         $('#vipCharts').highcharts({
                             chart: {
@@ -120,11 +119,8 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                             }]
                         });
                         $('.setOffVipModule').find('.chartsData').show();
-                        $('#vipCharts').parents('.contents').children('.noContents').hide();
+                        //$('#vipCharts').parents('.contents').children('.noContents').hide();
                         //return false;
-                    }else{
-                        $('.setOffVipModule').find('.chartsData').hide();
-                        $('#vipCharts').parents('.contents').children('.noContents').show();
                     }
                     if(chartsData2[0]!='0'||chartsData2[1]!='0'){
                         $('#staffCharts').highcharts({
@@ -176,11 +172,8 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                             }]
                         });
                         $('.setOffStaffModule').find('.chartsData').show();
-                        $('#staffCharts').parents('.contents').children('.noContents').hide();
+                        //$('#staffCharts').parents('.contents').children('.noContents').hide();
                         //return false;
-                    }else{
-                        $('.setOffStaffModule').find('.chartsData').hide();
-                        $('#staffCharts').parents('.contents').children('.noContents').show();
                     }
 
 
@@ -220,21 +213,16 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     $('#winTool').find('#setOfferPoster').show();
                 }else if(value=='0'){
                     $.util.partialRefresh($('#gridTable1'));
-
                     $('#winTool').find('#setOfferPoster').hide();
-                    //$('#winTool').find('.datagrid').hide();
-                     $('#gridTable2').parents('.datagrid').hide();
-                    // $('#winTool').find('.datagrid').eq(1).hide();
                     that.loadToolData(0,type);
+                    $('#gridTable2').parents('.datagrid').hide();
                     $('#winTool').find('.toolList').show();
                     $('#winTool').find('.toolList').children('.commonBtn').html('新建活动');
                 }else if(value=='100'){
                     $.util.partialRefresh($('#gridTable2'));
                     $('#winTool').find('#setOfferPoster').hide();
                     that.loadToolData(1,type);
-                    //$('#winTool').find('.datagrid').hide();
                      $('#gridTable1').parents('.datagrid').hide();
-                    // $('#winTool').find('.datagrid').eq(1).show();
                     $('#winTool').find('.toolList').show();
                     $('#winTool').find('.toolList').children('.commonBtn').html('新建优惠券');
                 }
@@ -378,7 +366,14 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     contentVip.show();
                     noContentVip.hide();
                     toolTitleVip.show();
-                    toolTitleVip.find('li').eq(0).trigger('click');
+                    if(value=='0'){
+                        toolTitleVip.find('li').eq(0).trigger('click');
+                    }else if(value=='100'){
+                        toolTitleVip.find('li').eq(1).trigger('click');
+                    }else if(value=='900'){
+                        toolTitleVip.find('li').eq(2).trigger('click');
+                    }
+
                 }
                 if(SetoffType=='2'){
                     if(listAction!=''&&isUniform==true){
@@ -444,7 +439,14 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     contentStaff.show();
                     noContentStaff.hide();
                     toolTitleStaff.show();
-                    toolTitleStaff.find('li').eq(0).trigger('click');
+                    if(value=='0'){
+                        toolTitleStaff.find('li').eq(0).trigger('click');
+                    }else if(value=='100'){
+                        toolTitleStaff.find('li').eq(1).trigger('click');
+                    }else if(value=='900'){
+                        toolTitleStaff.find('li').eq(2).trigger('click');
+                    }
+
                 }
                 if(isUniform==true){
                     $('#winTool').window('close');
@@ -497,7 +499,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
             });
 
             //点击设置集客行动展开集客行动
-            $('.noContents').delegate('a','click',function(){
+            $('.charts').delegate('a','click',function(){
                 var parModul = $(this).parents('.Module').find('.blockModul');
                 var pointBtn = $(this).parents('.Module').find('.point');
                 var isHidden = parModul.css('display');
@@ -1895,8 +1897,8 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     }else{
                         $('#rewardRule').parents('.editArea').find('.till').html('积分');
                     }
+                    $('.setOffVipModule').find('.point').children('span').eq(1).trigger('click');
                     if(isDisabled=='10'){
-                        $('.setOffVipModule').find('.point').children('span').eq(1).trigger('click');
                         $('.setOffVipModule').find('.lockBack').children('.cirle').trigger('click');
                         $('.setOffVipModule').find('.editArea').find("p[data-type='"+setoffOrderTimers+"']").addClass('on');
                     }else{
@@ -1927,9 +1929,8 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                 }
                 if(setoffType=='2'){
                     that.loadData.setOff.setOffStaffId = list[i].SetoffEventID;//获取集客员工行动id
-
+                    $('.setOffStaffModule').find('.point').children('span').eq(1).trigger('click');
                     if(isDisabled=="10"){
-                        $('.setOffStaffModule').find('.point').children('span').eq(1).trigger('click');
                         $('.setOffStaffModule').find('.lockBack').children('.cirle').trigger('click');
                         $('.setOffStaffModule').find('.editArea').find("p[data-type='"+setoffOrderTimers+"']").addClass('on');
                     }else{

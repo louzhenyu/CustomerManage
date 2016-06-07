@@ -55,7 +55,7 @@
                         <div class="title num borderR2">
                            <img src="images/2.1_05.png" class="incos" />
                            <span>客服</span>
-                       </div>
+                        </div>
                         <div class="num bordergrey borderR2">
                             <div class="numTitle"><span>客服分享</span></div>
                             <div class="numNow2"><span></span></div>
@@ -63,7 +63,7 @@
                             <div class="numTitle"><span>集客</span></div>
                             <div class="numNow2">
                                 <span></span>
-                                 <img src="" class="incoB" />
+                                <img src="" class="incoB" />
                                 <span class="fontcolor"></span>
                             </div>
                         </div>
@@ -72,7 +72,7 @@
                         <div class="title num borderR2">
                            <img src="images/2.1_11.png" class="incos" />
                            <span>店员</span>
-                       </div>
+                        </div>
                         <div class="num bordergrey borderR2">
                             <div class="numTitle"><span>店员分享</span></div>
                             <div class="numNow2"><span></span></div>
@@ -80,7 +80,7 @@
                             <div class="numTitle"><span>集客</span></div>
                             <div class="numNow2">
                                 <span></span>
-                                 <img src="" class="incoB" />
+                                <img src="" class="incoB" />
                                 <span class="fontcolor"></span>
                             </div>
                         </div>
@@ -130,7 +130,7 @@
                                           <input id="reserveDateEnd" name="ReserveDateEnd" class="easyui-datebox"data-options="width:200,height:32" validType="compareDate[$('#reserveDateBegin').datebox('getText'),'当前选择的时间必须晚于前面选择的时间']"/>
                                    </div>
                          </div>
-                         <div class="moreQueryWrap" style="margin-left: 160px;">
+                         <div class="moreQueryWrap messageLocation">
                               <a href="javascript:;" class="commonBtn" id="sendmessage" style=" width:90px">发送通知</a>
                          </div>
                        </div>

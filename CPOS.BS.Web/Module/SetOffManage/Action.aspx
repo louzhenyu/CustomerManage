@@ -3,7 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>集客行动</title>
-    <link href="<%=StaticUrl+"/module/SetOffManage/css/action.css?v=1.5"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/SetOffManage/css/action.css?v=1.6"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="allPage" id="section" data-js="js/action.js?ver=0.1" >
@@ -24,11 +24,9 @@
                 </div>
                 <div class="contents">
                     <div class="charts" id="staffCharts">
+                        <p>点击<a>设置集客行动</a>，开启您的集客行动。</p>
                     </div>
                     <div class="noContents">
-                        <p>
-                            点击<a>设置集客行动</a>，开启您的集客行动。
-                        </p>
                     </div>
                     <div class="chartsData"></div>
                 </div>
@@ -117,13 +115,12 @@
                          <span>效果</span>
                      </div>
                  </div><div class="contents">
-                     <div class="charts" id="vipCharts"></div>
-
-                     <div class="noContents">
-                         <p>
+                     <div class="charts" id="vipCharts">
+                        <p>
                              点击<a>设置集客行动</a>，开启您的集客行动。
                          </p>
-                     </div>
+                    </div>
+                    <div class="noContents"></div>
                      <div class="chartsData"></div>
                  </div>
              </div>

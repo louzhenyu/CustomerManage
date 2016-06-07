@@ -97,7 +97,7 @@ namespace JIT.CPOS.BS.DataAccess
                     break;
             }
             sbSql.AppendFormat(@"select DisplayIndex = row_number() over(order by StartTime desc), * into #tmp from
-                         (SELECT distinct ST.SetoffEventID,ST.CustomerId, ST.SetoffToolID AS 'SetoffToolID' ,ST.ObjectId, Name As 'SetOffToolName',CONVERT(varchar(100),cast(T.StartDate as datetime),23) AS 'StartTime',CONVERT(varchar(100),cast(T.EndDate as datetime),23) AS 'EndTime',ST.ToolType,T.OfflineRedirectUrl AS 'URL',
+                         (SELECT distinct ST.SetoffEventID,ST.CustomerId, ST.SetoffToolID AS 'SetoffToolID' ,ST.ObjectId, Name As 'SetOffToolName',CONVERT(varchar(100),cast(T.StartDate as datetime),23) AS 'StartTime',CONVERT(varchar(100),cast(T.EndDate as datetime),23) AS 'EndTime',ST.ToolType,T.OnLineRedirectUrl AS 'URL',
                          SUW.NoticePlatformType,ISNULL(NULL,0) AS 'ServiceLife',ISNULL(SP.BeShareVipID,0) as IsPush,ISNULL(IsOpen,0)as IsRead FROM SetoffTools ST
                         LEFT JOIN T_CTW_LEvent T ON  ST.ObjectId=T.CTWEventId
                         LEFT JOIN SetoffToolUserView SUW ON SUW.SetoffToolID=ST.SetoffToolID AND  UserID='{0}' AND NoticePlatformType='{4}'

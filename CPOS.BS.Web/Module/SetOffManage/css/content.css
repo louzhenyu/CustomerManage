@@ -41,4 +41,4 @@ borderRadiu{border-radius:20px}
 .hrbottom{border-bottom:1px solid #eeeeee}
 .hrright{float:left;width:1px;height:60px;margin:20px 25px 20px 0px;background-color:#eeeeee}
 /*图例*/
-rect{width:12px !important; rx:6!important}
+.highcharts-legend-item rect{width:12px !important; rx:6!important}

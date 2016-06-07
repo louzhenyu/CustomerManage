@@ -26,6 +26,7 @@
 .chartTitle{background-color:#f7f7fa;color:#999999;padding-left:12px;height:40px;line-height:40px;}
 .chart{height:300px;width:95%;}
 /*通知框*/
+.messageLocation{width: 90px;position: absolute;top: 815px;left: 1100px;}
 .messagediv{padding:10px;margin:30px 20px 40px;}
 .textdiv{border-bottom:1px solid #eeeeee;width: 540px;height: 295px;}
 .textareastyle{border:1px solid #e5e5e5;width:476px;height:82px;border-radius:2px;}
@@ -46,4 +47,4 @@
 .font18{font-size:18px}
 .font24{font-size:24px;}
 /*图例*/
-rect{width:12px !important; rx:6!important}
+.highcharts-legend-item rect{width:12px !important; rx:6!important}
