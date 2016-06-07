@@ -42,14 +42,14 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipGold
                             List<CustomerBasicSettingEntity> settingList = new List<CustomerBasicSettingEntity>();//基础配置数据
 
                             //获取已发布的集客行动
-                            var SetoffEvenResult = SetoffEventBll.QueryByEntity(new SetoffEventEntity() { SetoffType = item.SetoffType, Status = "10" }, null).ToList();
+                            var SetoffEvenResult = SetoffEventBll.QueryByEntity(new SetoffEventEntity() { SetoffType = item.SetoffType, Status = "10", CustomerId=loggingSessionInfo.ClientID }, null).ToList();
                             if (SetoffEvenResult.Count > 1)
                                 throw new APIException("数据异常，只能有一种集客行动！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
 
                             if (SetoffEvenResult.Count > 0)
                             {
                                 var Result = SetoffEvenResult.First();//集客行动
-                                var RuleData = IincentiveRuleBll.QueryByEntity(new IincentiveRuleEntity() { SetoffEventID = Result.SetoffEventID }, null).FirstOrDefault();
+                                var RuleData = IincentiveRuleBll.QueryByEntity(new IincentiveRuleEntity() { SetoffEventID = Result.SetoffEventID, CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
                                 if (RuleData == null)
                                     throw new APIException("数据异常，找不到奖励规则！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
                                 //判断奖励是否变动
