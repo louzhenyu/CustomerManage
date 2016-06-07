@@ -92,7 +92,8 @@
 						params[para.name]=para.value;
 					});
 					params['RoleMenuInfoList'] = [];
-					var nodes = $('#limitsTreeBox').tree('getChecked',['checked','indeterminate']);//
+					var nodes = $('#limitsTreeBox').tree('getChecked');//,['checked','indeterminate']
+					console.log(nodes);
 					if(!nodes.length){
 						$('.icon-tipBox').show();
 						setTimeout(function(){

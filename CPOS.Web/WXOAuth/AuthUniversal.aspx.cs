@@ -209,6 +209,10 @@ namespace JIT.CPOS.Web.WXOAuth
                         var pObjectID = Request["ObjectID"];
                         var pSourceID = Request["SourceID"];
                         var pShareVipID = Request["ShareVipID"];
+                        if (!string.IsNullOrWhiteSpace(pShareVipID))
+                        {
+                            pShareVipID = pShareVipID.Split(',')[0];
+                        }
                         var objectType = Request["objectType"];
                         
                         if (!string.IsNullOrWhiteSpace(pObjectID))
