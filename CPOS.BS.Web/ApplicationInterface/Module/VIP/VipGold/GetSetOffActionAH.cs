@@ -24,13 +24,13 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipGold
             var SetoffPosterBll = new SetoffPosterBLL(this.CurrentUserInfo);
             var IincentiveRuleBll = new IincentiveRuleBLL(this.CurrentUserInfo);
             //集客行动主数据
-            var SetoffEventResult = SetoffEventBll.QueryByEntity(new SetoffEventEntity() { Status = "10" }, null).ToList();
+            var SetoffEventResult = SetoffEventBll.QueryByEntity(new SetoffEventEntity() { Status = "10", CustomerId=loggingSessionInfo.ClientID }, null).ToList();
             //
             rd.GetSetOffActionInfoList = new List<GetSetOffActionInfo>();
             foreach (var item in SetoffEventResult)
             {
                 //规则
-                var RuleData = IincentiveRuleBll.QueryByEntity(new IincentiveRuleEntity() { SetoffEventID = item.SetoffEventID }, null).FirstOrDefault();
+                var RuleData = IincentiveRuleBll.QueryByEntity(new IincentiveRuleEntity() { SetoffEventID = item.SetoffEventID, CustomerId=loggingSessionInfo.ClientID }, null).FirstOrDefault();
 
                 var DataInfo = new GetSetOffActionInfo();
                 DataInfo.SetoffEventID = item.SetoffEventID.ToString();
@@ -44,7 +44,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipGold
                     DataInfo.IincentiveRuleStatus = Convert.ToInt32(RuleData.Status);
                 }
                 //集客工具关系
-                var ToolsData = SetoffToolsBll.QueryByEntity(new SetoffToolsEntity() { SetoffEventID = item.SetoffEventID, Status = "10" }, null).ToList();
+                var ToolsData = SetoffToolsBll.QueryByEntity(new SetoffToolsEntity() { SetoffEventID = item.SetoffEventID, Status = "10", CustomerId=loggingSessionInfo.ClientID }, null).ToList();
                 if (ToolsData != null)
                 {
                     var ds = SetoffToolsBll.GetToolsDetails(item.SetoffEventID.ToString());
