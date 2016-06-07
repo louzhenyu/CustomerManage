@@ -18,7 +18,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipGold
             var rd = new EmptyResponseData();
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
-            var SetoffToolsBll = new SetoffToolsBLL(this.CurrentUserInfo);
+            var SetoffToolsBll = new SetoffToolsBLL(loggingSessionInfo);
             //
             var pTran = SetoffToolsBll.GetTran();
             using (pTran.Connection)

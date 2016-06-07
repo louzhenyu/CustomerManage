@@ -19,8 +19,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipGold
             var rd = new SetoffPosterRD();
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
-            var SetoffPosterBll = new SetoffPosterBLL(this.CurrentUserInfo);
-            var ObjectImagesBll = new ObjectImagesBLL(this.CurrentUserInfo);
+            var SetoffPosterBll = new SetoffPosterBLL(loggingSessionInfo);
+            var ObjectImagesBll = new ObjectImagesBLL(loggingSessionInfo);
             //
             var pTran = SetoffPosterBll.GetTran();
             var Data = SetoffPosterBll.GetByID(para.SetoffPosterID);

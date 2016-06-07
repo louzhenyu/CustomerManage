@@ -19,10 +19,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipGold
             var rd = new GetSetOffActionRD();
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
-            var SetoffEventBll = new SetoffEventBLL(this.CurrentUserInfo);
-            var SetoffToolsBll = new SetoffToolsBLL(this.CurrentUserInfo);
-            var SetoffPosterBll = new SetoffPosterBLL(this.CurrentUserInfo);
-            var IincentiveRuleBll = new IincentiveRuleBLL(this.CurrentUserInfo);
+            var SetoffEventBll = new SetoffEventBLL(loggingSessionInfo);
+            var SetoffToolsBll = new SetoffToolsBLL(loggingSessionInfo);
+            var SetoffPosterBll = new SetoffPosterBLL(loggingSessionInfo);
+            var IincentiveRuleBll = new IincentiveRuleBLL(loggingSessionInfo);
             //集客行动主数据
             var SetoffEventResult = SetoffEventBll.QueryByEntity(new SetoffEventEntity() { Status = "10", CustomerId=loggingSessionInfo.ClientID }, null).ToList();
             //

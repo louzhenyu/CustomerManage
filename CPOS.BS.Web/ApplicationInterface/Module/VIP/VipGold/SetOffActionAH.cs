@@ -18,15 +18,15 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipGold
             var rd = new EmptyResponseData();
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
-            var SetoffEventBll = new SetoffEventBLL(this.CurrentUserInfo);
-            var IincentiveRuleBll = new IincentiveRuleBLL(this.CurrentUserInfo);
-            var ObjectImagesBll = new ObjectImagesBLL(this.CurrentUserInfo);
-            var SetoffToolsBll = new SetoffToolsBLL(this.CurrentUserInfo);
-            var SetoffPosterBll = new SetoffPosterBLL(this.CurrentUserInfo);
-            var CustomerBasicSettingBll = new CustomerBasicSettingBLL(this.CurrentUserInfo);
+            var SetoffEventBll = new SetoffEventBLL(loggingSessionInfo);
+            var IincentiveRuleBll = new IincentiveRuleBLL(loggingSessionInfo);
+            var ObjectImagesBll = new ObjectImagesBLL(loggingSessionInfo);
+            var SetoffToolsBll = new SetoffToolsBLL(loggingSessionInfo);
+            var SetoffPosterBll = new SetoffPosterBLL(loggingSessionInfo);
+            var CustomerBasicSettingBll = new CustomerBasicSettingBLL(loggingSessionInfo);
             //
             var pTran = SetoffEventBll.GetTran();
-            string _CustomerId = this.CurrentUserInfo.ClientID;
+            string _CustomerId = loggingSessionInfo.ClientID;
 
             if (para.SetOffActionList.Count > 0)
             {

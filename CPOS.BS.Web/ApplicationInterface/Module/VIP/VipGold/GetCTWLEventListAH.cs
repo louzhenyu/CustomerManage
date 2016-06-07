@@ -19,7 +19,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipGold
             var rd = new GetCTWLEventListRD();
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
-            var Bll = new T_CTW_LEventBLL(this.CurrentUserInfo);
+            var Bll = new T_CTW_LEventBLL(loggingSessionInfo);
 
             //排序
             var pOrderBys = new List<OrderBy>();

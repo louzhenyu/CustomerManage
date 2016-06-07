@@ -44,7 +44,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
                 var SetOffPosterInfo = setOffPosterBLL.QueryByEntity(new SetoffPosterEntity() { SetoffPosterID = new Guid(para.ObjectId) }, null);//获取集客海报信息
                 var setoffEventBLL = new SetoffEventBLL(CurrentUserInfo);
                 var setoffEventInfo = setoffEventBLL.QueryByEntity(new SetoffEventEntity() { Status = "10", SetoffType = 1, CustomerId=customerId }, null);
-                var SetoffToolsInfo = SetoffToolsBll.QueryByEntity(new SetoffToolsEntity() { ObjectId = para.ObjectId, Status = "10", ToolType = para.ToolType, SetoffEventID = setoffEventInfo[0].SetoffEventID }, null);//获取工具信息
+                //var SetoffToolsInfo = SetoffToolsBll.QueryByEntity(new SetoffToolsEntity() { ObjectId = para.ObjectId, Status = "10", ToolType = para.ToolType, SetoffEventID = setoffEventInfo[0].SetoffEventID }, null);//获取工具信息
                 if (para.VipDCode == 9)
                 {
                     //根据分享人ID和对象ID获取永久二维码信息

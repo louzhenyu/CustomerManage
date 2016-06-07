@@ -18,7 +18,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipGold
             var rd = new EmptyResponseData();
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
-            var InnerGroupNewsBll = new InnerGroupNewsBLL(this.CurrentUserInfo);
+            var InnerGroupNewsBll = new InnerGroupNewsBLL(loggingSessionInfo);
 
             foreach (var item in para.NoticeInfoList)
             {
