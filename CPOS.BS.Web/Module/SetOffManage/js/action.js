@@ -1145,16 +1145,16 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                             if(type=='1'){
                                 $('#winMessage').window('close');
                                 alert('集客行动及活动消息已发布');
-                               // $.util.toNewUrlPath( "/module/SetOffManage/Source.aspx");
+                               $.util.toNewUrlPath( "/module/SetOffManage/Source.aspx");
                             }else if(type=='2'){
                                 $('#winMessage').window('close');
                                 alert('活动消息已发布');
-                                ///$.util.toNewUrlPath( "/module/SetOffManage/Source.aspx");
+                                $.util.toNewUrlPath( "/module/SetOffManage/Source.aspx");
                             }
                             else{
                                 $('#winMessage').window('close');
                                 alert('集客行动已发布');
-                               // $.util.toNewUrlPath( "/module/SetOffManage/Source.aspx");
+                               $.util.toNewUrlPath( "/module/SetOffManage/Source.aspx");
                             }
 
                         });
@@ -1176,7 +1176,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     $.util.toNewUrlPath( "/module/SetOffManage/Source.aspx");
                 }else{
                     $('#winMessage').window('close');
-                    window.reload();
+                    location.reload()
                 }
 
             })
@@ -1905,7 +1905,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                         $('.setOffVipModule').find('.editArea').find("p[data-type='"+setoffOrderTimers+"']").addClass('on');
                         $('.setOffVipModule').find('.editArea').find("p[data-type='"+setoffOrderTimers+"']").addClass('disab');
                     }
-                    if(getSetoffTools==null){
+                    if(getSetoffTools==null||getSetoffTools==[]){
                         $('.setOffVipModule').find('.blockModul').find('.noContents').show();
                     }else{
                         $('.setOffVipModule').find(".toolSetOff").html('已发布');
@@ -1941,7 +1941,8 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     }else{
                         $('.setOffStaffModule').find('.rewardAction').html('使用中的激励方案')
                     }
-                    if(getSetoffTools==null){
+                    console.log(getSetoffTools);
+                    if(getSetoffTools==null||getSetoffTools==[]){
                         $('.setOffStaffModule').find('.blockModul').find('.noContents').show();
                     }else{
                         $('.setOffStaffModule').find(".toolSetOff").html('已发布');
