@@ -345,14 +345,14 @@ namespace JIT.CPOS.Web.WXOAuth
                                 vipInfotmp.VipSourceId = "24";
                             }
 
-                            vipServer.Update(vipInfotmp);
+                            vipServer.Update(vipInfotmp,false);
 
                         }
                         else   //状态为未关注，vipInfo.Status == 0
                         {
                             vipInfo.IsDelete = 0;
                             //   vipInfo.Status = 1;  //潜在用户？这个时候如果没关注，也算潜在用户吗？没关注不算潜在用户，所以不改变他的状态**
-                            vipServer.Update(vipInfo);
+                            vipServer.Update(vipInfo, false);
                             vipInfotmp.VIPID = vipInfo.VIPID;
                         }
                     }
@@ -401,7 +401,7 @@ namespace JIT.CPOS.Web.WXOAuth
                                 vipInfo.VipSourceId = "24";
                             }
 
-                            vipServer.Update(vipInfotmp);
+                            vipServer.Update(vipInfotmp,false);
 
 
                         }
@@ -622,7 +622,7 @@ namespace JIT.CPOS.Web.WXOAuth
             vipInfotmp.CouponInfo = UnitId;
             vipInfotmp.Col24 = ObjectID;
             vipInfotmp.Col23 = SourceId.ToString();
-            vipBll.Update(vipInfotmp);
+            vipBll.Update(vipInfotmp,false);
 
             //分享记录
             T_LEventsSharePersonLogBLL t_LEventsSharePersonLogBLL = new T_LEventsSharePersonLogBLL(loggingSessionInfo);
