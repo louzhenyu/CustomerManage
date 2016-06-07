@@ -663,13 +663,13 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
 				tt.SetoffRegAwardName="现金";
 				tt.setoffRegPrize = $('.Module').eq(0).find('.setoffRegPrize').val();
 				tt.setoffOrderPer = $('.Module').eq(0).find('.setoffOrderPer').val();
-				tt.setoffOrderTimers =$('.Module').eq(0).find('.editArea').find("p[class='on']").attr('data-name');
+				tt.setoffOrderTimers =$('.Module').eq(0).find('.editArea').find(".on").attr('data-name');
 				tt.activeLL = $('.Module').eq(0).find('.contentsData').find('li').length;
 				tt.setoffVipName=SetoffVipName;
                 tt.SetoffViptill =SetoffViptill;
 				tt.setoffVipRegPrize = $('.Module').eq(1).find('.setoffRegPrize').val()||0;
 				tt.setoffVipOrderPer = $('.Module').eq(1).find('.setoffOrderPer').val();
-				tt.setoffOrderVipTimers =$('.Module').eq(1).find('.editArea').find("p[class='on']").attr('data-name');
+				tt.setoffOrderVipTimers =$('.Module').eq(1).find('.editArea').find(".on").attr('data-name');
 				tt.activeVipLL = $('.Module').eq(1).find('.contentsData').find('li').length;
 				setMessage.push(tt);
 				var data =setMessage;
@@ -1077,7 +1077,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                         SetOff.push(obj);
                     }
                 })
-                if(isData!='false'){
+                if(isData!=false){
                     that.loadData.setOff.SetOffActionInfo=SetOff;//发布集客行动
                     $('#win').window('close');
                     that.loadData.setOffAction(function(data,isSuccess){
