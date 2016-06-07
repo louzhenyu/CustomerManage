@@ -409,8 +409,23 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                             vipInfo.SetoffUserId = RP.UserID;//设为门店员工
                             vipInfo.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//集客时间*****
                         }
+                        if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID)
+                        {
+                            rsp.Message = "恭喜你集客成功。会员需要用心经营才会有订单哦！";
+                        }
                     }
-                    else if (UserStatus.Trim().Equals("-1"))
+                    else
+                    {
+                        if (vipInfo != null && !string.IsNullOrEmpty(vipInfo.CouponInfo) && vipInfo.SetoffUserId != RP.UserID)
+                        {
+                            //rsp.Message = "此客户已是会员，无需再集客。老会员更要服务好哦！";
+                        }
+                        else if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID && !string.IsNullOrEmpty(vipInfo.Col21) && Convert.ToDateTime(vipInfo.Col21).AddSeconds(3) < DateTime.Now)  //col21：员工集客/或者分销商集客时间
+                        {
+                            //rsp.Message = "此客户此前已经被您集客，无需重复集客。！";
+                        } 
+                    }
+                    if (UserStatus.Trim().Equals("-1"))
                     {// 当前会员的集客员工离职时
                         if (!string.IsNullOrEmpty(tt))
                         {
@@ -458,18 +473,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     //{
                     //    rsp.Message = "恭喜你集客成功。会员需要用心经营才会有订单哦！";
                     //}
-                    if (vipInfo != null && !string.IsNullOrEmpty(vipInfo.CouponInfo) && vipInfo.SetoffUserId != RP.UserID)
-                    {
-                        //rsp.Message = "此客户已是会员，无需再集客。老会员更要服务好哦！";
-                    }
-                    else if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID && !string.IsNullOrEmpty(vipInfo.Col21) && Convert.ToDateTime(vipInfo.Col21).AddSeconds(3) < DateTime.Now)  //col21：员工集客/或者分销商集客时间
-                    {
-                        //rsp.Message = "此客户此前已经被您集客，无需重复集客。！";
-                    }
-                    else if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID)
-                    {
-                        rsp.Message = "恭喜你集客成功。会员需要用心经营才会有订单哦！";
-                    }     
+                      
                     
                     vipBll.Update(vipInfo);
 

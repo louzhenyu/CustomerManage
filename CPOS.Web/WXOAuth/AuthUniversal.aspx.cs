@@ -207,14 +207,25 @@ namespace JIT.CPOS.Web.WXOAuth
                             }
                         }
                         var pObjectID = Request["ObjectID"];
+                        if (!string.IsNullOrWhiteSpace(pObjectID))
+                        {
+                            pObjectID = pObjectID.Split(',')[0];
+                        }
                         var pSourceID = Request["SourceID"];
+                        if (!string.IsNullOrWhiteSpace(pSourceID))
+                        {
+                            pSourceID = pSourceID.Split(',')[0];
+                        }
                         var pShareVipID = Request["ShareVipID"];
                         if (!string.IsNullOrWhiteSpace(pShareVipID))
                         {
                             pShareVipID = pShareVipID.Split(',')[0];
                         }
                         var objectType = Request["objectType"];
-                        
+                        if (!string.IsNullOrWhiteSpace(objectType))
+                        {
+                            objectType = objectType.Split(',')[0];
+                        }
                         if (!string.IsNullOrWhiteSpace(pObjectID))
                         {
                             if (goUrl.IndexOf("?") > 0)

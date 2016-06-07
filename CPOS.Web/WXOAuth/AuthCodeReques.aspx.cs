@@ -330,7 +330,7 @@ namespace JIT.CPOS.Web.WXOAuth
                                 vipInfotmp.VipSourceId = "26";
                                 //   vipInfo.VipSourceName = "优惠券二维码";
                             }
-                            else if (objectType.Equals("SetOffPoster"))//如果是海报根据给定的VipSourceId=29给定
+                            else if (objectType.Equals("SetoffPoster"))//如果是海报根据给定的VipSourceId=29给定
                             {
                                 vipInfotmp.VipSourceId = "28";
                                 //  vipInfo.VipSourceName = "集客海报二维码";
@@ -357,7 +357,7 @@ namespace JIT.CPOS.Web.WXOAuth
                                     vipInfo.VipSourceId = "26";
                                     //   vipInfo.VipSourceName = "优惠券二维码";
                                 }
-                                else if (objectType.Equals("SetOffPoster"))//如果是海报根据给定的VipSourceId=29给定
+                                else if (objectType.Equals("SetoffPoster"))//如果是海报根据给定的VipSourceId=29给定
                                 {
                                     vipInfo.VipSourceId = "28";
                                     //  vipInfo.VipSourceName = "集客海报二维码";
@@ -408,7 +408,7 @@ namespace JIT.CPOS.Web.WXOAuth
                                 vipInfo.VipSourceId = "26";
                                 //   vipInfo.VipSourceName = "优惠券二维码";
                             }
-                            else if (objectType.Equals("SetOffPoster"))//如果是海报根据给定的VipSourceId=29给定
+                            else if (objectType.Equals("SetoffPoster"))//如果是海报根据给定的VipSourceId=29给定
                             {
                                 vipInfo.VipSourceId = "28";
                                 //  vipInfo.VipSourceName = "集客海报二维码";
@@ -608,12 +608,12 @@ namespace JIT.CPOS.Web.WXOAuth
                     if (SourceId == 1 || SourceId == 2)//获取分享员工的默认门店
                     {
                         vipInfotmp.SetoffUserId = ShareVipID;
-                        vipInfotmp.HigherVipID = "";
+                        vipInfotmp.HigherVipID = null;
                     }
                     else
                     {
                         vipInfotmp.HigherVipID = ShareVipID;
-                        vipInfotmp.SetoffUserId = "";
+                        vipInfotmp.SetoffUserId = null;
                     }
                 }
 
@@ -627,13 +627,13 @@ namespace JIT.CPOS.Web.WXOAuth
                 if (SourceId == 1 || SourceId == 2)//获取分享员工的默认门店
                 {
                     vipInfotmp.SetoffUserId = ShareVipID;
-                    vipInfotmp.HigherVipID = "";
+                    vipInfotmp.HigherVipID = null;
                 }
                 //会员
                 else
                 {
                     vipInfotmp.HigherVipID = ShareVipID;
-                    vipInfotmp.SetoffUserId = "";
+                    vipInfotmp.SetoffUserId = null;
                 }
             }
             #endregion
