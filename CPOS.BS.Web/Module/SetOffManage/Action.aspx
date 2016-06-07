@@ -26,7 +26,7 @@
                     <div class="charts" id="staffCharts">
                         <p>点击<a>设置集客行动</a>，开启您的集客行动。</p>
                     </div>
-                    <div class="noContents">
+                    <div class="noContents" style="display: none;">
                     </div>
                     <div class="chartsData"></div>
                 </div>
@@ -120,7 +120,7 @@
                              点击<a>设置集客行动</a>，开启您的集客行动。
                          </p>
                     </div>
-                    <div class="noContents"></div>
+                    <div class="noContents" style="display: none;"></div>
                      <div class="chartsData"></div>
                  </div>
              </div>
