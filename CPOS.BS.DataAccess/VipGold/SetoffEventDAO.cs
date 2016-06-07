@@ -49,7 +49,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="customerId">ÉÌ»§ID</param>
         public void SetFailStatus(int Type,string customerId)
         {
-            string sql = string.Format("update SetoffEvent set Status='90' where SetoffType={0} and customerID={1}", Type,customerId);
+            string sql = string.Format("update SetoffEvent set Status='90' where SetoffType={0} and customerID='{1}'", Type,customerId);
             this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql);
         }
 
