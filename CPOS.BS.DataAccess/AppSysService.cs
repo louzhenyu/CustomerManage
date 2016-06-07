@@ -30,6 +30,68 @@ namespace JIT.CPOS.BS.DataAccess
             base.loggingSessionInfo = loggingSessionInfo;
         }
         #endregion
+        public DataSet GetMenuByIds(string[] ids)
+        {
+            if (ids.Length == 0)
+                return null;
+            StringBuilder sb = new StringBuilder();
+            List<SqlParameter> pList = new List<SqlParameter>();
+            sb.Append("select  a.Menu_Id,"
+                      + " a.Reg_App_Id, "
+                      + " a.Menu_Code,"
+                      + " a.Parent_Menu_Id,"
+                      + " a.Menu_Name"
+                      + " ,a.Menu_Level"
+                      + " ,a.Url_Path"
+                      + " ,a.Icon_Path"
+                      + " ,a.Display_Index"
+                      + " ,a.Menu_Name"
+                      + " ,a.User_Flag"
+                      + " ,a.Menu_Eng_Name"
+                      + " ,a.Status"
+                      + " ,a.Create_User_Id"
+                      + " ,a.Create_Time"
+                      + " ,a.Modify_User_id"
+                      + " ,a.Modify_Time"
+                      + " from t_menu a"
+                      + " inner join (select distinct x.menu_id,y.def_app_id from t_role_menu x,T_Role y where x.role_id = y.role_id and menu_id in (");
+
+            for (int i = 0; i < ids.Length; i++)
+            {
+                sb.Append("@p" + i);
+                if (i < ids.Length - 1)
+                {
+                    sb.Append(",");
+                }
+                pList.Add(new SqlParameter("@p" + i, ids[i]));
+            }
+            sb.Append(")");
+
+
+
+            sb.Append(" and x.status = '1' ) b "
+                        + " on(a.menu_id = b.menu_id "
+                        + " and a.reg_app_id = b.def_app_id) "
+                        + " where a.status = '1'"
+
+                        //+ " and a.menu_id in (select distinct menu_id from t_role_menu where role_id='"+roleId+"' and status = '1')"
+                        + " order by a.menu_level, a.display_index,a.create_time");
+
+
+            //sb.Append("select * from T_MENU where status=1 and menu_id in (");
+            //for (int i = 0; i < ids.Length; i++)
+            //{
+            //    sb.Append("@p" + i);
+            //    if (i < ids.Length - 1)
+            //    {
+            //        sb.Append(",");
+            //    }
+            //    pList.Add(new SqlParameter("@p" + i, ids[i]));
+            //}
+            //sb.Append(")");
+            var r = this.SQLHelper.ExecuteDataset(CommandType.Text, sb.ToString(), pList.ToArray());
+            return r;
+        }
 
         #region 得到MenuId通过UrlPath
         /// <summary>

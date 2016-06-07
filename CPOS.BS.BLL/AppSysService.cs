@@ -46,7 +46,10 @@ namespace JIT.CPOS.BS.BLL
 
         #endregion
 
-
+        public DataSet GetMenuByIds(string[] ids)
+        {
+            return appSysService.GetMenuByIds(ids);
+        }
         #region 菜单
         /// <summary>
         /// 获取某个角色所能操作的菜单列表
@@ -54,7 +57,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="loggingSession">当前登录用户的Session信息</param>
         /// <param name="roleId">角色Id</param>
         /// <returns></returns>
-        public IList<MenuModel> GetRoleMenus(LoggingSessionInfo loggingSessionInfo, string roleId)
+        public IList<MenuModel> GetRoleMenus(LoggingSessionInfo loggingSessionInfo, string roleId, int getMode = 0)
         {
             //分隔出角色ID和单位ID
             string[] arr_role = roleId.Split(new char[] { ',' });
@@ -75,9 +78,70 @@ namespace JIT.CPOS.BS.BLL
                 new RedisRoleBLL().SetRole(loggingSessionInfo.ClientID, roleId, menulist);
                 new RedisXML().RedisReadDBCount("RoleID", "角色权限相关", 2);
             }
-            else {
+            else
+            {
                 new RedisXML().RedisReadDBCount("RoleID", "角色权限相关", 1);
             }
+
+            #region 修改菜单权限Bug
+            //修改菜单权限Bug
+            //if (getMode != 0)
+            //{
+            //    var r = (from m in menulist
+            //             where !menulist.Select(x => x.Menu_Id).Contains(m.Parent_Menu_Id) && m.Parent_Menu_Id != "--"
+            //             select m.Parent_Menu_Id).Distinct().ToArray();
+            //    var newMenuDbSet = appSysService.GetMenuByIds(r);
+            //    if (newMenuDbSet != null)
+            //    {
+            //        List<MenuModel> newMenuList = DataTableToObject.ConvertToList<MenuModel>(newMenuDbSet.Tables[0]);
+            //        menulist.AddRange(newMenuList);
+            //    }
+            //}
+            if (getMode == 0)
+            {
+                //for (int i = 0; i < 10000; i++)
+                //{
+                //    var r = (from m in menulist
+                //             where !menulist.Select(x => x.Menu_Id).Contains(m.Parent_Menu_Id) && m.Parent_Menu_Id != "--"
+                //             select m.Parent_Menu_Id).Distinct().ToArray();
+                //    var newMenuDbSet = appSysService.GetMenuByIds(r);
+                //    if (newMenuDbSet != null && newMenuDbSet.Tables[0].Rows.Count > 0)
+                //    {
+                //        List<MenuModel> newMenuList = DataTableToObject.ConvertToList<MenuModel>(newMenuDbSet.Tables[0]);
+                //        menulist.AddRange(newMenuList);
+                //    }
+                //    else
+                //    {
+                //        break;
+                //    }
+                //}
+                menulist = GetAllMenuList(menulist);
+            }
+
+            #endregion
+            //var newMenuList2 = new List<MenuModel>();
+            //for (int i = 1; i <= 10; i++)
+            //{
+            //    var l = menulist.Where(x => x.Menu_Level == i).Select(x => x);
+            //    if (i == 1)
+            //    {
+            //        newMenuList2.AddRange(l);
+            //    }
+            //    else
+            //    {
+            //        foreach (var m in l)
+            //        {
+            //            var parentMenu = newMenuList2.Where(x => x.Menu_Id == m.Parent_Menu_Id).ToList().FirstOrDefault();
+            //            if (parentMenu != null)
+            //            {
+            //                if (parentMenu.SubMenuList == null)
+            //                    parentMenu.SubMenuList = new List<MenuModel>();
+            //                parentMenu.SubMenuList.Add(m);
+            //            }
+            //        }
+            //    }
+            //}
+            //return newMenuList2;
 
             if (menulist != null && menulist.Count > 0)
             {
@@ -93,7 +157,31 @@ namespace JIT.CPOS.BS.BLL
                     }
                 }
             }
-            //}
+            return menulist;
+        }
+        /// <summary>
+        /// 补全父Menu
+        /// </summary>
+        /// <param name="menulist"></param>
+        /// <returns></returns>
+        public List<MenuModel> GetAllMenuList(List<MenuModel> menulist)
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                var r = (from m in menulist
+                         where !menulist.Select(x => x.Menu_Id).Contains(m.Parent_Menu_Id) && m.Parent_Menu_Id != "--"
+                         select m.Parent_Menu_Id).Distinct().ToArray();
+                var newMenuDbSet = appSysService.GetMenuByIds(r);
+                if (newMenuDbSet != null && newMenuDbSet.Tables[0].Rows.Count > 0)
+                {
+                    List<MenuModel> newMenuList = DataTableToObject.ConvertToList<MenuModel>(newMenuDbSet.Tables[0]);
+                    menulist.AddRange(newMenuList);
+                }
+                else
+                {
+                    break;
+                }
+            }
             return menulist;
         }
 
@@ -121,11 +209,13 @@ namespace JIT.CPOS.BS.BLL
             if (menulist == null || menulist.Count <= 0)
             {
                 menulist = appSysService.GetRoleMenus(loggingSessionInfo.ClientID, roleId);
+                menulist = GetAllMenuList(menulist);
                 new RedisRoleBLL().SetRole(loggingSessionInfo.ClientID, roleId, menulist);
                 new RedisXML().RedisReadDBCount("RoleID", "角色权限相关", 2);
             }
             else
             {
+                menulist = GetAllMenuList(menulist);
                 new RedisXML().RedisReadDBCount("RoleID", "角色权限相关", 1);
             }
             //if (menulist != null && menulist.Count > 0)

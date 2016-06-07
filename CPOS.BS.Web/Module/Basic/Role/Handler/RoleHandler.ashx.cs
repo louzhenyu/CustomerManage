@@ -165,7 +165,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Role.Handler
             src = appSysService.GetAllMenusByAppSysId(appSysId);//获取所有菜单
 
             IList<MenuModel> roleMenuList = new List<MenuModel>();
-            roleMenuList = appSysService.GetRoleMenus(CurrentUserInfo, key);//获取当前用户的的菜单
+            roleMenuList = appSysService.GetRoleMenus(CurrentUserInfo, key, 2);//获取当前用户的的菜单
 
             foreach (var tmpSrcMenuObj in src)   //遍历所有菜单
             {
