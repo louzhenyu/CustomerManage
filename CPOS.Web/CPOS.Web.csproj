@@ -2253,6 +2253,14 @@
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionnaireAH.cs" />
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\SetQuestionnaireAnswerRecordAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\StoreManagerReport\GetUnitBirthdayVipReportAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\StoreManagerReport\GetUnitDayReportAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\StoreManagerReport\GetUnitMonthReportAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\StoreManagerReport\GetUnitOldVipBackReportAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\StoreManagerReport\GetUnitSalesBoardAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\StoreManagerReport\GetUnitVipListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\StoreManagerReport\GetUnitVipOverviewReportAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\StoreManagerReport\GetUnitWeekReportAH.cs" />
     <Compile Include="ApplicationInterface\Module\Sys\InnerGroupNews\GetInnerGroupNewsByIdAH.cs" />
     <Compile Include="ApplicationInterface\Module\Sys\InnerGroupNews\GetInnerGroupNewsCountAH.cs" />
     <Compile Include="ApplicationInterface\Module\Sys\InnerGroupNews\GetInnerGroupNewsListAH.cs" />
@@ -3162,7 +3170,6 @@
   <ItemGroup>
     <Folder Include="ApplicationInterface\BuyFood\" />
     <Folder Include="ApplicationInterface\Demo\" />
-    <Folder Include="ApplicationInterface\Module\Report\" />
     <Folder Include="ApplicationInterface\Module\VIP\VipDetail\" />
     <Folder Include="ApplicationInterface\Module\WX\Model\" />
     <Folder Include="ApplicationInterface\NwEvents\" />
