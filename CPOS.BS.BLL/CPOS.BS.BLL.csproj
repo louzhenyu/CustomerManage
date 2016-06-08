@@ -404,6 +404,32 @@
     <Compile Include="CodeGeneration\RegisterValidationCodeBLL.cs" />
     <Compile Include="CodeGeneration\Report\R_HomePageStatsBLL.cs" />
     <Compile Include="CodeGeneration\Report\R_UnitMonthlyAchievementRankingBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_Unit3MonthNoBackVipBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitActiveVipBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitBirthdayNoBackVipBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitDailyBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitDaily_EmplBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitDaily_VipCardTypeBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitHighValueVipBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitMonthlyBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitMonthly_EmplBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitMonthly_VipCardTypeBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitNowBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitNow_EmplBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitNow_VipCardTypeBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitOldBackVipBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitPotentialVipBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitWeeklyBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitWeekly_EmplBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitWeekly_VipCardTypeBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitYearlyBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitYearly_EmplBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\Agg_UnitYearly_VipCardTypeBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\R_UnitProductDaySalesTopBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\R_UnitProductMonthSalesTopBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\R_UnitProductNowSalesTopBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\R_UnitProductWeekSalesTopBLL.cs" />
+    <Compile Include="CodeGeneration\Report\StoreManagerReport\R_UnitProductYearSalesTopBLL.cs" />
     <Compile Include="CodeGeneration\ReservationPositionBLL.cs" />
     <Compile Include="CodeGeneration\ReservationServiceBigClassTermBLL.cs" />
     <Compile Include="CodeGeneration\ReservationServiceBigClassTermStatusBLL.cs" />
@@ -1046,6 +1072,32 @@
     <Compile Include="Report\ReportCommonBLL.cs" />
     <Compile Include="Report\R_HomePageStatsBLL.cs" />
     <Compile Include="Report\R_UnitMonthlyAchievementRankingBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_Unit3MonthNoBackVipBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitActiveVipBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitBirthdayNoBackVipBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitDailyBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitDaily_EmplBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitDaily_VipCardTypeBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitHighValueVipBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitMonthlyBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitMonthly_EmplBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitMonthly_VipCardTypeBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitNowBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitNow_EmplBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitNow_VipCardTypeBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitOldBackVipBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitPotentialVipBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitWeeklyBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitWeekly_EmplBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitWeekly_VipCardTypeBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitYearlyBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitYearly_EmplBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\Agg_UnitYearly_VipCardTypeBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\R_UnitProductDaySalesTopBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\R_UnitProductMonthSalesTopBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\R_UnitProductNowSalesTopBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\R_UnitProductWeekSalesTopBLL.cs" />
+    <Compile Include="Report\StoreManagerReport\R_UnitProductYearSalesTopBLL.cs" />
     <Compile Include="ReservationPositionBLL.cs" />
     <Compile Include="ReservationServiceBigClassTermBLL.cs" />
     <Compile Include="ReservationServiceBigClassTermStatusBLL.cs" />
@@ -1371,9 +1423,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Report\StoreManagerReport\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /r /y $(TargetFileName) $(ProjectDir)..\ReferenceDll\</PostBuildEvent>
