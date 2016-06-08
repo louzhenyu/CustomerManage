@@ -48,6 +48,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                         couponTypeEntity.CouponCategory = para.CouponCategory;
                         couponTypeEntity.ParValue = para.ParValue;
                         couponTypeEntity.IssuedQty = para.IssuedQty;
+                        couponTypeEntity.IsVoucher = 0;
                         couponTypeEntity.UsableRange = para.UsableRange;
                         if (para.BeginTime != DateTime.MinValue)
                             couponTypeEntity.BeginTime = para.BeginTime;
