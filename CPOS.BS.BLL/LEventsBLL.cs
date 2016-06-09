@@ -969,6 +969,8 @@ namespace JIT.CPOS.BS.BLL
                                     var userOnUnit = unitServer.GetUnitListByUserId(qrCodeEntity.ObjectId);
                                     vipEntity.CouponInfo = userOnUnit[0].unit_id;//会籍店ID
                                     vipEntity.SetoffUserId = qrCodeEntity.ObjectId;//店员ID（上线）
+                                    vipEntity.Col23 = "1";
+                                    vipEntity.Col21 = System.DateTime.Now.ToString();
                                     vipBll.Update(vipEntity);
                                     //var bll = new VipOrderSubRunObjectMappingBLL(loggingSessionInfo);
                                     //dynamic o = bll.SetVipOrderSubRun(loggingSessionInfo.ClientID, vipEntity.VIPID, 3, userOnUnit[0].Id);

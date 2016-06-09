@@ -81,7 +81,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                                 ['#f3bc47','#ed7d31','#5b9bd5']
                             ,
                             title: {
-                                text: '新增集客来源占数比',
+                                text: '新增集客',
                                 style:{fontFamily:"Microsoft YaHei",
                                 color:'#666',
                                 fontSize:'18px'
@@ -134,7 +134,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                                 ['#f3bc47','#ed7d31','#5b9bd5']
                             ,
                             title: {
-                                text: '新增集客来源占数比',
+                                text: '新增集客',
                                 style:{fontFamily:"Microsoft YaHei",
                                     color:'#666',
                                     fontSize:'18px'

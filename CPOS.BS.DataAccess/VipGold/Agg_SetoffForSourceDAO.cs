@@ -91,20 +91,9 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 foreach (var item in pOrderBys)
                 {
-                    if (item.Direction.ToString() == "2")
-                    {
-                        pagedSql.AppendFormat(item.FieldName + "  DESC");
-                    }
-                    else
-                    {
-                        pagedSql.AppendFormat(item.FieldName + "  ASC");
-                    }
+                    pagedSql.AppendFormat(item.FieldName + "  "+item.Direction);
 
                 }
-            }
-            else
-            {
-                pagedSql.AppendFormat("PushMessageCount  DESC");
             }
 
             pagedSql.AppendFormat(" ) as RowNumber from (");

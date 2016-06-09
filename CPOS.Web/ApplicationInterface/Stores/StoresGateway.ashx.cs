@@ -106,7 +106,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     var userQrCodeBll = new WQRCodeManagerBLL(loggingSessionInfo);
                     //if (!string.IsNullOrWhiteSpace(RP.Parameters.QRCodeId)) //如果是分享二维码，QRCodeId是有值的
                     //{
-                        
+
                     //    var userQrCode = userQrCodeBll.GetByID(RP.Parameters.QRCodeId);
 
                     //    if (userQrCode != null )
@@ -118,14 +118,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     //}
                     //else
                     //{
-                        var userQrCode = userQrCodeBll.QueryByEntity(new WQRCodeManagerEntity() { ObjectId = objectid }, null);
+                    var userQrCode = userQrCodeBll.QueryByEntity(new WQRCodeManagerEntity() { ObjectId = objectid }, null);
 
-                        if (userQrCode != null && userQrCode.Length > 0)
-                        {
-                            RD.imageUrl = userQrCode[0].ImageUrl;
-                            RD.paraTmp = userQrCode[0].QRCode;
-                            return rsp.ToJSON();
-                        }
+                    if (userQrCode != null && userQrCode.Length > 0)
+                    {
+                        RD.imageUrl = userQrCode[0].ImageUrl;
+                        RD.paraTmp = userQrCode[0].QRCode;
+                        return rsp.ToJSON();
+                    }
                     //}
 
                     //获取当前二维码 最大值
@@ -168,8 +168,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                         , wxObj.AppSecret
                         , rpVipDCode.ToString("")//二维码类型  0： 临时二维码  1：永久二维码
                         , iResult, loggingSessionInfo);//iResult作为场景值ID，临时二维码时为32位整型，永久二维码时只支持1--100000
-                        //"https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQGN7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL1dreENCS1htX0xxQk94SEJ6MktIAAIEUk88VwMECAcAAA==";
-                        //"https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQGN7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL1dreENCS1htX0xxQk94SEJ6MktIAAIEUk88VwMECAcAAA==";
+                    //"https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQGN7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL1dreENCS1htX0xxQk94SEJ6MktIAAIEUk88VwMECAcAAA==";
+                    //"https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQGN7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL1dreENCS1htX0xxQk94SEJ6MktIAAIEUk88VwMECAcAAA==";
                     if (imageUrl != null && !imageUrl.Equals(""))
                     {
                         CPOS.Common.DownloadImage downloadServer = new DownloadImage();
@@ -398,7 +398,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     string UserStatus = "";
                     if (UserEntity != null)
                         UserStatus = UserEntity.user_status;
-                    
+
                     #region 会员会籍店、集客员工变动处理
                     //string.IsNullOrWhiteSpace(vipInfo.CouponInfo) || string.IsNullOrWhiteSpace(vipInfo.SetoffUserId) 目前未用到
                     if (string.IsNullOrWhiteSpace(vipInfo.HigherVipID) && string.IsNullOrWhiteSpace(vipInfo.SetoffUserId) && string.IsNullOrWhiteSpace(vipInfo.Col20))
@@ -408,6 +408,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                             vipInfo.CouponInfo = tt;//设为门店
                             vipInfo.SetoffUserId = RP.UserID;//设为门店员工
                             vipInfo.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//集客时间*****
+                            vipInfo.Col23 = "1";
                         }
                         if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID)
                         {
@@ -423,7 +424,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                         else if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID && !string.IsNullOrEmpty(vipInfo.Col21) && Convert.ToDateTime(vipInfo.Col21).AddSeconds(3) < DateTime.Now)  //col21：员工集客/或者分销商集客时间
                         {
                             //rsp.Message = "此客户此前已经被您集客，无需重复集客。！";
-                        } 
+                        }
                     }
                     if (UserStatus.Trim().Equals("-1"))
                     {// 当前会员的集客员工离职时
@@ -432,17 +433,19 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                             vipInfo.CouponInfo = tt;//设为门店
                             vipInfo.SetoffUserId = RP.UserID;//设为门店员工
                             vipInfo.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//集客时间*****
+                            vipInfo.Col23 = "1";
                         }
                     }
-                    else if (tempUnit!=null&&tempUnit.type_id == "2F35F85CF7FF4DF087188A7FB05DED1D")//是总部标识
-                    {// 总部会员可以被门店集客
-                        if (!string.IsNullOrEmpty(tt))
-                        {
-                            vipInfo.CouponInfo = tt;//设为门店
-                            vipInfo.SetoffUserId = RP.UserID;//设为门店员工
-                            vipInfo.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//集客时间*****
-                        }
-                    }
+                    //else if (tempUnit!=null&&tempUnit.type_id == "2F35F85CF7FF4DF087188A7FB05DED1D")//是总部标识
+                    //{// 总部会员可以被门店集客
+                    //    if (!string.IsNullOrEmpty(tt))
+                    //    {
+                    //        vipInfo.CouponInfo = tt;//设为门店
+                    //        vipInfo.SetoffUserId = RP.UserID;//设为门店员工
+                    //        vipInfo.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//集客时间*****
+                    //        vipInfo.Col23 = "1";
+                    //    }
+                    //}
                     #endregion
 
                     #region 橙果财商
@@ -473,8 +476,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     //{
                     //    rsp.Message = "恭喜你集客成功。会员需要用心经营才会有订单哦！";
                     //}
-                      
-                    
+
+
                     vipBll.Update(vipInfo);
 
                 }
@@ -500,7 +503,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     //当会员的HigherVipID、SetoffUserId、Col20都为空时可以进行处理
                     if (string.IsNullOrWhiteSpace(vipInfo.HigherVipID) && string.IsNullOrWhiteSpace(vipInfo.SetoffUserId) && string.IsNullOrWhiteSpace(vipInfo.Col20))
                     {
-                        var HigherVipInfo = vipBll.QueryByEntity(new VipEntity() { ClientID=loggingSessionInfo.CurrentUser.customer_id,VIPID=RP.UserID},null).FirstOrDefault();
+                        var HigherVipInfo = vipBll.QueryByEntity(new VipEntity() { ClientID = loggingSessionInfo.CurrentUser.customer_id, VIPID = RP.UserID }, null).FirstOrDefault();
                         if (PlatformType != "" && PlatformType != null)//当为员工或会员时
                         {
                             switch (PlatformType)
@@ -524,7 +527,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                                     break;
                                 case "3":
                                     vipInfo.HigherVipID = RP.UserID;//设为3=会员
-                                    if (HigherVipInfo != null&&!string.IsNullOrEmpty(HigherVipInfo.CouponInfo))
+                                    if (HigherVipInfo != null && !string.IsNullOrEmpty(HigherVipInfo.CouponInfo))
                                     {
                                         vipInfo.CouponInfo = HigherVipInfo.CouponInfo;
                                     }
@@ -682,8 +685,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                         vipInfo.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//集客时间*****
 
                     }
-                    #endregion                  
-                    
+                    #endregion
+
                     vipBll.Update(vipInfo);
                 }
                 #endregion
@@ -851,7 +854,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                                             VipCardVipMappingBLL vipCardVipMappingBll = new VipCardVipMappingBLL(loggingSessionInfo);
                                             VipCardBLL vipCardBll = new VipCardBLL(loggingSessionInfo);
                                             VipCardRuleBLL vipCardRuleBll = new VipCardRuleBLL(loggingSessionInfo);
-                                            var vipCardVipMapping = vipCardVipMappingBll.QueryByEntity(new VipCardVipMappingEntity() { VIPID = RP.Parameters.VipId }, new OrderBy[] { new OrderBy(){ Direction = OrderByDirections.Desc,FieldName = "CreateTime"}});
+                                            var vipCardVipMapping = vipCardVipMappingBll.QueryByEntity(new VipCardVipMappingEntity() { VIPID = RP.Parameters.VipId }, new OrderBy[] { new OrderBy() { Direction = OrderByDirections.Desc, FieldName = "CreateTime" } });
                                             if (vipCardVipMapping.Length != 0)
                                             {
                                                 var vipCard = vipCardBll.GetByID(vipCardVipMapping[0].VipCardID);
@@ -864,9 +867,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                                                 else
                                                 {
                                                     ReturnAmount = 0;
-                                                } 
+                                                }
                                             }
-            
+
                                             PushInfo = ds.Tables[1].Rows[0]["PushInfo"].ToString();
                                             //if (ds != null && ds.Tables[0].Rows.Count == 0 && ds.Tables[1].Rows.Count == 0)
                                             //{
@@ -917,7 +920,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                                             {
                                                 ReturnAmount = temp.ReturnAmount;
                                             }
-                                         
+
                                             var vipBll = new VipBLL(loggingSessionInfo);
 
                                             var vipEntity = vipBll.GetByID(RP.Parameters.VipId);

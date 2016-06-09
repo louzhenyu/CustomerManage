@@ -22,6 +22,67 @@
         },
         initEvent: function () {
             var that = this;
+			
+			$('#reserveDateBegin').datebox({
+				
+				onSelect: function(date){
+					var newDate=$('#reserveDateEnd').datebox('getValue')
+					$('#reserveDateEnd').datebox().datebox('calendar').calendar({
+						validator: function (date1) {
+							//var now = new Date();
+							var d1 = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+							//var d2 = new Date(now.getFullYear(), now.getMonth(), now.getDate()+10);
+							//return d1<=date && date<=d2;
+							return d1 <= date1;
+						}
+					});
+					$('#reserveDateEnd').datebox('setValue',newDate);
+
+				}
+				
+				}).datebox('calendar').calendar({
+                validator: function (date) {
+                  var now = new Date();
+                    var d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    //var d2 = new Date(now.getFullYear(), now.getMonth(), now.getDate()+10);
+                    //return d1<=date && date<=d2;
+                    return true;
+                }
+
+            });
+			
+			
+			$('#reserveDateEnd').datebox({
+				
+				onSelect: function(date){
+					var newDate=$('#reserveDateBegin').datebox('getValue')
+					$('#reserveDateBegin').datebox().datebox('calendar').calendar({
+						validator: function (date1) {
+							//var now = new Date();
+							var d1 = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+							//var d2 = new Date(now.getFullYear(), now.getMonth(), now.getDate()+10);
+							//return d1<=date && date<=d2;
+							return d1 >= date1;
+						}
+					});
+					console.info(newDate)
+					$('#reserveDateBegin').datebox('setValue',newDate);
+	
+				}
+				
+				}).datebox('calendar').calendar({
+                validator: function (date) {
+                  var now = new Date();
+                    var d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    //var d2 = new Date(now.getFullYear(), now.getMonth(), now.getDate()+10);
+                    //return d1<=date && date<=d2;
+                    return true;
+                }
+
+            });
+
+			
+			
             // 下拉框数据查询 --门店选择
             that.getshopDate(function (data) {
                 data.push({"id":"","text":"请选择","selected": true});
@@ -265,11 +326,11 @@
                                 {
                                     name: '会员',
                                     data: [
-                                        data.Data.lst[0].RoleContent[0].PeopleCount,
-                                        data.Data.lst[1].RoleContent[0].PeopleCount,
-                                        data.Data.lst[2].RoleContent[0].PeopleCount,
-                                        data.Data.lst[3].RoleContent[0].PeopleCount,
-                                        data.Data.lst[4].RoleContent[0].PeopleCount
+                                        data.Data.lst[0].RoleContent[2].PeopleCount,
+										   data.Data.lst[1].RoleContent[2].PeopleCount,
+										   data.Data.lst[2].RoleContent[2].PeopleCount,
+										   data.Data.lst[3].RoleContent[2].PeopleCount,
+										   data.Data.lst[4].RoleContent[2].PeopleCount
                                     ],
                                     dataLabels: {
                                         enabled: true,
@@ -305,11 +366,11 @@
                                {
                                    name: '店员',
                                    data: [
-                                       data.Data.lst[0].RoleContent[2].PeopleCount,
-                                       data.Data.lst[1].RoleContent[2].PeopleCount,
-                                       data.Data.lst[2].RoleContent[2].PeopleCount,
-                                       data.Data.lst[3].RoleContent[2].PeopleCount,
-                                       data.Data.lst[4].RoleContent[2].PeopleCount
+									   data.Data.lst[0].RoleContent[0].PeopleCount,
+										data.Data.lst[1].RoleContent[0].PeopleCount,
+										data.Data.lst[2].RoleContent[0].PeopleCount,
+										data.Data.lst[3].RoleContent[0].PeopleCount,
+										data.Data.lst[4].RoleContent[0].PeopleCount
                                    ],
                                    dataLabels: {
                                        enabled: true,

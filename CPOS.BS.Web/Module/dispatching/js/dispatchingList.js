@@ -145,6 +145,20 @@ define(['tools', 'template', 'kkpager', 'artDialog', 'json2', 'ajaxform','easyui
 						$this.addClass('on');
 					}
 				});
+
+				$('.checkBox').bind('click',function(){
+					var radioType = $('.jui-dialog-dispatching .radioBox.on').attr('date-type');//启用为1，停用为2；
+					var $this = $(this);
+					if(radioType=='1'){
+						if($this.hasClass('on')){
+							$this.removeClass('on');
+							$('#dispatching_pickup').attr('readonly','readonly');
+						}else{
+							$this.addClass('on');
+							$('#dispatching_pickup').removeAttr('readonly');
+						}
+					}
+				});
 				
 				//到店自提，提货设置
 				$('.timePassageArea').delegate('.timeItem .editBtn','click',function(){
@@ -152,106 +166,95 @@ define(['tools', 'template', 'kkpager', 'artDialog', 'json2', 'ajaxform','easyui
 						$timeItem = $this.parents('.timeItem'),
 						$startTime = $('.startTime',$timeItem),
 						$endTime = $('.endTime',$timeItem),
-						lengthTime = $timeItem.index();//获取当前修改时间所在位置;
+						isChecked = $('.timePassageArea .checkBox').hasClass('on'),
+						lengthTime = $timeItem.index(),//获取当前修改时间所在位置;
+						radioType = $('.jui-dialog-dispatching .radioBox.on').attr('date-type');//启用为1，停用为2;
 					   
 
 					//that.timeIndex = $($timeItem,'.timePassage').index();
 					//alert(that.timeIndex);
 					that.IsEdit = 1;
-					$('.addTimePassageBox').show();
-					$('.addTimePassageBox').css({'position':'absolute','top':'15px','right':'-30px'});
-					$('.addTimePassageBox').attr('data-length',lengthTime);
-					$('#dispatching_startTime').val($startTime.text());
-					$('#dispatching_endTime').val($endTime.text());
+					if(radioType=='1'&&isChecked){
+						$('.addTimePassageBox').show();
+						$('.addTimePassageBox').css({'position':'absolute','top':'15px','right':'-30px'});
+						$('.addTimePassageBox').attr('data-length',lengthTime);
+						$('#dispatching_startTime').val($startTime.text());
+						$('#dispatching_endTime').val($endTime.text());
+					}
 					
 					$timeItem.remove();
 						
 				});
-				
+				//移除时间段
 				$('.timePassageArea').delegate('.timeItem .removeBtn','click',function(){
-					var $this = $(this);
-					$this.parents('.timeItem').remove();
-				});
-				
-				$('.checkBox').bind('click',function(){
-					var $this = $(this);
-					if($this.hasClass('on')){
-						$this.removeClass('on');
-					}else{
-						$this.addClass('on');
+					var $this = $(this),
+						isChecked = $('.timePassageArea .checkBox').hasClass('on'),
+						radioType = $('.jui-dialog-dispatching .radioBox.on').attr('date-type');//启用为1，停用为2;
+					if(radioType=='1'&&isChecked){
+						$this.parents('.timeItem').remove();
 					}
+
 				});
 				
 				//保存时间段
 				$('.timeSaveBtn').bind('click',function(){
 					var startTime = $("#dispatching_startTime").val(),
-						endTime = $("#dispatching_endTime").val()
+						endTime = $("#dispatching_endTime").val(),
+						isChecked = $('.timePassageArea .checkBox').hasClass('on'),
 						lengthTime = $('.addTimePassageBox').attr('data-length'),//获取当前修改时间所在位置;
-						lengthTimeCount = $('.timePassage').children('.timeItem').length;
+						lengthTimeCount = $('.timePassage').children('.timeItem').length,
+						radioType = $('.jui-dialog-dispatching .radioBox.on').attr('date-type');//启用为1，停用为2；
 
 					that.IsEdit = 0;
-					if(startTime == ''){
-						that.alert('开始时间段不能为空！');
-						return ;
+					if(radioType=='1'&&isChecked){
+						if(startTime == ''){
+							that.alert('开始时间段不能为空！');
+							return ;
+						}
+						if(endTime == ''){
+							that.alert('结束时间段不能为空！');
+							return ;
+						}
+						if(startTime >= endTime){
+							that.alert('开始时间段不能大于或等于结束时间段！');
+							return ;
+						}
+						if(parseInt(lengthTime)+1<=parseInt(lengthTimeCount)){
+							$('.timeItem').eq(lengthTime).find('.startTime').html(startTime);
+							$('.timeItem').eq(lengthTime).find('.endTime').html(endTime);
+							$("#dispatching_startTime").val('');
+							$("#dispatching_endTime").val('');
+							$('.addTimePassageBox').hide();
+						}
+						else if(lengthTime =="null"||parseInt(lengthTime)+1>=parseInt(lengthTimeCount)){
+							var timeStr = '<div class="timeItem">\
+							<p><span class="startTime">'+startTime+'</span> 至 <span class="endTime">'+endTime+'</span></p>\
+							<span class="editBtn">修改</span>\
+							<span class="removeBtn">删除</span>\
+							</div>';
+							$('.timePassage').append(timeStr);
+							$("#dispatching_startTime").val('');
+							$("#dispatching_endTime").val('');
+							$('.addTimePassageBox').hide();
+						}
 					}
-					if(endTime == ''){
-						that.alert('结束时间段不能为空！');
-						return ;
-					}
-					if(startTime >= endTime){
-						that.alert('开始时间段不能大于或等于结束时间段！');
-						return ;
-					}
-					if(parseInt(lengthTime)+1<=parseInt(lengthTimeCount)){
-						$('.timeItem').eq(lengthTime).find('.startTime').html(startTime);
-						$('.timeItem').eq(lengthTime).find('.endTime').html(endTime);
-						$("#dispatching_startTime").val('');
-						$("#dispatching_endTime").val('');
-						$('.addTimePassageBox').hide();
-					}
-					else if(lengthTime =="null"||parseInt(lengthTime)+1>=parseInt(lengthTimeCount)){
-						var timeStr = '<div class="timeItem">\
-						<p><span class="startTime">'+startTime+'</span> 至 <span class="endTime">'+endTime+'</span></p>\
-						<span class="editBtn">修改</span>\
-						<span class="removeBtn">删除</span>\
-						</div>';
-						$('.timePassage').append(timeStr);
-						$("#dispatching_startTime").val('');
-						$("#dispatching_endTime").val('');
-						$('.addTimePassageBox').hide();
-					}
-					
-					
-					
 				});
 				//取消时间段
 				$('.timeCancelBtn').bind('click',function(){
-					if(that.IsEdit==1){
-						$('.timeSaveBtn').trigger('click');
-					}else{
-						$("#dispatching_startTime").val('');
-						$("#dispatching_endTime").val('');
-						$('.addTimePassageBox').hide();
-					}
-				});
-				
-				
-				$('#addTimeBtn').bind('click',function(){
-					var isDis = $('.addTimePassageBox').css('display'),
-						isChecked = $('.timePassageArea .checkBox').hasClass('on'),
-						isNull = $('.timePassage').children('.timeItem').length;
-					$('.addTimePassageBox').attr('data-length','null');
-					if(isDis == 'none'){
-						if(isNull =='0'){
-							$('.addTimePassageBox').css({'position':'relative','top':'0','right':'0'});
+					var radioType = $('.jui-dialog-dispatching .radioBox.on').attr('date-type'),//启用为1，停用为2；
+						isChecked = $('.timePassageArea .checkBox').hasClass('on');
+
+					if(radioType =='1'&&isChecked){
+						if(that.IsEdit==1){
+							$('.timeSaveBtn').trigger('click');
+						}else{
+							$("#dispatching_startTime").val('');
+							$("#dispatching_endTime").val('');
+							$('.addTimePassageBox').hide();
 						}
-						$('.addTimePassageBox').show();
-					}else{
-						alert('请把当前的时间段设置完成，再添加！');
 					}
 				});
-				
-				
+
 				//编辑操作
 				$('.tableWrap').delegate('.operateWrap','click',function(e){
 					var $this = $(this);
@@ -320,6 +323,25 @@ define(['tools', 'template', 'kkpager', 'artDialog', 'json2', 'ajaxform','easyui
                     $(this).parents('.jui-dialog').fadeOut();
 				});
 
+				//新增时间段
+				$('#addTimeBtn').bind('click',function(){
+					var isDis = $('.addTimePassageBox').css('display'),
+						isChecked = $('.timePassageArea .checkBox').hasClass('on'),
+						isNull = $('.timePassage').children('.timeItem').length,
+					    radioType = $('.jui-dialog-dispatching .radioBox.on').attr('date-type');//启用为1，停用为2;
+					$('.addTimePassageBox').attr('data-length','null');
+					if(radioType=='1'&&isChecked){
+						if(isDis == 'none'){
+							if(isNull =='0'){
+								$('.addTimePassageBox').css({'position':'relative','top':'0','right':'0'});
+							}
+							$('.addTimePassageBox').show();
+						}else{
+							alert('请把当前的时间段设置完成，再添加！');
+						}
+					}
+				});
+
 				//点击保存按钮
 				$('.jui-dialog').delegate('.saveBtn','click',function(){
 					var REG_INT = /^[0-9]\d*$/;
@@ -333,7 +355,7 @@ define(['tools', 'template', 'kkpager', 'artDialog', 'json2', 'ajaxform','easyui
 					var obj = {};
 					obj.Parameters = that.saveDataInfo;//原本的数据
 					obj.Parameters.DeliveryId = deliveryId;//配送方式ID
-					
+
 					//判断状态[1启用\0停用]
 					if(!radioValue){
 						obj.Parameters.Status = 0;
@@ -345,15 +367,7 @@ define(['tools', 'template', 'kkpager', 'artDialog', 'json2', 'ajaxform','easyui
 					}else{
 						obj.Parameters.Status = 1;
 						//判断配送方式[1送货上门\2店自提]
-							if(deliveryId=='1'){
-								$('.commonSelectWrap').find('input').click(function(){
-									$(this).css('border','1px solid #fafafa');
-								})
-								$('.commonSelectWrap').find('textarea').click(function(){
-									$(this).css('border','1px solid #fafafa');
-								})
-								if($("#dispatching_describe").val() ==''){	
-								$("#dispatching_describe").css('border','1px solid red');
+						if(deliveryId=='1'){							if($("#dispatching_describe").val() == ''){
 								that.alert('配送费描述不能为空！');
 								return ;
 							}
@@ -383,20 +397,23 @@ define(['tools', 'template', 'kkpager', 'artDialog', 'json2', 'ajaxform','easyui
 								return ;
 							}
 							/*
-							if(!REG_INT.test(parseInt($("#dispatching_mincost").val()))){
-								that.alert('！');
-								return ;
-							}
-							*/
+							 if(!REG_INT.test(parseInt($("#dispatching_mincost").val()))){
+							 that.alert('！');
+							 return ;
+							 }
+							 */
 							if(parseInt($("#dispatching_mincost").val())>1000){
 								that.alert('订单金额为小于或等于1000的整数！');
 								return ;
 							}
-							
+
 							obj.Parameters.Description = $('#dispatching_describe').val(); //配送描述
 							obj.Parameters.DeliveryAmount = $('#dispatching_cost').val();//默认配送费
 							obj.Parameters.AmountEnd = $('#dispatching_mincost').val()||0 ;//免配送费最低订单金额
 						}else if(deliveryId=='2'){
+							var isChecked = $('.timePassageArea .checkBox').hasClass('on'),
+								lengthTimeCount = $('.timePassage').children('.timeItem').length;//添加的时间段
+
 							if($('.addTimePassageBox').css('display')!='none'){
 								that.alert('请把当前的时间段设置完毕，再保存！');
 								return ;
@@ -408,7 +425,7 @@ define(['tools', 'template', 'kkpager', 'artDialog', 'json2', 'ajaxform','easyui
 								that.alert('备货期只能为正整数！');
 								return ;
 							}
-							
+
 							if($("#dispatching_pickup").val() == ''){
 								that.alert('提货期不能为空！');
 								return ;
@@ -416,10 +433,14 @@ define(['tools', 'template', 'kkpager', 'artDialog', 'json2', 'ajaxform','easyui
 								that.alert('提货期只能为正整数！');
 								return ;
 							}
+							if(isChecked&&lengthTimeCount=='0'){
+								that.alert('请添加时间段！');
+								return ;
+							}
 							/*
-							obj.Parameters.BeginWorkTime = dateStr+$('#dispatching_startTime').val()+':00';//门店工作时间开始
-							obj.Parameters.EndWorkTime = dateStr+$('#dispatching_endTime').val()+':00';//门店工作时间结束
-							*/
+							 obj.Parameters.BeginWorkTime = dateStr+$('#dispatching_startTime').val()+':00';//门店工作时间开始
+							 obj.Parameters.EndWorkTime = dateStr+$('#dispatching_endTime').val()+':00';//门店工作时间结束
+							 */
 							obj.Parameters.StockUpPeriod = $('#dispatching_stockup').val() || 0; //备货期
 							obj.Parameters.MaxDelivery = 0;
 							if($('.deliveryNumBox .checkBox').hasClass('on')){
@@ -432,14 +453,15 @@ define(['tools', 'template', 'kkpager', 'artDialog', 'json2', 'ajaxform','easyui
 									var timeStr = $('.startTime',$timeItem.eq(i)).text()+'-'+$('.endTime',$timeItem.eq(i)).text();
 									obj.Parameters.QuantumList.push({"Quantum":timeStr});
 								}
+
 							}
-							
+
 						}
 					}
 					var obj2=obj;
 					obj = JSON.stringify(obj);
-					//{ "Parameters": { "DeliveryId": "2", "TakeDeliveryId": null, "Status": 1, "StockUpPeriod":1, "BeginWorkTime":"0001-01-01T00:00:00", "EndWorkTime":"0001-01-01T00:00:00", "MaxDelivery":2 } }	
-					
+					//{ "Parameters": { "DeliveryId": "2", "TakeDeliveryId": null, "Status": 1, "StockUpPeriod":1, "BeginWorkTime":"0001-01-01T00:00:00", "EndWorkTime":"0001-01-01T00:00:00", "MaxDelivery":2 } }
+
 					that.saveDeliveryInfo(obj,function(data){
 						that.queryDispatchingList();
 						if(obj2.Parameters.Status){
@@ -452,9 +474,8 @@ define(['tools', 'template', 'kkpager', 'artDialog', 'json2', 'ajaxform','easyui
 						that.elems.uiMask.slideUp();
 						$this.parents('.jui-dialog').fadeOut();
 					});
-					
+
 				});
-				
             },
 			queryDispatchingList: function(callback){
 				

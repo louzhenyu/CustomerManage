@@ -121,13 +121,13 @@
                            <div class="commonSelectWrap" >
                                 <em class="tit">开始时间：</em>
                                 <div class="selectBox" >
-                                      <input id="reserveDateBegin"  name="ReserveDateBegin" class="easyui-datebox"  data-options="width:200,height:32" validType="compareEqualityDate[$('#reserveDateEnd').datebox('getText'),'当前选择的时间必须早于前面选择的时间']"/>
+                                      <input id="reserveDateBegin"  name="ReserveDateBegin" class="easyui-datebox"   data-options="width:200,height:32" />
                                  </div>
                             </div>
                          <div class="commonSelectWrap">
                                    <em class="tit">结束时间：</em>
                                    <div class="selectBox">
-                                          <input id="reserveDateEnd" name="ReserveDateEnd" class="easyui-datebox"data-options="width:200,height:32" validType="compareDate[$('#reserveDateBegin').datebox('getText'),'当前选择的时间必须晚于前面选择的时间']"/>
+                                          <input id="reserveDateEnd" name="ReserveDateEnd" class="easyui-datebox" data-options="width:200,height:32" />
                                    </div>
                          </div>
                          <div class="moreQueryWrap messageLocation">

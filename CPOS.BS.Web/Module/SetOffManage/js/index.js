@@ -96,7 +96,12 @@
 					$('.onlineVipCountPerFor30DayOrderM2M').addClass('up');
 				}
 				
-				$('.onlineVipSalesFor30Day em').text(data.OnlineVipSalesFor30Day);//String	注册会员近30天销量贡献(额)
+				var numOnlineVipSalesFor30Day = parseFloat(data.OnlineVipSalesFor30Day);
+				if(numOnlineVipSalesFor30Day>100000){
+					numOnlineVipSalesFor30Day = Math.round((numOnlineVipSalesFor30Day /10000) * 100) / 100;
+					numOnlineVipSalesFor30Day = numOnlineVipSalesFor30Day + "万";
+				}
+				$('.onlineVipSalesFor30Day em').text(numOnlineVipSalesFor30Day);//data.OnlineVipSalesFor30Day 注册会员近30天销量贡献(额)
 				$('.onlineVipSalesFor30DayM2M em').text(Math.abs(parseFloat(data.OnlineVipSalesFor30DayM2M)));//String注册会员近30天销量贡献增比
 				if(data.OnlineVipSalesFor30DayM2M<0){
 					$('.onlineVipSalesFor30DayM2M').addClass('dn');

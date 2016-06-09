@@ -42,11 +42,23 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipGold
             if (String.IsNullOrEmpty(parameter.SortName)) { parameter.SortName = "OrderAmount"; }
             else { parameter.SortName = "" + parameter.SortName; }
 
-            if (String.IsNullOrEmpty(parameter.SortOrder)) { parameter.SortOrder = "0"; }
-            OrderByDirections directionenum = (OrderByDirections)Enum.Parse(typeof(OrderByDirections), parameter.SortOrder);
+            if (String.IsNullOrEmpty(parameter.SortOrder)) { parameter.SortOrder = "2"; }
+
+
+            OrderBy order = null;
+
+            if (parameter.SortOrder == "1")
+            {
+                order = new OrderBy() { FieldName = parameter.SortName, Direction = OrderByDirections.Asc };
+            }
+            else
+            {
+               order= new OrderBy() { FieldName = parameter.SortName, Direction = OrderByDirections.Desc };
+            }
 
             //排序参数
-            List<OrderBy> lstOrder = new List<OrderBy> { new OrderBy() { FieldName = parameter.SortName, Direction = directionenum } };
+            List<OrderBy> lstOrder = new List<OrderBy> { };
+            lstOrder.Add(order);
             var tempList = bll.FindAllByPage(complexCondition.ToArray(), lstOrder.ToArray(), parameter.PageSize, parameter.PageIndex);
             rd.TotalPageCount = tempList.PageCount;
             rd.TotalCount = tempList.RowCount;

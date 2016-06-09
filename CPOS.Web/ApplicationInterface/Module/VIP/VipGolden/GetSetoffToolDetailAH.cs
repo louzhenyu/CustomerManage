@@ -168,7 +168,15 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
                     
                     if (couponTypeInfo != null)
                     {
-                        SurplusCount = couponTypeInfo[0].IssuedQty - couponTypeInfo[0].IsVoucher;
+                        string couponIsVocher = string.Empty;
+                        if (couponTypeInfo[0].IsVoucher == null)
+                        {
+                            SurplusCount = couponTypeInfo[0].IssuedQty - 0;
+                        }
+                        else
+                        {
+                            SurplusCount = couponTypeInfo[0].IssuedQty - couponTypeInfo[0].IsVoucher;
+                        }       
                         if (SurplusCount != 0 && para.ShareVipId != null && para.ShareVipId != "")// 通过列表进详细自己不能领券
                         {
                             //当剩余数量不为0时，进行下一步判断是否存在已领券的信息
