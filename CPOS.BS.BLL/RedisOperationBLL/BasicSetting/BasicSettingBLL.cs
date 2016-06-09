@@ -35,9 +35,6 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.BasicSetting
                 CustomerBasicSettingBLL bllBasicSetting = new CustomerBasicSettingBLL(_loggingSessionInfo);
                 List<CustomerBasicSettingEntity> listBasicSetting = bllBasicSetting.GetAll().ToList();
 
-                BasicSettingBLL redisBasicSettingBll = new BasicSettingBLL();
-                redisBasicSettingBll.SetBasicSetting(strCustomerId, listBasicSetting);
-
                 RedisOpenAPI.Instance.CCBasicSetting().SetBasicSetting(new CC_BasicSetting()
                 {
                     CustomerId = strCustomerId,
