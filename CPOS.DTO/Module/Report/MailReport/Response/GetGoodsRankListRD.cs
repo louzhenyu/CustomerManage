@@ -11,37 +11,40 @@ namespace JIT.CPOS.DTO.Module.Report.MailReport.Response
     {
         public GetGoodsRankListRD(List<R_WxO2OPanel_ItemTopTenEntity> dbList)
         {
-            Top10Views = dbList.Where(x => x.ItemType == 10).Select(x =>
+            Top10Views = dbList.Where(x => x.ItemType == 10).OrderByDescending(x => x.ItemPV).Select(x =>
                 new GoodsListInfo()
                 {
                     ItemId = x.ItemID,
                     ItemName = x.ItemName,
                     ItemSoldCount = x.ItemSoldCount,
-                    Rate = (x.ItemSoldCount != null && x.ItemUV != null && x.ItemUV != 0 ? Math.Round((decimal)x.ItemSoldCount * 100 / (decimal)x.ItemUV, 2).ToString() : "") + "%"
+                    Rate = (x.ItemSoldCount != null && x.ItemUV != null && x.ItemUV != 0 ? Math.Round((decimal)x.ItemSoldCount * 100 / (decimal)x.ItemUV, 2,MidpointRounding.AwayFromZero).ToString() : "0") + "%"
                 }).ToList();
-            Least10Views = dbList.Where(x => x.ItemType == 30).Select(x =>
+
+            Least10Views = dbList.Where(x => x.ItemType == 30).OrderBy(x => x.ItemPV).Select(x =>
                 new GoodsListInfo()
                 {
                     ItemId = x.ItemID,
                     ItemName = x.ItemName,
                     ItemSoldCount = x.ItemSoldCount,
-                    Rate = (x.ItemSoldCount != null && x.ItemUV != null && x.ItemUV != 0 ? Math.Round((decimal)x.ItemSoldCount * 100 / (decimal)x.ItemUV, 2).ToString() : "") + "%"
+                    Rate = (x.ItemSoldCount != null && x.ItemUV != null && x.ItemUV != 0 ? Math.Round((decimal)x.ItemSoldCount * 100 / (decimal)x.ItemUV, 2, MidpointRounding.AwayFromZero).ToString() : "0") + "%"
                 }).ToList();
-            Top10Sales = dbList.Where(x => x.ItemType == 20).Select(x =>
+
+            Top10Sales = dbList.Where(x => x.ItemType == 20).OrderByDescending(x => x.ItemSoldCount).Select(x =>
                 new GoodsListInfo()
                 {
                     ItemId = x.ItemID,
                     ItemName = x.ItemName,
                     ItemSoldCount = x.ItemSoldCount,
-                    Rate = (x.ItemSoldCount != null && x.ItemUV != null && x.ItemUV != 0 ? Math.Round((decimal)x.ItemSoldCount*100 / (decimal)x.ItemUV, 2).ToString() : "") + "%"
+                    Rate = (x.ItemSoldCount != null && x.ItemUV != null && x.ItemUV != 0 ? Math.Round((decimal)x.ItemSoldCount * 100 / (decimal)x.ItemUV, 2, MidpointRounding.AwayFromZero).ToString() : "0") + "%"
                 }).ToList();
-            Least10Sales = dbList.Where(x => x.ItemType == 40).Select(x =>
+
+            Least10Sales = dbList.Where(x => x.ItemType == 40).OrderBy(x => x.ItemSoldCount).Select(x =>
                 new GoodsListInfo()
                 {
                     ItemId = x.ItemID,
                     ItemName = x.ItemName,
                     ItemSoldCount = x.ItemSoldCount,
-                    Rate = (x.ItemSoldCount != null && x.ItemUV != null && x.ItemUV != 0 ? Math.Round((decimal)x.ItemSoldCount * 100 / (decimal)x.ItemUV, 2).ToString() : "") + "%"
+                    Rate = (x.ItemSoldCount != null && x.ItemUV != null && x.ItemUV != 0 ? Math.Round((decimal)x.ItemSoldCount * 100 / (decimal)x.ItemUV, 2, MidpointRounding.AwayFromZero).ToString() : "0") + "%"
                 }).ToList();
         }
         public List<GoodsListInfo> Top10Views { get; set; }
