@@ -151,8 +151,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                 rd.OrderListInfo.ReceivePoints = orderList[0].receive_points;
                 rd.OrderListInfo.PaymentTime = orderList[0].Field1 == "1" ? orderList[0].complete_date : null;
                 rd.OrderListInfo.OrderReasonTypeId = orderList[0].order_reason_id;
-                //rd.OrderListInfo.ActualDecimal = orderList[0].actual_amount ?? 0;
+                rd.OrderListInfo.ActualDecimal = orderList[0].actual_amount ?? 0;
 
+                 
 
                 rd.OrderListInfo.PaymentTypeCode = orderList[0].Payment_Type_Code;
                 rd.OrderListInfo.PaymentTypeName = orderList[0].Payment_Type_Name;
