@@ -33,12 +33,12 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.BasicSetting
                 _loggingSessionInfo.CurrentLoggingManager = CurrentLoggingManager;
 
                 CustomerBasicSettingBLL bllBasicSetting = new CustomerBasicSettingBLL(_loggingSessionInfo);
-                List<CustomerBasicSettingEntity> listBasicSetting = bllBasicSetting.GetAll().ToList();
+                List<CustomerBasicSettingEntity> listBasicSetting = bllBasicSetting.QueryByEntity(new CustomerBasicSettingEntity(){CustomerID=strCustomerId,IsDelete=0},null).ToList();
 
                 RedisOpenAPI.Instance.CCBasicSetting().SetBasicSetting(new CC_BasicSetting()
                 {
                     CustomerId = strCustomerId,
-                    SettingList = basicSettingList.Select(b => new Setting
+                    SettingList = listBasicSetting.Select(b => new Setting
                     {
                         SettingCode = b.SettingCode,
                         SettingDesc = b.SettingDesc,
