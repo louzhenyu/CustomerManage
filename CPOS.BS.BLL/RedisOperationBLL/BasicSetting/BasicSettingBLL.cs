@@ -1,10 +1,12 @@
 ﻿using JIT.CPOS.BS.BLL.RedisOperationBLL.Connection;
 using JIT.CPOS.BS.Entity;
+using JIT.Utility.DataAccess;
 using RedisOpenAPIClient;
 using RedisOpenAPIClient.Models;
 using RedisOpenAPIClient.Models.CC;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 
@@ -24,10 +26,10 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.BasicSetting
 
                 LoggingSessionInfo _loggingSessionInfo = new LoggingSessionInfo();
                 LoggingManager CurrentLoggingManager = new LoggingManager();
-                CC_Connection connection = new RedisConnectionBLL().GetConnection(strCustomerId);
+                var connection = GetCustomerConn(strCustomerId);
 
                 _loggingSessionInfo.ClientID = strCustomerId;
-                CurrentLoggingManager.Connection_String = connection.ConnectionStr;
+                CurrentLoggingManager.Connection_String = connection;
                 _loggingSessionInfo.CurrentLoggingManager = CurrentLoggingManager;
 
                 CustomerBasicSettingBLL bllBasicSetting = new CustomerBasicSettingBLL(_loggingSessionInfo);
@@ -102,6 +104,17 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.BasicSetting
             {
                 throw new Exception("删除缓存失败!" + ex.Message);
             }
+        }
+        public static string GetCustomerConn(string customerId)
+        {
+            string sql = string.Format(
+                "select 'user id='+a.db_user+';password='+a.db_pwd+';data source='+a.db_server+';database='+a.db_name+';' conn " +
+                " from t_customer_connect a where a.customer_id='{0}' ",
+                customerId);
+            string conn = ConfigurationManager.AppSettings["Conn_ap"];
+            DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
+            var result = sqlHelper.ExecuteScalar(sql);
+            return result == null || result == DBNull.Value ? string.Empty : result.ToString();
         }
     }
 }
