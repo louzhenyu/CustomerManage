@@ -1,4 +1,5 @@
-﻿using JIT.CPOS.BS.Entity;
+﻿using JIT.CPOS.BS.BLL.RedisOperationBLL.Connection;
+using JIT.CPOS.BS.Entity;
 using RedisOpenAPIClient;
 using RedisOpenAPIClient.Models;
 using RedisOpenAPIClient.Models.CC;
@@ -16,18 +17,33 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.BasicSetting
         /// </summary>
         /// <param name="strCustomerId"></param>
         /// <param name="basicSettingList"></param>
-        public void SetBasicSetting(string strCustomerId,List<CustomerBasicSettingEntity> basicSettingList)
+        public void SetBasicSetting(string strCustomerId, List<CustomerBasicSettingEntity> basicSettingList)
         {
             try
             {
 
+                LoggingSessionInfo _loggingSessionInfo = new LoggingSessionInfo();
+                LoggingManager CurrentLoggingManager = new LoggingManager();
+                CC_Connection connection = new RedisConnectionBLL().GetConnection(strCustomerId);
+
+                _loggingSessionInfo.ClientID = strCustomerId;
+                CurrentLoggingManager.Connection_String = connection.ConnectionStr;
+                _loggingSessionInfo.CurrentLoggingManager = CurrentLoggingManager;
+
+                CustomerBasicSettingBLL bllBasicSetting = new CustomerBasicSettingBLL(_loggingSessionInfo);
+                List<CustomerBasicSettingEntity> listBasicSetting = bllBasicSetting.GetAll().ToList();
+
+                BasicSettingBLL redisBasicSettingBll = new BasicSettingBLL();
+                redisBasicSettingBll.SetBasicSetting(strCustomerId, listBasicSetting);
+
                 RedisOpenAPI.Instance.CCBasicSetting().SetBasicSetting(new CC_BasicSetting()
                 {
                     CustomerId = strCustomerId,
-                    SettingList = basicSettingList.Select(b => new Setting { 
-                    SettingCode=b.SettingCode,
-                    SettingDesc=b.SettingDesc,
-                    SettingValue=b.SettingValue
+                    SettingList = basicSettingList.Select(b => new Setting
+                    {
+                        SettingCode = b.SettingCode,
+                        SettingDesc = b.SettingDesc,
+                        SettingValue = b.SettingValue
                     }).ToList()
                 });
             }
@@ -35,7 +51,7 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.BasicSetting
             {
                 throw new Exception("设置缓存失败!" + ex.Message);
             }
-            
+
         }
         /// <summary>
         /// 获取BasicSetting缓存
@@ -54,9 +70,9 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.BasicSetting
                 {
                     return response.Result.SettingList.Select(it => new CustomerBasicSettingEntity
                     {
-                        SettingCode=it.SettingCode,
-                        SettingValue=it.SettingValue,
-                        SettingDesc=it.SettingDesc
+                        SettingCode = it.SettingCode,
+                        SettingValue = it.SettingValue,
+                        SettingDesc = it.SettingDesc
                     }).ToList();
                 }
                 else
