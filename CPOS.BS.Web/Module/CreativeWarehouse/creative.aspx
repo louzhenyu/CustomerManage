@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/optimize.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -407,5 +407,16 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
                            </div>
      </div>
 
+       <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"
+            defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>
+              <script type="text/javascript">
+                     var version=new Date().getTime();
+                     //测试
+                     //var str="<script type='text/javascript' src='//test.linkin.mobi/vveshow/plugins/jvveshow/1.0.0/resource/app/jvveshow/jvveshow.js?versionInit='"+version+"'>";
+                     //正式
+                 var str="<script type='text/javascript' src='http://www.vveshow.com/plugins/jvveshow/1.0.0/resource/app/jvveshow/jvveshow.min.js?versionInit='"+version+"'>";
+                     str+="\<\/script\>";
+                 document.write(str);
+                </script>
 </asp:Content>
 
