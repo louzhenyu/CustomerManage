@@ -206,7 +206,7 @@ namespace JIT.CPOS.Web.WeiXin
                             vipInfo.WeiXinUserId = OpenID;
                             vipInfo.WeiXin = WeiXin;
                             vipInfo.UnionID = unionid;
-                            vipInfo.VipSourceId = "3";//是否需要把这个去掉，因为VipSourceId=13也会走到这里
+                            
                             /**  //不做为查询条件
                             vipInfo.City = City;
                             if (Gender != string.Empty) vipInfo.Gender = Convert.ToInt32(Gender);
@@ -228,7 +228,7 @@ namespace JIT.CPOS.Web.WeiXin
                                 //couponInfo字段保存总部门店ID
                                 UnitService unitServer = new UnitService(loggingSessionInfo);
                                 vipInfo.CouponInfo = unitServer.GetUnitByUnitTypeForWX("总部", null).Id; //获取总部门店标识
-
+                                vipInfo.VipSourceId = "3";//是否需要把这个去掉，因为VipSourceId=13也会走到这里
                                 vipInfo.Status = 1;
                                 vipInfo.VIPID = Guid.NewGuid().ToString().Replace("-", "");
                                 vipInfo.VipCode = vipCode;
@@ -1378,8 +1378,7 @@ namespace JIT.CPOS.Web.WeiXin
                 // vipInfo.QRVipCode = ConfigurationManager.AppSettings["website_url"].Trim() + "WeiXin/" + newFilePath;
                 // vipInfo.CouponURL = ConfigurationManager.AppSettings["website_url"].Trim() + "WeiXin/" + couponNewFilePath;
                 vipInfo.Col49 = qrcode;//这个应该放在这里，因为这样会作为一个查询条件，这样之前不是集客方式注册的会员就不会被查到
-                vipInfo.WeiXin = WeiXin;
-                vipInfo.VipSourceId = "3";
+                vipInfo.WeiXin = WeiXin;                
                 vipInfo.HeadImgUrl = headimgurl;
                 
                 var vipObj = vipServiceUnion.QueryByEntity(vipQueryInfo, null);
@@ -1398,6 +1397,7 @@ namespace JIT.CPOS.Web.WeiXin
                         vipInfo.VipCode = vipServiceUnion.GetVipCode();
                     }
                     // vipInfo.Col49 = qrcode;//应该放在这里****
+                    vipInfo.VipSourceId = "3";
                     vipInfo.ClientID = tmpUser.CurrentUser.customer_id;
                     vipInfo.Status = 1;//关注状态
                     vipInfo.VipPasswrod = "e10adc3949ba59abbe56e057f20f883e";

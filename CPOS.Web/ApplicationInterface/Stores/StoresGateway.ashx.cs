@@ -552,6 +552,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                             vipInfo.VipSourceId = "29";
                             vipInfo.VipSourceName = "集客海报二维码";
                         }
+                        if (RP.Parameters.special.Mode.Equals("ToFace"))
+                        {
+                            vipInfo.VipSourceId = "13";
+                            vipInfo.VipSourceName = "员工集客";
+                        }
                         vipInfo.Col24 = RP.Parameters.special.ObjectID;
                         vipInfo.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//集客时间*****         
                         //如果集客成功给出提示

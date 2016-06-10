@@ -56,9 +56,11 @@ namespace JIT.CPOS.BS.BLL
         /// <returns></returns>
         public string GetSourceByVipSourceID(string VipSourceID)
         {
-            string AmountSourceID = "20";//当会员来源模糊时，归结为集客相关奖励
+            string AmountSourceID = "5";
 
-            if (VipSourceID.Equals("22") || VipSourceID.Equals("24") || VipSourceID.Equals("25"))
+            if (VipSourceID.Equals("3"))    //来自微信的会员
+                AmountSourceID = "35";      //员工集客注册奖励
+            else if (VipSourceID.Equals("22") || VipSourceID.Equals("24") || VipSourceID.Equals("25"))
                 AmountSourceID = "29";
             else if (VipSourceID.Equals("26") || VipSourceID.Equals("27"))
                 AmountSourceID = "30";
