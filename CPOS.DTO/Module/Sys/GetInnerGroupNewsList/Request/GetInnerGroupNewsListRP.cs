@@ -14,9 +14,13 @@ namespace JIT.CPOS.DTO.Module.Sys.InnerGroupNews.Request
         /// 平台编号   1=微信用户 2=APP员工
         /// </summary>
         public int NoticePlatformTypeId { get; set; }
-
-        public int TotalCount { get; set; }
+      public int TotalCount { get; set; }
         public int TotalPages { get; set; }
+
+        /// <summary>
+        /// 业务类型Id(1=内部公告2=集客行动)
+        /// </summary>
+        public int? BusType { get; set; }
         public void Validate()
         {
 

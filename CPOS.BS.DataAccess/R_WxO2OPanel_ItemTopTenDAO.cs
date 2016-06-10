@@ -42,16 +42,16 @@ namespace JIT.CPOS.BS.DataAccess
     /// </summary>
     public partial class R_WxO2OPanel_ItemTopTenDAO : Base.BaseCPOSDAO, ICRUDable<R_WxO2OPanel_ItemTopTenEntity>, IQueryable<R_WxO2OPanel_ItemTopTenEntity>
     {
-        public List<R_WxO2OPanel_ItemTopTenEntity> GetListByDate(DateTime dateCode)
+        public List<R_WxO2OPanel_ItemTopTenEntity> GetListByDate()
         {
             if (CurrentUserInfo == null)
             {
                 return null;
             }
-            string sql = "select * from R_WxO2OPanel_ItemTopTen where CustomerId=@customerId and DateCode=@dateCode order by sortIndex";
+            //string sql = "select * from R_WxO2OPanel_ItemTopTen where CustomerId=@customerId and DateCode=@dateCode order by sortIndex";
+            string sql = "select * from R_WxO2OPanel_ItemTopTen where DateCode=(select DISTINCT top 1 DateCode from R_WxO2OPanel_ItemTopTen  order by DateCode desc) and CustomerId=@customerId order by sortIndex";
             List<SqlParameter> pList = new List<SqlParameter>();
             pList.Add(new SqlParameter("@customerId", CurrentUserInfo.ClientID));
-            pList.Add(new SqlParameter("@dateCode", dateCode));
 
             List<R_WxO2OPanel_ItemTopTenEntity> list = new List<R_WxO2OPanel_ItemTopTenEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(CommandType.Text, sql.ToString(), pList.ToArray()))

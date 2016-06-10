@@ -121,7 +121,7 @@ select a.*  from InnerGroupNews a
         /// <param name="CustomerID">商户编号</param>
         /// <param name="NoticePlatformType">平台编号{1=微信用户 2=APP员工}</param>
         /// <returns></returns>
-        public PagedQueryResult<InnerGroupNewsEntity> GetVipInnerGroupNewsList(int pageIndex, int pageSize, string UserID, string CustomerID, int NoticePlatformType)
+        public PagedQueryResult<InnerGroupNewsEntity> GetVipInnerGroupNewsList(int pageIndex, int pageSize, string UserID, string CustomerID, int NoticePlatformType, int? BusType)
         {
             #region 组织SQL
             StringBuilder pagedSql = new StringBuilder();
@@ -151,16 +151,27 @@ select a.*  from InnerGroupNews a
                         AND a.NoticePlatformType=@NoticePlatformTypeId AND a.IsDelete=0 --1=微信用户 2=APP员工
                          ) AS T WHERE T._row> @LimitPageCount AND _row<= @MaxPageCount ");
 
+            if (BusType != null && BusType != 0)
+            {
+                pagedSql.Append(" AND BusType='" + BusType + "'");
+            }
             SqlParameter[] pagedParameter = new SqlParameter[5]{
                             new SqlParameter("@UserId",UserID),
                             new SqlParameter("@CustomerID",CustomerID),
                             new SqlParameter("@NoticePlatformTypeId",NoticePlatformType),
                             new SqlParameter("@LimitPageCount",pageIndex*pageSize),
                             new SqlParameter("@MaxPageCount",(pageIndex+1)*pageSize)
-                        };
+            };
+
             #region 记录总数sql
             totalCountSql.Append(@"select count(1) from InnerGroupNews as a WHERE  a.CustomerID =@CustomerID
                                 AND a.NoticePlatformType=@NoticePlatformTypeId AND a.IsDelete=0");
+
+            if (BusType != null && BusType != 0)
+            {
+                totalCountSql.Append(" AND BusType='" + BusType + "'");
+            }
+
 
             SqlParameter[] totalParameter = new SqlParameter[2]{
                             new SqlParameter("@CustomerID",CustomerID),

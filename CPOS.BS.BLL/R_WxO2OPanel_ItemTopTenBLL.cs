@@ -34,13 +34,13 @@ namespace JIT.CPOS.BS.BLL
     /// </summary>
     public partial class R_WxO2OPanel_ItemTopTenBLL
     {
-        public List<R_WxO2OPanel_ItemTopTenEntity> GetListByDate(DateTime dateCode)
+        public List<R_WxO2OPanel_ItemTopTenEntity> GetListByDate()
         {
             if (CurrentUserInfo == null)
             {
                 throw new APIException("用户没有登录") { ErrorCode = ERROR_CODES.DEFAULT_ERROR };
             }
-            return _currentDAO.GetListByDate(dateCode);
+            return _currentDAO.GetListByDate();
         }
     }
 }

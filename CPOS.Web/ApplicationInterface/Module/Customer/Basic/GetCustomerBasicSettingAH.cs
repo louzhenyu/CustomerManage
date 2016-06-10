@@ -37,6 +37,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Customer.Basic
                 }
                 if (Data != null)
                     rd.SettingValue = Data.SettingValue;
+                else
+                    rd.SettingValue = "欢迎光临!请问有什么可以帮助到您?";
             }
             return rd;
         }

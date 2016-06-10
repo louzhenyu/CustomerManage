@@ -55,9 +55,9 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="CustomerID">商户编号</param>
         /// <param name="NoticePlatformType">平台编号（1=微信用户2=APP员工）</param>
         /// <returns></returns>
-        public PagedQueryResult<InnerGroupNewsEntity> GetVipInnerGroupNewsList(int pageIndex, int pageSize, string UserID, string CustomerID, int NoticePlatformType)
+        public PagedQueryResult<InnerGroupNewsEntity> GetVipInnerGroupNewsList(int pageIndex, int pageSize, string UserID, string CustomerID, int NoticePlatformType, int? BusType)
         {
-            return _currentDAO.GetVipInnerGroupNewsList(pageIndex, pageSize, UserID, CustomerID, NoticePlatformType);
+            return _currentDAO.GetVipInnerGroupNewsList(pageIndex, pageSize, UserID, CustomerID, NoticePlatformType, BusType);
         }
 
         /// <summary>

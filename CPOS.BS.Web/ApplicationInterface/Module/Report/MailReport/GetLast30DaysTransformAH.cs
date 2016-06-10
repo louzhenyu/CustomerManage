@@ -14,7 +14,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Report.MailReport
         protected override GetLast30DaysTransformRD ProcessRequest(DTO.Base.APIRequest<GetLast30DaysTransformRP> pRequest)
         {
             R_WxO2OPanel_30DaysBLL bll = new R_WxO2OPanel_30DaysBLL(CurrentUserInfo);
-            var dbEntity = bll.GetEntityByDate(DateTime.Parse(pRequest.Parameters.DateCode));
+            var dbEntity = bll.GetEntityByDate();
             return new GetLast30DaysTransformRD(dbEntity) { };
         }
     }

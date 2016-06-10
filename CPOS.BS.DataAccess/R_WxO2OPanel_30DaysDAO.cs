@@ -42,16 +42,16 @@ namespace JIT.CPOS.BS.DataAccess
     /// </summary>
     public partial class R_WxO2OPanel_30DaysDAO : Base.BaseCPOSDAO, ICRUDable<R_WxO2OPanel_30DaysEntity>, IQueryable<R_WxO2OPanel_30DaysEntity>
     {
-        public R_WxO2OPanel_30DaysEntity GetEntityByDate(DateTime dateCode)
+        public R_WxO2OPanel_30DaysEntity GetEntityByDate()
         {
             if (CurrentUserInfo == null)
             {
                 return null;
             }
-            string sql = "select top 1 * from R_WxO2OPanel_30Days where CustomerId=@customerId and DateCode=@dateCode";
+            //string sql = "select top 1 * from R_WxO2OPanel_30Days where CustomerId=@customerId and DateCode=@dateCode";
+            string sql = "select top 1 * from R_WxO2OPanel_30Days where CustomerId=@customerId order by DateCode desc";
             List<SqlParameter> pList = new List<SqlParameter>();
             pList.Add(new SqlParameter("@customerId", CurrentUserInfo.ClientID));
-            pList.Add(new SqlParameter("@dateCode", dateCode));
             //¶ÁÈ¡Êý¾Ý
             R_WxO2OPanel_30DaysEntity m = null;
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(CommandType.Text, sql.ToString(), pList.ToArray()))

@@ -277,7 +277,7 @@
                         var Status= $(this).data("statusid");
                         debugger
                         var applyId=dataAll[0].ApplyID;
-                        var  str="";
+                        //var  str="";
                         var isSubmit=false;
                         if (dataAll[0].Status==2)
                         {

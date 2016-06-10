@@ -24,7 +24,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Sys.InnerGroupNews
             var rd = new GetInnerGroupNewsListRD();
 
             //分页查找消息列表
-            PagedQueryResult<InnerGroupNewsEntity> lst = bll.GetVipInnerGroupNewsList(parameter.PageIndex, parameter.PageSize, pRequest.UserID, pRequest.CustomerID, parameter.NoticePlatformTypeId);
+            PagedQueryResult<InnerGroupNewsEntity> lst = bll.GetVipInnerGroupNewsList(parameter.PageIndex, parameter.PageSize, pRequest.UserID, pRequest.CustomerID, parameter.NoticePlatformTypeId, parameter.BusType);
             rd.InnerGroupNewsList = lst.Entities.Select(m => new InnerGroupNewsInfo()
                                                         {
                                                             Title = m.Title,

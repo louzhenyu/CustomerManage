@@ -1103,7 +1103,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                 minimizable:false,
                 maximizable:false,
                 closed:true,
-                closable:true
+                closable:false
             });
             $('#panlConent').layout({
                 fit:true
@@ -1119,6 +1119,14 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
 				}
 			})
 
+            $('.window').delegate(".panel-tool-close","click",function(e){
+                alert('aa');
+                var isTrue = $(this).parents('.window').find('#winMessage').length;
+                console.log(isTrue);
+                if(isTrue!='0'){
+                    location.reload();
+                }
+            })
             //集客发送通知
 			$('#winMessage').delegate(".message","click",function(e){
 				var item = $('#winMessage').find('.on');
@@ -1280,6 +1288,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                setMessageId=[];
                var vipId = list[1].SetoffEventID;
                var staffId = list[0].SetoffEventID;
+
                $('#winMessage .editCheck').eq(0).attr('data-SetoffEventID',staffId);
                $('#winMessage .editCheck').eq(1).attr('data-SetoffEventID',vipId);
            });
@@ -1295,7 +1304,6 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
             };
             $('#panlConent').layout('add',options);
             $('#winMessage').window('open');
-
             $('#winMessage').parents('.window').css('position','fixed');
         },
 
@@ -1889,9 +1897,6 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                 if(setoffRegPrize=="0"){
                     setoffRegPrize="";
                 }
-                if(setoffOrderTimers=="0"){
-                    setoffOrderTimers="";
-                }
                 if(setoffType=='1'){
                     if(setoffOrderPer!=""&&setoffRegPrize!=""||getSetoffTools!=null){
                         $('.setOffVipModule').find('.point').children('span').eq(1).trigger('click');
@@ -1950,7 +1955,6 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     }else{
                         $('.setOffStaffModule').find('.rewardAction').html('使用中的激励方案')
                     }
-                    console.log(getSetoffTools);
                     if(getSetoffTools==null||getSetoffTools==[]){
                         $('.setOffStaffModule').find('.blockModul').find('.noContents').show();
                     }else{
@@ -2138,6 +2142,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                         // 'BeginTime':this.seach.BeginTime,
                         // 'EndTime':this.seach.EndTime,
                         'IsEffective':true,
+                        'SurplusCount':1,
                         'PageIndex':this.getCoupon.PageIndex,
                         'PageSize':this.getCoupon.PageSize
                     },

@@ -34,13 +34,13 @@ namespace JIT.CPOS.BS.BLL
     /// </summary>
     public partial class R_WxO2OPanel_7DaysBLL
     {
-        public R_WxO2OPanel_7DaysEntity GetEntityByDate(DateTime dateCode)
+        public R_WxO2OPanel_7DaysEntity GetEntityByDate()
         {
             if (CurrentUserInfo == null)
             {
                 throw new APIException("用户没有登录") { ErrorCode = ERROR_CODES.DEFAULT_ERROR };
             }
-            return _currentDAO.GetEntityByDate(dateCode);
+            return _currentDAO.GetEntityByDate();
         }
     }
 }

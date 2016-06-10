@@ -382,7 +382,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 temp.openId = openId;
                 RD.content = temp;
                 rsp = new SuccessResponse<IAPIResponseData>(RD);
-                if ((RP.Parameters.special.Mode == null || (!string.IsNullOrEmpty(RP.Parameters.special.Mode) && RP.Parameters.special.Mode.Equals("Inbound"))) && !string.IsNullOrEmpty(info.VipId))
+                if ((RP.Parameters.special.Mode == null || (!string.IsNullOrEmpty(RP.Parameters.special.Mode) && RP.Parameters.special.Mode.Equals("Inbound"))) && !string.IsNullOrEmpty(info.VipId) && info.VipId != RP.UserID)
                 {
                     VipBLL vipBll = new VipBLL(loggingSessionInfo);
                     var unitBll = new t_unitBLL(loggingSessionInfo);
@@ -482,7 +482,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
 
                 }
                 //处理面对面、优惠券、海报的集客处理
-                if (!string.IsNullOrEmpty(RP.Parameters.special.Mode) && (RP.Parameters.special.Mode.Equals("Coupon") || RP.Parameters.special.Mode.Equals("SetOffPoster") || RP.Parameters.special.Mode.Equals("ToFace")) && !string.IsNullOrEmpty(info.VipId))//如果通过优惠券或海报扫码
+                if (!string.IsNullOrEmpty(RP.Parameters.special.Mode) && (RP.Parameters.special.Mode.Equals("Coupon") || RP.Parameters.special.Mode.Equals("SetOffPoster") || RP.Parameters.special.Mode.Equals("ToFace")) && !string.IsNullOrEmpty(info.VipId)&&info.VipId!=RP.UserID)//如果通过优惠券或海报扫码
                 {
                     VipBLL vipBll = new VipBLL(loggingSessionInfo);
                     var unitBll = new t_unitBLL(loggingSessionInfo);

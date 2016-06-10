@@ -14,7 +14,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Report.MailReport
         protected override GetGoodsRankListRD ProcessRequest(DTO.Base.APIRequest<GetGoodsRankListRP> pRequest)
         {
             R_WxO2OPanel_ItemTopTenBLL bll = new R_WxO2OPanel_ItemTopTenBLL(CurrentUserInfo);
-            var dbEntity = bll.GetListByDate(DateTime.Parse(pRequest.Parameters.DateCode));
+            var dbEntity = bll.GetListByDate();
             return new GetGoodsRankListRD(dbEntity) { };
         }
     }

@@ -221,7 +221,7 @@
     </div>
 	<!-- 集客发送通知 -->
     <div style="display: none">
-        <div id="winMessage" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,maximizable:false,closed:true,closable:true">
+        <div id="winMessage" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,maximizable:false,closed:true,closable:false">
             <div class="easyui-layout" data-options="fit:true" id="panlConent">
                 <div data-options="region:'center'" style="padding: 10px;">
                     指定的模板添加内容
