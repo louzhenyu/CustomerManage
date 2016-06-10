@@ -87,7 +87,7 @@
                 </div>
                 
                 <div class="itemBox">
-                	<p class="minTit">注册会员近30天销量贡献</p>
+                	<p class="minTit">注册会员近30天销量占比</p>
                     <div class="infoBox">
                     	<p class="exp">占注册会员总贡献</p>
                         <div class="dataBox">

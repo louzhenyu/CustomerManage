@@ -56,7 +56,7 @@ namespace JIT.CPOS.BS.BLL
         /// <returns></returns>
         public string GetSourceByVipSourceID(string VipSourceID)
         {
-            string AmountSourceID = "5";
+            string AmountSourceID = "20";//当会员来源模糊时，归结为集客相关奖励
 
             if (VipSourceID.Equals("22") || VipSourceID.Equals("24") || VipSourceID.Equals("25"))
                 AmountSourceID = "29";
