@@ -80,7 +80,7 @@
 				
 				
 				$('.onlineVipCountFor30DayOrder em').text(data.OnlineVipCountFor30DayOrder);	//Int	近30天会员活跃人数
-				$('.onlineVipCountPerFor30DayOrder em').text(Math.abs(parseFloat(data.OnlineVipCountPerFor30DayOrder)));
+				$('.onlineVipCountPerFor30DayOrder em').text(Math.abs(parseFloat(data.OnlineVipCountFor30DayOrderM2M)));
 				if(data.OnlineVipCountPerFor30DayOrder<0){
 					$('.onlineVipCountPerFor30DayOrder').addClass('dn');
 				}else{
@@ -88,7 +88,7 @@
 				}
 				
 				
-				$('.onlineVipCountFor30DayOrderM2M em').text(data.OnlineVipCountFor30DayOrderM2M);//String	近30天活跃会员占比{占注册会员总数}
+				$('.onlineVipCountFor30DayOrderM2M em').text(data.OnlineVipCountPerFor30DayOrder);//String	近30天活跃会员占比{占注册会员总数}
 				$('.onlineVipCountPerFor30DayOrderM2M em').text(Math.abs(parseFloat(data.OnlineVipCountPerFor30DayOrderM2M)));//String	近30天活跃会员占比增减
 				if(data.OnlineVipCountPerFor30DayOrderM2M<0){
 					$('.onlineVipCountPerFor30DayOrderM2M').addClass('dn');

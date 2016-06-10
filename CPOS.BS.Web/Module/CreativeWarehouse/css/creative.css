@@ -124,11 +124,13 @@
 .commonSelectWrap .searchInput em{ font-size: 12px;padding-left: 8px;}
 .listName{
     position: absolute;
-    top: 218px;
+    top: 205px;
     left: 50%;
-    color: #ccc;
+    color: #000;
     margin-left: -100px;
+    z-index: 50;
 }
+
 
 
 /*发布预览二维码*/

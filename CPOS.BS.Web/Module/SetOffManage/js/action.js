@@ -1889,7 +1889,13 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                 if(setoffRegPrize=="0"){
                     setoffRegPrize="";
                 }
+                if(setoffOrderTimers=="0"){
+                    setoffOrderTimers="";
+                }
                 if(setoffType=='1'){
+                    if(setoffOrderPer!=""&&setoffRegPrize!=""||getSetoffTools!=null){
+                        $('.setOffVipModule').find('.point').children('span').eq(1).trigger('click');
+                    }
 
                     that.loadData.setOff.setOffVipId = list[i].SetoffEventID;//获取会员集客行动id
                     if(setoffRegAwardType=='1'){
@@ -1897,7 +1903,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     }else{
                         $('#rewardRule').parents('.editArea').find('.till').html('积分');
                     }
-                    $('.setOffVipModule').find('.point').children('span').eq(1).trigger('click');
+
                     if(isDisabled=='10'){
                         $('.setOffVipModule').find('.lockBack').children('.cirle').trigger('click');
                         $('.setOffVipModule').find('.editArea').find("p[data-type='"+setoffOrderTimers+"']").addClass('on');
@@ -1929,7 +1935,9 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                 }
                 if(setoffType=='2'){
                     that.loadData.setOff.setOffStaffId = list[i].SetoffEventID;//获取集客员工行动id
-                    $('.setOffStaffModule').find('.point').children('span').eq(1).trigger('click');
+                    if(setoffOrderPer!=""&&setoffRegPrize!=""||getSetoffTools!=null){
+                        $('.setOffStaffModule').find('.point').children('span').eq(1).trigger('click');
+                    }
                     if(isDisabled=="10"){
                         $('.setOffStaffModule').find('.lockBack').children('.cirle').trigger('click');
                         $('.setOffStaffModule').find('.editArea').find("p[data-type='"+setoffOrderTimers+"']").addClass('on');

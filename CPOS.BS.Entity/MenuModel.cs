@@ -13,7 +13,7 @@ namespace JIT.CPOS.BS.Entity
     [Serializable]
     [XmlRootAttribute("data")]
     //[XmlRoot("data")]
-  
+
     public class MenuModel
     {
 
@@ -21,83 +21,83 @@ namespace JIT.CPOS.BS.Entity
         /// <summary>
         /// 菜单标识【保存必须】
         /// </summary>
-        [XmlElement("menu_id")] 
+        [XmlElement("menu_id")]
         public string Menu_Id { get; set; }
         /// <summary>
         /// 应用系统标识【保存必须】
         /// </summary>
-        [XmlElement("reg_app_id")] 
-        public string Reg_App_Id  { get; set; }
+        [XmlElement("reg_app_id")]
+        public string Reg_App_Id { get; set; }
         /// <summary>
         /// 菜单号码【保存必须】
         /// </summary>
-        [XmlElement("menu_code")] 
-        public string Menu_Code  { get; set; }
+        [XmlElement("menu_code")]
+        public string Menu_Code { get; set; }
         /// <summary>
         /// 父节点标识【保存必须】
         /// </summary>
-        [XmlElement("parent_menu_id")] 
-        public string Parent_Menu_Id  { get; set; }
+        [XmlElement("parent_menu_id")]
+        public string Parent_Menu_Id { get; set; }
         /// <summary>
         /// 菜单级别【保存必须】
         /// </summary>
-        [XmlElement("menu_level")] 
-        public int Menu_Level  { get; set; }
+        [XmlElement("menu_level")]
+        public int Menu_Level { get; set; }
         /// <summary>
         /// 连接地址
         /// </summary>
-        [XmlElement("url_path")] 
-        public string  Url_Path { get; set; }
+        [XmlElement("url_path")]
+        public string Url_Path { get; set; }
         /// <summary>
         /// 图片地址
         /// </summary>
-        [XmlElement("icon_path")] 
-        public string Icon_Path  { get; set; }
+        [XmlElement("icon_path")]
+        public string Icon_Path { get; set; }
         /// <summary>
         /// 显示次序【保存必须】
         /// </summary>
-        [XmlElement("display_index")] 
+        [XmlElement("display_index")]
         public int Display_Index { get; set; }
-	    /// <summary>
+        /// <summary>
         /// 菜单名称【保存必须】
-	    /// </summary>
-        [XmlElement("menu_name")] 
+        /// </summary>
+        [XmlElement("menu_name")]
         public string Menu_Name { get; set; }
         /// <summary>
         /// 用户标识
         /// </summary>
-        [XmlElement("user_flag")] 
+        [XmlElement("user_flag")]
         public int User_Flag { get; set; }
         /// <summary>
         /// 菜单英文名称
         /// </summary>
-        [XmlElement("menu_eng_name")] 
+        [XmlElement("menu_eng_name")]
         public string Menu_Eng_Name { get; set; }
         /// <summary>
         /// 状态
         /// </summary>
-        [XmlElement("status")] 
+        [XmlElement("status")]
         public int Status { get; set; }
 
         /// <summary>
         /// 创建人
         /// </summary>
-        [XmlElement("create_user_id")] 
+        [XmlElement("create_user_id")]
         public string Create_User_Id { get; set; }
         /// <summary>
         /// 创建时间
         /// </summary>
-        [XmlElement("create_time")] 
+        [XmlElement("create_time")]
         public string Create_Time { get; set; }
         /// <summary>
         /// 修改人
         /// </summary>
-        [XmlElement("modify_user_id")] 
+        [XmlElement("modify_user_id")]
         public string Modify_User_id { get; set; }
         /// <summary>
         /// 修改时间
         /// </summary>
-        [XmlElement("modify_time")] 
+        [XmlElement("modify_time")]
         public string Modify_Time { get; set; }
 
         /// <summary>
@@ -176,13 +176,28 @@ namespace JIT.CPOS.BS.Entity
         [XmlIgnore()]
         public string Parent_Menu_Name { get; set; }
         //支持老的树结构
-        public string id { get{ return  Menu_Id; }}
+        public string id { get { return Menu_Id; } }
         public string text { get { return Menu_Name; } }
         public string state { get { return expanded_flag == "true" ? "open" : "closed"; } }
 
-    
-      [JsonProperty(PropertyName = "checked")]//转换成json数据时按照这个名称
-        public bool Checked { get { return check_flag=="true"?true:false; } }
+
+        private bool? custom_checked = null;
+        [JsonProperty(PropertyName = "checked")]//转换成json数据时按照这个名称
+        public bool Checked
+        {
+            get
+            {
+                if (custom_checked != null)
+                    return (bool)custom_checked;
+                else
+                    return check_flag == "true" ? true : false;
+
+            }
+            set
+            {
+                custom_checked = value;
+            }
+        }
 
     }
 }

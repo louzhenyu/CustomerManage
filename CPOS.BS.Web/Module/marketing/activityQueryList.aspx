@@ -45,6 +45,11 @@
                     <!--<h2 class="commonTitle">会员查询</h2>-->
 
                 </div>
+                <div class="optionBtn">
+                      <div class="commonBtn  icon w100  icon_add r" data-flag="add">新增活动</div>
+
+
+                     </div>
                 <div class="tableWrap" id="tableWrap">
                      
                     <div class="dataTable" id="gridTable">

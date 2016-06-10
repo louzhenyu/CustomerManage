@@ -85,7 +85,7 @@ body{overflow-x: hidden;}
 .commonHeader .setBox-tip{top: 50px;  padding: 0;background: url(../../images/newYear/set-tip-bg.png) repeat-y 0 0;  left: 0; width: 158px; height: 132px; border-bottom: none;}
 .commonHeader .setBox-tip .safetyOutBtn{ border-radius:0; width: 100%; height: 32px;  padding:0;  line-height: 32px; background: none;  text-align: center;margin: 0;}
 .commonHeader .setBox-tip .safetyOutBtn:nth-child(4){border-bottom:none;height:38px;background: url("../../images/newYear/setBoxBot.png") no-repeat bottom center;}
-.commonHeader .setBox-tip a{padding-left: 48px;text-align:left; background-repeat: no-repeat; background-position: 20px center;color: #999; line-height: 32px; font-size: 12px; width: 148px; margin:0 auto;}
+.commonHeader .setBox-tip a{padding-left: 48px;text-align:left; background-repeat: no-repeat; background-position: 20px center;color: #999; line-height: 32px; font-size: 12px; margin:0 auto;}
 .commonHeader .setBox-tip a:hover { background-color:#0c5e99; color: #fff;border-radius: 0;background-repeat: no-repeat; background-position: 20px center;}
 .commonHeader .setBox-tip a.one{background-image: url("../../images/newYear/set_top/abacus.png");}
 .commonHeader .setBox-tip a.two{background-image: url("../../images/newYear/set_top/unlock.png");}
@@ -173,7 +173,7 @@ body{overflow-x: hidden;}
 .add{ cursor:pointer}
 /*查询*/
 .queryTermArea .commonSelectWrap{margin-right: 28px; font-size: 12px; }
-.commonSelectWrap{float:left;height:33px;margin:10px 10px 10px 0;position:relative;}
+.commonSelectWrap{float:left;height:33px;margin:10px 10px 10px 0;position:relative;z-index: 55}
 .commonSelectWrap .tit{float:left;width:76px;height:30px;line-height:30px;text-align:right;font-size:12px;color:#666;}
 .commonSelectWrap .w100{width: 100px;}
 .commonSelectWrap .w120{width: 120px;}

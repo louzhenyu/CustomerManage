@@ -8,7 +8,7 @@ namespace JIT.CPOS.DTO.Module.Marketing.Coupon.Request
 {
     public class GetCouponTypeListRP : IAPIRequestParameter
     {
-        public string CouponTypeName{get;set;}
+        public string CouponTypeName { get; set; }
         public string ParValue { get; set; }
         /// <summary>
         /// 是否获取有效券
@@ -16,6 +16,11 @@ namespace JIT.CPOS.DTO.Module.Marketing.Coupon.Request
         public bool? IsEffective { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
+
+        /// <summary>
+        /// SurplusCount==1 查询剩余张数大于0 的优惠券 否则不做处理
+        /// </summary>
+        public int? SurplusCount { get; set; }
         public void Validate()
         {
 

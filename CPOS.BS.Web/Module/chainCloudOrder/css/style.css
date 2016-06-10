@@ -17,7 +17,6 @@
 .imgTable .datagrid-row-checked {background-color:#b2f0f0;}
 .imgTable .datagrid-row  img{ float: left;margin-right: 10px;}
 .rowStatusStyle{color: #00a0e8;}
-.dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
 .commonSelectWrap .searchInput.whauto{ width: auto; height: auto;}
 .commonSelectWrap .searchInput .line{ height: 46px;}
 .commonSelectWrap .searchInput input {color:#999;}

@@ -68,6 +68,13 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipGold
                                             continue;
                                     }
                                 }
+
+                                //if (dr["SurplusCount"] != DBNull.Value)
+                                //{
+                                //    if (Convert.ToInt32(dr["SurplusCount"]) <= 0)
+                                //        continue;
+                                //}
+
                             }
                             #endregion
 

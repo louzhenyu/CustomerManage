@@ -31,10 +31,16 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                 complexCondition.Add(new LikeCondition() { FieldName = "CouponTypeName", Value = "%" + para.CouponTypeName + "%" });
             if (!string.IsNullOrEmpty(para.ParValue))
                 complexCondition.Add(new LikeCondition() { FieldName = "ParValue", Value = para.ParValue.ToString() });
-            if (IsEffective)
+          
+
+            if (para.SurplusCount != null && para.SurplusCount == 1)
             {
-                complexCondition.Add(new DirectCondition(" (ServiceLife >0 or (BeginTime<=GETDATE() and EndTime>=GETDATE()))"));
+                complexCondition.Add(new DirectCondition(" IssuedQty-IsVoucher>0 ")); //剩余张数大于o
+                complexCondition.Add(new DirectCondition(" (EndTime>='" + DateTime.Now + "' OR (BeginTime IS NULL AND EndTime IS NULL AND ServiceLife>0))")); //剩余张数大于o  结束时间小于当前时间也要过滤掉
             }
+
+
+
             //排序参数
             List<OrderBy> lstOrder = new List<OrderBy> { };
             lstOrder.Add(new OrderBy() { FieldName = "CreateTime", Direction = OrderByDirections.Desc });
