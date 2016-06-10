@@ -49,6 +49,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.Bargain
                 entityPanicbuyingEvent.PromotePersonCount = 0;
                 entityPanicbuyingEvent.BargainPersonCount = 0;
                 entityPanicbuyingEvent.ItemQty = 0;
+                entityPanicbuyingEvent.IsCTW = 0;
                 entityPanicbuyingEvent.CustomerID = loggingSessionInfo.ClientID;
                 bllPanicbuyingEvent.Create(entityPanicbuyingEvent);
                 //
