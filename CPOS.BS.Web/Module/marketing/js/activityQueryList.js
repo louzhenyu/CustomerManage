@@ -275,19 +275,7 @@
                     }
                 },
                 onClickRow:function(rowindex,rowData){
-                    if(that.elems.click) {
 
-                        that.elems.click=true;
-                        if(rowData.Status==1||rowData.Status==2) {
-                            var mid = $.util.getUrlParam("mid");
-                            $.util.toNewUrlPath("activityDetail.aspx?mid=" + mid + "&ActivityID=" + rowData.ActivityID);
-                        }else if(rowData.Status==3){
-                            $.messager.alert("提示", "活动运行中,不可修改");
-                        }else if(rowData.Status==4){
-                            $.messager.alert( "提示","活动已经结束,不可修改");
-
-                        }
-                    }
                 },onClickCell:function(rowIndex, field, value){
                     if(field=="addOpt"||field=="addOptdel"){    //在每一列有操作 而点击行有跳转页面的操作  才使用该功能。 此处不注释 与注释都可以。
                         that.elems.click=false;
