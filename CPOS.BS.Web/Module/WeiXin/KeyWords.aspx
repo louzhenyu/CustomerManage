@@ -142,6 +142,9 @@
     </div>
 </div>
 <script id="pageTmpl" type="text/html">
+    <div id="emptyPager" style=" width=100%; height:70px; line-height:70px; text-align:center; font-size:14px; display:none;">
+        没有符合条件的查询记录
+    </div>
     <div class="pagination">
       <a href="#" class="first" data-action="first">&laquo;</a>
       <a href="#" class="previous" data-action="previous">&lsaquo;</a>

@@ -31,7 +31,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                 complexCondition.Add(new LikeCondition() { FieldName = "CouponTypeName", Value = "%" + para.CouponTypeName + "%" });
             if (!string.IsNullOrEmpty(para.ParValue))
                 complexCondition.Add(new LikeCondition() { FieldName = "ParValue", Value = para.ParValue.ToString() });
-          
+            //过滤用完的 #bug 2838 (不改了 改从前端改)
+            //complexCondition.Add(new DirectCondition(" ((IssuedQty-IsVoucher)>0) "));
 
             if (para.SurplusCount != null && para.SurplusCount == 1)
             {

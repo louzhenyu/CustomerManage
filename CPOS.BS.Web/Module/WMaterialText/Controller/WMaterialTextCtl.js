@@ -22,19 +22,24 @@ function fnSearch() {
     Ext.getCmp("pageBar").store.proxy.extraParams = {
         form: Ext.JSON.encode(Ext.getCmp("searchPanel").getValues())
     };
-    Ext.getCmp("pageBar").moveFirst();
+    //Ext.getCmp("pageBar").moveFirst();
 
+    Ext.getCmp("pageBar").store.load(function (options) {
+        if (options == null || options.length == 0) {
+            $(".x-grid-header-row").after('<tr><td></td><td colspan="5" class="" style="height: 40px;line-height: 40px;padding-left: 25px;">没有符合条件的查询记录</td></tr>');
+        }
+    });
 }
 
 function fnCreate() {
     var mid = JITMethod.getUrlParam("mid");
     var url = "../WeiXin/ImageContent.aspx?type=add" + "&mid=" + window.mid;;
-    window.open(url,"_top");
+    window.open(url, "_top");
 
 }
 function fnEdit(id) {
     var mid = JITMethod.getUrlParam("mid");
-    var url = "../WeiXin/ImageContent.aspx?type=edit&imageContentId=" + id+"&mid=" +window.mid;
+    var url = "../WeiXin/ImageContent.aspx?type=edit&imageContentId=" + id + "&mid=" + window.mid;
     window.open(url, "_top");
 }
 
@@ -50,7 +55,7 @@ function fnDelete(id) {
                 method: 'POST',
                 success: function (response, opts) {
                     var jdata = Ext.JSON.decode(response.responseText);
-                    if (jdata.success&&jdata.success!="false") {
+                    if (jdata.success && jdata.success != "false") {
                         Ext.Msg.show({
                             title: '提示',
                             msg: '删除成功',

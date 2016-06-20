@@ -30,7 +30,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                 C_ActivityEntity ActivityData = ActivityBLL.GetByID(para.ActivityID);
                 if (ActivityData != null)
                 {
-
                     rd.ActivityID = ActivityData.ActivityID.ToString();
                     rd.ActivityName = ActivityData.ActivityName;
                     rd.StartTime = ActivityData.StartTime == null ? "" : ActivityData.StartTime.Value.ToString("yyyy-MM-dd");
@@ -75,6 +74,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                         var PrizesDetailList = PrizesDetailBLL.GetPrizesDetailList(item.PrizesID);
                         if (PrizesDetailList.Count > 0)
                         {
+                            CouponTypeBLL ctbll = new CouponTypeBLL(CurrentUserInfo);
                             foreach (var itemes in PrizesDetailList)
                             {
                                 PrizesDetailInfo m = new PrizesDetailInfo();
@@ -85,6 +85,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                                 m.AvailableQty = (itemes.IssuedQty == null ? 0 : itemes.IssuedQty.Value) - (itemes.IsVoucher == null ? 0 : itemes.IsVoucher.Value);
                                 m.CouponTypeDesc = itemes.CouponTypeDesc == null ? "" : itemes.CouponTypeDesc;
 
+                                //ValidityPeriod = t.BeginTime == null ? ("领取后" + (t.ServiceLife == 0 ? "1天内有效" : t.ServiceLife.ToString() + "天内有效")) : (t.BeginTime.Value.ToString("yyyy-MM-dd") + "至" + t.EndTime.Value.ToString("yyyy-MM-dd")),
+                                var t = ctbll.GetByID(m.CouponTypeID);
+                                m.ValidityPeriod = t.BeginTime == null ? ("领取后" + (t.ServiceLife == 0 ? "1天内有效" : t.ServiceLife.ToString() + "天内有效")) : (t.BeginTime.Value.ToString("yyyy-MM-dd") + "至" + t.EndTime.Value.ToString("yyyy-MM-dd"));
                                 //奖品明细集合额赋值
                                 item.PrizesDetailList.Add(m);
                             }
@@ -93,7 +96,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                 }
                 #endregion
                 #region 消息
-                var ActivityMessageList = ActivityMessageBLL.Query(new IWhereCondition[] { new EqualsCondition() { FieldName = "ActivityID", Value = para.ActivityID },new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID } }, null).ToList();
+                var ActivityMessageList = ActivityMessageBLL.Query(new IWhereCondition[] { new EqualsCondition() { FieldName = "ActivityID", Value = para.ActivityID }, new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID } }, null).ToList();
                 if (ActivityMessageList.Count > 0)
                 {
                     //消息赋值

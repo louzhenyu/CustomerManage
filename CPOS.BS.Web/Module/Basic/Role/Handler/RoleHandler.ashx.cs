@@ -188,7 +188,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Role.Handler
             {
                 tmpMenuObj.leaf_flag = tmpMenuObj.Menu_Level == 1 ? "false" : "true";
                 tmpMenuObj.expanded_flag = tmpMenuObj.Menu_Level == 1 ? "true" : "false";
-                tmpMenuObj.Checked = false;
+
                 //tmpMenuObj.cls_flag = tmpMenuObj.Menu_Level == 1 ? "folder" : "";
 
                 foreach (var tmpSrcMenuObj in src)//找下面的字节点
@@ -203,6 +203,8 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Role.Handler
                         GetSubMenus(tmpSrcMenuObj, src);
                     }
                 }
+                if (tmpMenuObj.children != null && tmpMenuObj.children.Count == 0)
+                    tmpMenuObj.Checked = false;
             }
 
 

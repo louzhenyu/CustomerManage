@@ -827,10 +827,10 @@
                         that.getKeyWords();
                     }
                 });
-                that.elems.weixinAccount.delegate(".selectBox","change",function(e){
+                that.elems.weixinAccount.delegate(".selectBox", "change", function (e) {
 
-                    var me=$(this);
-                    if(me.val()) {
+                    var me = $(this);
+                    if (me.val()) {
                         that.applicationId = me.val();
 
                         that.getKeyWords();
@@ -869,7 +869,8 @@
 
 
                 //拖拽排序
-                that.elems.imageContentDiv.find(".list").sortable({ opacity: 0.7, cursor: 'move', update: function () { }
+                that.elems.imageContentDiv.find(".list").sortable({
+                    opacity: 0.7, cursor: 'move', update: function () { }
                 });
 
                 //鼠标悬停的时候把内容展示出来
@@ -1458,6 +1459,14 @@
                         //表示成功
                         if (callback) {
                             callback(data);
+                            if (data.Data.SearchKeyList != null && data.Data.SearchKeyList.length > 0) {
+                                $("#emptyPager").hide();
+                                $("#menuArea > .pagination").show();
+                            }
+                            else {
+                                $("#emptyPager").show();
+                                $("#menuArea > .pagination").hide();
+                            }
                         }
                     }
                     else {

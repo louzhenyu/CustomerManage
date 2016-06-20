@@ -48,6 +48,11 @@ namespace JIT.CPOS.DTO.Module.Marketing.Response
         /// </summary>
         public string CouponTypeName { get; set; }
         /// <summary>
+        /// bug# 2838 有效期
+        /// </summary>
+        public string ValidityPeriod { get; set; }
+
+        /// <summary>
         /// 有效期（券结束时间）
         /// </summary>
         public string EndTime { get; set; }
