@@ -87,7 +87,7 @@ namespace JIT.CPOS.BS.Entity.WX
         public DataInfo keyword2 { get; set; }
         public DataInfo keyword3 { get; set; }
         public DataInfo keyword4 { get; set; }
-        public DataInfo Remark { get; set; }
+        public DataInfo remark { get; set; }
     }
 
     public class NotPay
@@ -97,7 +97,7 @@ namespace JIT.CPOS.BS.Entity.WX
         public DataInfo orderProductName { get; set; }
         public DataInfo orderAddress { get; set; }
         public DataInfo orderName { get; set; }
-        public DataInfo Remark { get; set; }
+        public DataInfo remark { get; set; }
     }
 
     public class DataInfo

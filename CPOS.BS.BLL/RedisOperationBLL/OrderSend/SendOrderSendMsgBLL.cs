@@ -42,7 +42,7 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.OrderSend
             CommonData.remark = new DataInfo() { value = WXTMConfigData.RemarkText, color = WXTMConfigData.RemarkColour };
 
             //下面往redis里存入数据
-            var response = RedisOpenAPI.Instance.CCOrderSend().SeOrderSend(new CC_OrderSend
+            var response = RedisOpenAPI.Instance.CCOrderSend().SetOrderSend(new CC_OrderSend
             {
                 CustomerID = loggingSessionInfo.ClientID,
                 ConfigData = new CC_ConfigData
@@ -62,7 +62,7 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.OrderSend
                     remark = new CC_DataInfo { value = CommonData.remark.value, color = CommonData.remark.color }
                 }
             });
-            //如果往缓存redis里写入不成功，还是按照原来的老方法往数据库里写
+            //如果往缓存redis里写入不成功，还是按照原来的老方法直接发送
             if (response.Code != ResponseCode.Success)
             {
                 CommonBLL.SendMatchWXTemplateMessage(WXTMConfigData.TemplateID, CommonData, null, null, null, null, null, null, null, "8", OpenID, VipID, loggingSessionInfo);

@@ -713,9 +713,15 @@
     <Compile Include="RedisOperationBLL\BasicSetting\SetBasicSettingJobBLL.cs" />
     <Compile Include="RedisOperationBLL\Connection\RedisConnectionBLL.cs" />
     <Compile Include="RedisOperationBLL\Contact\RedisContactBLL.cs" />
+    <Compile Include="RedisOperationBLL\CouponsUpcomingExpired\CouponToBeExpiredMsgBLL.cs" />
+    <Compile Include="RedisOperationBLL\CouponsUpcomingExpired\CouponToBeExpiredMsgGetJobBLL.cs" />
+    <Compile Include="RedisOperationBLL\CouponsUpcomingExpired\CouponToBeExpiredMsgSetJobBLL.cs" />
     <Compile Include="RedisOperationBLL\Coupon\RedisCouponBLL.cs" />
     <Compile Include="RedisOperationBLL\Coupon\RedisVipMappingCouponBLL.cs" />
     <Compile Include="RedisOperationBLL\CustomerBLL.cs" />
+    <Compile Include="RedisOperationBLL\OrderNotPay\ProcessOrderNotPayMsgJobBLL.cs" />
+    <Compile Include="RedisOperationBLL\OrderNotPay\SendOrderNotPayMsgBLL.cs" />
+    <Compile Include="RedisOperationBLL\OrderNotPay\OrderNotPayMsgSetJobBLL.cs" />
     <Compile Include="RedisOperationBLL\OrderPaySuccess\ProcessOrderPaySuccessMsgJobBLL.cs" />
     <Compile Include="RedisOperationBLL\OrderPaySuccess\SendOrderPaySuccessMsgBLL.cs" />
     <Compile Include="RedisOperationBLL\PrizePools\RedisPrizePoolsBLL.cs" />
@@ -1423,6 +1429,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -31,7 +31,7 @@ using JIT.CPOS.BS.DataAccess.Base;
 
 namespace JIT.CPOS.BS.DataAccess
 {
-    
+
     /// <summary>
     /// 数据访问：  
     /// 表VipCouponMapping的数据访问类 
@@ -47,7 +47,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="strCouponId"></param>
         /// <returns></returns>
-        public int HadBeGranted(string strCouponId,string strGiver)
+        public int HadBeGranted(string strCouponId, string strGiver)
         {
             string strSql = string.Format(@"SELECT COUNT (1) FROM   [dbo].[VipCouponMapping] WITH(NOLOCK)
                                             WHERE  CouponID='{0}' AND IsDelete=0 AND VIPID='{1}'
@@ -61,12 +61,12 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="strGrantee">被赠送</param>
         /// <param name="strCouponId">优惠券ID</param>
         /// <returns></returns>
-        public int  GrantCoupon(string strGiver,string strGrantee,string strCouponId)
+        public int GrantCoupon(string strGiver, string strGrantee, string strCouponId)
         {
             string strSql = string.Format(@"Update  [dbo].[VipCouponMapping] Set VIPID='{0}'
                                                ,FromVipId='{1}',CouponSourceId='22E189E1-57C2-488E-A1DA-C42AEBAF3766'
                                             WHERE  CouponID='{2}' AND IsDelete=0
-            ", strGrantee,strGiver,strCouponId);
+            ", strGrantee, strGiver, strCouponId);
             return this.SQLHelper.ExecuteNonQuery(strSql);
         }
         /// <summary>
@@ -76,7 +76,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pCouponTypeID">券种ID</param>
         /// <param name="pSourceType">券来源类型</param>
         /// <returns></returns>
-        public int GetReceiveCouponCount(string pVipID,string pCouponTypeID,string pSourceType)
+        public int GetReceiveCouponCount(string pVipID, string pCouponTypeID, string pSourceType)
         {
             string strSql = string.Empty;
             strSql = string.Format(@"select Count(VCM.VipCouponMapping) from VipCouponMapping VCM
@@ -84,6 +84,28 @@ namespace JIT.CPOS.BS.DataAccess
                                     inner join CouponType CT on CT.CouponTypeID=C.CouponTypeID AND CT.CouponTypeID='{1}'
                                     inner join CouponSource CS ON CS.CouponSourceID=VCM.CouponSourceId", pVipID, pCouponTypeID);
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
+        }
+
+
+        public DataSet GetCouponToBeExpired(string customerID, int day)
+        {
+            string strSql = string.Empty;
+            List<SqlParameter> ls = new List<SqlParameter>();
+            ls.Add(new SqlParameter("@CustomerID", customerID));
+            ls.Add(new SqlParameter("@min", day));
+            ls.Add(new SqlParameter("@max", day + 1));
+
+            strSql = string.Format(@"select  CouponCode,   BeginDate,EndDate,c.CouponTypeName,c.CouponTypeCode,d.VIPID,d.WeiXinUserId from VipCouponMapping a
+               inner join coupon  b on a.couponid=b.couponid
+			   inner join coupontype c on b.CouponTypeID=c.CouponTypeID
+			   inner join vip d on a.vipid=d.vipid
+
+			   where    dateadd(day,@min,getdate()) <b.EndDate and  dateadd(day,@max,getdate()) >b.EndDate and d.clientid=@CustomerID 
+                             and WeiXinUserId is not null
+			    and WeiXinUserId!=''
+                            ");
+
+            return this.SQLHelper.ExecuteDataset(CommandType.Text, strSql, ls.ToArray());
         }
     }
 }

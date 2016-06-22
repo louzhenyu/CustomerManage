@@ -2274,7 +2274,7 @@ namespace JIT.CPOS.BS.BLL.WX
             Data.keyword2 = new DataInfo() { value = CouponCode, color = WXTMConfigData.Colour1 };//券码
             Data.keyword3 = new DataInfo() { value = EffectiveData, color = WXTMConfigData.Colour1 };//生效日期
             Data.keyword4 = new DataInfo() { value = FailData, color = WXTMConfigData.Colour1 };//失效日期
-            Data.Remark = new DataInfo() { value = WXTMConfigData.RemarkText, color = WXTMConfigData.RemarkColour };
+            Data.remark = new DataInfo() { value = WXTMConfigData.RemarkText, color = WXTMConfigData.RemarkColour };
 
             return SendMatchWXTemplateMessage(WXTMConfigData.TemplateID, null, null, null, null, null, null, Data, null, "1", OpenID, null, loggingSessionInfo);
         }
@@ -2299,7 +2299,7 @@ namespace JIT.CPOS.BS.BLL.WX
             Data.orderProductName = new DataInfo() { value = orderProductName, color = WXTMConfigData.Colour1 };//商品详情
             Data.orderAddress = new DataInfo() { value = orderAddress, color = WXTMConfigData.Colour1 };//收货信息
             Data.orderName = new DataInfo() { value = orderName, color = WXTMConfigData.Colour1 };//订单编号
-            Data.Remark = new DataInfo() { value = WXTMConfigData.RemarkText, color = WXTMConfigData.RemarkColour };
+            Data.remark = new DataInfo() { value = WXTMConfigData.RemarkText, color = WXTMConfigData.RemarkColour };
 
             return SendMatchWXTemplateMessage(WXTMConfigData.TemplateID, null, null, null, null, null, null, null, Data, "2", OpenID, null, loggingSessionInfo);
         }

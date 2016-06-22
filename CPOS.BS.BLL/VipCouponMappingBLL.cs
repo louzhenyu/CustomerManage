@@ -66,5 +66,17 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetReceiveCouponCount(pVipID, pCouponTypeID, pSourceType    );
         }
+
+        /// <summary>
+        /// 获取指定日期即将过期的优惠券
+        /// </summary>
+        /// <param name="pVipID">领取人ID</param>
+        /// <param name="pCouponTypeID">券种ID</param>
+        /// <param name="pSourceType">券来源类型</param>
+        /// <returns>0=表示此种券未领取过，>0表示已领取过</returns>
+        public DataSet GetCouponToBeExpired(string customerID, int day)
+        {
+            return this._currentDAO.GetCouponToBeExpired(customerID, day );
+        }
     }
 }

@@ -230,7 +230,6 @@ namespace JIT.CPOS.BS.Web.Module.Basic.WApplication.Handler
             string message = string.Empty;
             var responseData = new ResponseData();
             string ApplicationId = Request("ApplicationId").ToString();
-
             //var Result = WXTMConfigBLL.QueryByEntity(new WXTMConfigEntity() { CustomerId = CurrentUserInfo.ClientID }, null).ToList();
             //if (Result.Count > 0)
             //{
@@ -239,8 +238,6 @@ namespace JIT.CPOS.BS.Web.Module.Basic.WApplication.Handler
             //    content = responseData.ToJSON();
             //    return content;
             //}     
-
-
             if (!string.IsNullOrWhiteSpace(ApplicationId))
             {
                 string FirstText = "连锁掌柜欢迎你！";
