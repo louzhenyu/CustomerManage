@@ -2839,6 +2839,14 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                             info.StatusRemark = "订单收款成功[操作人:" + CurrentUserInfo.CurrentUser.User_Name + "]";
                             inoutStatusnode.SetOrderPayment(order.order_id, out error);
 
+                            ///超级分销商订单入队列
+                            if (order.data_from_id == "35" || order.data_from_id == "36")
+                            {
+                                BS.BLL.RedisOperationBLL.Order.SuperRetailTraderOrderBLL bllSuperRetailTraderOrder = new BS.BLL.RedisOperationBLL.Order.SuperRetailTraderOrderBLL();
+                                T_InoutEntity inoutEneity = inoutBLL.GetByID(order.order_id);
+                                bllSuperRetailTraderOrder.SetRedisToSuperRetailTraderOrder(CurrentUserInfo, inoutEneity);
+                            }
+
                             #region 发送订单支付成功微信模板消息
                             //获取会员信息
                             var vipBll = new VipBLL(CurrentUserInfo);
@@ -2864,6 +2872,8 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                             info.StatusRemark = "订单状态从" + order.status_desc + "变为" + statusDesc + "[操作人:" + CurrentUserInfo.CurrentUser.User_Name + "]";
                             service.UpdateOrderDeliveryStatus(order.order_id, status, Utils.GetNow());
                         }
+
+                      
 
                         inoutStatus.Create(info);
 

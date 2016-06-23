@@ -33,6 +33,7 @@ using JIT.CPOS.DTO.Module.Order.Order.Response;
 using JIT.Utility.Log;
 using JIT.CPOS.Common;
 using JIT.CPOS.BS.DataAccess;
+using System.Data.SqlClient;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -54,6 +55,7 @@ namespace JIT.CPOS.BS.BLL
             var refundOrderBll = new T_RefundOrderBLL(loggingSessionInfo);  //退货业务实例化
             var inoutBll = new T_InoutBLL(loggingSessionInfo);              //订单业务实例化
             PanicbuyingEventBLL panicbuyingEventBLL = new PanicbuyingEventBLL(loggingSessionInfo); //活动订单业务实例化
+            T_SuperRetailTraderItemMappingBLL superRetailTraderItemMappingBll = new T_SuperRetailTraderItemMappingBLL(loggingSessionInfo); //分销商业务实例化
 
             //获取订单详情
             var inoutInfo = inoutBll.GetInoutInfo(orderId, loggingSessionInfo);
@@ -187,6 +189,10 @@ namespace JIT.CPOS.BS.BLL
             {
                 panicbuyingEventBLL.SetKJEventStock(orderId, inoutDetailList.ToList());
             }
+            if (inoutInfo.data_from_id == "35" || inoutInfo.data_from_id == "36")
+            {
+                superRetailTraderItemMappingBll.DeleteSuperRetailTraderItemStock(inoutDetailList.ToList());
+            }
         }
 
         /// <summary>
@@ -309,6 +315,168 @@ namespace JIT.CPOS.BS.BLL
             }
         }
    
+        /// <summary>
+        /// 计算超级分销商佣金分润
+        /// </summary>
+        /// <param name="loggingSessionInfo"></param>
+        /// <param name="orderInfo"></param>
+        public void CalculateSuperRetailTraderOrder(LoggingSessionInfo loggingSessionInfo,T_InoutEntity orderInfo)
+        {
+            
+            if (orderInfo != null)
+            {
+                if (orderInfo.data_from_id == "35" || orderInfo.data_from_id == "36")
+                {
+                   
 
+
+                        T_SuperRetailTraderBLL bllSuperRetailTrader = new T_SuperRetailTraderBLL(loggingSessionInfo);
+                        DataSet dsAllFather = bllSuperRetailTrader.GetAllFather(orderInfo.sales_user);
+                        if (dsAllFather != null && dsAllFather.Tables.Count > 0 && dsAllFather.Tables[0].Rows.Count > 0)
+                        {
+
+                            T_SuperRetailTraderProfitConfigBLL bllSuperRetailTraderProfitConfig = new T_SuperRetailTraderProfitConfigBLL(loggingSessionInfo);
+                            T_SuperRetailTraderConfigBLL bllSuperRetailTraderConfig = new T_SuperRetailTraderConfigBLL(loggingSessionInfo);
+                            T_SuperRetailTraderProfitDetailBLL bllSuperRetailTraderProfitDetail = new T_SuperRetailTraderProfitDetailBLL(loggingSessionInfo);
+
+                            VipAmountBLL bllVipAmount = new VipAmountBLL(loggingSessionInfo);
+                            VipAmountDetailBLL bllVipAmountDetail = new VipAmountDetailBLL(loggingSessionInfo);
+
+                            var entitySuperRetailTraderProfitConfig = bllSuperRetailTraderProfitConfig.QueryByEntity(new T_SuperRetailTraderProfitConfigEntity() { CustomerId = loggingSessionInfo.ClientID, IsDelete = 0, Status = "10" }, null);
+                            var entityConfig = bllSuperRetailTraderConfig.QueryByEntity(new T_SuperRetailTraderConfigEntity() { CustomerId = loggingSessionInfo.ClientID, IsDelete = 0 }, null).SingleOrDefault();
+                            if (entityConfig != null && entitySuperRetailTraderProfitConfig != null)
+                            {
+
+                                //佣金比列
+                                decimal SkuCommission = Convert.ToDecimal(entityConfig.SkuCommission) * Convert.ToDecimal(0.01);
+                                //商品分润比列
+                                decimal DistributionProfit = Convert.ToDecimal(entityConfig.DistributionProfit) * Convert.ToDecimal(0.01);
+
+
+                                foreach (DataRow dr in dsAllFather.Tables[0].Rows)
+                                {
+                                    decimal amount = 0;
+                                    string strAmountSourceId = string.Empty;
+                                    T_SuperRetailTraderProfitConfigEntity singlProfitConfig = new T_SuperRetailTraderProfitConfigEntity();
+                                    if (dr["level"].ToString() == "1")//佣金
+                                    {
+                                        strAmountSourceId = "34";
+                                        singlProfitConfig = entitySuperRetailTraderProfitConfig.Where(a => a.Level == Convert.ToInt16(dr["level"].ToString())).SingleOrDefault();
+                                        if (singlProfitConfig != null)
+                                        {
+                                            if (singlProfitConfig.ProfitType == "Percent")
+                                            {
+                                                amount = Convert.ToDecimal(orderInfo.actual_amount) * SkuCommission;
+                                            }
+                                        }
+                                    }
+                                    else//分润
+                                    {
+                                        strAmountSourceId = "33";
+                                        singlProfitConfig = entitySuperRetailTraderProfitConfig.Where(a => a.Level == Convert.ToInt16(dr["level"].ToString())).SingleOrDefault();
+                                        if (singlProfitConfig != null)
+                                        {
+                                            if (singlProfitConfig.ProfitType == "Percent")
+                                            {
+                                                amount = Convert.ToDecimal(orderInfo.actual_amount) * DistributionProfit * Convert.ToDecimal(singlProfitConfig.Profit) * Convert.ToDecimal(0.01);
+                                            }
+                                        }
+                                    }
+                                    if (amount > 0)
+                                    {
+                                        IDbTransaction tran = new JIT.CPOS.BS.DataAccess.Base.TransactionHelper(loggingSessionInfo).CreateTransaction();
+                                        try
+                                        {
+                                            T_SuperRetailTraderProfitDetailEntity entitySuperRetailTraderProfitDetail = new T_SuperRetailTraderProfitDetailEntity()
+                                            {
+                                                SuperRetailTraderProfitConfigId = singlProfitConfig.SuperRetailTraderProfitConfigId,
+                                                SuperRetailTraderID = new Guid(dr["SuperRetailTraderID"].ToString()),
+                                                Level = Convert.ToInt16(dr["level"].ToString()),
+                                                ProfitType = "Cash",
+                                                Profit = amount,
+                                                OrderType = "Order",
+                                                OrderId = orderInfo.order_id,
+                                                OrderDate = Convert.ToDateTime(orderInfo.order_date),
+                                                VipId = orderInfo.vip_no,
+                                                OrderActualAmount = orderInfo.actual_amount,
+                                                SalesId = new Guid(orderInfo.sales_user),
+                                                OrderNo = orderInfo.order_no,
+                                                CustomerId = loggingSessionInfo.ClientID
+                                            };
+
+
+                                            bllSuperRetailTraderProfitDetail.Create(entitySuperRetailTraderProfitDetail, (SqlTransaction)tran);
+
+
+                                            VipAmountDetailEntity entityVipAmountDetail = new VipAmountDetailEntity();
+                                            VipAmountEntity entityVipAmount = new VipAmountEntity();
+                                            entityVipAmountDetail = new VipAmountDetailEntity
+                                            {
+                                                VipAmountDetailId = Guid.NewGuid(),
+                                                VipId = dr["SuperRetailTraderID"].ToString(),
+                                                Amount = amount,
+                                                UsedReturnAmount = 0,
+                                                EffectiveDate = DateTime.Now,
+                                                DeadlineDate = Convert.ToDateTime("9999-12-31 23:59:59"),
+                                                AmountSourceId = strAmountSourceId,
+                                                ObjectId = orderInfo.order_id,
+                                                CustomerID = loggingSessionInfo.ClientID,
+                                                Reason = "超级分销商"
+                                            };
+                                            bllVipAmountDetail.Create(entityVipAmountDetail, (SqlTransaction)tran);
+
+                                            entityVipAmount = bllVipAmount.QueryByEntity(new VipAmountEntity() { VipId = dr["SuperRetailTraderID"].ToString(), IsDelete = 0, CustomerID = loggingSessionInfo.ClientID }, null).SingleOrDefault();
+                                            if (entityVipAmount == null)
+                                            {
+                                                entityVipAmount = new VipAmountEntity
+                                                {
+                                                    VipId = dr["SuperRetailTraderID"].ToString(),
+                                                    BeginAmount = 0,
+                                                    InAmount = amount,
+                                                    OutAmount = 0,
+                                                    EndAmount = amount,
+                                                    TotalAmount = amount,
+                                                    BeginReturnAmount = 0,
+                                                    InReturnAmount = 0,
+                                                    OutReturnAmount = 0,
+                                                    ReturnAmount = 0,
+                                                    ImminentInvalidRAmount = 0,
+                                                    InvalidReturnAmount = 0,
+                                                    ValidReturnAmount = 0,
+                                                    TotalReturnAmount = 0,
+                                                    IsLocking = 0,
+                                                    CustomerID = loggingSessionInfo.ClientID,
+                                                    VipCardCode = ""
+
+                                                };
+                                                bllVipAmount.Create(entityVipAmount, tran);
+                                            }
+                                            else
+                                            {
+
+                                                entityVipAmount.InReturnAmount = (entityVipAmount.InReturnAmount == null ? 0 : entityVipAmount.InReturnAmount.Value) + amount;
+                                                entityVipAmount.TotalReturnAmount = (entityVipAmount.TotalReturnAmount == null ? 0 : entityVipAmount.TotalReturnAmount.Value) + amount;
+
+                                                entityVipAmount.ValidReturnAmount = (entityVipAmount.ValidReturnAmount == null ? 0 : entityVipAmount.ValidReturnAmount.Value) + amount;
+                                                entityVipAmount.ReturnAmount = (entityVipAmount.ReturnAmount == null ? 0 : entityVipAmount.ReturnAmount.Value) + amount;
+
+                                                bllVipAmount.Update(entityVipAmount);
+                                            }
+                                            tran.Commit();
+                                        }
+                                        catch (Exception)
+                                        {
+                                            tran.Rollback();
+                                            throw;
+                                        }
+                                    }
+
+                                }
+
+                            }
+                        }
+                }
+            }
+        }
     }
 }

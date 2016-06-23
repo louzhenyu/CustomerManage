@@ -270,6 +270,37 @@ namespace JIT.CPOS.BS.DataAccess
             return ds;
         }
 
+        public List<WMaterialTextEntity> GetAllByCustomId()
+        {
+            if (CurrentUserInfo == null)
+                return null;
+            string sql = @"SELECT
+	a.*
+FROM
+	WMaterialText a
+LEFT JOIN WModelTextMapping b ON (a.TextId = b.TextId)
+LEFT JOIN T_User d ON a.LastUpdateBy = d.user_id
+INNER JOIN WApplicationInterface w ON w.ApplicationId = a.ApplicationId
+WHERE (a.IsAuth != 1 or a.IsAuth is null) and 
+ 	a.IsDelete = '0' --and b.IsDelete = '0' 
+AND w.CustomerId = @customId and a.textId not in (select ObjectId from SetoffTools where SetoffEventID=(select top 1 SetoffEventID from SetoffEvent where CustomerId=@customId and Status='10' and SetoffType=3) and ToolType='MaterialText'
+) order by a.createtime desc";
+            List<SqlParameter> pList = new List<SqlParameter>();
+            pList.Add(new SqlParameter("@customId", CurrentUserInfo.ClientID));
+            //读取数据
+            List<WMaterialTextEntity> list = new List<WMaterialTextEntity>();
+            using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(CommandType.Text, sql.ToString(), pList.ToArray()))
+            {
+                while (rdr.Read())
+                {
+                    WMaterialTextEntity m;
+                    this.Load(rdr, out m);
+                    list.Add(m);
+                }
+            }
+            return list;
+        }
+
         #region GetEvPageSQL
         /// <summary>
         /// 返回分页SQL

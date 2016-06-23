@@ -121,7 +121,7 @@ select a.*  from InnerGroupNews a
         /// <param name="CustomerID">商户编号</param>
         /// <param name="NoticePlatformType">平台编号{1=微信用户 2=APP员工}</param>
         /// <returns></returns>
-        public PagedQueryResult<InnerGroupNewsEntity> GetVipInnerGroupNewsList(int pageIndex, int pageSize, string UserID, string CustomerID, int NoticePlatformType, int? BusType)
+        public PagedQueryResult<InnerGroupNewsEntity> GetVipInnerGroupNewsList(int pageIndex, int pageSize, string UserID, string CustomerID, int NoticePlatformType, int? BusType, DateTime BeginTime)
         {
             #region 组织SQL
             StringBuilder pagedSql = new StringBuilder();
@@ -146,36 +146,42 @@ select a.*  from InnerGroupNews a
                         a.ObjectId
                         from InnerGroupNews a 
                         LEFT JOIN newsusermapping mum ON mum.GroupNewsId=a.GroupNewsId  AND mum.UserId=@UserId
-                        WHERE 1 = 1 AND a.isdelete = 0 
-                        and a.CustomerID = @CustomerID
+                        WHERE 1 = 1 AND a.isdelete = 0 ");
+            if (BusType != null && BusType != 0)
+            {
+                pagedSql.Append(" AND BusType='" + BusType + "'");
+            }
+
+            pagedSql.Append(@"   and a.CustomerID = @CustomerID
                         AND a.NoticePlatformType=@NoticePlatformTypeId AND a.IsDelete=0 --1=微信用户 2=APP员工
-                         ) AS T WHERE T._row> @LimitPageCount AND _row<= @MaxPageCount ");
+                         ) AS T WHERE T._row> @LimitPageCount AND _row<= @MaxPageCount  AND CreateTime>=@CreateTime");
 
             if (BusType != null && BusType != 0)
             {
                 pagedSql.Append(" AND BusType='" + BusType + "'");
             }
-            SqlParameter[] pagedParameter = new SqlParameter[5]{
+            SqlParameter[] pagedParameter = new SqlParameter[6]{
                             new SqlParameter("@UserId",UserID),
                             new SqlParameter("@CustomerID",CustomerID),
                             new SqlParameter("@NoticePlatformTypeId",NoticePlatformType),
                             new SqlParameter("@LimitPageCount",pageIndex*pageSize),
-                            new SqlParameter("@MaxPageCount",(pageIndex+1)*pageSize)
+                            new SqlParameter("@MaxPageCount",(pageIndex+1)*pageSize),
+                               new SqlParameter("@CreateTime",BeginTime)
             };
 
             #region 记录总数sql
             totalCountSql.Append(@"select count(1) from InnerGroupNews as a WHERE  a.CustomerID =@CustomerID
-                                AND a.NoticePlatformType=@NoticePlatformTypeId AND a.IsDelete=0");
+                                AND a.NoticePlatformType=@NoticePlatformTypeId AND a.IsDelete=0 AND a.CreateTime>=@CreateTime");
 
             if (BusType != null && BusType != 0)
             {
-                totalCountSql.Append(" AND BusType='" + BusType + "'");
+                totalCountSql.Append("  AND BusType='" + BusType + "'");
             }
 
-
-            SqlParameter[] totalParameter = new SqlParameter[2]{
+            SqlParameter[] totalParameter = new SqlParameter[3]{
                             new SqlParameter("@CustomerID",CustomerID),
-                            new SqlParameter("@NoticePlatformTypeId",NoticePlatformType)
+                            new SqlParameter("@NoticePlatformTypeId",NoticePlatformType),
+                              new SqlParameter("@CreateTime",BeginTime)
                         };
             #endregion
             #endregion
@@ -213,8 +219,9 @@ select a.*  from InnerGroupNews a
         /// <param name="UserID">用户编号</param>
         /// <param name="CustomerID">商户编号</param>
         /// <param name="NoticePlatformType">平台编号{1=微信用户 2=APP员工}</param>
+        /// <param name="CreateTime">当前用户注册时间</param>
         /// <returns></returns>
-        public int GetVipInnerGroupNewsUnReadCount(string UserID, string CustomerID, int? NoticePlatformType, string NewsGroupId)
+        public int GetVipInnerGroupNewsUnReadCount(string UserID, string CustomerID, int? NoticePlatformType, string NewsGroupId, DateTime? CreateTime)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(@"
@@ -228,6 +235,12 @@ select a.*  from InnerGroupNews a
                 sb.Append(" AND a.GroupNewsId='" + NewsGroupId + "'");
             }
 
+            if (!String.IsNullOrEmpty(CreateTime + ""))
+            {
+                sb.Append(" AND a.CreateTime>='" + CreateTime + "'");
+            }
+
+
             if (NoticePlatformType != null)
             {
                 sb.Append(" AND a.NoticePlatformType='" + NoticePlatformType + "'");
@@ -236,10 +249,10 @@ select a.*  from InnerGroupNews a
 
             sb.Append("  AND (mum.HasRead IS NULL OR mum.HasRead=0)");
 
-            SqlParameter[] parameter = new SqlParameter[2];
+            SqlParameter[] parameter = new SqlParameter[3];
             parameter[0] = new SqlParameter("@CustomerID", CustomerID);
             parameter[1] = new SqlParameter("@UserId", UserID);
-
+            parameter[2] = new SqlParameter("@CreateTime", CreateTime);
             var ds = this.SQLHelper.ExecuteDataset(CommandType.Text, sb.ToString(), parameter);
 
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
@@ -255,9 +268,10 @@ select a.*  from InnerGroupNews a
         /// <param name="CustomerId">商户编号</param>
         /// <param name="model">operationtype（0=当前消息 1=下一条消息 2=上一条消息）</param>
         /// <param name="NoticePlatformType">平台编号（1=微信用户 2=APP员工）</param>
+        /// <param name="CreateTime">会员注册时间</param>
         /// <returns>
         /// </returns>
-        public InnerGroupNewsEntity GetVipInnerGroupNewsDetailsByPaging(string CustomerId, int operationtype, int NoticePlatformTypeId, string GroupNewsId)
+        public InnerGroupNewsEntity GetVipInnerGroupNewsDetailsByPaging(string CustomerId, int operationtype, int NoticePlatformTypeId, string GroupNewsId, DateTime CreateTime)
         {
 
             string expression = string.Empty;
@@ -282,11 +296,11 @@ select a.*  from InnerGroupNews a
 
             sbentitysql.Append(@"select COUNT(*) AS 'PageIndex'
                     from InnerGroupNews a  
-                    WHERE a.NoticePlatformType=@NoticePlatformType AND a.createtime {0} (SELECT CreateTime FROM InnerGroupNews WHERE GroupNewsId=@GroupNewsId)  AND CustomerId=@CustomerId"); //获取当前商户的上一条消息或下一条消息 同时获取当前索引
+                    WHERE a.CreateTime>='" + CreateTime + "' AND a.NoticePlatformType=@NoticePlatformType AND a.createtime {0} (SELECT CreateTime FROM InnerGroupNews WHERE GroupNewsId=@GroupNewsId)  AND CustomerId=@CustomerId"); //获取当前商户的上一条消息或下一条消息 同时获取当前索引
 
             sbentitysql.Append(@" select TOP 1 a.GroupNewsId AS 'GroupNewsId' ,a.Title AS 'Title',a.Text AS 'Text',a.ObjectId,a.CreateTime
                     from InnerGroupNews a  
-                    WHERE a.NoticePlatformType=@NoticePlatformType AND a.createtime {0} (SELECT CreateTime FROM InnerGroupNews WHERE GroupNewsId=@GroupNewsId)  AND CustomerId=@CustomerId
+                    WHERE a.NoticePlatformType=@NoticePlatformType AND a.CreateTime>='" + CreateTime + @"' AND a.createtime {0} (SELECT CreateTime FROM InnerGroupNews WHERE GroupNewsId=@GroupNewsId)  AND CustomerId=@CustomerId
                     ORDER BY a.CreateTime {1}"); //获取当前商户的上一条消息或下一条消息 同时获取当前索引
             SqlParameter[] parameter = new SqlParameter[]{
                 new SqlParameter("@NoticePlatformType",NoticePlatformTypeId),

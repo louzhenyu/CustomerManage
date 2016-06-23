@@ -26,6 +26,7 @@ using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.BS.Entity;
 using System.Data.SqlClient;
+using JIT.CPOS.DTO.Module.SuperRetailTraderProfit.RTExtend.Response;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -47,9 +48,9 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="Type"></param>
         /// <param name="customerId">商户ID</param>
-        public void SetFailStatus(int Type,string customerId)
+        public void SetFailStatus(int Type, string customerId)
         {
-            this._currentDAO.SetFailStatus(Type,customerId);
+            this._currentDAO.SetFailStatus(Type, customerId);
         }
         /// <summary>
         /// 判断添加集客工具是否重复
@@ -57,9 +58,48 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="SetoffEventID"></param>
         /// <param name="ObjectId"></param>
         /// <returns></returns>
-        public bool IsToolsRepeat(string SetoffEventID,string ObjectId)
+        public bool IsToolsRepeat(string SetoffEventID, string ObjectId)
         {
             return this._currentDAO.IsToolsRepeat(SetoffEventID, ObjectId);
+        }
+        ///// <summary>
+        ///// 得到扩展工具
+        ///// </summary>
+        ///// <returns></returns>
+        //public GetExtendListRD GetSetoffToolList()
+        //{
+        //    //超级分销主数据
+        //    var dbResult1 = QueryByEntity(new SetoffEventEntity() { Status = "10", SetoffType = 3, CustomerId = CurrentUserInfo.ClientID }, null).FirstOrDefault();
+        //    if (dbResult1 == null)
+        //        return null;
+        //    var result = new GetExtendListRD();
+        //    result.SetoffEventID = dbResult1.SetoffEventID;
+        //    result.List = new List<GetExtendInfo>();
+        //    var dbResult2 = _currentDAO.GetExtendList(dbResult1.SetoffEventID);
+        //    if (dbResult2 != null)
+        //        result.List = DataTableToObject.ConvertToList<GetExtendInfo>(dbResult2.Tables[0]);
+        //    foreach (var m in result.List)
+        //    {
+        //        var tmpD1 = new DateTime();
+        //        if (DateTime.TryParse(m.BeginData, out tmpD1))
+        //        {
+        //            m.BeginData = Convert.ToDateTime(m.BeginData).ToString("yyyy-MM-dd");
+        //        }
+        //        if (DateTime.TryParse(m.EndData, out tmpD1))
+        //        {
+        //            m.EndData = Convert.ToDateTime(m.EndData).ToString("yyyy-MM-dd");
+        //        }
+        //    }
+        //    return result;
+        //}
+        /// <summary>
+        /// 分销扩展工具数据集
+        /// </summary>
+        /// <param name="setoffEventID"></param>
+        /// <returns></returns>
+        public DataSet GetSetoffToolList(Guid? setoffEventID)
+        {
+            return _currentDAO.GetSetoffToolList(setoffEventID);
         }
 
     }

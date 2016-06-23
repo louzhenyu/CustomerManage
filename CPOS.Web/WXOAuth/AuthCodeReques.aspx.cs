@@ -344,6 +344,10 @@ namespace JIT.CPOS.Web.WXOAuth
                             {
                                 vipInfotmp.VipSourceId = "24";
                             }
+                            else if (objectType.Equals("Material"))
+                            {
+                                vipInfotmp.VipSourceId = "32";
+                            }
 
                             vipServer.Update(vipInfotmp,false);
 
@@ -370,6 +374,10 @@ namespace JIT.CPOS.Web.WXOAuth
                                 else if (objectType.Equals("CTW"))
                                 {
                                     vipInfo.VipSourceId = "24";
+                                }
+                                else if (objectType.Equals("Material"))
+                                {
+                                    vipInfo.VipSourceId = "32";
                                 }
                             }
                             vipInfo.IsDelete = 0;
@@ -422,7 +430,10 @@ namespace JIT.CPOS.Web.WXOAuth
                             {
                                 vipInfo.VipSourceId = "24";
                             }
-
+                            else if (objectType.Equals("Material"))
+                            {
+                                vipInfo.VipSourceId = "32";
+                            }
                             vipServer.Update(vipInfotmp,false);
 
 
@@ -590,11 +601,18 @@ namespace JIT.CPOS.Web.WXOAuth
                     if (SourceId == 1 || SourceId == 2)//获取分享员工的默认门店
                     {
                         vipInfotmp.SetoffUserId = ShareVipID;
+                        vipInfotmp.Col21 = System.DateTime.Now.ToString();
+                    }
+                    else if (SourceId == 4)
+                    {
+                        vipInfotmp.Col20 = ShareVipID;
+                        vipInfotmp.Col21 = System.DateTime.Now.ToString();
                     }
                     //会员
                     else
                     {
                         vipInfotmp.HigherVipID = ShareVipID;
+                        vipInfotmp.Col21 = System.DateTime.Now.ToString();
                     }
                 }
             }
@@ -609,11 +627,22 @@ namespace JIT.CPOS.Web.WXOAuth
                     {
                         vipInfotmp.SetoffUserId = ShareVipID;
                         vipInfotmp.HigherVipID = null;
+                        vipInfotmp.Col20 = "";
+                        vipInfotmp.Col21 = System.DateTime.Now.ToString();
+                    }
+                    else if (SourceId == 4)
+                    {
+                        vipInfotmp.Col20 = ShareVipID;
+                        vipInfotmp.HigherVipID = "";
+                        vipInfotmp.SetoffUserId = "";
+                        vipInfotmp.Col21 = System.DateTime.Now.ToString();
                     }
                     else
                     {
                         vipInfotmp.HigherVipID = ShareVipID;
                         vipInfotmp.SetoffUserId = null;
+                        vipInfotmp.Col20 = "";
+                        vipInfotmp.Col21 = System.DateTime.Now.ToString();
                     }
                 }
 
@@ -628,12 +657,23 @@ namespace JIT.CPOS.Web.WXOAuth
                 {
                     vipInfotmp.SetoffUserId = ShareVipID;
                     vipInfotmp.HigherVipID = null;
+                    vipInfotmp.Col20 = "";
+                    vipInfotmp.Col21 = System.DateTime.Now.ToString();
+                }
+                else if (SourceId == 4)
+                {
+                    vipInfotmp.Col20 = ShareVipID;
+                    vipInfotmp.HigherVipID = "";
+                    vipInfotmp.SetoffUserId = "";
+                    vipInfotmp.Col21 = System.DateTime.Now.ToString();
                 }
                 //会员
                 else
                 {
                     vipInfotmp.HigherVipID = ShareVipID;
                     vipInfotmp.SetoffUserId = null;
+                    vipInfotmp.Col20 = "";
+                    vipInfotmp.Col21 = System.DateTime.Now.ToString();
                 }
             }
             #endregion
@@ -657,7 +697,7 @@ namespace JIT.CPOS.Web.WXOAuth
             var t_LEventsSharePersonLogTemp = new T_LEventsSharePersonLogEntity();
             t_LEventsSharePersonLogTemp.BusTypeCode = objectType;
             t_LEventsSharePersonLogTemp.ObjectId = ObjectID;////分享的链接代表的对象，活动或者商品
-            t_LEventsSharePersonLogTemp.ShareVipType = SourceId;// 1员工，2客服，3会员           
+            t_LEventsSharePersonLogTemp.ShareVipType = SourceId;// 1员工，2客服，3会员  4超级分销商         
             t_LEventsSharePersonLogTemp.ShareVipID = ShareVipID;
             t_LEventsSharePersonLogTemp.BeShareVipID = vipid;//被分享人
             var t_LEventsSharePersonLogOld = t_LEventsSharePersonLogBLL.QueryByEntity(t_LEventsSharePersonLogTemp,null);

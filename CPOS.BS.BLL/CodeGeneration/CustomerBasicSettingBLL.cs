@@ -255,7 +255,7 @@ namespace JIT.CPOS.BS.BLL
             if(i>0)///2016-05-17 wujx ÷÷÷≤ª∫¥Ê
             {
                 RedisOperationBLL.BasicSetting.BasicSettingBLL bllBasicSetting = new RedisOperationBLL.BasicSetting.BasicSettingBLL();
-                bllBasicSetting.SetBasicSetting(strCustomerId, list);
+                bllBasicSetting.SetBasicSetting(strCustomerId);
             }
             return i;
         }

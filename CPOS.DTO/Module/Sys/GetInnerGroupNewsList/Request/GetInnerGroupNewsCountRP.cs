@@ -12,8 +12,10 @@ namespace JIT.CPOS.DTO.Module.Sys.GetInnerGroupNewsList.Request
         /// 平台编号 （1=微信用户2=APP员工）
         /// </summary>
         public int NoticePlatformTypeId { get; set; }
-        public string CustomerID { get; set; }
-        public string UserId { get; set; }
+        /// <summary>
+        /// 1=会员集客 2=员工集客 3=超级分销商
+        /// </summary>
+        public int SetoffType { get; set; }
         public void Validate()
         {
         }

@@ -15,7 +15,7 @@ namespace JIT.CPOS.DTO.Module.VIP.VipGold.Request
         public string PlatformType { get; set; }//应用类型 1=微信用户 2=APP员工   
         public string ShareVipId { get; set; }//此处ID 可能是会员ID，可能是员工ID
         public string ToolType { get; set; }//集客工具类型 推出QRCode类型(SetoffPosterQRCode=集客海报;CouponQrCode =优惠券;)
-        public string ObjectId { get; set; }//优惠券对象ID，集客海报ID
+        public string ObjectId { get; set; }//优惠券对象ID，集客海报ID 或超级分销里面的对象ID
         public string SetoffToolID { get; set; }//活动工具ID
         public void Validate()
         {

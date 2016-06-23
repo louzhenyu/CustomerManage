@@ -291,6 +291,152 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
             BaseService.WriteLog("---------------------------vip绑定优惠券结束---------------------------");
 
         }
+        public void InsertDataBase(string strCustomerId,string strVipId,string strObjectId,string strSource, CC_Coupon coupon)
+        {
+            try
+            {
+                string customerCon = GetCustomerConn(strCustomerId);
+
+                LoggingSessionInfo loggingSessionInfo = new LoggingSessionInfo();
+                LoggingManager CurrentLoggingManager = new LoggingManager();
+                loggingSessionInfo.ClientID = strCustomerId;
+                CurrentLoggingManager.Connection_String = customerCon;
+                loggingSessionInfo.CurrentLoggingManager = CurrentLoggingManager;
+                loggingSessionInfo.CurrentUser = new BS.Entity.User.UserInfo();
+                loggingSessionInfo.CurrentUser.customer_id = strCustomerId;
+
+                DataTable dtCoupon = new DataTable();
+                dtCoupon.Columns.Add("CouponID", typeof(string));
+                dtCoupon.Columns.Add("CouponCode", typeof(string));
+                dtCoupon.Columns.Add("CouponDesc", typeof(string));
+                dtCoupon.Columns.Add("BeginDate", typeof(DateTime));
+                dtCoupon.Columns.Add("EndDate", typeof(DateTime));
+                dtCoupon.Columns.Add("CouponUrl", typeof(string));
+                dtCoupon.Columns.Add("ImageUrl", typeof(string));
+                dtCoupon.Columns.Add("Status", typeof(Int32));
+                dtCoupon.Columns.Add("CreateTime", typeof(DateTime));
+                dtCoupon.Columns.Add("CreateBy", typeof(string));
+                dtCoupon.Columns.Add("LastUpdateTime", typeof(DateTime));
+                dtCoupon.Columns.Add("LastUpdateBy", typeof(string));
+                dtCoupon.Columns.Add("IsDelete", typeof(Int32));
+                dtCoupon.Columns.Add("CouponTypeID", typeof(string));
+                dtCoupon.Columns.Add("CoupnName", typeof(string));
+                dtCoupon.Columns.Add("DoorID", typeof(string));
+                dtCoupon.Columns.Add("CouponPwd", typeof(string));
+                dtCoupon.Columns.Add("CollarCardMode", typeof(string));
+                dtCoupon.Columns.Add("CustomerID", typeof(string));
+                DataTable dtVipCoupon = new DataTable();
+                dtVipCoupon.Columns.Add("VipCouponMapping", typeof(string));
+                dtVipCoupon.Columns.Add("VIPID", typeof(string));
+                dtVipCoupon.Columns.Add("CouponID", typeof(string));
+                dtVipCoupon.Columns.Add("UrlInfo", typeof(string));
+                dtVipCoupon.Columns.Add("IsDelete", typeof(Int32));
+                dtVipCoupon.Columns.Add("LastUpdateBy", typeof(string));
+                dtVipCoupon.Columns.Add("LastUpdateTime", typeof(DateTime));
+                dtVipCoupon.Columns.Add("CreateBy", typeof(string));
+                dtVipCoupon.Columns.Add("CreateTime", typeof(DateTime));
+                dtVipCoupon.Columns.Add("FromVipId", typeof(string));
+                dtVipCoupon.Columns.Add("ObjectId", typeof(string));
+                dtVipCoupon.Columns.Add("CouponSourceId", typeof(string));
+                
+                RedisCouponBLL redisCouponBLL = new RedisCouponBLL();
+                var response = redisCouponBLL.RedisGetCoupon(coupon);
+
+
+                if (response.Code == ResponseCode.Success && response.Result.CouponTypeId!=null)
+                    {
+                        String uperStr = StringUtil.GetRandomUperStr(4);
+                        String strInt = StringUtil.GetRandomStrInt(8);
+                        string strCouponCode = uperStr + "-" + strInt;
+                        string strCouponId = Guid.NewGuid().ToString();
+
+                        DataRow dr_Coupon = dtCoupon.NewRow();
+                        dr_Coupon["CouponID"] = strCouponId;
+                        dr_Coupon["CouponCode"] = strCouponCode;
+                        dr_Coupon["CouponDesc"] = response.Result.CouponTypeDesc;
+                        if (response.Result.ServiceLife > 0)
+                        {
+                            dr_Coupon["BeginDate"] = DateTime.Now;
+                            dr_Coupon["EndDate"] = DateTime.Now.Date.AddDays(response.Result.ServiceLife - 1).ToShortDateString() + " 23:59:59.998";
+
+                        }
+                        else
+                        {
+                            dr_Coupon["BeginDate"] = response.Result.BeginTime;
+                            dr_Coupon["EndDate"] = response.Result.EndTime;
+                        }
+                        dr_Coupon["CouponUrl"] = "";
+                        dr_Coupon["ImageUrl"] = "";
+                        dr_Coupon["Status"] = 2;
+                        dr_Coupon["CreateTime"] = DateTime.Now;
+                        dr_Coupon["CreateBy"] = "Redis";
+                        dr_Coupon["LastUpdateTime"] = DateTime.Now;
+                        dr_Coupon["LastUpdateBy"] = "Redis";
+                        dr_Coupon["IsDelete"] = 0;
+                        dr_Coupon["CouponTypeID"] = response.Result.CouponTypeId;
+                        dr_Coupon["CoupnName"] = response.Result.CouponTypeName;
+                        dr_Coupon["DoorID"] = "";
+                        dr_Coupon["CouponPwd"] = "";
+                        dr_Coupon["CollarCardMode"] = "";
+                        dr_Coupon["CustomerID"] = strCustomerId;
+                        dtCoupon.Rows.Add(dr_Coupon);
+
+                        DataRow dr_VipCoupon = dtVipCoupon.NewRow();
+                        dr_VipCoupon["VipCouponMapping"] = Guid.NewGuid().ToString().Replace("-", "");
+                        dr_VipCoupon["VIPID"] = strVipId;
+                        dr_VipCoupon["CouponID"] = strCouponId;
+                        dr_VipCoupon["UrlInfo"] = "";
+                        dr_VipCoupon["IsDelete"] = 0;
+                        dr_VipCoupon["LastUpdateBy"] = "Redis";
+                        dr_VipCoupon["LastUpdateTime"] = DateTime.Now;
+                        dr_VipCoupon["CreateBy"] = "Redis";
+                        dr_VipCoupon["CreateTime"] = DateTime.Now;
+                        dr_VipCoupon["FromVipId"] = "";
+                        dr_VipCoupon["ObjectId"] = strObjectId;
+                        dr_VipCoupon["CouponSourceId"] = GetSourceId(strSource);
+
+
+                        dtVipCoupon.Rows.Add(dr_VipCoupon);
+                        try
+                        {
+                            ///优惠券到账通知
+                            var CommonBLL = new CommonBLL();
+                            var bllVip = new VipBLL(loggingSessionInfo);
+                            var vip = bllVip.GetByID(strVipId);
+
+                            string strValidityData = Convert.ToDateTime(dr_Coupon["BeginDate"].ToString()).ToShortDateString() + "-" + Convert.ToDateTime(dr_Coupon["EndDate"].ToString()).ToShortDateString();
+                            CommonBLL.CouponsArrivalMessage(response.Result.CouponCode, response.Result.CouponTypeName, strValidityData, response.Result.CouponCategory == null ? "" : response.Result.CouponCategory, vip.WeiXinUserId, loggingSessionInfo);
+                        }
+                        catch (Exception ex)
+                        {
+                            BaseService.WriteLog("优惠券到账通知异常：" + ex.Message);
+                        
+                        }
+                    }
+                
+                if (dtCoupon != null && dtCoupon.Rows.Count > 0)
+                {
+                    SqlBulkCopy(customerCon, dtCoupon, "Coupon");
+
+                    var bllCouponType = new CouponTypeBLL(loggingSessionInfo);
+                    bllCouponType.UpdateCouponTypeIsVoucher(strCustomerId);
+
+                }
+                if (dtVipCoupon != null && dtVipCoupon.Rows.Count > 0)
+                {
+                    SqlBulkCopy(customerCon, dtVipCoupon, "VipCouponMapping");
+
+                }
+            }
+            catch (Exception ex)
+            {
+                BaseService.WriteLog("vip绑定优惠券异常" + ex.Message);
+
+                throw;
+            }
+            BaseService.WriteLog("---------------------------vip绑定优惠券结束---------------------------");
+
+        }
         /// <summary>
         /// 批量插入数据库
         /// </summary>

@@ -78,6 +78,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             rd.MemberInfo.VipRealName = VipLoginInfo.VipRealName;
             rd.MemberInfo.VipNo = VipLoginInfo.VipCode;
             rd.MemberInfo.IsDealer = VipLoginInfo.Col48 != null ? int.Parse(VipLoginInfo.Col48) : 0;
+            rd.MemberInfo.SuperRetailTraderID = VipLoginInfo.Col26;
             //rd.MemberInfo.Integration = VipLoginInfo.Integration ?? 0;//会员积分
 
             #region 会员有效积分
@@ -244,21 +245,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             SetoffToolsBLL setofftoolsService = new SetoffToolsBLL(CurrentUserInfo);
 
             //1=微信用户 2=APP员工
-            int UnReadInnerMessageCount = InnerGroupNewsService.GetVipInnerGroupNewsUnReadCount(CurrentUserInfo.UserID, pRequest.CustomerID, 1,null);
+            int UnReadInnerMessageCount = InnerGroupNewsService.GetVipInnerGroupNewsUnReadCount(CurrentUserInfo.UserID, pRequest.CustomerID, 1, null, Convert.ToDateTime(VipLoginInfo.CreateTime));
             var setofftoolsMessageCount = setofftoolsService.GetUnReadSetoffToolsCount(CurrentUserInfo.UserID, pRequest.CustomerID, 1, 1);
             message.InnerGroupNewsCount = UnReadInnerMessageCount;
             message.SetoffToolsCount = setofftoolsMessageCount;
             rd.MessageInfo = message;
             return rd;
         }
-        //public class InnerGroupNewsInfo
-        //{
-        //    public string GroupNewsId { get; set; }
-        //    public string Title { get; set; }
-        //    public string Text { get; set; }
-        //    public DateTime CreateTime { get; set; }
-        //    public string IsRead { get; set; } //是否已读
-
-        //}
     }
 }

@@ -1231,6 +1231,29 @@ namespace JIT.CPOS.BS.BLL
                                 }
 
                                 break;
+                            case "superretailqrcode"://超级分销商二维码  处理上下级关系
+                                #region 绑定会籍店
+
+                                if (vipEntity != null && string.IsNullOrEmpty(vipEntity.Col20) && string.IsNullOrEmpty(vipEntity.HigherVipID) && string.IsNullOrEmpty(vipEntity.SetoffUserId))
+                                {
+                                    UnitService unitServer = new UnitService(loggingSessionInfo);
+                                    var userOnUnit = unitServer.GetUnitListByUserId(qrCodeEntity.ObjectId);
+                                    if (userOnUnit.Count > 0)
+                                    {
+                                        vipEntity.CouponInfo = userOnUnit[0].unit_id;//会籍店ID
+                                    }
+                                    else
+                                    {
+                                        vipEntity.CouponInfo = strConponInfo;
+                                    }
+                                    vipEntity.Col20 = qrCodeEntity.ObjectId;//超级分销商ID（上线）
+                                    vipEntity.Col23 = "4";//超级分销商
+                                    vipEntity.Col21 = System.DateTime.Now.ToString();
+                                    vipEntity.VipSourceId = "34";
+                                    vipBll.Update(vipEntity,false);
+                                }
+                                #endregion
+                                break;
                             default:
                                 break;
                         }

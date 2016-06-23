@@ -533,6 +533,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                                     }
                                     vipInfo.Col23 = "3";
                                     break;
+                                case "4":
+                                    vipInfo.Col20 = RP.UserID;//如果pushType=IsSuperRetail 则PlatformType=4 表示超级分销
+                                    if (HigherVipInfo != null && !string.IsNullOrEmpty(HigherVipInfo.CouponInfo))
+                                    {
+                                        vipInfo.CouponInfo = HigherVipInfo.CouponInfo;
+                                    }
+                                    vipInfo.Col23 = "4";//超级分销
+                                    break;
                                 default:
                                     if (HigherVipInfo != null && !string.IsNullOrEmpty(HigherVipInfo.CouponInfo))
                                     {
@@ -615,6 +623,18 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                                 case "3":
                                     vipInfo.HigherVipID = RP.UserID;//设为3=会员
                                     vipInfo.Col23 = "3";
+                                    if (!string.IsNullOrEmpty(tt))
+                                    {
+                                        vipInfo.CouponInfo = tt;//设为门店  1=员工;2=客服;3=会员;
+                                    }
+                                    break;
+                                case "4":
+                                    vipInfo.Col20 = RP.UserID;//如果pushType=IsSuperRetail 则PlatformType=4 表示超级分销                                    
+                                    vipInfo.Col23 = "4";//超级分销
+                                    if (!string.IsNullOrEmpty(tt))
+                                    {
+                                        vipInfo.CouponInfo = tt;//设为门店  1=员工;2=客服;3=会员;
+                                    }
                                     break;
                                 default:
                                     vipInfo.SetoffUserId = RP.UserID;
@@ -665,6 +685,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                                 case "3":
                                     vipInfo.HigherVipID = RP.UserID;//设为3=会员
                                     vipInfo.Col23 = "3";
+                                    break;
+                                case "4":
+                                    vipInfo.Col20 = RP.UserID;//如果pushType=IsSuperRetail 则PlatformType=4 表示超级分销                                    
+                                    vipInfo.Col23 = "4";//超级分销
+                                    if (!string.IsNullOrEmpty(tt))
+                                    {
+                                        vipInfo.CouponInfo = tt;//设为门店  1=员工;2=客服;3=会员;
+                                    }
                                     break;
                                 default:
                                     vipInfo.SetoffUserId = RP.UserID;

@@ -356,7 +356,12 @@ namespace JIT.CPOS.Web.OnlineShopping.Notify
                                     inoutBll.SetStock(OrderID, inoutDetailList, 1, loggingSessionInfo);
                                 
                             }
-                             
+                            ///超级分销商订单入队列
+                            if(inoutInfo.data_from_id=="35" || inoutInfo.data_from_id=="36" )
+                            {
+                                BS.BLL.RedisOperationBLL.Order.SuperRetailTraderOrderBLL bllSuperRetailTraderOrder=new BS.BLL.RedisOperationBLL.Order.SuperRetailTraderOrderBLL();
+                                bllSuperRetailTraderOrder.SetRedisToSuperRetailTraderOrder(loggingSessionInfo,inoutInfo);
+                            }
                         }
                         else//充值订单
                         {

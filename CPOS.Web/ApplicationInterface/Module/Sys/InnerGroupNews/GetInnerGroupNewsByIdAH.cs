@@ -30,7 +30,43 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Sys.InnerGroupNews
             NewsUserMappingBLL newsusermappingService = new NewsUserMappingBLL(loggingSessionInfo);
             #endregion
 
-            var model = bll.GetVipInnerGroupNewsDetailsByPaging(parameter.Operationtype, pRequest.CustomerID, parameter.NoticePlatformTypeId, parameter.GroupNewsID);
+
+            //分页查找消息列表
+            DateTime CreateTime = DateTime.Now;
+            var vipinfo = new VipBLL(loggingSessionInfo).GetByID(loggingSessionInfo.CurrentUser.User_Id);
+            if (vipinfo != null)  //按照时间过滤
+            {
+                CreateTime = Convert.ToDateTime(vipinfo.CreateTime);
+            }
+            var userinfo = new T_UserBLL(loggingSessionInfo).GetByID(loggingSessionInfo.CurrentUser.User_Id);
+            if (userinfo != null)
+            {
+                CreateTime = Convert.ToDateTime(userinfo.create_time);
+            }
+
+            if (vipinfo == null && userinfo == null)
+            {
+                var T_SuperRetailTrader = new T_SuperRetailTraderBLL(loggingSessionInfo).GetByID(loggingSessionInfo.CurrentUser.User_Id);
+
+                if (T_SuperRetailTrader != null)
+                {
+                    userinfo = new T_UserBLL(loggingSessionInfo).GetByID(T_SuperRetailTrader.SuperRetailTraderFromId);
+                    if (userinfo != null)
+                    {
+                        CreateTime = Convert.ToDateTime(userinfo.create_time);
+                    }
+                    else
+                    {
+                        vipinfo = new VipBLL(loggingSessionInfo).GetByID(T_SuperRetailTrader.SuperRetailTraderFromId);
+                        if (vipinfo != null)  //按照时间过滤
+                        {
+                            CreateTime = Convert.ToDateTime(vipinfo.CreateTime);
+                        }
+                    }
+                }
+            }
+
+            var model = bll.GetVipInnerGroupNewsDetailsByPaging(parameter.Operationtype, pRequest.CustomerID, parameter.NoticePlatformTypeId, parameter.GroupNewsID, CreateTime);
 
             if (model == null || String.IsNullOrEmpty(model.GroupNewsId))
             {
@@ -44,12 +80,15 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Sys.InnerGroupNews
                 }
             }
 
-            var MessageList = bll.PagedQueryByEntity(new InnerGroupNewsEntity()
-            {
-                CustomerID = pRequest.CustomerID,
-                NoticePlatformType = parameter.NoticePlatformTypeId,
-                IsDelete = 0
-            }, null, 1, 1); //分页获取数据
+            List<IWhereCondition> lstWhereCondition = new List<IWhereCondition>();
+            lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = pRequest.CustomerID });
+            lstWhereCondition.Add(new EqualsCondition() { FieldName = "NoticePlatformType", Value = parameter.NoticePlatformTypeId });
+            lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = "0" });
+            lstWhereCondition.Add(new DirectCondition() { Expression = "CreateTime>='" + CreateTime + "'" });
+
+
+
+            var MessageList = bll.PagedQuery(lstWhereCondition.ToArray(), null, 1, 1); //分页获取数据
 
             rd.TotalPageCount = MessageList.RowCount; //获取总数据
 
@@ -70,7 +109,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Sys.InnerGroupNews
 
                 if (parameter.Operationtype == 1)  //0=当前消息 1=下一条消息 2=上一条消息
                 {
-                    rd.PageIndex = -(model.PageIndex - rd.TotalPageCount) + 1;
+                    rd.PageIndex = -(model.PageIndex - rd.TotalPageCount)+1;
                 }
                 else if (parameter.Operationtype == 2 || parameter.Operationtype == 0)
                 {

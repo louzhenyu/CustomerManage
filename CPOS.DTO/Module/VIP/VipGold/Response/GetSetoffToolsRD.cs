@@ -41,6 +41,10 @@ namespace JIT.CPOS.DTO.Module.VIP.VipGold.Response
         public string URL { get; set; }
         public string ImageUrl { get; set; }
         public string ServiceLife { get; set; }
+        /// <summary>
+        /// 描述
+        /// </summary>
+        public string Description { get; set; }
     }
 
 }

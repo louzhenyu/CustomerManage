@@ -95,6 +95,15 @@ namespace JIT.CPOS.BS.BLL
             return _currentDAO.GetCustomerIDByCustomerCode(customerCode);
         }
         #endregion
+        /// <summary>
+        /// 根据Customer_id 获取CustomerCode
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns></returns>
+        public string GetCustomerCodeByCustomerID(string customerID)
+        {
+            return _currentDAO.GetCustomerCodeByCustomerID(customerID);
+        }
 
         #region Jermyn 20131107 根据微信号码获取客户标识
         /// <summary>

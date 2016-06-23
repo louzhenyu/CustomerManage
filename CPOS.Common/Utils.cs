@@ -21,6 +21,7 @@ using ThoughtWorks.QRCode.Codec;
 using System.Globalization;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Data.SqlClient;
 
 namespace JIT.CPOS.Common
 {
@@ -1104,6 +1105,42 @@ PixelFormat.Format8bppIndexed
             }
             return outputList;
         }
+
+        /// <summary>
+        /// 批量插入数据库
+        /// </summary>
+        /// <param name="strCon"></param>
+        /// <param name="dt"></param>
+        /// <param name="strTableName"></param>
+        public static void SqlBulkCopy(string strCon, DataTable dt, string strTableName)
+        {
+            using (SqlConnection conn = new SqlConnection(strCon))
+            {
+                conn.Open();
+                using (SqlTransaction trans = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlBulkCopy sqlbulkcopy = new SqlBulkCopy(conn, SqlBulkCopyOptions.Default, trans))
+                        {
+                            sqlbulkcopy.DestinationTableName = strTableName;
+                            sqlbulkcopy.BatchSize = dt.Rows.Count;
+                            for (int i = 0; i < dt.Columns.Count; i++)
+                            {
+                                sqlbulkcopy.ColumnMappings.Add(dt.Columns[i].ColumnName, dt.Columns[i].ColumnName);
+                            }
+                            sqlbulkcopy.WriteToServer(dt);
+                            trans.Commit();
+                        }
+                    }
+                    catch
+                    {
+                        trans.Rollback();
+                    }
+                }
+            }
+        }
+  
     }
 
     public class Response

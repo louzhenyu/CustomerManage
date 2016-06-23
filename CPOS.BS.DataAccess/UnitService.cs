@@ -1147,10 +1147,12 @@ where b.IsDelete = '0' and customer_id='{0}'", pCustomerID);
         /// 调用sp将临时表中的门店信息导入正式表T_Unit,并返回未导入的信息
         /// </summary>
         /// <returns></returns>
-        public DataSet ExcelImportToDB()
+        public DataSet ExcelImportToDB(string strCustomerId)
         {
             string sql = "Proc_ExcelImportToUnit";
-            var ds = this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, sql);
+            List<SqlParameter> ls = new List<System.Data.SqlClient.SqlParameter>();
+            ls.Add(new SqlParameter("@CustomerId", strCustomerId));
+            var ds = this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, sql, ls.ToArray());
             return ds;
         }
     }

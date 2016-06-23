@@ -396,6 +396,7 @@
                         that.elems.allData.ItemPropGroupList = data.Data.ItemPropGroupList; //商品属性组 商品详细信息的基础信息
                         that.elems.allData.SKUPropList = data.Data.SKUPropList; //Sku属性列表   sku属性的基础信息
                         that.elems.allData.ItemPriceTypeList = data.Data.ItemPriceTypeList; //商品价格类型库存列表
+                        that.elems.allData.SkuList = dataInfo.data.SkuList; //当前商品的信息
 
                         that.elems.allData.barcode = { filed: "barcode", title: "商品条码", Prop_Input_Flag: "text" }; //商品条码
                         that.createDom(that.elems.allData.ItemPropGroupList[0]);
@@ -1332,7 +1333,12 @@
                 that.loadData.addPram.SkuList = gridData.rows;
 
             } else if(!$("#dataState").is(':hidden')) {
-                that.loadData.addPram.SkuList = [{ bat_id: "1", sku_price_list: []}];
+                debugger;
+                var  skuId=that.elems.allData.SkuList[0].sku_id;
+                if(!skuId){
+                    skuId="";
+                }
+                that.loadData.addPram.SkuList = [{ bat_id: "1", sku_price_list: [],sku_id:skuId}];
                 $("[data-flag='price']").each(function (index, dom) {
                     var me = $(this);
                     if (me.data("type") == 'price') {
@@ -1342,6 +1348,7 @@
                         if (isNaN(parseInt(me.val()))||parseInt(me.val())<0) {
                             obj.sku_price = 0;
                         }
+                        obj["sku_id"]=skuId;
                         that.loadData.addPram.SkuList[0].sku_price_list.push(obj)
 
 
@@ -1351,7 +1358,7 @@
                             isSubmit=false
                         }
                         that.loadData.addPram.SkuList[0].barcode = me.val();
-                        console.log("商品编码" + me.val());
+                        console.log("商品条码" + me.val());
                     }
                 });
             }else{

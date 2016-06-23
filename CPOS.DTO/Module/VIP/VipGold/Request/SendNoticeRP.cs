@@ -17,7 +17,7 @@ namespace JIT.CPOS.DTO.Module.VIP.VipGold.Request
 
     public class NoticeInfo{
         /// <summary>
-        /// 1：微信用户 2：APP员工
+        /// 1：微信用户 2：APP员工 3:超级分销商
         /// </summary>
         public int NoticePlatformType{get;set;}
         public string SetoffEventID{get;set;}

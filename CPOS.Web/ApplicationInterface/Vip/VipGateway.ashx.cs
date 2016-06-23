@@ -218,8 +218,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             //获取会员折扣
             var sysVipCardGradeBLL = new SysVipCardGradeBLL(loggingSessionInfo);
             decimal vipDiscount =1;//会员折扣
-            if (rp.Parameters.DiscountType == 0)
-                vipDiscount = sysVipCardGradeBLL.GetVipDiscount();
+            if (!rp.ChannelId.Equals("11"))
+            {
+                if (rp.Parameters.DiscountType == 0)
+                    vipDiscount = sysVipCardGradeBLL.GetVipDiscount();
+            }
+            
             rd.VipDiscount = vipDiscount;
 
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
@@ -547,7 +551,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             var inoutDetailList = inoutServiceBLL.GetInoutDetailInfoByOrderId(orderId);
 
             #region 判断库存是否足够
-            if (tInoutEntity.OrderReasonID == "2F6891A2194A4BBAB6F17B4C99A6C6F5") //普通商品订单判断
+            if (tInoutEntity.OrderReasonID == "2F6891A2194A4BBAB6F17B4C99A6C6F5" && tInoutEntity.DataFromID != "35" && tInoutEntity.DataFromID != "36") //普通商品订单判断
             {
                 foreach (var detail in inoutDetailList)
                 {
@@ -573,7 +577,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     //首次提交订单处理库存和销量
                     CustomerBasicSettingBLL customerBasicSettingBll = new CustomerBasicSettingBLL(loggingSessionInfo);
                     string AfterPaySetStock = customerBasicSettingBll.GetSettingValueByCode("AfterPaySetStock");
-                    if (AfterPaySetStock != "1")
+                    if (tInoutEntity.OrderReasonID == "2F6891A2194A4BBAB6F17B4C99A6C6F5" && tInoutEntity.DataFromID != "35" && tInoutEntity.DataFromID != "36") //普通商品订单判断
                     {
                         if (tInoutEntity.Status == "100" && tInoutEntity.Field7 == "-99")
                             inoutBll.SetStock(orderId, inoutDetailList, 1, loggingSessionInfo);
@@ -920,29 +924,39 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     tinoutStatusBLL.Create(statusEntity, tran);
                     #endregion
 
-                    #region 抢购团购砍价处理库存
+                    #region 抢购团购砍价分销商商品处理库存
                     if (AfterPaySetStock != "1")
                     {
+                        //处理团购抢购库存销量
                         if (tInoutEntity.OrderReasonID == "CB43DD7DD1C94853BE98C4396738E00C" || tInoutEntity.OrderReasonID == "671E724C85B847BDA1E96E0E5A62055A")
                         {
                             if (string.IsNullOrEmpty(rp.Parameters.EventId))
                             {
-                                throw new APIException("活动商品,EventId不能为空");
+                                throw new APIException("活动商品,EventId不能为空") { ErrorCode = 105 };
                             }
                             //下订单，修改抢购商品的数量信息存储过程ProcPEventItemQty
                             var eventbll = new vwItemPEventDetailBLL(loggingSessionInfo);
                             eventbll.ExecProcPEventItemQty(loggingSessionInfo.ClientID, rp.Parameters.EventId, orderId, tInoutEntity.VipNo, (SqlTransaction)tran);
                         }
+                        //处理砍价库存销量
                         if (tInoutEntity.OrderReasonID == "096419BFDF394F7FABFE0DFCA909537F")
                         {
                             if (string.IsNullOrEmpty(rp.Parameters.EventId))
                             {
-                                throw new APIException("活动商品,EventId不能为空");
+                                throw new APIException("活动商品,EventId不能为空") { ErrorCode = 105 };
                             }
                             var eventBll = new PanicbuyingEventBLL(loggingSessionInfo);
                             eventBll.SetKJEventOrder(loggingSessionInfo.ClientID, orderId, rp.Parameters.EventId,rp.Parameters.KJEventJoinId,inoutDetailList.ToList());
                         }
-
+                        //处理分销商商品库存销量
+                        if (tInoutEntity.DataFromID == "35" || tInoutEntity.DataFromID == "36")
+                        {
+                            var superRetailTraderItemBll = new T_SuperRetailTraderItemMappingBLL(loggingSessionInfo);
+                            if (!superRetailTraderItemBll.SetSuperRetailTraderItemStock(inoutDetailList.ToList())) //返回false,库存不足
+                            {
+                                throw new APIException("库存不足") { ErrorCode = 107 };
+                            }
+                        }
                     }
                     #endregion
 
@@ -960,10 +974,15 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     #endregion
 
                 }
+                catch (APIException apiEx)
+                {
+                    tran.Rollback();//回滚事物
+                    throw new APIException(apiEx.ErrorCode, apiEx.Message);
+                }
                 catch (Exception ex)
                 {
                     tran.Rollback();
-                    throw new APIException(ex.Message);
+                    throw new Exception(ex.Message);
                 }
             }
             var rd = new EmptyResponseData();

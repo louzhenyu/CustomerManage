@@ -71,12 +71,12 @@ namespace JIT.CPOS.DTO.Module.Basic.HomePageStats.Response
         /// <summary>
         /// 
         /// </summary>
-        public Int32? RetailTraderCount { get; set; }
+       // public Int32? RetailTraderCount { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public Decimal? CurrentDayRetailTraderOrderAmount { get; set; }
+      //  public Decimal? CurrentDayRetailTraderOrderAmount { get; set; }
 
         /// <summary>
         /// 
@@ -86,7 +86,7 @@ namespace JIT.CPOS.DTO.Module.Basic.HomePageStats.Response
         /// <summary>
         /// 
         /// </summary>
-        public Decimal? CurrentDayRetailTraderOrderAmountDToD { get; set; }
+       // public Decimal? CurrentDayRetailTraderOrderAmountDToD { get; set; }
 
         /// <summary>
         /// 
@@ -154,6 +154,21 @@ namespace JIT.CPOS.DTO.Module.Basic.HomePageStats.Response
         public int? PreTakeOrder { get; set; }
         public int? PreRefund { get; set; }
         public int? PreReturnCash { get; set; }
+
+        /// <summary>
+        /// 超级分销商数
+        /// </summary>
+        public int? SuperRetailTraderCount { get; set; }
+
+        /// <summary>
+        /// 当日超级分销商业绩
+        /// </summary>
+        public decimal? CurrentDaySuperRetailTraderOrderAmount { get; set; }
+
+        /// <summary>
+        /// 当日超级分销商业绩环比
+        /// </summary>
+        public decimal? CurrentDaySuperRetailTraderOrderAmountDToD { get; set; }
         public List<PerformanceInfo> PerformanceTop { get; set; }
         public List<PerformanceInfo> PerformanceLower { get; set; }
 

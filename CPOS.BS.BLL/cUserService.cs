@@ -1619,18 +1619,46 @@ namespace JIT.CPOS.BS.BLL
                 int C_Count = dt.Columns.Count;//获取列数  
                 if (C_Count == 7)
                 {
+                    DataTable dtUser = new DataTable();
+                    dtUser.Columns.Add("id", typeof(Int32));
+                    dtUser.Columns.Add("UserName", typeof(string));
+                    dtUser.Columns.Add("UserCode", typeof(string));
+                    dtUser.Columns.Add("Password", typeof(string));
+                    dtUser.Columns.Add("UserTel", typeof(string));
+                    dtUser.Columns.Add("Unit", typeof(string));
+                    dtUser.Columns.Add("AppRole", typeof(string));
+                    dtUser.Columns.Add("SysRole", typeof(string));
+                    dtUser.Columns.Add("CustomerId", typeof(string));
+                    dtUser.Columns.Add("CreateUserId", typeof(string));
+
                     for (int i = 0; i < dt.Rows.Count; i++)  //记录表中的行数，循环插入  
                     {
                         dr = dt.Rows[i];
+                        DataRow dr_Usr = dtUser.NewRow();
+
                         if (dr[0].ToString() != "" && dr[1].ToString() != "")
                         {
-                            this.userService.insertToSql(dr, C_Count, connSql, CurrentUserInfo.ClientID, CurrentUserInfo.UserID);
+                            //this.userService.insertToSql(dr, C_Count, connSql, CurrentUserInfo.ClientID, CurrentUserInfo.UserID);
+                            dr_Usr["id"] = 0;
+                            dr_Usr["UserName"] = dr[0].ToString();
+                            dr_Usr["UserCode"] = dr[1].ToString();
+                            dr_Usr["Password"] = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(dr[2].ToString() == "" ? "888888" : dr[2].ToString(), "MD5");
+                            dr_Usr["UserTel"] = dr[3].ToString();
+                            dr_Usr["Unit"] = dr[4].ToString();
+                            dr_Usr["AppRole"] = dr[5].ToString();
+                            dr_Usr["SysRole"] = dr[6].ToString();
+                            dr_Usr["CustomerId"] = CurrentUserInfo.ClientID;
+                            dr_Usr["CreateUserId"] = CurrentUserInfo.UserID;
+
+                            dtUser.Rows.Add(dr_Usr);
+                              
                         }
                     }
+                    Utils.SqlBulkCopy(connString, dtUser, "ImportUserTemp");
 
                     connSql.Close();
                     //临时表导入正式表
-                    dsResult = this.userService.ExcelImportToDB();
+                    dsResult = this.userService.ExcelImportToDB(CurrentUserInfo.ClientID);
                 }
                 else
                 {

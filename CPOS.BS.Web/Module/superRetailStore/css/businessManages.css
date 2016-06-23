@@ -1,0 +1,25 @@
+.queryTermArea{border-bottom:1px dashed #dcdcdc;background:#fafafa;}
+.moreQueryWrap{float:left;margin-left:20px;}
+.commonSelectWrap .tit{width:120px;}
+#inportStoreBtn{display:none;}
+#exportBtn{float:right;}
+.searchLineBox{height:55px;}
+#JoinSatrtTime,#JoinEndTime{width:160px;height:30px;line-height:30px;border:1px solid #ddd;background:#fff url(../images/icon-calendar.png) no-repeat 135px center;cursor:pointer;}
+.toText{float:left;padding:0 5px;}
+.joinTimeBox{float:none;}
+.loading{width:81%;}
+
+.offlineNumBox{width:600px;position:absolute;top:10%;left:50%;margin-left:-300px;background:#fff;z-index:999;}
+.offlineTable{width:100%;}
+.offlineNumBox tr{height:43px;line-height:42px;border-bottom:1px solid #e1e7ea;}
+.offlineNumBox tr td{width:33.33%;text-align:center;}
+.offlineTextBox{display:block;color:#038efe;cursor:pointer;}
+#pageContianer2{padding-right:30px;}
+.dataMessage{margin-top:-54px;}
+#pageContianer2 .kkPager{padding-right:20px;margin-top:10px;}
+#pageContianer2 .kkPager a{padding:2px;}
+
+/*对话框样式重构*/
+.easyui-linkbutton.commonBtn.saveBtn{margin-top:14px;}
+.panel.layout-panel.layout-panel-south{height:75px !important;overflow:hidden !important;border-top:1px solid #e1e7ea;}
+.panel.window{position:fixed !important;}

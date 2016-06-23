@@ -36,15 +36,9 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.BasicSetting
             {
                 connection = new RedisConnectionBLL().GetConnection(customer.Key);
 
-                _loggingSessionInfo.ClientID = customer.Key;
-                CurrentLoggingManager.Connection_String = customer.Value;
-                _loggingSessionInfo.CurrentLoggingManager = CurrentLoggingManager;
-
-                CustomerBasicSettingBLL bllBasicSetting = new CustomerBasicSettingBLL(_loggingSessionInfo);
-                List<CustomerBasicSettingEntity> listBasicSetting=bllBasicSetting.GetAll().ToList();
-
                 BasicSettingBLL redisBasicSettingBll = new BasicSettingBLL();
-                redisBasicSettingBll.SetBasicSetting(customer.Key, listBasicSetting);
+                redisBasicSettingBll.DelBasicSetting(customer.Key);
+                redisBasicSettingBll.SetBasicSetting(customer.Key);
             }
         }
     }

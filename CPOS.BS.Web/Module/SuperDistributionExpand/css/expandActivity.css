@@ -1,0 +1,128 @@
+@charset "utf-8";
+/*module*/
+.Module{width:100%;}
+.ModuleHead{margin-left:20px;}
+.day30Area .itemTotle{width:300px;height:297px;border:1px solid #f0f0f0;border-radius:5px;background-color:#f7f6f6;float:left;}
+.day30Area .itemTotle .head{background-color:#ff4d4d;padding:9px 0;border-radius: 2px;}
+.day30Area .item{width:300px;height:139px;border:1px solid #f0f0f0;border-radius:5px;float:left;margin-bottom:20px;margin-left:20px;}
+.itemTotle .head .title{color:#fff;margin-left:10px;}
+.itemTotle .content{height:100px;margin:30px;}
+.itemTotle .content:nth-of-type(1){border-bottom: 1px solid #ccc;}
+.itemTotle .content p{text-align: left;line-height:60px;margin-left:50px;display:inline-block;}
+.itemTotle .content p .totle{font-size:18px;font-weight: 400;font-style:normal;margin-right:4px;}
+.itemTotle .content p:nth-of-type(1){margin-left:0px;display:block;line-height: 22px;margin-top:30px;}
+.itemTotle .record p:nth-of-type(1){color:#ff4d4d;display:inline;line-height: 60px;text-align: center;margin-left: 50px;}
+.itemTotle .content span{color:#aaa;}
+.itemTotle .content span i{margin-left:5px;}
+.item .head{background:#f7f6f6;padding:9px 0;}
+.item .head .title{color:#aaa;margin-left:10px;}
+.item .content{height:100px;margin:10px 30px;}
+.item .content p{text-align: left;line-height:60px;margin-left:50px;display:inline-block;}
+.item .content p .totle{font-size:18px;font-weight: 400;font-style:normal;margin-right:4px;}
+.item .content p:nth-of-type(1){display:block;line-height: 22px;}
+.item .record p:nth-of-type(1){color:#ff4d4d;display:inline;line-height: 60px;text-align: center;margin-left: 50px;}
+.item .content span{color:#aaa;}
+.item .content span i{margin-left:5px;}
+.ModuleContent{display:inline-block;width:100%;}
+.day30Totle{width:940px;height:340px;margin-left:94px;}
+.day30Totle .noContents{display:table;width:100%;height:100%;}
+.day30Totle .noContents p{width:100%;vertical-align: middle;text-align:center;display:table-cell;}
+.day30Totle .noContents p a{color:#00a0e8;cursor:pointer;}
+#opt{background:none;border:none;}
+.datagrid{height:410px;overflow-y: auto;}
+/*Tools */
+.toolExmaple{margin-top:20px;}
+.toolExmaple p{text-align:center;margin-top:10px;}
+.toolExmaple p img{height:200px;}
+.toolExmaple .title{width:520px;margin:0 auto;}
+.toolExmaple .title p{text-align: left;margin-top:5px;}
+#opt{background:none;border:none;}
+.datagrid{height:304px;width:520px;overflow-y: auto;border:1px solid #fff;margin:24px auto;}
+.datagrid-wrap{border:1px solid #e1e7ea;}
+.toolList{display:block;height:60px;width:90%;clear:both;margin-bottom:5px;margin-left:44px;}
+.toolList p{float:left;}
+.toolList p:nth-of-type(1){width:16px;margin-top:18px;margin-right:5px;}
+.toolList p:nth-of-type(2){width:300px;position: relative;}
+.toolList p:nth-of-type(2) a{position: absolute;bottom:0;right:0;color:#038efe;cursor:pointer;}
+.toolList .reload{float:right;line-height:30px;cursor:pointer;}
+.toolList .commonBtn{float:right;width:100px;margin-left:10px;}
+.datagrid .panel-body{min-height:40px;border-radius:5px;}
+.datagrid-view{height:60px;}
+.datagrid-row{height:60px;}
+
+/*icon*/
+.top{background:no-repeat center center;background-position:0 8px; background-image:url(../images/icon-arr-top.png);display:inline-block; width: 18px; height: 18px;cursor: pointer}
+.bottom{background:no-repeat center center;background-position:0 8px; background-image:url(../images/icon-arr-bottom.png);display:inline-block;width: 18px; height: 18px;cursor: pointer}
+.panelDiv{padding:0;float:none;padding:5px;}
+.panelDiv span{font-size:14px;}
+.panelDiv .title{font-size:14px;width:auto;margin-right:5px;}
+/*弹层，添加工具*/
+/*#winTool{position: fixed !important;top:50%;}*/
+/*#winMessage{position: fixed !important;bottom:50%;}*/
+/*#win{position: fixed !important;bottom:50%;}*/
+
+/*.panel.window {position: fixed !important;}*/
+.btnWrap{padding:20px 0 0;margin:30px 0 0;clear:both;border-top:1px solid #ccc;}
+.btnWrap .cancelBtn{display:inline-block;height:38px;line-height:35px;border:2px solid #00a0e8;margin-top:-2px;border-radius:38px;width:110px;background:#fff;color:#00a0e8;margin-right:10px;}
+.btnWrap .saveBtn{height:38px;line-height:38px;border-radius:38px;width:110px;margin-left:10px;}
+.btnWrap .message{height:38px;line-height:38px;border-radius:38px;width:110px;margin-left:10px;}
+.checkBox{float:left;width:20px;height:28px;margin-right:13px;background:url(../images/checkBox01.png) no-repeat center center;}
+.checkBox.on{background:url(../images/checkBox02.png) no-repeat center center;}
+#tpl_Message .contents{clear:both;}
+#win .contents{width:120px;margin:0 auto;margin-top:20px;}
+#win .contents p{line-height:30px;text-align:left;}
+.editCheck{height:28px;}
+.editCheck p{height:28px;line-height:28px;}
+.editCheck:nth-of-type(odd){margin-top:20px;}
+.editCheck:nth-of-type(even){margin-top:5px;}
+.editMessage{position: relative;}
+.editMessage textarea{border:1px solid #ccc;width:430px;height:50px;margin-left:40px;margin-right:5px;}
+.editMessage span{position:absolute;bottom:0;}
+.tableWrap{height:460px;}
+.datagrid-header{border:0}
+.tableList li:nth-of-type(1){margin-left:20px}
+
+/*集客行动工具*/
+.ModuleContent .ModuleList{background-color:#f2f2f2;width:100%;height:50px;border-top:1px solid #e1e7ea;border-bottom:1px solid #e1e7ea;}
+.ModuleContent .addTools{float:right;margin-top:10px;margin-right:40px;}
+.ModuleContent .addTools .commonBtn{width:90px;}
+.ModuleList .title ul li{float:left;background-color:#fafafa;border-right:1px solid #e1e7ea;width:180px;height:49px;text-align:center;line-height:49px;border-bottom:1px solid #e1e7ea;cursor:pointer;}
+.ModuleList .title ul li.current{background:#fff;border-bottom:1px solid #fff;}
+.contentsTool{display:none;}
+.contentsTool:nth-of-type(1){display:block;}
+.ModuleTool .contentsTool{clear:both;height:300px;overflow-y:scroll;}
+.contentsTool .toolDatas li{padding:5px 20px;height:60px;border-bottom:1px solid #ccc;}
+.contentsTool .toolDatas li label{float:left;}
+.contentsTool .toolDatas li p:nth-of-type(1){font-weight: 400;font-size: 13px;}
+.contentsTool .toolDatas li p:nth-of-type(2){}
+.contentsTool .toolDatas li p{line-height:26px;}
+.contentsTool .toolDatas li b{margin-right:100px;float:left;line-height:50px;}
+.contentsTool .toolDatas li img{float:left;margin-right:100px;margin-top:5px;}
+.contentsTool .toolDatas li .staffStart{margin-right:35px;margin-left:3px;}
+.contentsTool .toolDatas li .StaffEnd{margin-left:3px;}
+.contentsTool .toolDatas li .remove{float: right;text-align:center;line-height:30px;border-radius:3px;color:#00a0e8;margin-top:8px;cursor:pointer;margin-right: 20px}
+.contentsTool .toolDatas li .removeDlist{float: right;text-align:center;line-height:30px;border-radius:4px;color:#00a0e8;margin-top:8px;cursor:pointer;margin-right: 20px}
+.contentsTool .toolDatas li .exitPoster{float: right;text-align:center;line-height:30px;border-radius:3px;color:#00a0e8;margin-top:8px;margin-right:20px;cursor:pointer;}
+.tplCoupon .name{font-size:14px;}
+.tplCoupon .till{margin-left:10px;font-size:12px;color:#ccc;}
+.tplPoster li p{line-height:50px;}
+
+
+/*上传图片*/
+#setOfferPoster{height:410px;clear:both;border:1px solid #ccc;padding:10px;width:480px;margin:0 auto;}
+#setOfferPoster .editArea{margin-top:10px;float:left;height:50px;}
+#setOfferPoster .editArea:nth-of-type(2){width:190px;float:right;margin-right:20px;}
+#setOfferPoster .editArea em{letter-spacing: 1.5px;margin-right:10px;}
+#setOfferPoster .editArea em i{color:red;}
+#setOfferPoster .editArea p{color:#ccc;}
+#setOfferPoster .upImageModul .commonBtn{position:absolute;margin: 40px 27px;}
+#setOfferPoster .upImageModul .qrCodeModul{width:120px;height:140px;position:absolute;bottom:40px;margin:0 37px;}
+#setOffBack{position:absolute;}
+.posterExmaple{float:right;width:200px;margin-right:20px;}
+.posterExmaple p{text-align: center;}
+.upImage{width:194px;height:300px;background-color:#f7f7fa;position:relative;float:left;margin-top: 19px; margin-left: 20px;}
+.upImage a{cursor:pointer;color:#fff;}
+.ke-upload-area .ke-upload-file{position:absolute;cursor:pointer;}
+.qrCodeModul .title{text-align: center;margin-bottom:10px;}
+.qrCodeModul .imageContents{width:100px;height:100px;margin:0 auto;background:#fff;}
+.commonHandleBtn{opacity: 0;position: absolute;top:0}

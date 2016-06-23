@@ -1740,6 +1740,30 @@
     <Content Include="Module\TouchSpotActivityManagement\js\ActivityEvent.js" />
     <Content Include="Module\TouchSpotActivityManagement\js\queryList.js" />
     <Content Include="Module\TouchSpotActivityManagement\js\标注开发版.js" />
+    <Content Include="Module\SuperDistributionExpand\css\action.css" />
+    <Content Include="Module\SuperDistributionExpand\css\addCoupon.css" />
+    <Content Include="Module\SuperDistributionExpand\css\content.css" />
+    <Content Include="Module\SuperDistributionExpand\css\expandActivity.css" />
+    <Content Include="Module\SuperDistributionExpand\css\index.css" />
+    <Content Include="Module\SuperDistributionExpand\css\source.css" />
+    <Content Include="Module\SuperDistributionExpand\css\style.css" />
+    <Content Include="Module\SuperDistributionExpand\expandActivity.aspx" />
+    <Content Include="Module\SuperDistributionExpand\images\checkBox01.png" />
+    <Content Include="Module\SuperDistributionExpand\images\checkBox02.png" />
+    <Content Include="Module\SuperDistributionExpand\images\coupon.png" />
+    <Content Include="Module\SuperDistributionExpand\images\distribution.png" />
+    <Content Include="Module\SuperDistributionExpand\images\icon-arr-bottom.png" />
+    <Content Include="Module\SuperDistributionExpand\images\icon-arr-top.png" />
+    <Content Include="Module\SuperDistributionExpand\images\icon3.png" />
+    <Content Include="Module\SuperDistributionExpand\images\imgText.png" />
+    <Content Include="Module\SuperDistributionExpand\images\poster.png" />
+    <Content Include="Module\SuperDistributionExpand\images\rightList.png" />
+    <Content Include="Module\SuperDistributionExpand\js\action.js" />
+    <Content Include="Module\SuperDistributionExpand\js\content.js" />
+    <Content Include="Module\SuperDistributionExpand\js\expandActivity.js" />
+    <Content Include="Module\SuperDistributionExpand\js\index.js" />
+    <Content Include="Module\SuperDistributionExpand\js\queryList.js" />
+    <Content Include="Module\SuperDistributionExpand\js\Source.js" />
     <Content Include="Module\VipCardCenter\AllBrowser.aspx" />
     <Content Include="Module\VipCardCenter\CardManage.aspx" />
     <Content Include="Module\VipCardCenter\Consumption.aspx" />
@@ -6788,6 +6812,29 @@
     <Compile Include="ApplicationInterface\Module\Report\VipGoldReport\GetRSetoffHomeListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Report\VipGoldReport\GetVipGoldHomeListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Report\VipReport\GetVipBirthdayCountAH.cs" />
+    <Compile Include="ApplicationInterface\Module\SuperRetailTrader\Item\GetItemListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\SuperRetailTrader\Item\GetSuperRetailTraderItemListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\SuperRetailTrader\Item\SetSuperRetailTraderItemAH.cs" />
+    <Compile Include="ApplicationInterface\Module\SuperRetailTrader\Item\SetSuperRetailTraderItemInfoAH.cs" />
+    <Compile Include="ApplicationInterface\Module\SuperRetailTrader\Item\SetSuperRetailTraderItemStatusAH.cs" />
+    <Compile Include="ApplicationInterface\Module\SuperRetailTrader\RTAboutReport\GetInfoAboutItemsAH.cs" />
+    <Compile Include="ApplicationInterface\Module\SuperRetailTrader\RTAboutReport\GetOverViewAH.cs" />
+    <Compile Include="ApplicationInterface\Module\SuperRetailTrader\RTExtend\GetSetoffToolListAH.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ApplicationInterface\Module\SuperRetailTrader\RTExtend\GetExtendStatisticsAH.cs" />
+    <Compile Include="ApplicationInterface\Module\SuperRetailTrader\RTExtend\GetMaterialTextListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\SuperRetailTrader\RTExtend\SetSetoffToolsAH.cs" />
+    <Compile Include="ApplicationInterface\Module\SuperRetailTrader\SRTRTHome\GetRTTopListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\SuperRetailTrader\SRTRTHome\GetRTRTHomeListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\SuperRetailTrader\SuperRetailTraderConfig\GetSuperRetailTraderConfigAH.cs" />
+    <Compile Include="ApplicationInterface\Module\SuperRetailTrader\SuperRetailTraderConfig\GetSuperRetailTraderListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\SuperRetailTrader\SuperRetailTraderConfig\SetSuperRetailTraderConfigAH.cs" />
+    <Compile Include="ApplicationInterface\Module\SuperRetailTrader\SuperRetailTraderExport.ashx.cs">
+      <DependentUpon>SuperRetailTraderExport.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationInterface\Module\SuperRetailTrader\SuperRetailTraderProfitConfig\GetSuperRetailTraderProfitConfigAH.cs" />
+    <Compile Include="ApplicationInterface\Module\SuperRetailTrader\SuperRetailTraderProfitConfig\SetuperRetailTraderProfitConfigAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\BasicSet\DeleteHolidayAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\BasicSet\GetHolidayListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\BasicSet\SetHoliday.cs" />
@@ -6886,6 +6933,7 @@
     <Content Include="ApplicationInterface\Module\WEvents\EventShareHandler.ashx" />
     <Content Include="ApplicationInterface\Module\WEvents\EventsListHandler.ashx" />
     <Content Include="ApplicationInterface\Module\WEvents\EventsSaveHandler.ashx" />
+    <Content Include="ApplicationInterface\Module\SuperRetailTrader\SuperRetailTraderExport.ashx" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\demo.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\file_manager_json.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\upload_json.jsp" />

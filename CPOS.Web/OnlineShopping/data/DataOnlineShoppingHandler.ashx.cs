@@ -2409,77 +2409,82 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     }
                 }
 
-                IList<SkuPrice> skuPriceList = SkuPriceBll.GetPriceListBySkuIds(skuIds.ToString(), reqObj.special.isGroupBy);
+
                 decimal TotalAmount = 0.00m;
                 decimal TotalReturnCash = 0.00m;
 
-                var basicSettingBll = new CustomerBasicSettingBLL(loggingSessionInfo);
-                Hashtable htSetting = basicSettingBll.GetSocialSetting();   //获取社会化销售配置
-
-                foreach (var item in reqObj.special.orderDetailList)
+                if (!reqObj.common.channelId.Equals("11"))  //超级分销商订单，不计算以下内容
                 {
-                    var skuprice = skuPriceList.Where(m => m.sku_id == item.skuId).FirstOrDefault();
-                    if (skuprice != null)
+                    IList<SkuPrice> skuPriceList = SkuPriceBll.GetPriceListBySkuIds(skuIds.ToString(), reqObj.special.isGroupBy);
+
+                    var basicSettingBll = new CustomerBasicSettingBLL(loggingSessionInfo);
+                    Hashtable htSetting = basicSettingBll.GetSocialSetting();   //获取社会化销售配置
+
+                    foreach (var item in reqObj.special.orderDetailList)
                     {
-                        item.salesPrice = skuprice.price.ToString();
-                        //if (reqObj.common.channelId == "6")
-                        //{
-                        //    item.salesPrice = skuprice.EveryoneSalesPrice.ToString("f2");
-                        //    item.ReturnCash = skuprice.ReturnCash.ToString("f2");
-                        //}
-                        if (int.Parse(htSetting["socialSalesType"].ToString()) == 0)
+                        var skuprice = skuPriceList.Where(m => m.sku_id == item.skuId).FirstOrDefault();
+                        if (skuprice != null)
                         {
-                            if (reqObj.common.channelId == "6")//微信小店
+                            item.salesPrice = skuprice.price.ToString();
+                            //if (reqObj.common.channelId == "6")
+                            //{
+                            //    item.salesPrice = skuprice.EveryoneSalesPrice.ToString("f2");
+                            //    item.ReturnCash = skuprice.ReturnCash.ToString("f2");
+                            //}
+                            if (int.Parse(htSetting["socialSalesType"].ToString()) == 0)
                             {
-                                if (int.Parse(htSetting["enableVipSales"].ToString()) > 0)//启用会员小店
+                                if (reqObj.common.channelId == "6")//微信小店
                                 {
-                                    item.salesPrice = Math.Round((decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["vDistributionPricePer"].ToString()) / 100)),2).ToString();
-                                    item.ReturnCash = Math.Round((decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["vOrderCommissionPer"].ToString()) / 100)),2).ToString();
-                                }
-                            }
-                            else if (reqObj.common.channelId == "10")//员工小店
-                            {
-                                if (int.Parse(htSetting["enableEmployeeSales"].ToString()) > 0)//启用员工小店
-                                {
-                                    item.salesPrice = Math.Round((decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["eDistributionPricePer"].ToString()) / 100)),2).ToString();
-                                    item.ReturnCash = Math.Round((decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["eOrderCommissionPer"].ToString()) / 100)),2).ToString();
-                                }
-                            }
-                            if (reqObj.common.channelId == "7")//一起发码
-                            {
-                                var bll = new SysRetailRewardRuleBLL(loggingSessionInfo);
-                                SysRetailRewardRuleEntity en = new SysRetailRewardRuleEntity();
-                                en.RetailTraderID = reqObj.special.RetailTraderId;
-                                en.CustomerId = loggingSessionInfo.ClientID;
-                                var ds = bll.GetSysRetailRewardRule(en).Where(a => a.CooperateType == "Sales").FirstOrDefault();
-                                if (ds != null)
-                                {
-                                    //--如果渠道是一起发码，当前价格取一起发码价
-                                    if (ds.ItemSalesPriceRate > 0)
+                                    if (int.Parse(htSetting["enableVipSales"].ToString()) > 0)//启用会员小店
                                     {
-                                        item.salesPrice = Math.Round(((decimal.Parse(item.salesPrice) * (decimal)ds.ItemSalesPriceRate) / 100),2).ToString();
+                                        item.salesPrice = Math.Round((decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["vDistributionPricePer"].ToString()) / 100)), 2).ToString();
+                                        item.ReturnCash = Math.Round((decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["vOrderCommissionPer"].ToString()) / 100)), 2).ToString();
                                     }
                                 }
+                                else if (reqObj.common.channelId == "10")//员工小店
+                                {
+                                    if (int.Parse(htSetting["enableEmployeeSales"].ToString()) > 0)//启用员工小店
+                                    {
+                                        item.salesPrice = Math.Round((decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["eDistributionPricePer"].ToString()) / 100)), 2).ToString();
+                                        item.ReturnCash = Math.Round((decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["eOrderCommissionPer"].ToString()) / 100)), 2).ToString();
+                                    }
+                                }
+                                if (reqObj.common.channelId == "7")//一起发码
+                                {
+                                    var bll = new SysRetailRewardRuleBLL(loggingSessionInfo);
+                                    SysRetailRewardRuleEntity en = new SysRetailRewardRuleEntity();
+                                    en.RetailTraderID = reqObj.special.RetailTraderId;
+                                    en.CustomerId = loggingSessionInfo.ClientID;
+                                    var ds = bll.GetSysRetailRewardRule(en).Where(a => a.CooperateType == "Sales").FirstOrDefault();
+                                    if (ds != null)
+                                    {
+                                        //--如果渠道是一起发码，当前价格取一起发码价
+                                        if (ds.ItemSalesPriceRate > 0)
+                                        {
+                                            item.salesPrice = Math.Round(((decimal.Parse(item.salesPrice) * (decimal)ds.ItemSalesPriceRate) / 100), 2).ToString();
+                                        }
+                                    }
+                                }
+
+
+                            }
+                            else
+                            { //商品人人销售价格
+                                item.salesPrice = skuprice.EveryoneSalesPrice.ToString("f2");
+                                item.ReturnCash = skuprice.ReturnCash.ToString("f2");
                             }
 
-
+                            //团购
+                            if (!string.IsNullOrWhiteSpace(reqObj.special.isGroupBy))
+                            {
+                                item.salesPrice = skuprice.groupPrice.ToString("f2");
+                            }
                         }
-                        else
-                        { //商品人人销售价格
-                            item.salesPrice = skuprice.EveryoneSalesPrice.ToString("f2");
-                            item.ReturnCash = skuprice.ReturnCash.ToString("f2");
-                        }
-
-                        //团购
-                        if (!string.IsNullOrWhiteSpace(reqObj.special.isGroupBy))
-                        {
-                            item.salesPrice = skuprice.groupPrice.ToString("f2");
-                        }
+                        TotalAmount += (Convert.ToDecimal(item.salesPrice) * Convert.ToInt32(item.qty));
+                        TotalReturnCash += (Convert.ToDecimal(item.ReturnCash) * Convert.ToInt32(item.qty));
                     }
-                    TotalAmount += (Convert.ToDecimal(item.salesPrice) * Convert.ToInt32(item.qty));
-                    TotalReturnCash += (Convert.ToDecimal(item.ReturnCash) * Convert.ToInt32(item.qty));
+                    reqObj.special.totalAmount = TotalAmount.ToString("f2");
                 }
-                reqObj.special.totalAmount = TotalAmount.ToString("f2");
 
                 #endregion
 
@@ -2522,6 +2527,10 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 else if (reqObj.common.channelId.Equals("7")) //分销商订单
                 {
                     orderInfo.DataFromId = 19;
+                }
+                else if( reqObj.common.channelId.Equals("11") )//超级分销订单
+                {
+                    orderInfo.DataFromId = 35;
                 }
 
                 orderInfo.SalesUser = reqObj.special.SalesUser; //店员ID add by donal 2014-9-25 18:09:49
@@ -2566,6 +2575,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
                 int i = 1;
                 orderInfo.OrderDetailInfoList = new List<InoutDetailInfo>();
+                //订单明细处理
                 foreach (var detail in reqObj.special.orderDetailList)
                 {
                     InoutDetailInfo orderDetailInfo = new InoutDetailInfo();
@@ -3102,6 +3112,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public int dataFromId { get; set; }
             public string SalesUser { get; set; } //店员ID add by donal 2014-9-25 18:07:11
             public string RetailTraderId { get; set; }  //分销商id
+           // public string IsShared { get; set; }  //超级分销分享订单 0 - 否 1 - 是 
         }
 
 

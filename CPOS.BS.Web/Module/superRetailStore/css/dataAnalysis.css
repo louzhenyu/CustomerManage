@@ -1,0 +1,22 @@
+@charset "utf-8";
+/*day30Data*/
+.day30Data{width:90%;margin:10px auto;border:1px solid #f0f0f0;border-radius:5px;}
+.day30Data .ModuleHead{background:#f7f6f6;padding:9px 0;}
+.day30Data .title{margin-left:20px;}
+.day30Data .contents{width:33%;display:inline-block;margin:15px 0;font-size:14px;}
+.day30Data .contents .chartsData{border-right:1px solid #e1e7ea;}
+.day30Data .contents p{text-align: center;}
+.day30Data .contents p span{color:#ff4d4d;}
+.day30Data .contents p i{color:#ff4d4d;}
+.day30Data .charts{display: table;width:100%;height:188px;}
+.day30Data .contents:nth-of-type(4) .chartsData{border:0;}
+.day30Data .charts p{vertical-align: middle;text-align: center;display:table-cell;}
+.day30Data .chartsLegend p{width:48%;text-align: center;display: inline-block;}
+.day30Data .contents:nth-of-type(2) .chartsLegend p:nth-of-type(1) span{display:inline-block;width:10px;height:10px;border-radius:5px;margin-right:4px;background-color:#ffd2d2}
+.day30Data .contents:nth-of-type(2) .chartsLegend p:nth-of-type(2) span{display:inline-block;width:10px;height:10px;border-radius:5px;margin-right:4px;background-color:#ff4d4d}
+.day30Data .contents:nth-of-type(3) .chartsLegend p:nth-of-type(1) span{display:inline-block;width:10px;height:10px;border-radius:5px;margin-right:4px;background-color:#d9f1fc}
+.day30Data .contents:nth-of-type(3) .chartsLegend p:nth-of-type(2) span{display:inline-block;width:10px;height:10px;border-radius:5px;margin-right:4px;background-color:#01a1ff}
+.day30Data .contents:nth-of-type(4) .chartsLegend p:nth-of-type(1) span{display:inline-block;width:10px;height:10px;border-radius:5px;margin-right:4px;background-color:#ffe29c}
+.day30Data .contents:nth-of-type(4) .chartsLegend p:nth-of-type(2) span{display:inline-block;width:10px;height:10px;border-radius:5px;margin-right:4px;background-color:#ff8a00}
+.btnWrap {padding: 20px 0 0; margin: 30px 0 0;clear: both;border-top: 1px solid #e1e7ea;}
+.btnWrap .cancelBtn{display:inline-block;height:38px;line-height:35px;border:2px solid #00a0e8;margin-top:-2px;border-radius:38px;width:110px;background:#fff;color:#00a0e8;margin-right:10px;}

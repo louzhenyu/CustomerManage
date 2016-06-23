@@ -416,8 +416,8 @@
                     {field : 'order_no',title : '订单编号',width:140,resizable:false,align:'left'},
                     {field : 'paymentcenter_id',title : '商户单号',width:100,resizable:false,align:'left'},
                     {field : 'total_amount',title : '订单金额(元)',width:100,resizable:false,align:'center'},
-                    {field : 'payment_name',title : '支付方式',width:100,align:'center',resizable:false},
-                    {field : 'total_qty',title : '商品数量',width:100,align:'center',resizable:false,
+                    {field : 'payment_name',title : '支付方式',width:80,align:'center',resizable:false},
+                    {field : 'total_qty',title : '商品数量',width:80,align:'center',resizable:false,
                         formatter:function(value,row,index){
                             if(isNaN(parseInt(value))){
                                 return 0;
@@ -435,7 +435,7 @@
                         }
                     },
 
-                    {field : 'data_from_name',title : '订单渠道',width:100,align:'left',resizable:false},
+                    {field : 'data_from_name',title : '订单渠道',width:140,align:'left',resizable:false},
                     {field : 'Field1',title : '付款状态',width:70,align:'center',resizable:false,
                         styler: function(index,row){
                             /* status: "700"

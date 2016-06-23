@@ -16,7 +16,6 @@ namespace JIT.CPOS.DTO.Module.Sys.GetInnerGroupNewsList.Request
         public int Operationtype { get; set; }
         public void Validate()
         {
-
         }
     }
 }

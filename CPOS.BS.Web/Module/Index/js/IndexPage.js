@@ -179,7 +179,7 @@
                         $(".UserCurrentDayAvgOrderAmountDToD").parents(".achievementnum").find(".rise").attr("src", "images/rise1.png");
                     }
                     $(".UserCurrentDayAvgOrderAmountDToD").html((UserCurrentDayAvgOrderAmountDToD ? UserCurrentDayAvgOrderAmountDToD.toFixed(1) : "0") + "%");//当日人均业绩环比
-                    $(".RetailTraderCount").html((data.RetailTraderCount ? data.RetailTraderCount : "0") + "家");//分销商数
+                    $(".RetailTraderCount").html((data.SuperRetailTraderCount ? data.SuperRetailTraderCount : "0") + "人");//分销商数                                 
                     that.NumberFormat(data.CurrentDayRetailTraderOrderAmount, function (result, isyuan) {
                         $(".CurrentDayRetailTraderOrderAmount").html("<span style='font-size: 14px;'>￥</span>" + result);//当日分销业绩
                         if (isyuan)
@@ -188,9 +188,15 @@
                             $(".CurrentDayRetailTraderOrderAmount").parents(".achievementnum").find(".CurrentMonthunit").html("万");
 
                     });
+					
+					
+					var CurrentDaySuperRetailTraderOrderAmount = data.CurrentDaySuperRetailTraderOrderAmount;
+					if(!!CurrentDaySuperRetailTraderOrderAmount){
+						$(".CurrentDayRetailTraderOrderAmount").html("<span style='font-size: 14px;'>￥</span>" + CurrentDaySuperRetailTraderOrderAmount);
+					}
+					
 
-
-                    var CurrentDayRetailTraderOrderAmountDToD = data.CurrentDayRetailTraderOrderAmountDToD;
+                    var CurrentDayRetailTraderOrderAmountDToD = data.CurrentDaySuperRetailTraderOrderAmountDToD;
                     if (CurrentDayRetailTraderOrderAmountDToD < 0) {
                         $(".CurrentDayRetailTraderOrderAmountDToD").parents(".achievementnum").find(".rise").attr("src", "images/drop1.png");
                         CurrentDayRetailTraderOrderAmountDToD = -CurrentDayRetailTraderOrderAmountDToD;

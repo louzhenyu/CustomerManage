@@ -515,6 +515,7 @@ namespace JIT.CPOS.BS.BLL
 
                     var templist = detailEntitys.Where(t => t.order_id == item.order_id).ToArray();
                     var tempDetailInfos = new List<JIT.CPOS.DTO.Module.VIP.Order.Response.OrderDetailInfo> { };
+
                     foreach (var it in templist)
                     {
 

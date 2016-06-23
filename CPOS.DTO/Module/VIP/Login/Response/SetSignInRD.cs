@@ -12,6 +12,7 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Response
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
         public string UserName { get; set; }
+        public string SuperRetailTraderID { get; set; }
         /// <summary>
         /// 用户状态1：正常；-1不正常
         /// </summary>
@@ -33,6 +34,7 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Response
 
         //头像信息
         public string HeadImg { get; set; }
+
     }
 
     public class RoleCodeInfo

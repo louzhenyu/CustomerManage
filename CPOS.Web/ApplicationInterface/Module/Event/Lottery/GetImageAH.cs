@@ -138,6 +138,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                         rd.LT_bgpic2 = i.ImageURL;
                     if (i.BatId == "LT_regularpic")
                         rd.LT_regularpic = i.ImageURL;
+                    if (i.BatId == "Receive")
+                        rd.Receive = i.ImageURL;
+                    if (i.BatId == "NotReceive")
+                        rd.NotReceive = i.ImageURL;
                 };
                 rd.RuleContent = image.FirstOrDefault().RuleContent;
                 rd.RuleId = image.FirstOrDefault().RuleId??0;

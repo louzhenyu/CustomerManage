@@ -257,6 +257,26 @@ namespace JIT.CPOS.BS.Entity
 		/// </summary>
 		public DateTime? LastUpdateTime { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int32? SuperRetailTraderCount { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Decimal? CurrentDaySuperRetailTraderOrderAmount { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Decimal? LastDaySuperRetailTraderOrderAmount { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Decimal? CurrentDaySuperRetailTraderOrderAmountDToD { get; set; }
+
 
         #endregion
 

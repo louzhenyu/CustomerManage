@@ -1,7 +1,10 @@
 ﻿; (function ($) {
     var util={};
-    //日期时间的格式化
-    Date.prototype.format =function(format)
+    /*
+     日期时间的格式化
+     @formatm:日期格式yyyy-MM-dd hh:mm:ss:SS;  2016-06-08
+     */
+    Date.prototype.format =function(format,displayPlaceholder)
     {
         var o = {
             "M+" : this.getMonth()+1, //month
@@ -15,9 +18,15 @@
         if(/(y+)/.test(format)) format=format.replace(RegExp.$1,
             (this.getFullYear()+"").substr(4- RegExp.$1.length));
         for(var k in o)if(new RegExp("("+ k +")").test(format))
-            format = format.replace(RegExp.$1,
-                    RegExp.$1.length==1? o[k] :
-                    ("00"+ o[k]).substr((""+ o[k]).length));
+             if(displayPlaceholder&&o[k]-10<0) {
+                 format = format.replace(RegExp.$1,
+                     RegExp.$1.length == 1 ? o[k] :
+                         ("0" + o[k]).substr(("" + o[k]).length));
+             } else{
+                 format = format.replace(RegExp.$1,
+                     RegExp.$1.length == 1 ? o[k] :
+                         ("00" + o[k]).substr(("" + o[k]).length));
+             }
         return format;
     };
     /*///两种调用方式

@@ -57,5 +57,9 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Response
         /// 是否是经销商 0=不是；1=是
         /// </summary>
         public int IsDealer { get; set; }
+        /// <summary>
+        /// 是否是超级分销商  有值表示为超级分销商/无值表示不是超级分销商
+        /// </summary>
+        public string SuperRetailTraderID { get; set; }
     }
 }

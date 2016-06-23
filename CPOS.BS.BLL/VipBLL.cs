@@ -39,6 +39,7 @@ using JIT.CPOS.DTO.Base;
 using JIT.CPOS.BS.BLL.WX;
 using JIT.CPOS.DTO.Module.Report.VipReport.Response;
 using JIT.CPOS.DTO.Module.VIP.Dealer.Response;
+using JIT.CPOS.Common;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -2251,26 +2252,61 @@ namespace JIT.CPOS.BS.BLL
                 connSql.Open();
                 DataRow dr = null;
                 int C_Count = dt.Columns.Count;//获取列数  
-                if (C_Count == 16)
+                if (C_Count == 12)
                 {
+                    DataTable dtVip = new DataTable();
+                    dtVip.Columns.Add("id", typeof(Int32));
+                    dtVip.Columns.Add("VipName", typeof(string));
+                    dtVip.Columns.Add("VipCardType", typeof(string));
+                    dtVip.Columns.Add("VipTel", typeof(string));
+                    dtVip.Columns.Add("OpenId", typeof(string));
+                    dtVip.Columns.Add("Birthday", typeof(DateTime));
+                    dtVip.Columns.Add("VipGender", typeof(string));
+                    dtVip.Columns.Add("IDCardNum", typeof(string));
+                    dtVip.Columns.Add("PointBalance", typeof(decimal));
+                    dtVip.Columns.Add("CashBalance", typeof(decimal));
+                    dtVip.Columns.Add("VipCard", typeof(string));
+                    dtVip.Columns.Add("CreateVipDate", typeof(DateTime));
+                    dtVip.Columns.Add("CreateVipUnit", typeof(string));
+                    dtVip.Columns.Add("CreateUserId", typeof(string));
+                    dtVip.Columns.Add("CustomerId", typeof(string));
+
                     for (int i = 0; i < dt.Rows.Count; i++)  //记录表中的行数，循环插入  
                     {
                         dr = dt.Rows[i];
+                        DataRow dr_Vip = dtVip.NewRow();
                         if (dr[0].ToString() != "" && dr[1].ToString() != "")
                         {
-                            this._currentDAO.insertToSql(dr, C_Count, connSql, CurrentUserInfo.ClientID, CurrentUserInfo.UserID);
+                            //this._currentDAO.insertToSql(dr, C_Count, connSql, CurrentUserInfo.ClientID, CurrentUserInfo.UserID);
+                            dr_Vip["id"] = 0;
+                            dr_Vip["VipName"] = dr[0].ToString();
+                            dr_Vip["VipCardType"] = dr[1].ToString();
+                            dr_Vip["VipTel"] = dr[2].ToString();
+                            dr_Vip["OpenId"] = dr[3].ToString();
+                            dr_Vip["Birthday"] = dr[4].ToString() == "" ? DateTime.Now : Convert.ToDateTime(dr[4].ToString());
+                            dr_Vip["VipGender"] = dr[5].ToString();
+                            dr_Vip["IDCardNum"] = dr[6].ToString();
+                            dr_Vip["PointBalance"] = dr[7].ToString() == "" ? 0 : Convert.ToDecimal(dr[7].ToString());
+                            dr_Vip["CashBalance"] = dr[8].ToString() == "" ? 0 : Convert.ToDecimal(dr[8].ToString());
+                            dr_Vip["VipCard"] = dr[9].ToString();
+                            dr_Vip["CreateVipDate"] = dr[10].ToString() == "" ? DateTime.Now : Convert.ToDateTime(dr[10].ToString());
+                            dr_Vip["CreateVipUnit"] = dr[11].ToString();
+                            dr_Vip["CreateUserId"] = CurrentUserInfo.UserID;
+                            dr_Vip["CustomerId"] = CurrentUserInfo.ClientID;
+
+                            dtVip.Rows.Add(dr_Vip);
                         }
                     }
-
+                    Utils.SqlBulkCopy(connString, dtVip, "ImportVipTemp");
                     connSql.Close();
                     //临时表导入正式表
-                    dsResult = this._currentDAO.ExcelImportToDB();
+                    dsResult = this._currentDAO.ExcelImportToDB(CurrentUserInfo.ClientID);
                 }
                 else
                 {
 
                     DataRow row = table.NewRow();
-                    row["ErrMsg"] = "模板列数不对";
+                    row["ErrMsg"] = "模板列数不对" + C_Count.ToString(); ;
                     table.Rows.Add(row);
                     dsResult.Tables.Add(table);
 
@@ -2307,5 +2343,6 @@ namespace JIT.CPOS.BS.BLL
 
             return dsResult;
         }
+
     }
 }

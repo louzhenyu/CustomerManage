@@ -9,6 +9,7 @@ using JIT.CPOS.DTO.Base;
 using JIT.CPOS.BS.BLL;
 using System.Data;
 using JIT.CPOS.BS.Entity;
+using JIT.Utility.DataAccess.Query;
 
 namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
 {
@@ -77,7 +78,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             rd.UserName = ds.Tables[0].Rows[0]["user_name"].ToString();
             rd.Status =int.Parse(ds.Tables[0].Rows[0]["user_status"].ToString());
             rd.CustomerId = customerId;
-
+            var T_SuperRetailTraderbll = new T_SuperRetailTraderBLL(currentUserInfo);
+            var T_SuperRetailTraderInfo = T_SuperRetailTraderbll.QueryByEntity(new T_SuperRetailTraderEntity() { CustomerId = customerId, SuperRetailTraderFromId = rd.UserId,SuperRetailTraderFrom="User" }, new OrderBy[] { new OrderBy() { FieldName = "CreateTime", Direction = OrderByDirections.Desc } }).FirstOrDefault();
+            if (T_SuperRetailTraderInfo != null)
+            {
+                rd.SuperRetailTraderID = T_SuperRetailTraderInfo.SuperRetailTraderID.ToString();
+            }
             #endregion
             //如果状态不等于1，就说明已经停用，
             if (rd.Status != 1)

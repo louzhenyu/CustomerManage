@@ -23,7 +23,7 @@ namespace JIT.CPOS.DTO.Module.Sys.InnerGroupNews.Request
         public int? BusType { get; set; }
         public void Validate()
         {
-
+         
         }
     }
 }

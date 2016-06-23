@@ -322,6 +322,21 @@ namespace JIT.CPOS.BS.DataAccess
         }
 
         #endregion
+        /// <summary>
+        /// 根据Customer_ID获取CustomerCode
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns></returns>
+        public string GetCustomerCodeByCustomerID(string customerID)
+        {
+            string sql = string.Format("SELECT customer_code FROM dbo.t_customer WHERE customer_id = '{0}'",
+                customerID);
+
+            string conn = ConfigurationManager.AppSettings["Conn_ap"];
+            DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
+            var result = sqlHelper.ExecuteScalar(sql);
+            return result == null || result == DBNull.Value ? string.Empty : result.ToString();
+        }
 
         #region Jermyn 20131107 根据微信号码获取客户标识
 

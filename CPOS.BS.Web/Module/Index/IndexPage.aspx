@@ -121,11 +121,11 @@
                     </div>
                 </div>
             </div>
-            <div class="module" data-menucode="qdcx">
+            <div class="module" data-menucode="cjfx">
             <a class="menusrc" href="JavaScript:void(0)">
                 <div class="modulehead" >
 
-                 <div class="title"><img src="images/money.png" /><span>渠道创新</span></div>
+                 <div class="title"><img src="images/fenxiao.png" /><span>超级分销</span></div>
                  <div class="gomore" ><img src="images/gomore.png" /></div>
 
                </div>

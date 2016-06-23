@@ -48,7 +48,15 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         public int GeSetoffToolsListCount(SetoffToolsEntity entity, string ApplicationType, string pBeShareVipID, string pSetoffEventID)
         {
-            string sql = GetSetoffToolsListSql(entity, ApplicationType, pBeShareVipID, pSetoffEventID);
+            string sql = string.Empty;
+            if (ApplicationType != "4")
+            {
+                sql = GetSetoffToolsListSql(entity, ApplicationType, pBeShareVipID, pSetoffEventID);
+            }
+            else
+            {
+                sql = GetSetoffToolsListSqlForSRT(entity, ApplicationType, pBeShareVipID, pSetoffEventID);
+            }            
             sql = sql + " select count(*) as icount From #tmp; ";
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
         }
@@ -68,17 +76,25 @@ namespace JIT.CPOS.BS.DataAccess
             int beginSize = (Page - 1) * PageSize + 1;
             int endSize = beginSize + PageSize - 1;
             DataSet ds = new DataSet();
-            string sql = GetSetoffToolsListSql(entity, ApplicationType, pBeShareVipID, pSetoffEventID);
+            string sql = string.Empty;
+            if (ApplicationType != "4")
+            {
+                sql = GetSetoffToolsListSql(entity, ApplicationType, pBeShareVipID, pSetoffEventID);
+            }
+            else
+            {
+                sql = GetSetoffToolsListSqlForSRT(entity, ApplicationType, pBeShareVipID, pSetoffEventID);
+            }   
             sql += " select * From #tmp a where 1=1 and a.DisplayIndex between '" +
                 beginSize + "' and '" + endSize + "' order by  a.DisplayIndex ";
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
         }
-
+        #region 供会员金矿使用
         private string GetSetoffToolsListSql(SetoffToolsEntity entity, string ApplicationType, string pBeShareVipID, string pSetoffEventID)
         {
             StringBuilder sbSql = new StringBuilder();
-            string CustomerID= this.CurrentUserInfo.CurrentUser.customer_id;
+            string CustomerID = this.CurrentUserInfo.CurrentUser.customer_id;
             string strApplicationType = string.Empty;
             string NoticePlatType = string.Empty;//平台类型  1=微信，2=APP员工，3=超级分销商
             switch (ApplicationType)
@@ -95,36 +111,40 @@ namespace JIT.CPOS.BS.DataAccess
                     strApplicationType = "2";//客服
                     NoticePlatType = "2";
                     break;
+                case "4":
+                    strApplicationType = "4";//超级分销
+                    NoticePlatType = "3";
+                    break;
             }
             sbSql.AppendFormat(@"select DisplayIndex = row_number() over(order by StartTime desc), * into #tmp from
                          (SELECT distinct ST.SetoffEventID,ST.CustomerId, ST.SetoffToolID AS 'SetoffToolID' ,ST.ObjectId, Name As 'SetOffToolName',CONVERT(varchar(100),cast(T.StartDate as datetime),23) AS 'StartTime',CONVERT(varchar(100),cast(T.EndDate as datetime),23) AS 'EndTime',ST.ToolType,T.OnLineRedirectUrl AS 'URL',
-                         SUW.NoticePlatformType,ISNULL(NULL,0) AS 'ServiceLife',ISNULL(SP.BeShareVipID,0) as IsPush,ISNULL(IsOpen,0)as IsRead FROM SetoffTools ST
+                         T.[Desc] AS 'Description', SUW.NoticePlatformType,ISNULL(NULL,0) AS 'ServiceLife',ISNULL(SP.BeShareVipID,0) as IsPush,ISNULL(IsOpen,0)as IsRead FROM SetoffTools ST
                         LEFT JOIN T_CTW_LEvent T ON  ST.ObjectId=T.CTWEventId
-                        LEFT JOIN SetoffToolUserView SUW ON SUW.SetoffToolID=ST.SetoffToolID AND  UserID='{0}' AND NoticePlatformType='{4}'
+                        LEFT JOIN SetoffToolUserView SUW ON SUW.SetoffToolID=ST.SetoffToolID AND  UserID='{0}' AND NoticePlatformType='{1}'
                         LEFT JOIN T_LEventsSharePersonLog SP ON SP.ObjectId=ST.ObjectId AND SP.ShareVipID='{0}' AND SP.BeShareVipID='{2}' AND SP.ShareVipType='{1}' WHERE 1=1 AND ST.ToolType='CTW' AND ST.[Status]='10'
                         UNION ALL
                         SELECT distinct ST.SetoffEventID,ST.CustomerId,ST.SetoffToolID AS 'SetoffToolID',ST.ObjectId,CouponType.CouponTypeName AS 'SetOffToolName',CONVERT(varchar(100),cast(CouponType.BeginTime as datetime),23) AS 'StartTime',CONVERT(varchar(100),cast(CouponType.EndTime as datetime),23) AS 'EndTime',ST.ToolType,ISNULL(null,null) AS 'URL',
-                         SUW.NoticePlatformType,CouponType.ServiceLife AS 'ServiceLife',ISNULL(SP.BeShareVipID,0) as IsPush,ISNULL(IsOpen,0)as IsRead FROM SetoffTools ST
+                        CouponType.CouponTypeDesc AS 'Description',SUW.NoticePlatformType,CouponType.ServiceLife AS 'ServiceLife',ISNULL(SP.BeShareVipID,0) as IsPush,ISNULL(IsOpen,0)as IsRead FROM SetoffTools ST
                         LEFT JOIN CouponType ON ST.ObjectId=CouponType.CouponTypeId
-                        LEFT JOIN SetoffToolUserView SUW ON SUW.SetoffToolID=ST.SetoffToolID AND  UserID='{0}' AND NoticePlatformType='{4}'
+                        LEFT JOIN SetoffToolUserView SUW ON SUW.SetoffToolID=ST.SetoffToolID AND  UserID='{0}' AND NoticePlatformType='{1}'
                         LEFT JOIN T_LEventsSharePersonLog SP ON SP.ObjectId=ST.ObjectId AND SP.ShareVipID='{0}' AND SP.BeShareVipID='{2}' AND SP.ShareVipType='{1}' WHERE 1=1 AND ST.ToolType='Coupon' AND ST.[Status]='10'
                         UNION ALL
                         SELECT distinct  ST.SetoffEventID,ST.CustomerId,ST.SetoffToolID AS 'SetoffToolID',ST.ObjectId,Name AS 'SetOffToolName',CONVERT(varchar(100),cast(SetoffPoster.CreateTime as datetime),23) AS 'StartTime',  IsNull(null,null)as 'EndTime',ST.ToolType,ISNULL(null,null) AS 'URL',
-                         SUW.NoticePlatformType,ISNULL(NULL,0) AS 'ServiceLife',ISNULL(SP.BeShareVipID,0) as IsPush,ISNULL(IsOpen,0)as IsRead FROM SetoffTools ST
+                        ISNULL(SetoffPoster.[Desc],'') AS 'Description',SUW.NoticePlatformType,ISNULL(NULL,0) AS 'ServiceLife',ISNULL(SP.BeShareVipID,0) as IsPush,ISNULL(IsOpen,0)as IsRead FROM SetoffTools ST
                         LEFT JOIN SetoffPoster ON ST.ObjectId=SetoffPoster.SetoffPosterID
-                        LEFT JOIN SetoffToolUserView SUW ON SUW.SetoffToolID=ST.SetoffToolID AND  UserID='{0}' AND NoticePlatformType='{4}'
+                        LEFT JOIN SetoffToolUserView SUW ON SUW.SetoffToolID=ST.SetoffToolID AND  UserID='{0}' AND NoticePlatformType='{1}'
                         LEFT JOIN T_LEventsSharePersonLog SP ON SP.ObjectId=ST.ObjectId AND SP.ShareVipID='{0}' AND SP.BeShareVipID='{2}' AND SP.ShareVipType='{1}' WHERE 1=1 AND ST.ToolType='SetoffPoster' AND ST.[Status]='10'
                         UNION ALL
-                        SELECT distinct ST.SetoffEventID,ST.CustomerId,ST.SetoffToolID AS 'SetoffToolID',ST.ObjectId,Title AS 'SetOffToolName',CONVERT(varchar(100),cast(WMaterialText.CreateTime as datetime),23) AS 'StartTime',  IsNull(null,null)as 'EndTime',ST.ToolType,ISNULL(null,null) AS 'URL',
-                        SUW.NoticePlatformType,ISNULL(NULL,0) AS 'ServiceLife',ISNULL(SP.BeShareVipID,0) as IsPush,ISNULL(IsOpen,0)as IsRead FROM SetoffTools ST
-                        LEFT JOIN WMaterialText ON ST.ObjectId=WMaterialText.TextId
-                        LEFT JOIN SetoffToolUserView SUW ON SUW.SetoffToolID=ST.SetoffToolID AND  UserID='{0}' AND NoticePlatformType='{4}'
-                        LEFT JOIN T_LEventsSharePersonLog SP ON SP.ObjectId=ST.ObjectId AND SP.ShareVipID='{0}' AND SP.BeShareVipID='1' AND SP.ShareVipType='4' WHERE 1=1 AND ST.ToolType='Material' AND ST.[Status]='10'
+                        SELECT distinct ST.SetoffEventID,ST.CustomerId,ST.SetoffToolID AS 'SetoffToolID',ST.ObjectId,Title AS 'SetOffToolName',CONVERT(varchar(100),cast(WMaterialText.CreateTime as datetime),23) AS 'StartTime',  IsNull(null,null)as 'EndTime',ST.ToolType,ISNULL(OriginalUrl,null) AS 'URL',
+                        ISNULL(WMaterialText.[Text],'') AS 'Description',SUW.NoticePlatformType,ISNULL(NULL,0) AS 'ServiceLife',ISNULL(SP.BeShareVipID,0) as IsPush,ISNULL(IsOpen,0)as IsRead FROM SetoffTools ST
+                        LEFT JOIN WMaterialText ON ST.ObjectId=WMaterialText.TextId AND ISNULL(WMaterialText.IsAuth,0)!=1
+                        LEFT JOIN SetoffToolUserView SUW ON SUW.SetoffToolID=ST.SetoffToolID AND  UserID='{0}' AND NoticePlatformType='{1}'
+                        LEFT JOIN T_LEventsSharePersonLog SP ON SP.ObjectId=ST.ObjectId AND SP.ShareVipID='{0}' AND SP.BeShareVipID='1' AND SP.ShareVipType='{1}' WHERE 1=1 AND ST.ToolType='Material' AND ST.[Status]='10'
                         )AS a where 1=1 and SetoffEventID='{3}'
-                        ", CurrentUserInfo.UserID, strApplicationType, pBeShareVipID, pSetoffEventID, NoticePlatType);
+                        ", CurrentUserInfo.UserID, ApplicationType, pBeShareVipID, pSetoffEventID);
             if (CustomerID != null && CustomerID != "")
             {
-                sbSql.Append( " AND CustomerID='" + CustomerID + "' ");
+                sbSql.Append(" AND CustomerID='" + CustomerID + "' ");
             }
             if (entity.ToolType != null && entity.ToolType != "")
             {
@@ -132,6 +152,72 @@ namespace JIT.CPOS.BS.DataAccess
             }
             return sbSql.ToString();
         }
+        #endregion
+
+        #region 供超级分销使用
+        private string GetSetoffToolsListSqlForSRT(SetoffToolsEntity entity, string ApplicationType, string pBeShareVipID, string pSetoffEventID)
+        {
+            StringBuilder sbSql = new StringBuilder();
+            string CustomerID = this.CurrentUserInfo.CurrentUser.customer_id;
+            string strApplicationType = string.Empty;
+            string NoticePlatType = string.Empty;//平台类型  1=微信，2=APP员工，3=超级分销商
+            switch (ApplicationType)
+            {
+                case "1":
+                    strApplicationType = "3";//会员
+                    NoticePlatType = "1";
+                    break;
+                case "2":
+                    strApplicationType = "1";//员工
+                    NoticePlatType = "2";
+                    break;
+                case "3":
+                    strApplicationType = "2";//客服
+                    NoticePlatType = "2";
+                    break;
+                case "4":
+                    strApplicationType = "4";//超级分销
+                    NoticePlatType = "3";
+                    break;
+            }
+            sbSql.AppendFormat(@"select DisplayIndex = row_number() over(order by StartTime desc), * into #tmp from
+                         (SELECT distinct ST.SetoffEventID,ST.CustomerId, ST.SetoffToolID AS 'SetoffToolID' ,ST.ObjectId, Name As 'SetOffToolName',CONVERT(varchar(100),cast(T.StartDate as datetime),23) AS 'StartTime',CONVERT(varchar(100),cast(T.EndDate as datetime),23) AS 'EndTime',ST.ToolType,T.OnLineRedirectUrl AS 'URL',
+                         T.[Desc] AS 'Description', SUW.NoticePlatformType,ISNULL(NULL,0) AS 'ServiceLife',ISNULL(SP.ShareVipID,0) as IsPush,ISNULL(IsOpen,0)as IsRead FROM SetoffTools ST
+                        LEFT JOIN T_CTW_LEvent T ON  ST.ObjectId=T.CTWEventId
+                        LEFT JOIN SetoffToolUserView SUW ON SUW.SetoffToolID=ST.SetoffToolID AND  UserID='{0}' AND NoticePlatformType='{3}'
+                        LEFT JOIN T_LEventsSharePersonLog SP ON SP.ObjectId=ST.ObjectId AND SP.ShareVipID='{0}' AND SP.ShareVipType='{1}' WHERE 1=1 AND ST.ToolType='CTW' AND ST.[Status]='10'
+                        UNION ALL
+                        SELECT distinct ST.SetoffEventID,ST.CustomerId,ST.SetoffToolID AS 'SetoffToolID',ST.ObjectId,CouponType.CouponTypeName AS 'SetOffToolName',CONVERT(varchar(100),cast(CouponType.BeginTime as datetime),23) AS 'StartTime',CONVERT(varchar(100),cast(CouponType.EndTime as datetime),23) AS 'EndTime',ST.ToolType,ISNULL(null,null) AS 'URL',
+                        CouponType.CouponTypeDesc AS 'Description',SUW.NoticePlatformType,CouponType.ServiceLife AS 'ServiceLife',ISNULL(SP.ShareVipID,0) as IsPush,ISNULL(IsOpen,0)as IsRead FROM SetoffTools ST
+                        LEFT JOIN CouponType ON ST.ObjectId=CouponType.CouponTypeId
+                        LEFT JOIN SetoffToolUserView SUW ON SUW.SetoffToolID=ST.SetoffToolID AND  UserID='{0}' AND NoticePlatformType='{3}'
+                        LEFT JOIN T_LEventsSharePersonLog SP ON SP.ObjectId=ST.ObjectId AND SP.ShareVipID='{0}' AND SP.ShareVipType='{1}' WHERE 1=1 AND ST.ToolType='Coupon' AND ST.[Status]='10'
+                        UNION ALL
+                        SELECT distinct  ST.SetoffEventID,ST.CustomerId,ST.SetoffToolID AS 'SetoffToolID',ST.ObjectId,Name AS 'SetOffToolName',CONVERT(varchar(100),cast(SetoffPoster.CreateTime as datetime),23) AS 'StartTime',  IsNull(null,null)as 'EndTime',ST.ToolType,ISNULL(null,null) AS 'URL',
+                        ISNULL(SetoffPoster.[Desc],'') AS 'Description',SUW.NoticePlatformType,ISNULL(NULL,0) AS 'ServiceLife',ISNULL(SP.ShareVipID,0) as IsPush,ISNULL(IsOpen,0)as IsRead FROM SetoffTools ST
+                        LEFT JOIN SetoffPoster ON ST.ObjectId=SetoffPoster.SetoffPosterID
+                        LEFT JOIN SetoffToolUserView SUW ON SUW.SetoffToolID=ST.SetoffToolID AND  UserID='{0}' AND NoticePlatformType='{3}'
+                        LEFT JOIN T_LEventsSharePersonLog SP ON SP.ObjectId=ST.ObjectId AND SP.ShareVipID='{0}' AND SP.ShareVipType='{1}' WHERE 1=1 AND ST.ToolType='SetoffPoster' AND ST.[Status]='10'
+                        UNION ALL
+                        SELECT distinct ST.SetoffEventID,ST.CustomerId,ST.SetoffToolID AS 'SetoffToolID',ST.ObjectId,Title AS 'SetOffToolName',CONVERT(varchar(100),cast(WMaterialText.CreateTime as datetime),23) AS 'StartTime',  IsNull(null,null)as 'EndTime',ST.ToolType,ISNULL(OriginalUrl,null) AS 'URL',
+                        ISNULL(WMaterialText.[Text],'') AS 'Description',SUW.NoticePlatformType,ISNULL(NULL,0) AS 'ServiceLife',ISNULL(SP.ShareVipID,0) as IsPush,ISNULL(IsOpen,0)as IsRead FROM SetoffTools ST
+                        LEFT JOIN WMaterialText ON ST.ObjectId=WMaterialText.TextId AND ISNULL(WMaterialText.IsAuth,0)!=1
+                        LEFT JOIN SetoffToolUserView SUW ON SUW.SetoffToolID=ST.SetoffToolID AND  UserID='{0}' AND NoticePlatformType='{3}'
+                        LEFT JOIN T_LEventsSharePersonLog SP ON SP.ObjectId=ST.ObjectId AND SP.ShareVipID='{0}' AND SP.ShareVipType='{1}' WHERE 1=1 AND ST.ToolType='Material' AND ST.[Status]='10'
+                        )AS a where 1=1 and SetoffEventID='{2}'
+                        ", CurrentUserInfo.UserID, strApplicationType, pSetoffEventID, NoticePlatType);
+            if (CustomerID != null && CustomerID != "")
+            {
+                sbSql.Append(" AND CustomerID='" + CustomerID + "' ");
+            }
+            if (entity.ToolType != null && entity.ToolType != "")
+            {
+                sbSql.Append(" AND ToolType='" + entity.ToolType + "' ");
+            }
+            return sbSql.ToString();
+        }
+        #endregion
+
         #endregion
 
 
@@ -203,7 +289,7 @@ namespace JIT.CPOS.BS.DataAccess
                                 AND SP.BeShareVipID=@BeShareVipID 
                                 AND SP.ShareVipType=@ShareVipType
                                 AND SP.BusTypeCode=@BusTypeCode
-                                WHERE ST.SetoffEventID=@SetoffEventID AND ST.ToolType=@BusTypeCode AND ST.[Status]='10' ");
+                                WHERE ST.SetoffEventID=@SetoffEventID AND ST.ToolType=@BusTypeCode ");
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(CommandType.Text,sbSql.ToString(),parm));
         }
         #endregion
@@ -226,9 +312,9 @@ namespace JIT.CPOS.BS.DataAccess
 	                else  b.EndTime end as 'EndData',
 	                a.ObjectId
                 from SetoffTools as a 
-                left join CouponType as b on REPLACE(a.objectid,'-','')=REPLACE(b.coupontypeID,'-','') and b.IsDelete=0 
-                left join T_CTW_LEvent as c on REPLACE(a.objectid,'-','')=REPLACE(c.CTWEventId,'-','') and c.IsDelete=0 
-                left join SetoffPoster as d on REPLACE(a.objectid,'-','')=REPLACE(d.SetoffPosterID,'-','') and d.IsDelete=0 
+                left join CouponType as b on a.objectid=b.coupontypeID and b.IsDelete=0 
+                left join T_CTW_LEvent as c on a.objectid=c.CTWEventId and c.IsDelete=0 
+                left join SetoffPoster as d on a.objectid=d.SetoffPosterID and d.IsDelete=0 
                 left join ObjectImages as o on d.ImageId=o.ImageId and o.IsDelete=0  
                 where a.IsDelete=0 and a.Status='10' and a.CustomerId='{1}'
                 and a.setoffeventid='{0}'", SetoffEventID, this.CurrentUserInfo.ClientID);

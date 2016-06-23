@@ -5,13 +5,18 @@
 .firstpage .col{margin-bottom:25px;overflow:auto;zoom:1}
 /*两列布局*/
 .firstpage .rowTwo{width:50%;}
+
 /*三列布局*/
 .firstpage .rowThree{width:33.3333333%;}
+.firstpage .rowThree:nth-of-type(2) .rowTwo{}
+.firstpage .rowThree:nth-of-type(2) .dataDiv{text-align: center;width:100%}
 .firstpage .marginCommon{margin-right:22px;}
 .firstpage .paddigcommon{padding-left:12px}
      /*页面模块具体布局*/
 /*页面第一列 图表*/
-.firstpage .chartBase{height:345px;width:100%}
+.firstpage .chartBase{height:265px;width:100%}
+.firstpage .chartTitle{height:80px; padding:20px 0px;}
+.firstpage .chartTitleData{height:40px;line-height:40px;padding-left:20px}
 
 /*页面第二列  方块*/
 .firstpage .squreBase{height:150px}
@@ -26,15 +31,23 @@
 .firstpage .linkTitleDiv{padding:20px 0px}
 .firstpage .steps{width:45px;height:45px;line-height:45px;text-align:center; border-top-right-radius:25px;border-bottom-right-radius:25px;}
 .firstpage .linkTitle{margin-left:20px}
-.firstpage .iconimgs{height:80px;width:80px;margin:20px auto 33px; border-radius:80px;}
-.firstpage .imgs{margin-top:30px; margin-left:23px;width:35px;}
+.firstpage .iconimgs{height:80px;width:80px;margin:20px auto 33px; border-radius:80px;text-align:center;}
+.firstpage .imgs{margin-top:25px;height:30px;}
 .firstpage .text{margin:0px 30px 0px 20px}
 .firstpage .line2{margin:30px 0px}
 .firstpage .linkBtn{position:absolute;top:345px;left:100px}
 .firstpage .linkBtn a {height:35px}
+
+/*无数据页面*/
+.firstpage .missDatecol{width:100%;height:600px;}
+.firstpage .missDataDiv{width:200px;height:160px;margin:-80px 0 0 -100px; position:relative;top:50%;left:50%;}
+.firstpage .missDatecol p {margin: 15px auto 20px;width: 90%;}
+.firstpage .missDataBtn{margin-left:30px;}
+.firstpage .missDataImg{margin-left:50px}
     /*通用样式设置*/
 .firstpage .borderGrey{border:1px solid #f0f0f2;border-radius:3px; }
 .firstpage .borRight{border-right:1px solid #f0f0f2;height:62px}
+.firstpage .borRightyellow{border-right:1px solid #ffffff;height:40px}
 .firstpage .borderBlue{border:2px solid #00a0e8; border-radius:16px}
 
 .firstpage .floatleft{float:left;}
@@ -45,7 +58,7 @@
 .firstpage .colorred{color:#ff4d4d}
 .firstpage .colorwhite{color:#ffffff}
 .firstpage .colorblue{color:#00a0e8}
-
+.firstpage .colorLitblue{color:#038efe}
 .firstpage .font20{font-size:20px;}
 .firstpage .font16{font-size:16px;}
 .firstpage .font14{font-size:14px;}
@@ -59,3 +72,8 @@
 .firstpage .bgyellow{background-color:#ffb80d}
 .firstpage .bgorange{background-color:#ff8a00}
 .firstpage .bgred{background-color:#ff4d4d}
+.firstpage .bggreen{background-color:#71ba36}
+
+
+#leftMenu{display:none;}
+#contentArea{margin-left:0;padding-right:0;}

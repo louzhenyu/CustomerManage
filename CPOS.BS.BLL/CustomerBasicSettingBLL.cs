@@ -233,9 +233,11 @@ namespace JIT.CPOS.BS.BLL
             var settingList = bllBasicSetting.GetBasicSetting(this.CurrentUserInfo.ClientID);
             if(settingList==null && settingList.Count==0)
             {
-                settingList = this._currentDAO.QueryByEntity(new CustomerBasicSettingEntity() { CustomerID = this.CurrentUserInfo.ClientID }, null).ToList();
-                bllBasicSetting.SetBasicSetting(this.CurrentUserInfo.ClientID, settingList);
+               
+                bllBasicSetting.SetBasicSetting(this.CurrentUserInfo.ClientID);
             }
+            else
+                settingList = this._currentDAO.QueryByEntity(new CustomerBasicSettingEntity() { CustomerID = this.CurrentUserInfo.ClientID }, null).ToList();
             #region 社会化销售配置
             //社会化销售设置类型 0=按订单；1=按商品
             int socialSalesType = 0;

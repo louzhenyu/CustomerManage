@@ -24,7 +24,40 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Sys.InnerGroupNews
             var rd = new GetInnerGroupNewsListRD();
 
             //分页查找消息列表
-            PagedQueryResult<InnerGroupNewsEntity> lst = bll.GetVipInnerGroupNewsList(parameter.PageIndex, parameter.PageSize, pRequest.UserID, pRequest.CustomerID, parameter.NoticePlatformTypeId, parameter.BusType);
+            DateTime CreateTime = DateTime.Now;
+            var vipinfo = new VipBLL(loggingSessionInfo).GetByID(loggingSessionInfo.CurrentUser.User_Id);
+            if (vipinfo != null)  //按照时间过滤
+            {
+                CreateTime = Convert.ToDateTime(vipinfo.CreateTime);
+            }
+            var userinfo = new T_UserBLL(loggingSessionInfo).GetByID(loggingSessionInfo.CurrentUser.User_Id);
+            if (userinfo != null)
+            {
+                CreateTime = Convert.ToDateTime(userinfo.create_time);
+            }
+
+            if (vipinfo == null && userinfo == null)
+            {
+                var T_SuperRetailTrader = new T_SuperRetailTraderBLL(loggingSessionInfo).GetByID(loggingSessionInfo.CurrentUser.User_Id);
+
+                if (T_SuperRetailTrader != null)
+                {
+                    CreateTime = Convert.ToDateTime(T_SuperRetailTrader.CreateTime);
+
+                    userinfo = new T_UserBLL(loggingSessionInfo).GetByID(T_SuperRetailTrader.SuperRetailTraderFromId);
+                    if (userinfo != null)
+                    {
+                        CreateTime = Convert.ToDateTime(userinfo.create_time);
+                    }
+
+                    vipinfo = new VipBLL(loggingSessionInfo).GetByID(T_SuperRetailTrader.SuperRetailTraderFromId);
+                    if (vipinfo != null)  //按照时间过滤
+                    {
+                        CreateTime = Convert.ToDateTime(vipinfo.CreateTime);
+                    }
+                }
+            }
+            PagedQueryResult<InnerGroupNewsEntity> lst = bll.GetVipInnerGroupNewsList(parameter.PageIndex, parameter.PageSize, pRequest.UserID, pRequest.CustomerID, parameter.NoticePlatformTypeId, parameter.BusType, CreateTime);
             rd.InnerGroupNewsList = lst.Entities.Select(m => new InnerGroupNewsInfo()
                                                         {
                                                             Title = m.Title,

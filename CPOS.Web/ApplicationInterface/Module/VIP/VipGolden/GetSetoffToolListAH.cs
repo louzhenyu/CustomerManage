@@ -36,12 +36,26 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
             if (string.IsNullOrEmpty(para.ApplicationType))
             {
                 para.ApplicationType = "0";
-                if (para.ApplicationType == "3")
+            }
+            else
+            {                
+                switch (para.ApplicationType)
                 {
-                    NoticePlatType = "2";
+                    case "1":
+                        NoticePlatType = "1";
+                        break;
+                    case "2":
+                        NoticePlatType = "2";
+                        break;
+                    case"3":
+                        NoticePlatType = "2";//传3需要进行平台类型处理 等于3时获取员工集客行动平台
+                        break;
+                    case "4":
+                        NoticePlatType = "3";//传4需要进行平台类型处理 等于4时获取超级分销商推广行动平台
+                        break;
                 }
             }
-            var setOffEventInfo = setoffEventBLL.QueryByEntity(new SetoffEventEntity() { Status = "10", IsDelete = 0, SetoffType = Convert.ToInt32(para.ApplicationType == "3" ? "2" : para.ApplicationType), CustomerId = CurrentUserInfo.CurrentUser.customer_id }, null);
+            var setOffEventInfo = setoffEventBLL.QueryByEntity(new SetoffEventEntity() { Status = "10", IsDelete = 0, SetoffType = Convert.ToInt32(NoticePlatType), CustomerId = CurrentUserInfo.CurrentUser.customer_id }, null);
             int SetoffToolsTotalCount=0;
             DataSet SetoffToolsList=null;
             if (setOffEventInfo.Length != 0)
@@ -73,10 +87,30 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
                 var setOffPosterBLL = new SetoffPosterBLL(CurrentUserInfo);
                 var ObjectImagesBLL = new ObjectImagesBLL(CurrentUserInfo);
                 var T_CTW_LEventBLL = new T_CTW_LEventBLL(CurrentUserInfo);
+                var wMaterialTextBLL = new WMaterialTextBLL(CurrentUserInfo);
+                string SourceId=string.Empty;
+                if (!string.IsNullOrEmpty(para.ApplicationType))
+                {
+                    switch (para.ApplicationType)
+                    {
+                        case"1":
+                            SourceId = "3";//会员集客
+                            break;
+                        case "2":
+                            SourceId = "1";//APP会员服务;
+                            break;
+                        case "3":
+                            SourceId = "3";//APP会员服务;
+                            break;
+                        case "4":
+                            SourceId = "4";//超级分销商;
+                            break;
+                    }
+                }
                 string goUrl = string.Empty;
                 string goCouponUrl = strHost + "/HtmlApps/html/common/GatheringClient/Coupon.html?customerId=";//拼优惠券详细页面
                 string goPosterUrl = strHost + "/HtmlApps/html/common/GatheringClient/poster.html?customerId=";//拼海报详细页面
-                string strOAuthUrl = strHost + "/WXOAuth/AuthUniversal.aspx?scope=snsapi_userinfo&SourceId=3&customerId=";//拼OAuth认证
+                string strOAuthUrl = strHost + "/WXOAuth/AuthUniversal.aspx?scope=snsapi_userinfo&SourceId="+SourceId+"&customerId=";//拼OAuth认证
                 foreach (DataRow dr in SetoffToolsList.Tables[0].Rows)
                 {
                     if (dr["ToolType"].ToString() == "Coupon")
@@ -85,9 +119,17 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
                         {
                             dr["ImageUrl"] = CustomerBasicInfo.SettingValue;
                         }
-                        //Oauth认证加商品详情页
-                        goUrl = goCouponUrl + CurrentUserInfo.CurrentUser.customer_id + "&ShareVipId=" + CurrentUserInfo.UserID + "&couponId=" + dr["ObjectId"] + "&version=";
-                        dr["URL"] = strOAuthUrl + CurrentUserInfo.CurrentUser.customer_id + "&ShareVipID=" + CurrentUserInfo.UserID + "&goUrl=" + System.Web.HttpUtility.UrlEncode(goUrl);
+                        if (para.ApplicationType == "4")
+                        {
+                            goUrl = goCouponUrl + CurrentUserInfo.CurrentUser.customer_id + "&pushType=IsSuperRetail&ShareVipId=" + CurrentUserInfo.UserID + "&couponId=" + dr["ObjectId"] + "&version=";
+                            dr["URL"] = strOAuthUrl + CurrentUserInfo.CurrentUser.customer_id + "&objectType=Coupon&ObjectID=" + dr["ObjectId"] + "&ShareVipID=" + CurrentUserInfo.UserID + "&goUrl=" + System.Web.HttpUtility.UrlEncode(goUrl);
+                        }
+                        else
+                        {
+                            //Oauth认证加商品详情页
+                            goUrl = goCouponUrl + CurrentUserInfo.CurrentUser.customer_id + "&ShareVipId=" + CurrentUserInfo.UserID + "&couponId=" + dr["ObjectId"] + "&version=";
+                            dr["URL"] = strOAuthUrl + CurrentUserInfo.CurrentUser.customer_id + "&ShareVipID=" + CurrentUserInfo.UserID + "&goUrl=" + System.Web.HttpUtility.UrlEncode(goUrl);
+                        }
                     }
                     if (dr["ToolType"].ToString() == "SetoffPoster")
                     {
@@ -100,9 +142,17 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
                                 dr["ImageUrl"] = ObjectImgsInfo.ImageURL;
                             }
                         }
-                        //Oauth认证加海报详情页
-                        goUrl = goPosterUrl + CurrentUserInfo.CurrentUser.customer_id + "&&ShareVipId=" + CurrentUserInfo.UserID + "&ObjectId=" + dr["ObjectId"] + "&version=";
-                        dr["URL"] = strOAuthUrl + CurrentUserInfo.CurrentUser.customer_id + "&ShareVipID=" + CurrentUserInfo.UserID + "&goUrl=" + System.Web.HttpUtility.UrlEncode(goUrl);
+                        if (para.ApplicationType == "4")
+                        {
+                            goUrl = goPosterUrl + CurrentUserInfo.CurrentUser.customer_id + "&pushType=IsSuperRetail&ShareVipId=" + CurrentUserInfo.UserID + "&ObjectId=" + dr["ObjectId"] + "&version=";
+                            dr["URL"] = strOAuthUrl + CurrentUserInfo.CurrentUser.customer_id + "&objectType=SetoffPoster&ObjectID=" + dr["ObjectId"] + "&ShareVipID=" + CurrentUserInfo.UserID + "&goUrl=" + System.Web.HttpUtility.UrlEncode(goUrl);
+                        }
+                        else 
+                        {
+                            //Oauth认证加海报详情页
+                            goUrl = goPosterUrl + CurrentUserInfo.CurrentUser.customer_id + "&ShareVipId=" + CurrentUserInfo.UserID + "&ObjectId=" + dr["ObjectId"] + "&version=";
+                            dr["URL"] = strOAuthUrl + CurrentUserInfo.CurrentUser.customer_id + "&ShareVipID=" + CurrentUserInfo.UserID + "&goUrl=" + System.Web.HttpUtility.UrlEncode(goUrl);
+                        }                        
                     }
                     if (dr["ToolType"].ToString() == "CTW")
                     {
@@ -111,8 +161,27 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
                         {
                             dr["ImageUrl"] = T_CTW_LEventInfo.ImageURL;
                         }
+                        if (para.ApplicationType == "4")
+                        {
+                            goUrl = dr["URL"].ToString() + "&pushType=IsSuperRetail&ShareVipId=" + CurrentUserInfo.UserID + "&ObjectId=" + dr["ObjectId"] + "&version=";
+                            dr["URL"] = strOAuthUrl + CurrentUserInfo.CurrentUser.customer_id + "&objectType=CTW&ObjectID=" + dr["ObjectId"] + "&ShareVipID=" + CurrentUserInfo.UserID + "&goUrl=" + System.Web.HttpUtility.UrlEncode(goUrl);
+                        }
+                        else
+                        {
+                            goUrl = dr["URL"].ToString() +"&ShareVipId=" + CurrentUserInfo.UserID + "&ObjectId=" + dr["ObjectId"] + "&version=";
+                            dr["URL"] = strOAuthUrl + CurrentUserInfo.CurrentUser.customer_id + "&ShareVipID=" + CurrentUserInfo.UserID + "&goUrl=" + System.Web.HttpUtility.UrlEncode(goUrl);
+                        }
                     }
-
+                    if (dr["ToolType"].ToString() == "Material")//如果是图文素材
+                    {
+                        var wMaterialTextInfo = wMaterialTextBLL.QueryByEntity(new WMaterialTextEntity() { TextId = dr["ObjectId"].ToString() }, null).FirstOrDefault();
+                        if (wMaterialTextInfo != null)
+                        {
+                            dr["ImageUrl"] = wMaterialTextInfo.CoverImageUrl;
+                        }
+                        goUrl = dr["URL"].ToString();
+                        dr["URL"] = strOAuthUrl + CurrentUserInfo.CurrentUser.customer_id + "&objectType=Material&ObjectID=" + dr["ObjectId"] + "&ShareVipID=" + CurrentUserInfo.UserID + "&goUrl=" + System.Web.HttpUtility.UrlEncode(goUrl);
+                    }
                 }
                 setoffToolsRD.SetOffToolsList = DataTableToObject.ConvertToList<SetOffToolsInfo>(SetoffToolsList.Tables[0]);
             }

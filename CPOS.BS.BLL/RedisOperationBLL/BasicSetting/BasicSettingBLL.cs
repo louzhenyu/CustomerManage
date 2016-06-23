@@ -19,7 +19,7 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.BasicSetting
         /// </summary>
         /// <param name="strCustomerId"></param>
         /// <param name="basicSettingList"></param>
-        public void SetBasicSetting(string strCustomerId, List<CustomerBasicSettingEntity> basicSettingList)
+        public void SetBasicSetting(string strCustomerId)
         {
             try
             {

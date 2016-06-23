@@ -55,21 +55,22 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="CustomerID">商户编号</param>
         /// <param name="NoticePlatformType">平台编号（1=微信用户2=APP员工）</param>
         /// <returns></returns>
-        public PagedQueryResult<InnerGroupNewsEntity> GetVipInnerGroupNewsList(int pageIndex, int pageSize, string UserID, string CustomerID, int NoticePlatformType, int? BusType)
+        public PagedQueryResult<InnerGroupNewsEntity> GetVipInnerGroupNewsList(int pageIndex, int pageSize, string UserID, string CustomerID, int NoticePlatformType, int? BusType, DateTime BeginTime)
         {
-            return _currentDAO.GetVipInnerGroupNewsList(pageIndex, pageSize, UserID, CustomerID, NoticePlatformType, BusType);
+            return _currentDAO.GetVipInnerGroupNewsList(pageIndex, pageSize, UserID, CustomerID, NoticePlatformType, BusType, BeginTime);
         }
 
         /// <summary>
-        /// 获取未读站内信消息个数
+        /// 获取未读站内信消息个数 默认过滤之前的消息
         /// </summary>
         /// <param name="UserID">用户编号</param>
         /// <param name="CustomerID">商户编号</param>
         /// <param name="NoticePlatformType">平台编号（1=微信用户2=APP员工）</param>
+        /// <param name="CreateTime">当前用户注册时间</param>
         /// <returns></returns>
-        public int GetVipInnerGroupNewsUnReadCount(string UserID, string CustomerID, int NoticePlatformType,string NewsGroupId)
+        public int GetVipInnerGroupNewsUnReadCount(string UserID, string CustomerID, int NoticePlatformType, string NewsGroupId, DateTime CreateTime)
         {
-            return _currentDAO.GetVipInnerGroupNewsUnReadCount(UserID, CustomerID, NoticePlatformType, NewsGroupId);
+            return _currentDAO.GetVipInnerGroupNewsUnReadCount(UserID, CustomerID, NoticePlatformType, NewsGroupId, CreateTime);
         }
 
         /// <summary>
@@ -98,11 +99,13 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="CustomerId">商户编号</param>
         /// <param name="model">operationtype（0=当前消息 1=下一条消息 2=上一条消息）</param>
         /// <param name="NoticePlatformType">平台编号（1=微信用户 2=APP员工）</param>
+        /// <param name="CreateTime">会员注册信息</param>
+        /// 
         /// <returns>
         /// </returns>
-        public InnerGroupNewsEntity GetVipInnerGroupNewsDetailsByPaging(int operationtype, string CustomerID, int NoticePlatformType, string GroupNewsId)
+        public InnerGroupNewsEntity GetVipInnerGroupNewsDetailsByPaging(int operationtype, string CustomerID, int NoticePlatformType, string GroupNewsId, DateTime CreateTime)
         {
-            return _currentDAO.GetVipInnerGroupNewsDetailsByPaging(CustomerID, operationtype, NoticePlatformType, GroupNewsId);
+            return _currentDAO.GetVipInnerGroupNewsDetailsByPaging(CustomerID, operationtype, NoticePlatformType, GroupNewsId, CreateTime);
         }
         /// <summary>
         /// 查看某个用户对某条信息时候 读取过了
@@ -114,7 +117,7 @@ namespace JIT.CPOS.BS.BLL
         /// <returns></returns>
         public bool CheckUserIsReadMessage(string userId, string customerId, string GroupNewsId)
         {
-            return this._currentDAO.GetVipInnerGroupNewsUnReadCount(userId, customerId, null, GroupNewsId) > 0;
+            return this._currentDAO.GetVipInnerGroupNewsUnReadCount(userId, customerId, null, GroupNewsId,null) > 0;
         }
         #endregion
 

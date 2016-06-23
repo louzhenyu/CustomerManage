@@ -138,6 +138,14 @@ body{overflow-x: hidden;}
 .commonNav li a.icon_jysj_jysj{ background-image: url("../../images/newYear/icon/icon_jysj_jysj.png")}
 
 .commonNav li a.icon_dzhh_dzhh{ background-image: url("../../images/newYear/icon/icon_dzhh_dzhh.png")}
+
+/****超级分销****/
+.commonNav li a.icon_cjfx_gl{ background-image: url("../../images/newYear/icon/icon_cjfx_gl.png")}
+.commonNav li a.icon_cjfx_fx{ background-image: url("../../images/newYear/icon/icon_cjfx_fx.png")}
+.commonNav li a.icon_cjfx_sp{ background-image: url("../../images/newYear/icon/icon_cjfx_sp.png")}
+.commonNav li a.icon_cjfx_tz{ background-image: url("../../images/newYear/icon/icon_dzhh_dzhh.png")}
+
+
 /***图标End***/
 
 
@@ -492,3 +500,4 @@ body{overflow-x: hidden;}
 .operation .start{background-image:none;}
 .datagrid-mask{background: #fff;z-index: 30;opacity: 1;top: 40px;}
 .datagrid-mask-msg{background: url("../../../static/images/loading.gif") no-repeat center center transparent;z-index: 30;top: 40px;margin-top: 0;border: 0;}
+.datagrid-td-merged{ background-color: #fff;}

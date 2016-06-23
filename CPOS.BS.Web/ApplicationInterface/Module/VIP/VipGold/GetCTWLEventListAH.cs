@@ -33,8 +33,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipGold
             {
                 CTWEventId = m.CTWEventId.ToString(),
                 Name = m.Name,
-                StartDate = m.StartDate.Value.ToString("yyyy年MM月dd日"),
-                EndDate = m.EndDate.Value.ToString("yyyy年MM月dd日"),
+                //StartDate = m.StartDate.Value.ToString("yyyy年MM月dd日"),
+                //EndDate = m.EndDate.Value.ToString("yyyy年MM月dd日"),
+                StartDate = m.StartDate.Value.ToString("yyyy-MM-dd"),
+                EndDate = m.EndDate.Value.ToString("yyyy-MM-dd"),
                 OnfflineQRCodeId = m.OnlineQRCodeId
             }).ToList();
 

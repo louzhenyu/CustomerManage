@@ -1,0 +1,135 @@
+﻿@charset "utf-8";
+
+    /*页面整体布局*/
+.profits{width:1090px;padding:3px 0 0 45px;}
+   /*带小三角的边框*/
+.profits .col{position: relative;margin-bottom:30px}
+.profits .triangle{transform: rotate(45deg);overflow: hidden;width:20px;height:20px;border-top: 1px solid #e0e0e0;border-left: 1px solid #e0e0e0;}
+/*页面第一列 标题*/
+.profits .baseTitle{border-left:3px solid #00a0e8; padding-left:10px;padding-right:80px;margin-top:15px}
+.profits .saleBtn{}
+.profits .saleBtn a{width:100px}
+/*页面第二列  定价规则*/
+.profits .setPrice{width: 1055px;height: 228px;padding:25px 20px}
+.profits .setPrice .triangle{position: absolute;left:60px;top:-11px;}
+
+/*图片滑动框*/
+.slideimg{width:800px;padding-top:70px;padding-right:25px;}
+     /*滑动文字*/
+.profits .contentText{position:relative;height:40px;line-height:40px;padding:0px 10px;width:100%;border-radius:20px;text-align:center;white-space: nowrap;}
+    /*滑动提示框*/
+.profits .tooltipDiv{height:50px;width:auto;position:absolute;top:-63px;left:-30px;}
+.profits .LitTriange{transform: rotate(45deg);overflow: hidden;border-bottom: 1px solid #e0e0e0;border-right: 1px solid #e0e0e0;background-color:#ffffff; position: absolute;left:35px;top:45px;width:8px;height:8px}
+.TipText{position: relative; border: 1px solid #e0e0e0;border-radius:3px;padding: 0 5px;height:50px;color:#999999}
+
+/*滑动默认*/
+.priceContentzero{width:100%;}
+/*滑动1*/
+.priceContentone{width:100px;}
+/*滑动2*/
+.priceContenttwo{width:120px;margin-left:-22px;}
+/*滑动3*/
+.priceContentthree{width:300px;}
+/*滑动4*/
+.priceContentfour{width:275px}
+/*定价框*/
+.inputPrice{width:210px;height:160px;padding-left:25px;border-left:1px solid #e1e7ea}
+.profits .borderTrangle{border: 1px solid #e0e0e0;border-radius: 8px;}
+
+/*页面第三列  定价规则*/
+.profits .profitTitle{height:65px;line-height:65px;border-bottom:1px solid #e0e0e0;padding-left:30px;}
+.profits .profitContent{width:638px;height:870px;margin:60px auto 190px;border:1px solid black}
+.profits .parent{margin-top:-20px;padding-top:20px;width: 1055px;position: relative;background: url(../images/percent.png) no-repeat;height: 1198px;}
+.profits .commonLink{width:80px;border-radius:4px; margin-right:10px}
+.profits .lineTwo{border-left:1px solid #e0e0e0;border-right:1px solid #e0e0e0;padding-top:17px;}
+/*.profits .lineTwo div:first-child{margin-right:30px}*/
+.profits .lineTwoText{line-height:30px;}
+.profits .lineTwoText span:first-child{margin-right:610px;} 
+.profits .lineTwoText span:last-child{margin-right:15px;color:#f33;}
+
+.profits .systemOne  {position:absolute;top:204px;left:460px; width:400px;height:70px;line-height:70px;color:#ffffff;padding-left:70px;}
+.profits .systemTwo  {position:absolute;top:284px;left:404px; width:400px;height:70px;line-height:70px;color:#ffffff;padding-left:70px;}
+.profits .systemThree{position:absolute;top:364px;left:350px; width:400px;height:70px;line-height:70px;color:#ffffff;padding-left:70px;}
+.profits .systemFour {position:absolute;top:570px;left:573px; width:137px;height:55px;line-height:55px;color:#ffffff;}
+.profits .systemFifve{position:absolute;top:570px;left:718px; width:137px;height:55px;line-height:55px;color:#ffffff;}
+.profits .systemFour span{display:block;text-align:center;}
+.profits .systemFifve span{margin-left:16px}
+.profits .systemSix{position:absolute;top:490px;left:240px;width:11px;height:25px;background:url(../images/pic-down.png) no-repeat center center;}
+/*三级分销的开关*/
+.switchBtn{position:absolute;bottom:8px;right:30px;width:40px;height:20px;background:url(../images/switchBtnBg.png) no-repeat center center;}
+.switchBtn span{float:right;width:21px;height:20px;background:url(../images/switchBtnHandle.png) no-repeat center center;}
+
+.switchBtn.on{background:url(../images/switchBtnBg2.png) no-repeat center center;}
+.switchBtn.on span{float:left;background:url(../images/switchBtnHandle2.png) no-repeat center center;}
+input[type="text"]:disabled{ background:#f4f5f6;color:#ccc;}
+/**/
+.profits .systemTip{height:16px;line-height:16px;}
+.profits .systemInput{width:45px;height:30px;line-height:30px}
+.profits .numberbox{height:30px !important}
+.profits .systemSet{height:45px;line-height:45px;}
+.inputPrice .systemSet{height:36px;line-height:25px;}
+/*通用样式设置*/
+.profits .floatleft{float:left;}
+.profits .floatright{float:right;}
+
+.profits .colorgrey{color:#999999}
+.profits .colorred{color:#ff4d4d}
+.profits .colorwhite{color:#ffffff}
+.profits .colorOrange{color:#ffb80d}
+.profits .colorblue{color:#02a5ff}
+.profits .colorred{color:#ff8a00}
+.profits .colorGreen{color:#71ba36}
+
+.profits .font20{font-size:20px;}
+.profits .font16{font-size:16px;}
+.profits .font14{font-size:14px;}
+.profits .font10{font-size:10px}
+
+.profits .bgDefault{font-size:14px;background-color:#efefef;color:#666;}
+.profits .bgGrey{background-color:#fafafa}
+.profits .bgWhite{background-color:#ffffff}
+.profits .bgLitOrange{background-color:#ffb80d;/* white-space: nowrap; */}
+.profits .bgLitGreen{background-color:#ffb80d}
+.profits .bgDeepGreen{background-color:#71ba36}
+.profits .bgred {background-color: #ff8a00;}
+.profits .bgblue{background-color:#02a5ff}
+.profits .bgdeepOrange{background-color:#ff6600}
+
+
+/*录入协议*/
+#protocolHintBox{font-size:12px;color:#f00;}
+.layout-panel.layout-panel-south{border-top:1px solid #e5e5e5;}
+.easyui-linkbutton.commonBtn{margin-top:8px;}
+.protocolArea{width:100%;height:275px;padding: 25px 0 0 10px;}
+.protocolArea .item{display:inline-block;}
+.protocolArea .item em{float:left;width:110px;text-align:right;padding-right:10px;font-size: 14px;}
+.protocolArea .item .fromBox{margin-left:112px;width:402px;height:100%;}
+.protocolArea .item .fromBox textarea{height:100%;}
+.protocolArea .item .fromBox>*{width:100%;}
+.protocolArea .nameBox{margin-bottom:20px;position:relative;}
+.protocolArea .nameBox em{height:32px;line-height:32px;}
+.protocolArea .contBox{margin-bottom:10px;}
+.protocolArea .contBox em{height:80px;line-height:80px;}
+.protocolArea .contBox .fromBox{height:80px;border:1px solid #ccc;border-radius:4px;overflow:hidden;}
+.protocolArea .expBox em{}
+.protocolArea .expBox .fromBox{font-size:12px;color:#999;}
+.protocolArea .expBox .fromBox a{float:right;color:#038efe;}
+.protocolArea .nameBox .numLimit{position:absolute;right:-28px;top:0;height:30px;line-height:30px;color:#999;}
+
+
+.messageBtn{height:60px;text-align:center;padding:5px 0 0; border-top:1px solid #e5e5e5}
+.messageBtn .cancel{display:inline-block; background-color:#ffffff;color:#00a0e8;border:1px #00a0e8 solid;}
+.msgTitle{margin-bottom:15px;padding-left:35px;color:#666666}
+
+
+.affirmArea{height:188px;text-align:center;font-size:14px;color:#666;}
+.affirmArea .lineText{padding:50px 0 25px 0;}
+
+.panel.window{position:fixed !important;overflow:hidden;}
+.panel.window.messager-window{position:absolute !important;}
+.window-shadow{position:absolute !important;}
+.commonBtn.queryBtn{width:90px;float:right;margin-top:12px;}
+
+.loadingGifBox{text-align:center;}
+.loadingGifBox .textBox{padding-top:12px;font-size:12px;color:#666;}
+.textbox-text.validatebox-text{padding:0 2px;text-align:center;text-indent:0;}

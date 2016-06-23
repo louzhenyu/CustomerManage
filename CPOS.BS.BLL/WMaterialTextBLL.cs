@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.BLL
         }
         #endregion
 
-        public WMaterialTextEntity[] GetWMaterialTextList(string pCustomerID, string pName, string pTextId,string typeId, int? pPageSize, int? pPageIndex)
+        public WMaterialTextEntity[] GetWMaterialTextList(string pCustomerID, string pName, string pTextId, string typeId, int? pPageSize, int? pPageIndex)
         {
-            return this._currentDAO.GetWMaterialTextList(pCustomerID, pName, pTextId,typeId, pPageSize ?? 15, pPageIndex ?? 0);
+            return this._currentDAO.GetWMaterialTextList(pCustomerID, pName, pTextId, typeId, pPageSize ?? 15, pPageIndex ?? 0);
         }
 
         public int GetWMaterialTextListCount(string pCustomerID, string pName, string pMaterialTextId, string typeId)
@@ -134,6 +134,14 @@ namespace JIT.CPOS.BS.BLL
         public bool CheckName(string appId, string name, string textId)
         {
             return this._currentDAO.CheckName(appId, name, textId);
+        }
+        /// <summary>
+        /// 得到当前商户瞎的实体集合
+        /// </summary>
+        /// <returns></returns>
+        public List<WMaterialTextEntity> GetAllByCustomId()
+        {
+            return this._currentDAO.GetAllByCustomId();
         }
     }
 }

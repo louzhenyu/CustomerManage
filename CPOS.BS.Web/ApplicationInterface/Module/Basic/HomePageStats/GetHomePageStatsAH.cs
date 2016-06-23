@@ -40,9 +40,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.HomePageStats
                 rd.UnitUserCount = homePageStatsInfo.UnitUserCount;
                 rd.UserCurrentDayAvgOrderAmount = homePageStatsInfo.UserCurrentDayAvgOrderAmount;
                 rd.UserCurrentDayAvgOrderAmountDToD = homePageStatsInfo.UserCurrentDayAvgOrderAmountDToD;
-                rd.RetailTraderCount = homePageStatsInfo.RetailTraderCount;
-                rd.CurrentDayRetailTraderOrderAmount = homePageStatsInfo.CurrentDayRetailTraderOrderAmount;
-                rd.CurrentDayRetailTraderOrderAmountDToD = homePageStatsInfo.CurrentDayRetailTraderOrderAmountDToD;
+                rd.SuperRetailTraderCount = homePageStatsInfo.SuperRetailTraderCount;
+                rd.CurrentDaySuperRetailTraderOrderAmount = homePageStatsInfo.CurrentDaySuperRetailTraderOrderAmount;
+                rd.CurrentDaySuperRetailTraderOrderAmountDToD = homePageStatsInfo.CurrentDaySuperRetailTraderOrderAmountDToD;
                 rd.VipCount = homePageStatsInfo.VipCount;
                 rd.NewVipCount = homePageStatsInfo.NewVipCount;
                 rd.NewVipDToD = homePageStatsInfo.NewVipDToD;
@@ -67,7 +67,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.HomePageStats
             //查询参数
             List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
             complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID });
-            complexCondition.Add(new EqualsCondition() { FieldName = "DateCode", Value =  DateTime.Now.Date.ToString("yyyyMM") });
+            complexCondition.Add(new EqualsCondition() { FieldName = "DateCode", Value = DateTime.Now.Date.ToString("yyyyMM") });
 
             //Top5 排序参数
             List<OrderBy> topOrder = new List<OrderBy> { };

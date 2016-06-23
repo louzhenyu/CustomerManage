@@ -12,6 +12,7 @@ using System.Data;
 using System.Data.Sql;
 using System.Data.SqlClient;
 using System.Data.OleDb;
+using JIT.CPOS.Common;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -948,19 +949,54 @@ namespace JIT.CPOS.BS.BLL
                 int C_Count = dt.Columns.Count;//获取列数  
                 if (C_Count == 13)
                 {
+                    DataTable dtUnit = new DataTable();
+                    dtUnit.Columns.Add("UnitType", typeof(Int32));
+                    dtUnit.Columns.Add("UnitName", typeof(string));
+                    dtUnit.Columns.Add("UnitCode", typeof(string));
+                    dtUnit.Columns.Add("UnitContact", typeof(string));
+                    dtUnit.Columns.Add("UnitTel", typeof(string));
+                    dtUnit.Columns.Add("UintSuperiors", typeof(string));
+                    dtUnit.Columns.Add("UnitProvince", typeof(string));
+                    dtUnit.Columns.Add("UnitCity", typeof(string));
+                    dtUnit.Columns.Add("UnitDistrict", typeof(string));
+                    dtUnit.Columns.Add("UnitAddress", typeof(string));
+                    dtUnit.Columns.Add("Longitude", typeof(string));
+                    dtUnit.Columns.Add("Dimension", typeof(string));
+                    dtUnit.Columns.Add("UnitRemark", typeof(string));
+                    dtUnit.Columns.Add("CustomerId", typeof(string));
+                    dtUnit.Columns.Add("CreateUserId", typeof(string));
+
                     for (int i = 0; i < dt.Rows.Count; i++)  //记录表中的行数，循环插入  
                     {
                         dr = dt.Rows[i];
+                        DataRow dr_Unit = dtUnit.NewRow();
+
                         if (dr[0].ToString() != "" && dr[1].ToString() != "")
                         {
-                            this.unitService.insertToSql(dr, C_Count, connSql, CurrentUserInfo.ClientID, CurrentUserInfo.UserID);
+                            //this.unitService.insertToSql(dr, C_Count, connSql, CurrentUserInfo.ClientID, CurrentUserInfo.UserID);
+                            dr_Unit["UnitType"] = dr[0].ToString();
+                            dr_Unit["UnitName"] = dr[1].ToString();
+                            dr_Unit["UnitCode"] = dr[2].ToString();
+                            dr_Unit["UnitContact"] = dr[3].ToString();
+                            dr_Unit["UnitTel"] = dr[4].ToString();
+                            dr_Unit["UintSuperiors"] = dr[5].ToString();
+                            dr_Unit["UnitProvince"] = dr[6].ToString();
+                            dr_Unit["UnitCity"] = dr[7].ToString();
+                            dr_Unit["UnitDistrict"] = dr[8].ToString();
+                            dr_Unit["UnitAddress"] = dr[9].ToString();
+                            dr_Unit["Longitude"] = dr[10].ToString();
+                            dr_Unit["Dimension"] = dr[11].ToString();
+                            dr_Unit["UnitRemark"] = dr[12].ToString();
+                            dr_Unit["CustomerId"] = CurrentUserInfo.ClientID;
+                            dr_Unit["CreateUserId"] = CurrentUserInfo.UserID;
 
+                            dtUnit.Rows.Add(dr_Unit);
                         }
                     }
-
+                    Utils.SqlBulkCopy(connString, dtUnit, "ImportUnitTemp");
                     connSql.Close();
                     //临时表导入正式表
-                    dsResult = this.unitService.ExcelImportToDB();
+                    dsResult = this.unitService.ExcelImportToDB(CurrentUserInfo.ClientID);
                 }
                 else
                 {
@@ -1002,35 +1038,6 @@ namespace JIT.CPOS.BS.BLL
 
             return dsResult;
         }
-        public DataSet DataTableToDb(DataTable dt, LoggingSessionInfo CurrentUserInfo)
-        {
-
-            DataSet dsResult = null; //要插入的数据  
-            try
-            {
-                string connString=System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Conn_alading"].ToString();
-                //string connString = @"user id=dev;password=JtLaxT7668;data source=182.254.219.83,3433;database=cpos_bs_alading;";   //连接数据库的路径方法  
-                SqlConnection connSql = new SqlConnection(connString);
-                connSql.Open();
-                DataRow dr = null;
-                int C_Count = dt.Columns.Count;//获取列数  
-                for (int i = 0; i < dt.Rows.Count; i++)  //记录表中的行数，循环插入  
-                {
-                    dr = dt.Rows[i];
-                    this.unitService.insertToSql(dr, C_Count, connSql, CurrentUserInfo.ClientID, CurrentUserInfo.UserID);
-                }
-
-                connSql.Close();
-                //临时表导入正式表
-                dsResult = this.unitService.ExcelImportToDB();
-            }
-            catch (Exception)
-            {
-            }
-
-            return dsResult;
-        }
-
             
         
 

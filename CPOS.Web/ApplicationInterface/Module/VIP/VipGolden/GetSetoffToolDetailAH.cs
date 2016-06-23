@@ -43,8 +43,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
                 var SetoffToolsBll = new SetoffToolsBLL(CurrentUserInfo);
                 var SetOffPosterInfo = setOffPosterBLL.QueryByEntity(new SetoffPosterEntity() { SetoffPosterID = new Guid(para.ObjectId) }, null);//获取集客海报信息
                 var setoffEventBLL = new SetoffEventBLL(CurrentUserInfo);
-                var setoffEventInfo = setoffEventBLL.QueryByEntity(new SetoffEventEntity() { Status = "10", SetoffType = 1, CustomerId=customerId }, null);
+                var setoffEventInfo = setoffEventBLL.QueryByEntity(new SetoffEventEntity() { Status = "10", SetoffType = 1, CustomerId = customerId }, null);
                 //var SetoffToolsInfo = SetoffToolsBll.QueryByEntity(new SetoffToolsEntity() { ObjectId = para.ObjectId, Status = "10", ToolType = para.ToolType, SetoffEventID = setoffEventInfo[0].SetoffEventID }, null);//获取工具信息
+                //VipDcode=9生成永久二维码
                 if (para.VipDCode == 9)
                 {
                     //根据分享人ID和对象ID获取永久二维码信息
@@ -54,9 +55,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
                         if (para.ToolType == "Coupon")//如果类型为优惠券则返回二维码
                         {
                             setoffToolDetailRD.ToolType = para.ToolType;
-                            setoffToolDetailRD.imageUrl = userQrCode[0].ImageUrl;
-                            setoffToolDetailRD.paraTemp = userQrCode[0].QRCode;
-                           
                         }
                         if (para.ToolType == "SetoffPoster")//如果为集客海报则返回背景图和二维码
                         {
@@ -66,9 +64,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
                                 setoffToolDetailRD.ToolType = para.ToolType;
                                 setoffToolDetailRD.imageUrl = userQrCode[0].ImageUrl;
                                 setoffToolDetailRD.paraTemp = userQrCode[0].QRCode;
-                                setoffToolDetailRD.backImgUrl = backImgInfo[0].ImageURL;                                
+                                setoffToolDetailRD.backImgUrl = backImgInfo[0].ImageURL;
                             }
-                        }                        
+                        }
+                        setoffToolDetailRD.imageUrl = userQrCode[0].ImageUrl;
+                        setoffToolDetailRD.paraTemp = userQrCode[0].QRCode;
                         return setoffToolDetailRD;
                     }
                     //获取当前二维码 最大值
@@ -106,7 +106,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
                     {
                         pTypeCode = "SetoffPosterQrCode";
                     }
-                    var userQrType = userQrTypeBll.QueryByEntity(new WQRCodeTypeEntity() { TypeCode = pTypeCode }, null);//"CouponQrCode=优惠券二维码/SetoffPosterQrCode=集客海报二维码"
+                    if (para.ToolType.ToLower() == "superretail")
+                    {
+                        pTypeCode = "SuperRetailQrCode";
+                    }
+                    var userQrType = userQrTypeBll.QueryByEntity(new WQRCodeTypeEntity() { TypeCode = pTypeCode }, null);//"SuperRetailQrCode=超级分销商二维码"
                     if (userQrType != null && userQrType.Length > 0)
                     {
                         var userQrcodeBll = new WQRCodeManagerBLL(CurrentUserInfo);
@@ -149,23 +153,23 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
                 {
                     UserViewData = SetoffToolUserViewBLL.QueryByEntity(new SetoffToolUserViewEntity() { ObjectId = para.ObjectId, UserID = CurrentUserInfo.UserID, SetoffToolID = new Guid(para.SetoffToolID) }, null);
                 }
-                if (UserViewData.Length == 0 && !string.IsNullOrEmpty(para.SetoffToolID))
+                if (UserViewData.Length == 0 && !string.IsNullOrEmpty(para.SetoffToolID) && para.PlatformType != "3")
                 {
                     flag = 1;//当为1时进行增加打开工具记录
                 }
                 if (para.ToolType == "Coupon")//如果类型为优惠券则返回二维码
                 {
-                    
+
                     #region 用户领优惠券过程
                     var CouponTypeBLL = new CouponTypeBLL(CurrentUserInfo);
                     var couponBLL = new CouponBLL(CurrentUserInfo);
                     var CouponSourceBLL = new CouponSourceBLL(CurrentUserInfo);
-                    var VipCouponMappingBLL = new VipCouponMappingBLL(CurrentUserInfo);                    
-                    
+                    var VipCouponMappingBLL = new VipCouponMappingBLL(CurrentUserInfo);
+
                     int? SurplusCount = 0;//先获得剩余张数
-                    int hasCouponCount=0;//已领张数 如果>0表示已领取过就不让他领，=0就领取
+                    int hasCouponCount = 0;//已领张数 如果>0表示已领取过就不让他领，=0就领取
                     var couponTypeInfo = CouponTypeBLL.QueryByEntity(new CouponTypeEntity() { CouponTypeID = new Guid(para.ObjectId) }, null);
-                    
+
                     if (couponTypeInfo != null)
                     {
                         string couponIsVocher = string.Empty;
@@ -176,30 +180,30 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
                         else
                         {
                             SurplusCount = couponTypeInfo[0].IssuedQty - couponTypeInfo[0].IsVoucher;
-                        }       
+                        }
                         if (SurplusCount != 0 && para.ShareVipId != null && para.ShareVipId != "")// 通过列表进详细自己不能领券
                         {
                             //当剩余数量不为0时，进行下一步判断是否存在已领券的信息
-                            hasCouponCount = VipCouponMappingBLL.GetReceiveCouponCount(CurrentUserInfo.UserID,para.ObjectId,"Share");
-                            if (hasCouponCount == 0 )//如果等于零，开始领券流程
+                            hasCouponCount = VipCouponMappingBLL.GetReceiveCouponCount(CurrentUserInfo.UserID, para.ObjectId, "Share");
+                            if (hasCouponCount == 0)//如果等于零，开始领券流程
                             {
                                 //关联优惠券让用户领券
                                 var redisVipMappingCouponBLL = new JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon.RedisVipMappingCouponBLL();
                                 try
                                 {
                                     //执行领取操作
-                                    redisVipMappingCouponBLL.SetVipMappingCoupon(new CC_Coupon()
+                                    redisVipMappingCouponBLL.InsertDataBase(CurrentUserInfo.CurrentUser.customer_id, CurrentUserInfo.UserID, para.SetoffToolID, "Share", new CC_Coupon()
                                     {
-                                        CustomerId = this.CurrentUserInfo.ClientID,
+                                        CustomerId = CurrentUserInfo.CurrentUser.customer_id,
                                         CouponTypeId = para.ObjectId
-                                    }, "", CurrentUserInfo.UserID, "Share");                                    
-                                    setoffToolDetailRD.Name = couponTypeInfo[0].CouponTypeName+",已飞入您的账户";
+                                    });
+                                    setoffToolDetailRD.Name = couponTypeInfo[0].CouponTypeName + ",已飞入您的账户";
                                 }
                                 catch (Exception ex)
                                 {
                                     setoffToolDetailRD.Name = "很遗憾此次优惠券" + couponTypeInfo[0].CouponTypeName + "的分享已失效,下次请及时领取.";
                                 }
-                                
+
                             }
                         }
                         else
@@ -211,10 +215,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
                                 //throw new APIException("很遗憾您来迟一步券已被领完.") { ErrorCode = ERROR_LOAD_WRONG };
                             }
                         }
-                        if (setoffToolDetailRD.Name == null || setoffToolDetailRD.Name=="")
+                        if (setoffToolDetailRD.Name == null || setoffToolDetailRD.Name == "")
                         {
                             setoffToolDetailRD.Name = couponTypeInfo[0].CouponTypeName;
-                        }                        
+                        }
                         setoffToolDetailRD.StartTime = couponTypeInfo[0].BeginTime == null ? Convert.ToDateTime(couponTypeInfo[0].CreateTime).ToString("yyyy-MM-dd") : Convert.ToDateTime(couponTypeInfo[0].BeginTime).ToString("yyyy-MM-dd");
                         setoffToolDetailRD.EndTime = couponTypeInfo[0].EndTime == null ? "" : Convert.ToDateTime(couponTypeInfo[0].EndTime).ToString("yyyy-MM-dd");
                         setoffToolDetailRD.ServiceLife = couponTypeInfo[0].ServiceLife.ToString();
@@ -226,14 +230,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
                 }
                 if (para.ToolType == "SetoffPoster")//如果为集客海报则返回背景图和二维码
                 {
-                    if (SetOffPosterInfo != null)
+                    if (SetOffPosterInfo != null && SetOffPosterInfo.Length > 0)
                     {
                         var backImgInfo = imgBll.QueryByEntity(new ObjectImagesEntity() { ImageId = SetOffPosterInfo[0].ImageId }, null);
                         setoffToolDetailRD.ToolType = para.ToolType;
                         setoffToolDetailRD.imageUrl = imageUrl;
                         setoffToolDetailRD.paraTemp = iResult.ToString().Insert(4, " "); //加空格，加空格有什么作用？
                         setoffToolDetailRD.backImgUrl = backImgInfo[0].ImageURL;
-                        setoffToolDetailRD.Name = SetOffPosterInfo[0].Name;                       
+                        setoffToolDetailRD.Name = SetOffPosterInfo[0].Name;
                     }
                 }
                 if (flag == 1)//当为1是需进行打开工具的记录
@@ -259,7 +263,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
             }
             catch (Exception ex)
             {
-                throw new APIException(ex.Message) { };
+                throw new APIException(ex.Message) { ErrorCode = ERROR_CODES.DEFAULT_ERROR };
             }
             return setoffToolDetailRD;
         }

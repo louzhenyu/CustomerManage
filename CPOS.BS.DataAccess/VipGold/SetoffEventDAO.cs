@@ -71,5 +71,76 @@ namespace JIT.CPOS.BS.DataAccess
 
             return flag;
         }
+        /// <summary>
+        /// 分销工具
+        /// </summary>
+        /// <param name="setoffEventID"></param>
+        /// <returns></returns>
+        public DataSet GetSetoffToolList(Guid? setoffEventID)
+        {
+            string sql = @"
+SELECT
+	a.SetoffToolID,
+	a.ToolType,
+	(
+		isnull(b.IssuedQty, 0) - isnull(b.IsVoucher, 0)
+	) AS 'SurplusCount',
+	b.ServiceLife,
+	CASE a.ToolType
+WHEN 'Material' THEN
+	w.CoverImageUrl
+ELSE
+o.ImageUrl
+END AS 'ImageUrl',
+ a.ObjectId,
+ CASE a.ToolType
+WHEN 'CTW' THEN
+	c.Name
+WHEN 'Coupon' THEN
+	b.CouponTypeName
+WHEN 'Material' THEN
+	w.Title
+ELSE
+	d.Name
+END AS 'Name',
+ CASE a.ToolType
+WHEN 'CTW' THEN
+	c.StartDate
+ELSE
+	b.BeginTime
+END AS 'BeginData',
+ CASE a.ToolType
+WHEN 'CTW' THEN
+	c.EndDate
+ELSE
+	b.EndTime
+END AS 'EndData',
+ a.ObjectId,
+ w.[Author] as Text
+FROM
+	SetoffTools AS a
+LEFT JOIN CouponType AS b ON a.objectid = convert(nvarchar(40), b.coupontypeID)  
+AND b.IsDelete = 0
+LEFT JOIN T_CTW_LEvent AS c ON a.objectid = convert(nvarchar(40), c.CTWEventId)  
+AND c.IsDelete = 0
+LEFT JOIN SetoffPoster AS d ON a.objectid =convert(nvarchar(40), d.SetoffPosterID)  
+AND d.IsDelete = 0
+LEFT JOIN ObjectImages AS o ON d.ImageId = o.ImageId
+AND o.IsDelete = 0
+LEFT JOIN WMaterialText w ON a.ObjectId = w.TextId
+AND w.IsDelete = 0
+WHERE
+	a.IsDelete = 0
+AND a.Status = '10'
+AND a.CustomerId = @customerId
+AND a.setoffeventid = @setoffeventid
+order by a.CreateTime desc
+";
+            List<SqlParameter> pList = new List<SqlParameter>();
+            pList.Add(new SqlParameter("@customerId", CurrentUserInfo.ClientID));
+            pList.Add(new SqlParameter("@setoffeventid", setoffEventID));
+            var Result = this.SQLHelper.ExecuteDataset(CommandType.Text, sql, pList.ToArray());
+            return Result;
+        }
     }
 }
