@@ -1,5 +1,5 @@
 @charset "utf-8";
-
+.queryTermArea{width: 100%;position: relative;}
 .optionBtn .batch{ position:relative;background:url("../images/jiantouD.png") 90% center no-repeat #00a0e8;}
 
 .commonBtn{width: 90px;}
@@ -49,9 +49,9 @@
     background-position:center center;
 }
 .tree-checkbox0{ background-image:url("../images/check.png")}
-.tree-checkbox2 { background-image:url("../images/check.png")}
+.tree-checkbox2 { background-image:url("../images/solidChek.png")}
 .tree-checkbox1{ background-image:url("../images/checkon.png")}
-#unitTreeSelect .tree-title{width: 258px;height: 40px;line-height: 40px;}
+#unitTreeSelect .tree-title{width: 258px;height: 40px;line-height: 40px; text-align: center}
 #unitTreeSelect .tree-title .delete{float: right;height: 40px;}
 #unitTreeSelect .tree-expanded,
 #unitTreeSelect .tree-collapsed,#unitTreeSelect .tree-checkbox{
@@ -63,10 +63,31 @@
     background-position:center center;
 }
 #unitTreeSelect  .tree-node{height: 49px;line-height:49px; border-bottom:1px solid #e1e7ea;}
-#unitTreeSelect .bg{background:#f2f2f2;height: 40px;line-height:40px}
+#unitTreeSelect .tree-node.bg{background-color:#f2f2f2;height: 40px;line-height:40px}
+#unitTreeSelect .bg  .tree-title{ text-align: left;}
 
 #unitTreeSelect  li .tree-node-selected{background:#d9f1fc}
-
-.content .datagrid-header-check, .content .datagrid-cell-check { background-position:left center;}
+/*只有多个sql的时候显示边框*/
+/*.datagrid-body td.datagrid-td-merged{ border: 1px solid #e1e7ea; border-top: 1px solid transparent;} */
 .datagrid-body .datagrid-editable td{text-align: left;}
 .dataMessage1{width: 567px;height: 30px;position: absolute;top: 58px;text-align: center; display: none}
+.tipInfo{width:25px;cursor: pointer;position:absolute;right: 0;top:0;height: 25px;line-height: 25px;border-radius: 12px;background: #00a0e8;text-align: center;font-size: 18px;color: #fff;}
+.tipPanel{width: 25px;height: 60px;position: absolute;right: 0;top:30px;z-index: 1000;}
+.tipInfoText{display:none;background: url("../images/tipbg.png") no-repeat center center;padding-top:31px; padding-left:24px; padding-right:30px;width: 388px;height: 407px;position: absolute;right: -20px;    z-index: 100;top: 40px;}
+.tipInfoText p{padding-left: 17px; line-height: 26px;font-size: 14px; background:url("../images/tuoyuan.png") no-repeat left 10px;color: #999;}
+.tipInfoText p b{ color: #666; font-weight: bold; }
+
+#girdForm td[field="ck"]{border-right: 1px solid #e1e7ea;}
+#girdForm td[field="ItemName"]{border-right: 1px solid #e1e7ea;}
+#girdForm  .datagrid-header-row  td{ border-right: 1px solid transparent;}
+.datagrid-header-check,
+.datagrid-cell-check {
+    width: 40px;
+    height: 20px;
+    background-position: center center;
+
+}
+.semiangle .datagrid-cell-check{
+    background-image: url("../images/solidChek.png");
+
+}
