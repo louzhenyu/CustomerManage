@@ -454,6 +454,7 @@ namespace JIT.CPOS.BS.BLL.WX
                     vipInfo.VipSourceId = "3";		//写死
                     vipInfo.HeadImgUrl = headimgurl;   //注意，需要先传到我们本地服务器，可以参考（需要download下来）
                     vipInfo.ClientID = loggionSesionInfo.ClientID;		//客户标识
+                    vipInfo.RegistrationTime = DateTime.Now;
                     vipInfo.Status = 0;			//客户没有关注
                     vipInfo.VipPasswrod = "e10adc3949ba59abbe56e057f20f883e";  //初始密码123456
                     UnitService unitServer = new UnitService(loggionSesionInfo);

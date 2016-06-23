@@ -149,7 +149,7 @@ namespace JIT.CPOS.Web.WXOAuth
 
                 #region
                 Response.Write("<br>");
-                loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
+                loggingSessionInfo = Default.GetBSLoggingSession(customerId, "system");
 
                 GetKeyByApp();
                 string code = Request["code"];
