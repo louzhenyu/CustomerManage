@@ -381,6 +381,7 @@ body{overflow-x: hidden;}
 .imgTable .datagrid-row  img.l{margin-right: 10px;}
 /*列表相关样式*/
 .operation{display: inline-block;}
+.optBtnPanel{ width: auto; margin: 0 auto; display: inline-block;} /*控制操作按钮位置*/
 .opt {float: left;cursor: pointer; width: 18px;height: 18px; margin-left: 4px; margin-right: 16px;color: #00a0e8;}
 .opt a{ color: #00a0e8;}
 .noOpt{ float: left;margin: 6px 10px;}
