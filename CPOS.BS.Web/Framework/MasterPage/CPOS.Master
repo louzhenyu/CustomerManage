@@ -53,7 +53,6 @@
 
 
     <%--mvc 样式strart--%>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="<%=StaticUrl+"/framework/css/reset.css"%>" rel="stylesheet" type="text/css" />
     <link href="<%=StaticUrl+"/framework/css/style.css"%>" rel="stylesheet" type="text/css" />
     <link href="<%=StaticUrl+"/framework/css/webcontrol.css"%>" rel="stylesheet" type="text/css" />
@@ -72,7 +71,7 @@
     <link href="<%=StaticUrl+"/Lib/Javascript/Ext4.1.0/Resources/css/ext-all-gray.css"%>" rel="stylesheet" type="text/css" />
     <link href="<%=StaticUrl+"/Lib/Css/jit-all.css"%>" rel="stylesheet" type="text/css" />
     
-	<script src="http://kefu.qycn.com/vclient/state.php?webid=112929" language="javascript" type="text/javascript"></script>
+
     <script src="<%=StaticUrl+"/Lib/Javascript/Ext4.1.0/ext-all.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Lib/Javascript/Ext4.1.0/locale/ext-lang-zh_CN.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Lib/Javascript/Jit/jit-all-dev.js"%>" type="text/javascript"></script>
@@ -378,7 +377,8 @@
 <li data-menucode="hyjk"><a href="JavaScript:void(0)" class="menusrc"><img src="/Framework/Image/leftImgList/05L.png" alt="" class="hides"/><img src="/Framework/Image/leftImgList/05.png" alt="" class="shows"/></a></li>
 <li data-menucode="dzhh"><a href="JavaScript:void(0)" class="menusrc"><img src="/Framework/Image/leftImgList/02L.png" alt="" class="hides"/> <img src="/Framework/Image/leftImgList/02.png" alt="" class="shows"/></a></li>
 <li data-menucode="ygjl"><a href="JavaScript:void(0)"  class="menusrc"><img src="/Framework/Image/leftImgList/03L.png" alt="" class="hides"/> <img src="/Framework/Image/leftImgList/03.png" alt="" class="shows"/></a></li>
-<li data-menucode="qdcx"><a href="JavaScript:void(0)" class="menusrc" ><img src="/Framework/Image/leftImgList/04L.png" alt="" class="hides" /> <img src="/Framework/Image/leftImgList/04.png" alt="" class="shows"/></a></li>
+<%--<li data-menucode="qdcx"><a href="JavaScript:void(0)" class="menusrc" ><img src="/Framework/Image/leftImgList/04L.png" alt="" class="hides" /> <img src="/Framework/Image/leftImgList/04.png" alt="" class="shows"/></a></li>--%>
+<li data-menucode="cjfx"><a href="JavaScript:void(0)" class="menusrc" ><img src="/Framework/Image/leftImgList/09L.png" alt="" class="hides" /> <img src="/Framework/Image/leftImgList/09.png" alt="" class="shows"/></a></li>
 </ul>
 <div class="help   hover" >
 <a href="http://help.chainclouds.cn/" target="_blank"><img src="/Framework/Image/leftImgList/help.png" alt="" class="shows"/><img src="/Framework/Image/leftImgList/helpon.png" alt="" class="hides" style="display:none;" /> </a>
@@ -448,7 +448,7 @@
                 //     console.log($(".session1").text());
             });
         </script> 
-
+	<script src="http://kefu.qycn.com/vclient/state.php?webid=112929" language="javascript" type="text/javascript"></script>
 </body>
 
 

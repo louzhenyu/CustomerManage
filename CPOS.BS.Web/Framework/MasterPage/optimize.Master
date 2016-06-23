@@ -48,7 +48,7 @@
       <%--模板 样式strart 切换模板样式只要更改/alading/skin02.css?v=0.5  alading qixin  college 只要三个模板 --%>
     <link href="<%=StaticUrl+"/module/styles/css/newYear/skin02.css?v=0.1"%>" rel="stylesheet" />
       <%--模板 样式End--%>
-	<script src="http://kefu.qycn.com/vclient/state.php?webid=112929" language="javascript" type="text/javascript"></script>
+	
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
 </head>
 <%--<body cache="true" version="0.1">--%>
@@ -284,7 +284,8 @@
 <li data-menucode="hyjk"><a href="JavaScript:void(0)" class="menusrc"><img src="/Framework/Image/leftImgList/05L.png" alt="" class="hides"/><img src="/Framework/Image/leftImgList/05.png" alt="" class="shows"/></a></li>
 <li data-menucode="dzhh"><a href="JavaScript:void(0)" class="menusrc"><img src="/Framework/Image/leftImgList/02L.png" alt="" class="hides"/> <img src="/Framework/Image/leftImgList/02.png" alt="" class="shows"/></a></li>
 <li data-menucode="ygjl"><a href="JavaScript:void(0)"  class="menusrc"><img src="/Framework/Image/leftImgList/03L.png" alt="" class="hides"/> <img src="/Framework/Image/leftImgList/03.png" alt="" class="shows"/></a></li>
-<li data-menucode="qdcx"><a href="JavaScript:void(0)" class="menusrc" ><img src="/Framework/Image/leftImgList/04L.png" alt="" class="hides" /> <img src="/Framework/Image/leftImgList/04.png" alt="" class="shows"/></a></li>
+<%--<li data-menucode="qdcx"><a href="JavaScript:void(0)" class="menusrc" ><img src="/Framework/Image/leftImgList/04L.png" alt="" class="hides" /> <img src="/Framework/Image/leftImgList/04.png" alt="" class="shows"/></a></li>--%>
+<li data-menucode="cjfx"><a href="JavaScript:void(0)" class="menusrc" ><img src="/Framework/Image/leftImgList/09L.png" alt="" class="hides" /> <img src="/Framework/Image/leftImgList/09.png" alt="" class="shows"/></a></li>
 </ul>
 <div class="help hover">
 <a href="http://help.chainclouds.cn/" target="_blank"><img src="/Framework/Image/leftImgList/help.png" alt="" class="shows"/><img src="/Framework/Image/leftImgList/helpon.png" alt="" class="hides" style="display:none;" /> </a>
@@ -320,11 +321,12 @@
      <script type="text/javascript">
          if (location.pathname == "/Module/CreativeWarehouse/creative.aspx") {//只有一个页面加载此js
              var version = new Date().getTime();
-             var str = "<script type='text/javascript' src='http://www.vveshow.com/plugins/jvveshow/1.0.0/resource/app/jvveshow/jvveshow.min.js?versionInit='" + version + "'>";
+             var str = "<script type='text/javascript' src='//test.linkin.mobi/vveshow/plugins/jvveshow/1.0.0/resource/app/jvveshow/jvveshow.js?versionInit='" + version + "'>";
              str += "\<\/script\>";
              document.write(str);
          }
     </script>
+    <script src="http://kefu.qycn.com/vclient/state.php?webid=112929" language="javascript" type="text/javascript"></script>
 </body>
 
 </html>
