@@ -38,11 +38,26 @@
 
                                                   </form>
 
+
+
                         </div>
 
                     <!--<h2 class="commonTitle">会员查询</h2>-->
+                    <div class="tipPanel">
+                      <em class="tipInfo r">i</em>
+                      <div class="tipInfoText">
+                       <p><b>分销售价：</b><span>分销商对外销售商品的价格，合理设置可以帮助分销商更好的销售分销商品哦！</span></p>
+                       <p><b>商家利润：</b><span>商家可以在这个商品中实际所赚取的金额，帮助商家更为了解自己商品的利润空间可以更为合理的设置分销的奖励哦！</span></p>
+                       <p><b>分销库存：</b><span>分销商品虚拟库存和现有系统中商品库存无任何关系，请合理进行设置以免对实际库存照成影响！</span></p>
+                       <p><b>计算公式：</b><span> <br/> 1、分销售价=成本价/分销商品成本占比 <br/>
+                                            （您在分润管理中设置的比例） <br/>
+                                            2、商家利润=分销售价*商家利润占比 <br/>
+                                            （您在分润管理中设置的比例）</span></p>
 
-                </div> <div class="optionBtn" id="opt">
+</div>  <!--tipInfoText-->
+                  </div><!--tipPanel-->
+                </div>
+                <div class="optionBtn" id="opt">
                                                         <div class="commonBtn w100 batch optionCheck" style="position: relative" data-flag="batch"   >批量操作
                                                         <div class="panelTab" >
                                                         <p class="optionCheck check01" data-optiontype="audit"  >批量上架</p>
@@ -56,14 +71,14 @@
                                       <div class="commonBtn w100 r" data-flag="add"  >选择商品</div>
 
                                       </div>
-                <div class="tableWrap" id="tableWrap">
+                <div class="tableWrap cursorDef" id="tableWrap">
                   <form id="girdForm">
-                   <div class="imgTable"> <div class="dataTable" id="gridTable">
+                    <div class="dataTable" id="gridTable">
                                                <div  class="loading">
                                                         <span>
                                                       <img src="../static/images/loading.gif"></span>
                                                  </div>
-</div>  </div>
+</div>
   </form>
 
    <div id="pageContianer">
@@ -115,7 +130,7 @@
                   <div class="contentDiv center">
                     <div class="explain"><em>选择商品</em><span id="unitName">
                     <a href="/module/commodity/release.aspx" target="_blank">添加商品</a>
-                    <a href="javaScript:void(0)">刷新</a></span>
+                    <a href="javaScript:void(0)" class="searchBtn">刷新</a></span>
                     <div class="commonBtn searchBtn"> 搜索</div>
                                            <div class="commonSelectWrap r">
                             				   <div class=" searchInput">

@@ -17,6 +17,7 @@
             panlH:116, // 下来框统一高度
         },
         detailDate:{},
+
         ValueCard:'',//储值卡号
         classify:'',
         select:{
@@ -24,7 +25,7 @@
             tagType:[],                             //标签类型
             tagList:[]                              //标签列表
         },
-        selectProductList:"",
+        selectProductList:[],
         init: function () {
             var that=this;
             that.loadData.getClassify(function(data){
@@ -43,17 +44,6 @@
             //点击查询按钮进行数据查询
             //
 
-            $("#leftMenu li").each(function(){
-                debugger;
-                $(this).removeClass("on");
-                   var urlPath= location.pathname.replace(/\//g, "_");
-                var classNameList=$(this).find("em").attr("class").split(" ");
-                if(classNameList.length>1){
-                    if(urlPath.indexOf(classNameList[1])!=-1){
-                        $(this).addClass("on");
-                    }
-                }
-            });
             that.elems.sectionPage.delegate(".queryBtn","click", function (e) {
                 //调用设置参数方法   将查询内容  放置在this.loadData.args对象中
                 that.setCondition();
@@ -68,15 +58,48 @@
                 });
                 $.util.stopBubble(e);
 
+            }).delegate(".tipInfo","mouseenter",function(){
+                $(this).parent().find(".tipInfoText").show(function(){
+                    $(this).css({
+                        width: "388px",
+                        height: "407px",
+                        opacity: 1
+                    })
+                });
+            }).delegate(".tipInfo","mouseleave",function(){
+
+                $(this).parent().find(".tipInfoText").stop().hide(100);
+            }).delegate(".tipInfoText","mouseenter",function(){
+                $(this).stop().show(function(){
+                    $(this).css({
+                        width: "388px",
+                        height: "407px",
+                        opacity: 1
+                    })
+                });
+            }).delegate(".tipInfoText","mouseleave",function(){
+                  $(this).stop().hide(100);
             });
+
             that.elems.optionBtn.delegate(".commonBtn","click",function(e){
                 var type=$(this).data("flag");
+                if(that.elems.tabel.datagrid("getData").total==0&&type!="add"){
+                    $.messager.confirm("提示","您还没有选择商品,确定选择商品吗",function(r){
+                        if(r){
+                            that.elems.optionBtn.find(".submit").hide();
+                            $('[ data-flag="begEdit"]').show();
+                            that.elems.tabel.datagrid("rejectChanges");
+                            that.selectProduct();
+                        }
+                    });
+                    return false;
+                }
                 if(type=="batch"){
                     that.elems["isHide"]=false;
                     if(that.elems.tabel.datagrid("getChecked").length>0){
                         $(this).find(".panelTab").show();
                     }else{
-                        alert("至少选择一个规格");
+                        alert("至少选择一个分销商品的规格");
                     }
                 }
                 if(type=="begEdit"){
@@ -94,9 +117,7 @@
                 }
                 if(type=="save") {   //保存
 
-                    that.elems.tabel.datagrid('acceptChanges')
-                    var gridData = that.elems.tabel.datagrid('getData'); //去缓存的数据
-                    var  isSubmit=true, errorIndex=-1;
+
                   /*  for (var index = 0; index < gridData.rows.length; index++) {
                         if(!that.elems.tabel.datagrid('validateRow',index)){
                             isSubmit= false;
@@ -104,14 +125,18 @@
                             break;
                         }
                     }*/
-                    for (var index = 0; index < gridData.rows.length; index++) {
+                   /* for (var index = 0; index < gridData.rows.length; index++) {
                         that.elems.tabel.datagrid('beginEdit',index);
-                    }
-                    var fileds=[{name:"ItemList",value:gridData.rows}];
+                    }*/
+
                     if($("#girdForm").form("validate")) {
+                        that.elems.tabel.datagrid('acceptChanges');
+                        var gridData = that.elems.tabel.datagrid('getData'); //去缓存的数据
+                        var  isSubmit=true, errorIndex=-1;
+                        var fileds=[{name:"ItemList",value:gridData.rows}];
                          that.loadData.operation(fileds,"savePice",function(){
-                            alert("操作成功")
-                             that.loadDataPage();
+                            alert("操作成功");
+                             that.loadPageData();
                          });
                         that.elems.optionBtn.find(".submit").hide();
                         $('[ data-flag="begEdit"]').show();
@@ -129,10 +154,15 @@
             }).delegate(".panelTab p","click",function(){
                 var type=$(this).data("optiontype"),
                     fileds=[{name:"ItemIdList",value:""}],
+
                  rows=that.elems.tabel.datagrid("getSelections");
                  var list=[];
+                var isSubmit=false;
                 for(var i=0;i<rows.length;i++){
                     var obj={};
+                    if(rows[i]["DistributerStock"]==0||rows[i]["DistributerCostPrice"]==0){
+                        isSubmit=true
+                    }
                     obj["ItemId"]=rows[i]["ItemId"];
                     obj["SkuId"]=rows[i]["SkuId"];
 
@@ -142,6 +172,10 @@
                 switch (type){
                     case "audit" :
                         fileds.push({name:"Status",value:10}); // 上架
+                        if(isSubmit){
+                            alert("您有商品还没有配置分销设置哦！");
+                            return false;
+                        }
                         break;
                     case "soldOut" :
                         fileds.push({name:"Status",value:90}); // 下架
@@ -166,16 +200,17 @@
                 valueField: 'id',
                 textField: 'text',
                 data:[{
-                    "id":10,
-                    "text":"上架",
+                    "id":100,
+                    "text":"全部",
                     "selected":true
                 },{
-                    "id":90,
-                    "text":"下架"
+                    "id":10,
+                    "text":"已上架",
 
                 },{
-                    "id":100,
-                    "text":"全部"
+                    "id":90,
+                    "text":"已下架"
+
                 }]
             });
 
@@ -201,6 +236,8 @@
                 fit:true
             });
             $('#win').delegate(".saveBtn","click",function(e){
+                $("#seach").form("clear");
+                $('#item_status').combobox("setValue",100);
                     var treeList=$("#unitTreeSelect").tree("options").data;
                 if (treeList.length>0) {
                     var list=[];
@@ -223,28 +260,68 @@
 
                     });
                 }else{
-                    $.messager.alert("提示","请至少选择一个商品");
+                    $.messager.alert("提示","请选择你要操作的商品");
                 }
             }).delegate(".searchBtn","click",function(){
                      that.searchSelectProduct();
             }).delegate(".explain .optBtn","click",function(){
                var nodeList = $("#productGrid").datagrid('getData').rows;
                 var nodes=$("#unitTreeSelect").tree("getChecked");
+                var execute=true;
+                if(nodes.length>0){
+                    if(nodes.length>0){
+                        for (j = 0; j < that.selectProductList.length;) {
+                            var isRomove = false;
+
+
+                            for (i = 0; i < nodes.length; i++) {
+                                if (nodes[i].ParentId == that.selectProductList[j].ItemId && that.selectProductList[j].ParentId == -99) {  //找到规格属于哪个商品;
+
+                                    for(var k=0;k<that.selectProductList[j].children.length;k++){   //清楚选中的子节点。防止多个sku删除某个无效
+                                        if (nodes[i].SkuId == that.selectProductList[j].children[k].SkuId && that.selectProductList[j].children[k].ItemId == nodes[i].ItemId) {  //找到规格属于哪个商品;
+                                            that.selectProductList[j].children.splice(k, 1);
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (that.selectProductList[j].SkuId == nodes[i].SkuId && that.selectProductList[j].ItemId == nodes[i].ItemId) {
+                                    isRomove = true;
+                                    break;
+                                }
+                            }
+                            if (isRomove) {
+                                that.selectProductList.splice(j,1);
+                                j=0;
+                            }else{
+                                j++
+                            }
+                        }
+                    }
+                }
+
+
                 if(nodeList.length>0&&nodes.length>0){
                     for(var i=0; i<nodes.length; i++) {
 
                             for (var j = 0; j < nodeList.length; j++) {
                                 if (nodeList[j].SkuId == nodes[i].SkuId&&nodes[i].ParentId!=-99) {
                                     $("#productGrid").datagrid("unselectRow", j);
+                                    execute=false;
                                 }
                                 if (nodeList[j].ItemId == nodes[i].ItemId&&nodes[i].ParentId==-99) {
                                     $("#productGrid").datagrid("unselectRow", j);
+                                    execute=false;
                                 }
                             }
 
                     }
 
                 }
+              if( execute){   //如果当前查询列表没有包含  任何一个要被批量删除的数据。需要调用一次  getAllSkuList方法
+                  that.getAllSkuList();
+              }
+
+
             });
             /**************** -------------------弹出窗口初始化 end****************/
           that.elems.tabelWrap.delegate(".opt",'click',function(){
@@ -257,9 +334,14 @@
 
 
               fileds[0].value= [{ItemId:dataRow["ItemId"],SkuId:dataRow["SkuId"]}];
+
               switch (type){
                   case "audit" :
                       fileds.push({name:"Status",value:10}); // 上架
+                      if(dataRow["DistributerStock"]==0||dataRow["DistributerCostPrice"]==0){
+                          alert("您有商品还没有配置分销设置哦！");
+                          return false;
+                      }
                       break;
                   case "soldOut" :
                       fileds.push({name:"Status",value:90}); // 下架
@@ -340,13 +422,13 @@
                         field : 'ck',
                         title:'全选',
                         checkbox : true,
-                        width:50,
+                        width:80
                     }
                 ]],
                 columns : [[
                     {field : 'ItemName',title : '商品名称',width:80,align:'left',resizable:false,
                         formatter:function(value ,row,index){
-                            var long=56;
+                            var long=40;
                             if(value&&value.length>long){
                                 return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
                             }else{
@@ -355,44 +437,44 @@
                         }
                     },
                     {field : 'PropName',title : '商品规格',width:30,align:'center',resizable:false } ,
-                    {field : 'SalePrice',title : '商城售价(元)',width:30,resizable:false,align:'center'},
+                    {field : 'SalesPrice',title : '商城售价(元)',width:30,resizable:false,align:'center'},
                     {field : 'DistributerStock',title : '分销库存',width:30,align:'left',resizable:false,
                         formatter:function(value,row,index){
-                           if(isNaN(parseInt(value))){
+                           if(isNaN(Number(value))){
                              return 0;
                            }else{
-                              return parseInt(value);
+                               return value;
                            }
                         },editor: {
                         type: 'numberbox',
                         options: {
                             min: 0,
+                            max:999999,
                             required:true,
                             precision: 0,
                             height: 31,
                             width: 52,
                             validType:'nonzero'
-                            /* prefix:'￥'*/
                         }
                     }
                     },
                     {field : 'DistributerCostPrice',title : '成本价（元）',width:30,align:'left',resizable:false,
                         formatter:function(value,row,index){
-                            if(isNaN(parseInt(value))){
-                                return 0;
+                            if(isNaN(Number())){
+                                return 0.00;
                             }else{
-                                return parseInt(value);
+                                return Number(value).toFixed(2);
                             }
                         }, editor: {
                         type: 'numberbox',
                         options: {
                             min: 0,
+                            max:999999,
                             required:true,
                             precision: 2,
                             height: 31,
                             width: 52,
                             validType:'nonzero'
-                            /* prefix:'￥'*/
                         }
                     }
                     },
@@ -401,7 +483,7 @@
                             if(isNaN(parseInt(value))){
                                 return 0;
                             }else{
-                                return parseInt(value);
+                                return value;
                             }
                         }},
                     {field : 'CustomerProgit',title : '商家利润（元）',width:30,align:'center',resizable:false,
@@ -409,7 +491,7 @@
                             if(isNaN(parseInt(value))){
                                 return 0;
                             }else{
-                                return parseInt(value);
+                                return value;
                             }
                         }},
 
@@ -418,9 +500,9 @@
                             debugger;
                             var staus;
                             switch (value){
-                                case 10: staus="上架";break;
+                                case 10: staus="已上架";break;
 
-                                case 90: staus= "下架"; break;
+                                case 90: staus= "已下架"; break;
                             }
                             return staus;
                         }
@@ -451,6 +533,9 @@
                     }else{
                         that.elems.dataMessage.show();
                     }
+                    that.mergeCellsByField(that.elems.tabel, "ItemName");
+                    that.elems.optionBtn.find(".submit").hide();
+                    $('[ data-flag="begEdit"]').show();
                 },
                 onClickRow:function(rowindex,rowData){
                     /* debugger;
@@ -511,6 +596,61 @@
                 that.elems.tabel.find("tr").eq(that.loadData.opertionField.displayIndex).find("td").trigger("click",true);
                 that.loadData.opertionField.displayIndex=null;
             }
+
+        },
+        /*  mergeCellsByField()在DataGrid的onLoadSuccess中调用。
+         * EasyUI DataGrid根据字段动态合并单元格
+         * @param tableID 要合并table的id
+         * @param colList 要合并的列,用逗号分隔(例如："name,department,office");*/
+        //合并相同的值的属性行
+        mergeCellsByField:function(table,colList){
+
+
+            var ColArray = colList.split(",");
+            var tTable =table ;
+            var TableRowCnts=tTable.datagrid("getRows").length;
+            var tmpA;
+            var tmpB;
+            var PerTxt = "";
+            var CurTxt = "";
+            var alertStr = "";
+            //for (j=0;j<=ColArray.length-1 ;j++ )
+            for (j=ColArray.length-1;j>=0 ;j-- )
+            {
+                //当循环至某新的列时，变量复位。
+                PerTxt="";
+                tmpA=1;
+                tmpB=0;
+
+                //从第一行（表头为第0行）开始循环，循环至行尾(溢出一位)
+                for (i=0;i<=TableRowCnts ;i++ )
+                {
+                    if (i==TableRowCnts)
+                    {
+                        CurTxt="";
+                    }
+                    else
+                    {
+                        CurTxt=tTable.datagrid("getRows")[i][ColArray[j]];
+                    }
+                    if (PerTxt==CurTxt)
+                    {
+                        tmpA+=1;
+                    }
+                    else
+                    {
+                        tmpB+=tmpA;
+                        tTable.datagrid('mergeCells',{
+                            index:i-tmpA,
+                            field:ColArray[j],
+                            rowspan:tmpA,
+                            colspan:null
+                        });
+                        tmpA=1;
+                    }
+                    PerTxt=CurTxt;
+                }
+            }
         },
         //加载更多的资讯或者活动
         loadMoreData: function (currentPage) {
@@ -549,6 +689,7 @@
                 id: 'id',
                 text: 'text',
                 checkbox:true,
+                cascadeCheck:true,
                 formatter:function(node){
                     debugger;
                     var value = node.text;
@@ -561,7 +702,10 @@
                             value= '<div class="bg" >'+value+'</div>'
                         }
                     }else{
-                        value+='<em class="delete" title="删除" data-target='+node.id+' data-json='+JSON.stringify(node)+'></em>';
+                        var obj=node; obj.ItemName="";
+                        var nodeString=JSON.stringify(obj);
+
+                        value+='<em class="delete" title="删除" data-target='+node.id+' data-json='+nodeString+'></em>';
 
                     }
                     return value;
@@ -570,20 +714,49 @@
                     $(".bg").parents(".tree-node").addClass("bg");
                     $("#unitTreeSelect").delegate(".delete","click", function (e) {
                         debugger;
-                        var id=$(this).data("target");
-                        var nodeList=[] ;
-                        var isDel=true;
+                        var id = $(this).data("target");
+                        var nodeList = [];
+                        var isDel = true;
                         nodeList = $("#productGrid").datagrid('getData').rows;
-                        var node=$(this).data("json");
-                        if(nodeList.length>0){
-                            for(var j=0;j<nodeList.length;j++){
+                        var node = $(this).data("json");
+                        // $("#unitTreeSelect").tree("remove",node.target);
+                        if (nodeList.length > 0) {
+                            for (var j = 0; j < nodeList.length; j++) {
 
-                                if(nodeList[j].SkuId==id){
-                                    isDel=false;
-                                    $("#productGrid").datagrid("uncheckRow",j);
+                                if (nodeList[j].SkuId == id) {
+                                    isDel = false;
+                                    $("#productGrid").datagrid("uncheckRow", j);
                                 }
                             }
 
+                        }
+                        if (isDel) {
+                            var conunt = 0, itemIndex = -1;
+                            for (var i = 0; i < that.selectProductList.length;) {
+                                if (node.ParentId == that.selectProductList[i].ParentId) {   //统计有多少个SKU;
+                                    conunt++;
+                                }
+                                if (node.ParentId == that.selectProductList[i].ItemId && that.selectProductList[i].ParentId == -99) {  //找到规格属于哪个商品;
+                                    itemIndex = i
+                                   for(var j=0;j<that.selectProductList[i].children.length;j++){   //清楚选中的子节点。防止多个sku删除某个无效
+                                       if (node.SkuId == that.selectProductList[i].children[j].SkuId && that.selectProductList[i].children[j].ItemId == node.ItemId) {  //找到规格属于哪个商品;
+                                           that.selectProductList[i].children.splice(j, 1);
+                                         break;
+                                       }
+                                   }
+                                }
+                                if (node.SkuId == that.selectProductList[i].SkuId && that.selectProductList[i].ItemId == node.ItemId) {  //找到规格属于哪个商品;
+                                    that.selectProductList.splice(i, 1);
+                                    i = 0
+                                } else {
+                                    i++;
+                                }
+
+                            }
+                            if (conunt == 1) {    //如果值选中了一个商品的一个规格，直接移除商品
+                                that.selectProductList.splice(itemIndex, 1);
+                            }
+                            that.getAllSkuList();
                         }
                     });
                 },
@@ -614,6 +787,21 @@
                     list=that.formattedDataList(data.Data.ItemList);
 
                 }
+                var index=[];
+                if(that.selectProductList.length>0&&list.length>0){
+                        for(var i=0;i<list.length; i++) {
+                            var isAdd = false;
+                            for (var j = 0; j < that.selectProductList.length; j++) {
+                                if (that.selectProductList[j].SkuId == list[i].SkuId&&that.selectProductList[j].ItemId == list[i].ItemId) {
+                                    isAdd = true;
+                                }
+                            }
+                            if(isAdd){
+                                index.push(i);
+                            }
+
+                        }
+                }
                 $("#productGrid").datagrid({
 
                     method : 'post',
@@ -640,7 +828,7 @@
                         {
                             field : 'ck',
                             checkbox : true,
-                            width:50
+                            width:80
                         }
                     ]],
                     columns : [[
@@ -653,10 +841,20 @@
                                     return ''
                                 }
                             }
+                        },     {field : 'ItemCode',title : '商品编号',width:40,align:'left',resizable:false,
+                            formatter:function(value ,row,index){
+                                var long=40;
+                                if(row.ParentId==-99){
+                                        return value
+                                }else{
+                                    return ''
+                                }
+
+                            }
                         },
                         {field : 'ItemName',title : '商品名称',width:80,align:'left',resizable:false,
                             formatter:function(value ,row,index){
-                                var long=56;
+                                var long=40;
                                 if(row.ParentId==-99){
                                     if(value&&value.length>long){
                                         return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
@@ -692,37 +890,43 @@
 
                     onLoadSuccess : function(data) {
                         debugger;
-                        $("#productGrid").datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+                       $("#productGrid").datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
                         if(data.rows.length>0) {
                             $(".dataMessage1").hide();
                         }else{
                             $(".dataMessage1").show();
                         }
                         that.isSubmit=true;
+                        if(index.length>0){
+                            $.each(index,function(obj,i){
+                                $("#productGrid").datagrid('selectRow',i);
+                            })
+                        }
 
                     },
-                    onSelectAll:function(){
-                        that.getAllSkuList();
-                        var check= $(this).datagrid("getPanel").find(".datagrid-header-check").find("input").get(0).checked
+                    onSelectAll:function(rows){
+
+                        var check= $(this).datagrid("getPanel").find(".datagrid-header-check").find("input").get(0).checked;
                         if(check){
                             $(this).datagrid("getPanel").find(".datagrid-header-check").addClass("on");
                         } else{
                             $(this).datagrid("getPanel").find(".datagrid-header-check").removeClass("on");
                         }
+                        that.getAllSkuList();
                     },
-                    onUnselectAll:function(){
-                        var check= $(this).datagrid("getPanel").find(".datagrid-header-check").find("input").get(0).checked
+                    onUnselectAll:function(rows){
+                        var check= $(this).datagrid("getPanel").find(".datagrid-header-check").find("input").get(0).checked;
                         if(check){
                             $(this).datagrid("getPanel").find(".datagrid-header-check").addClass("on");
                         } else{
                             $(this).datagrid("getPanel").find(".datagrid-header-check").removeClass("on");
                         }
                         if(that.isSubmit) {
-                            that.getAllSkuList();
+                            that.getAllSkuList(rows,false,true);
                         }
                     },
                     onSelect:function(rowindex,rowData){
-                        var check= $(this).datagrid("getPanel").find(".datagrid-header-check").find("input").get(0).checked
+                        var check= $(this).datagrid("getPanel").find(".datagrid-header-check").find("input").get(0).checked;
                         if(check){
                             $(this).datagrid("getPanel").find(".datagrid-header-check").addClass("on");
                         } else{
@@ -733,7 +937,7 @@
                         }
                     },
                     onUnselect:function(rowindex,rowData){
-                        var check= $(this).datagrid("getPanel").find(".datagrid-header-check").find("input").get(0).checked
+                        var check= $(this).datagrid("getPanel").find(".datagrid-header-check").find("input").get(0).checked;
                         if(check){
                             $(this).datagrid("getPanel").find(".datagrid-header-check").addClass("on");
                         } else{
@@ -809,62 +1013,146 @@
             this.loadData.win.PageIndex =n;
            this.searchSelectProduct()
         },
-        getAllSkuList:function(row,isSelect) {
+        /*
+        isSelect： 是选中操作还是取消操作
+         isList: row 是一个obj还是一个数组对象
+         row 操作行数据
+        * */
+        getAllSkuList:function(row,isSelect,isList) {
             var that = this;
             var data = $("#productGrid").datagrid("getData");
-
-             if(row) {
-                 if (row.ParentId == -99) {
+            var i = 0,j= 0;
+             if(row&&!isList) {
+                 var removeList=[] //被连带移除的的选中项；
+                 if (row.ParentId == -99) {     //操作行是商品的处理
                      that.elems.click1 = false;
-                     for (var i = 0; i < data.total; i++) {
+                     for (i = 0; i < data.total; i++) {
                          if (data.rows[i].ParentId == row.ItemId) {
                              if (isSelect) {
                                  $("#productGrid").datagrid("selectRow", i);
                              } else {
                                  $("#productGrid").datagrid("unselectRow", i);
+                                  //当时移除的时候    that.selectProductList 缓存数据也需要移除
+                                 removeList.push(data.rows[i]);
+
                              }
                          }
                      }
                      that.elems.click1 = true;
-                 } else {
+                 } else {  //点击规格的处理
 
                      that.elems.click1 = false;
                      var list = [];
                      var index = -1;
                      var skuCount = 0;
-                     for (var j = 0; j < data.total; j++) {
-                         if (data.rows[j].ItemId == row.ParentId && data.rows[j].ParentId == -99) { //
+                     for (j = 0; j < data.total; j++) {
+                         if (data.rows[j].ItemId == row.ParentId && data.rows[j].ParentId == -99) { //找到规格对应的商品
                              index = j;
                          }
                          if (data.rows[j].ParentId == row.ParentId) {
                              skuCount++;
                          }
                      }
-                     if (isSelect) {
-                         var dataAll = $("#productGrid").datagrid("getSelections");
-                         for (var j = 0; j < dataAll.length; j++) {
-                             if (dataAll[j].ParentId == row.ParentId) {
-                                 list.push(dataAll[j]);
-                             }
+
+                     var isSemiangle=false;  //是否显示半选状态
+                     var dataAll = $("#productGrid").datagrid("getSelections");
+                     for ( j = 0; j < dataAll.length; j++) {
+                         if (dataAll[j].ParentId == row.ParentId) {
+                             list.push(dataAll[j]);
                          }
-                         if (list.length == skuCount) {
+                     }
+                     if (isSelect) {  //如果是选中规格 操作要判断是否是全部选中
+
+                         if (list.length == skuCount) {    //全部选中时候
                              $("#productGrid").datagrid("selectRow", index);
+
                          } else {
                              $("#productGrid").datagrid("unselectRow", index);
+                             //当取消选中的时候    that.selectProductList 缓存数据也需要移除
+                             if(skuCount>1){
+                                 isSemiangle=true;
+                             }
+                             removeList.push(data.rows[index]);
                          }
 
-                     } else {
+                     } else {     //如果是取消选中规格 操作要判断是否是全部取消
                          $("#productGrid").datagrid("unselectRow", index);
+                         removeList.push(data.rows[index]);
+                         if(list.length>0){ //有一个选中的规格商品就半选状态
+                             isSemiangle=true;
+                         }
                      }
                      that.elems.click1 = true;
+                     if(isSemiangle){
+                         $('[datagrid-row-index="'+index+'"]').addClass("semiangle");
+                     }else{
+                         $('[datagrid-row-index="'+index+'"]').removeClass("semiangle");
+                     }
+
+                 }
+                 if(removeList.length>0){
+                     for (j = 0; j < that.selectProductList.length;) {
+                         var isRomove = false;
+                         for (i = 0; i < removeList.length; i++) {
+                             if (that.selectProductList[j].SkuId == removeList[i].SkuId && that.selectProductList[j].ItemId == removeList[i].ItemId) {
+                                 isRomove = true;
+                                 break;
+                             }
+                         }
+
+                         if (isRomove) {
+                             that.selectProductList.splice(j,1);
+                             console.log(111);
+                             j=0;
+                         }else{
+                             j++
+                         }
+                     }
                  }
              }
 
             //生成选择的数据
-            var allList = $("#productGrid").datagrid("getSelections");
+            var allList=[],dataList= $("#productGrid").datagrid("getSelections");
+            allList=dataList;
+            for (j = 0; j < that.selectProductList.length; j++) {
+                var isAdd = true;
+                for (i = 0; i < dataList.length; i++) {
+                    if (that.selectProductList[j].SkuId == dataList[i].SkuId && that.selectProductList[j].ItemId == dataList[i].ItemId) {
+                        isAdd = false;
+                    }
+                }
+                if (isAdd && row && that.selectProductList[j].SkuId == row.SkuId && that.selectProductList[j].ItemId == row.ItemId) {
+                    isAdd = isSelect;
+                }
+                if (isAdd) {
+                    allList.push(that.selectProductList[j]);
+                }
+            }
+            if(isList) {     //批量取消操作时候
+                     allList=that.selectProductList;
+                     for (j = 0; j < allList.length;) {
+                         var isDel = false;
+                         for (i = 0; i < row.length; i++) {
+                             if (allList[j].SkuId == row[i].SkuId && allList[j].ItemId == row[i].ItemId) {
+                                 isDel = true;
+                                 break;
+                             }
+                         }
+
+                         if (isDel) {
+                             allList.splice(j,1);
+                             j=0;
+                         }else{
+                             j++
+                         }
+                     }
+
+
+                 }
+
             debugger;
             var treeList =[];
-            var skuList=[]//保存sku对象
+            var skuList=[]; //保存sku对象
             if (allList && allList.length > 0) {
                 $.each(allList, function () {
                     if(this.ParentId==-99){  //已选中的商品加入节点
@@ -925,8 +1213,8 @@
 
                 data:treeList
 
-            })
-
+            });
+            that.selectProductList=allList;
         },
 
 
@@ -1058,6 +1346,7 @@
                         prams.data[field.name] = field.value; //提交的参数
                     }
                 });
+
                 switch(operationType){
                     case "audit" :  // 上架
                     case "soldOut":   //下架
@@ -1070,22 +1359,55 @@
                     case "savePice": prams.data.action="SuperRetailTrader.Item.SetSuperRetailTraderItemInfo";break; //设置库存和分销价
 
                 }
-
-
-                $.util.ajax({
-                    url: prams.url,
-                    data:prams.data,
-                    success: function (data) {
-                        if (data.IsSuccess && data.ResultCode == 0) {
-                            if (callback) {
-                                callback(data);
-                            }
-
-                        } else {
-                            alert(data.Message);
-                        }
+                if(operationType=="soldOut"||operationType=="del") {
+                    var str="确认进行该操作吗？";
+                    switch(operationType) {
+                        case "del" :  // 删除
+                             str="确定要移除分销商品吗？";
+                            break;
+                        case "soldOut":
+                            str="确定要下架分销商品吗？";
+                            break;
+                            //下架
                     }
-                });
+                    $.messager.confirm("提示",str,function(r){
+                             if(r){
+                                 $.util.ajax({
+                                     url: prams.url,
+                                     data:prams.data,
+                                     success: function (data) {
+                                         if (data.IsSuccess && data.ResultCode == 0) {
+                                             if (callback) {
+                                                 callback(data);
+                                             }
+
+                                         } else {
+                                             alert(data.Message);
+                                         }
+                                     }
+                                 });
+                             }
+
+                    });
+
+                } else{
+                    $.util.ajax({
+                        url: prams.url,
+                        data:prams.data,
+                        success: function (data) {
+                            if (data.IsSuccess && data.ResultCode == 0) {
+                                if (callback) {
+                                    callback(data);
+                                }
+
+                            } else {
+                                alert(data.Message);
+                            }
+                        }
+                    });
+                }
+
+
             }
 
 
