@@ -875,7 +875,7 @@ namespace JIT.CPOS.Web.Interface.Data
                             AppOrderDesc = string.IsNullOrEmpty(itemNameList) ? "chainclouds" : itemNameList,
                             Currency = 1,
                             MobileNO = reqObj.special.mobileNo,
-                            ReturnUrl = pReturnUrl,
+                            ReturnUrl = HttpUtility.UrlEncode(pReturnUrl),
                             DynamicID = reqObj.special.dynamicId,
                             DynamicIDType = reqObj.special.dynamicIdType,
                             Paras = dic,

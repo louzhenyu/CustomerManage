@@ -25,7 +25,7 @@ namespace JIT.CPOS.Web.Module.Log.InterfaceWebLog
 
             if (reqContent != null && reqContent.Length > 0)
             {
-                reqContent = HttpUtility.UrlDecode(reqContent);
+                //reqContent = HttpUtility.UrlDecode(reqContent);
                 Default.ReqData reqObj = reqContent.DeserializeJSONTo<Default.ReqData>();
 
                 if (context.Request.ServerVariables["HTTP_VIA"] != null) // using proxy
