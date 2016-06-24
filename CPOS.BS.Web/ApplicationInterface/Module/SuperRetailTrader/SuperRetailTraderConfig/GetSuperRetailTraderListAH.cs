@@ -45,7 +45,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.SuperRetailTrader.SuperRet
             {
                 if (parameter.IsFlag == 1)  //特殊处理方式
                 {
-                    complexCondition.Add(new DirectCondition("a.JoinTime< '" + DateTime.Now + "' AND  a.JoinTime>='" + DateTime.Now.AddDays(-31) + "'"));
+                    complexCondition.Add(new DirectCondition("a.JoinTime< '" + DateTime.Now.ToString("yyyy-MM-dd") + "' AND  a.JoinTime>='" + DateTime.Now.AddDays(-31).ToString("yyyy-MM-dd") + "'"));
                 }
                 complexCondition.Add(new EqualsCondition() { FieldName = "a.HigheSuperRetailTraderID", Value = parameter.SuperRetailTraderID });
             }

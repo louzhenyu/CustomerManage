@@ -44,8 +44,11 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.SuperRetailTrader
             var model = _model.parameters;
             List<IWhereCondition> pWhereConditions = new List<IWhereCondition>() {
             new EqualsCondition() { FieldName = "a.CustomerId", Value = loggingSessionInfo .ClientID},
-            new EqualsCondition() { FieldName = "a.IsDelete", Value =0}
+            new EqualsCondition() { FieldName = "a.IsDelete", Value =0},
+            new EqualsCondition() { FieldName = "a.Status", Value = "10" }
             };
+
+
 
             if (!String.IsNullOrEmpty(model.SuperRetailTraderName))
                 pWhereConditions.Add(new LikeCondition() { FieldName = "a.SuperRetailTraderName", Value = "%" + model.SuperRetailTraderName + "%" });
