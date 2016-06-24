@@ -512,8 +512,8 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					if(data){
 						data.push({id:0,text:"请选择"});
 						$('#Parent_Unit_Id').combotree({
-							width: that.elems.width,
-							height: that.elems.height,
+							width: 200,
+							height: 30,
 							panelHeight: 210,
 							lines:true,
 							valueField: 'id',

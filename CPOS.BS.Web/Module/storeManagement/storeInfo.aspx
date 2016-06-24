@@ -162,7 +162,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
 					  <div class="commonSelectWrap">
                         <em class="tit">组织层级：</em>
                         <label class="searchInput clearBorder">
-                          <input data-text="上级组织层级" class="easyui-combobox" id="Parent_Unit_Id" data-flag="Parent_Unit_Id" name="Parent_Unit_Id" type="text" value="" data-options="required:true"  validType='selectIndex'>
+                          <input data-text="上级组织层级" class="easyui-combotree" id="Parent_Unit_Id" data-flag="Parent_Unit_Id" name="Parent_Unit_Id" type="text" value="" data-options="required:true"  validType='selectIndex'>
                         </label>
                       </div>
 
