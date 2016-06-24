@@ -230,6 +230,7 @@
                     that.loadData.getSuperRetailTraderItemList(function(data){
                         that.renderTable(data);
                     });
+                    that.selectProductList=[];
                 }
             });
             $('#panlconent').layout({
