@@ -1412,7 +1412,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
         loadData: {
             args: {
                 PageIndex:1,
-                PageSize:10
+                PageSize:999
             },
             tag:{
                 VipId:"",
