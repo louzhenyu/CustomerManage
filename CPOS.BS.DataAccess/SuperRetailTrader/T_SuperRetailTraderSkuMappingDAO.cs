@@ -50,15 +50,16 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pageSize"></param>
         /// <param name="pageIndex"></param>
         /// <returns></returns>
-        public List<T_SuperRetailTraderSkuMappingEntity> GetSkuList(string itemName,string itemCategoryId,int pageSize,int pageIndex)
+        public PagedQueryResult<T_SuperRetailTraderSkuMappingEntity> GetSkuList(string itemName, string itemCategoryId, int pageSize, int pageIndex)
         {
             List<T_SuperRetailTraderSkuMappingEntity> list = new List<T_SuperRetailTraderSkuMappingEntity>();
 
             StringBuilder pagedSql = new StringBuilder();
+            StringBuilder totalCountSql = new StringBuilder();
 
             //临时表
-            pagedSql.AppendFormat(@"Create Table Temp (ItemId varchar(50))");
-            pagedSql.AppendFormat(@"Insert into Temp 
+            pagedSql.AppendFormat(@"Create Table #Temp (ItemId varchar(50))");
+            pagedSql.AppendFormat(@"Insert into #Temp 
                                     select ItemId from (
                                     Select 
                                     distinct dense_rank() over(order by y.createtime desc) as rownum,* from (
@@ -77,6 +78,23 @@ namespace JIT.CPOS.BS.DataAccess
             }
             pagedSql.AppendFormat(@" group by a.item_id,a.create_time ) y ) x where x.rownum > {0} and x.rownum <= {1} ", pageSize * (pageIndex - 1), pageSize * pageIndex);
 
+            //记录总条数
+            totalCountSql.AppendFormat(@"  select Count(1) from( 
+                                           select a.item_id
+                                           from  vw_item_detail a  ");
+            totalCountSql.AppendFormat(@"  left join vw_sku_detail b on a.item_id = b.item_id and b.CustomerId = @CustomerId and b.status = 1 ");
+            totalCountSql.AppendFormat(@"  left join T_SuperRetailTraderSkuMapping d on b.sku_id = d.SkuId and d.CustomerId = @CustomerId and d.IsDelete = 0"); ;
+            if (!string.IsNullOrEmpty(itemCategoryId))
+            {
+                totalCountSql.AppendFormat(" inner join [dbo].[fnGetChildCategoryByID](@ItemCategoryId,1) c on c.CategoryID = a.item_category_id ");
+            }
+            totalCountSql.AppendFormat(@" where a.CustomerId = @CustomerId and a.status = 1 and d.SkuId is null and a.item_category_id <> '-1' ");
+            if (!string.IsNullOrEmpty(itemName))
+            {
+                totalCountSql.AppendFormat(" and a.item_name like @ItemName ");
+            }
+            totalCountSql.AppendFormat(@" group by a.item_id ) x");
+
             //查询
             pagedSql.AppendFormat(@"select * from ( 
                                          select distinct
@@ -88,7 +106,7 @@ namespace JIT.CPOS.BS.DataAccess
                                          from vw_Sku_Detail a 
                                          left join T_SuperRetailTraderSkuMapping b on a.Sku_id = b.SkuId and b.CustomerId = @CustomerId and b.IsDelete = 0
                                          inner join vw_item_detail x on x.item_id = a.item_id and  x.CustomerId = @CustomerId and x.status = 1
-                                         inner join temp d on a.item_id = d.ItemId ");
+                                         inner join #temp d on a.item_id = d.ItemId ");
 
             if (!string.IsNullOrEmpty(itemName))
             {
@@ -99,7 +117,7 @@ namespace JIT.CPOS.BS.DataAccess
                 pagedSql.AppendFormat(" inner join [dbo].[fnGetChildCategoryByID](@ItemCategoryId,1) c on c.CategoryID = x.item_category_id ");
             }
             pagedSql.AppendFormat(" where a.CustomerId = @CustomerId and a.status = 1 and b.itemid is null ) y");
-            pagedSql.AppendFormat(" drop table temp");
+            pagedSql.AppendFormat(" drop table #temp");
 
             SqlParameter[] parameters = 
             {
@@ -111,6 +129,7 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[1].Value = itemCategoryId;
             parameters[2].Value = "%" + itemName + "%";
 
+            PagedQueryResult<T_SuperRetailTraderSkuMappingEntity> result = new PagedQueryResult<T_SuperRetailTraderSkuMappingEntity>();
             using (SqlDataReader rdr = SQLHelper.ExecuteReader(CommandType.Text, pagedSql.ToString(), parameters))
             {
                 while (rdr.Read())
@@ -140,7 +159,14 @@ namespace JIT.CPOS.BS.DataAccess
                     list.Add(m);
                 }
             }
-            return list;
+            result.Entities = list.ToArray();
+            int totalCount = Convert.ToInt32(this.SQLHelper.ExecuteScalar(CommandType.Text, totalCountSql.ToString(), parameters));    //计算总行数
+            result.RowCount = totalCount;
+            int remainder = 0;
+            result.PageCount = Math.DivRem(totalCount, pageSize, out remainder);
+            if (remainder > 0)
+                result.PageCount++;
+            return result;
         }
         /// <summary>
         /// 获取分销商Sku列表
@@ -148,12 +174,13 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="itemName"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public List<T_SuperRetailTraderSkuMappingEntity> GetSuperRetailTraderSkuList(string itemCategoryId,string itemName,int status,int pageSize,int pageIndex)
+        public PagedQueryResult<T_SuperRetailTraderSkuMappingEntity> GetSuperRetailTraderSkuList(string itemCategoryId, string itemName, int status, int pageSize, int pageIndex)
         {
             List<T_SuperRetailTraderSkuMappingEntity> list = new List<T_SuperRetailTraderSkuMappingEntity>();
 
             StringBuilder pagedSql = new StringBuilder();
-            
+            StringBuilder totalCountSql = new StringBuilder();
+
             //临时表
             pagedSql.AppendFormat(@"Create Table Temp (ItemId varchar(50))");
             pagedSql.AppendFormat(@"insert into  Temp 
@@ -214,6 +241,24 @@ namespace JIT.CPOS.BS.DataAccess
             }
 
             pagedSql.AppendFormat(@" drop table Temp ");
+
+            //计算行数
+            totalCountSql.AppendFormat(@" select Count(1)
+                                    from T_SuperRetailTraderItemMapping a 
+                                    inner join vw_item_Detail b on a.ItemId = b.item_id and b.status = 1");
+            if (!string.IsNullOrEmpty(itemCategoryId))
+            {
+                totalCountSql.AppendFormat(" inner join [dbo].[fnGetChildCategoryByID](@ItemCategoryId,1) c on c.CategoryID = b.item_category_id ");
+            }
+            totalCountSql.AppendFormat(@" where a.CustomerId = @CustomerId and a.IsDelete = 0 ");
+            if (!string.IsNullOrEmpty(itemName))
+            {
+                totalCountSql.AppendFormat(" and b.item_name like @ItemName ");
+            }
+            if (status == 10 || status == 90)
+            {
+                totalCountSql.AppendFormat(" and a.Status = @Status");
+            }
             
             SqlParameter[] parameters = 
             {
@@ -227,7 +272,7 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[2].Value = "%" + itemName + "%";
             parameters[3].Value = itemCategoryId;
 
-
+            PagedQueryResult<T_SuperRetailTraderSkuMappingEntity> result = new PagedQueryResult<T_SuperRetailTraderSkuMappingEntity>();
             using (SqlDataReader rdr = SQLHelper.ExecuteReader(CommandType.Text, pagedSql.ToString(), parameters))
             {
                 while (rdr.Read())
@@ -280,7 +325,14 @@ namespace JIT.CPOS.BS.DataAccess
                     list.Add(m);
                 }
             }
-            return list;
+            result.Entities = list.ToArray();
+            int totalCount = Convert.ToInt32(this.SQLHelper.ExecuteScalar(CommandType.Text, totalCountSql.ToString(), parameters));    //计算总行数
+            result.RowCount = totalCount;
+            int remainder = 0;
+            result.PageCount = Math.DivRem(totalCount, pageSize, out remainder);
+            if (remainder > 0)
+                result.PageCount++;
+            return result;
         }
         /// <summary>
         /// 获取分销商Sku详情

@@ -30,8 +30,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.SuperRetailTrader.Item
             //初始化分销商商品信息
             foreach(var item in ItemIdList)
             {
-                var itemEntity = superRetailTraderItemMappingBll.QueryByEntity(new T_SuperRetailTraderItemMappingEntity { ItemId = item.ItemId }, null);
-                if (itemEntity.Count() == 0)
+                var itemEntity = superRetailTraderItemMappingBll.QueryByEntity(new T_SuperRetailTraderItemMappingEntity { ItemId = item.ItemId }, null).FirstOrDefault();
+                if (itemEntity == null)
                 {
                     T_SuperRetailTraderItemMappingEntity superRetailTraderItemMappingEntity = new T_SuperRetailTraderItemMappingEntity()
                     {
@@ -46,6 +46,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.SuperRetailTrader.Item
                         CustomerID = CurrentUserInfo.ClientID
                     };
                     superRetailTraderItemMappingBll.Create(superRetailTraderItemMappingEntity);
+                    itemEntity = superRetailTraderItemMappingEntity;
+                }
                     //初始化分销商Sku信息
                     foreach (var sku in SkuIdList.Where(n => n.ItemId == item.ItemId))
                     {
@@ -55,7 +57,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.SuperRetailTrader.Item
                             T_SuperRetailTraderSkuMappingEntity superRetailTraderSkuMappingEntity = new T_SuperRetailTraderSkuMappingEntity()
                             {
                                 Id = Guid.NewGuid(),
-                                SuperRetailTraderItemMappingId = superRetailTraderItemMappingEntity.SuperRetailTraderItemMappingId,
+                                SuperRetailTraderItemMappingId = itemEntity.SuperRetailTraderItemMappingId,
                                 ItemId = item.ItemId,
                                 SkuId = sku.SkuId,
                                 DistributerStock = 0,
@@ -68,7 +70,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.SuperRetailTrader.Item
                             superRetailTraderSkuMappingBll.Create(superRetailTraderSkuMappingEntity);
                         }
                     }
-                }
+    
             } 
             return new EmptyResponseData();
         }

@@ -27,11 +27,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.SuperRetailTrader.Item
             var superRetailTraderConfigBll = new T_SuperRetailTraderConfigBLL(CurrentUserInfo);
 
             OrderBy[] orderBy = new OrderBy[] { new OrderBy() { FieldName = "CreateTime", Direction = OrderByDirections.Desc } };
-            PagedQueryResult<T_SuperRetailTraderItemMappingEntity> superRetailTraderItemList = new PagedQueryResult<T_SuperRetailTraderItemMappingEntity>();
-            //获取分销商商品列表
-            superRetailTraderItemList = superRetailTraderItemMappingBll.GetSuperRetailTraderItemList(rp.ItemName,"",rp.Status,rp.PageSize,rp.PageIndex);
+            PagedQueryResult<T_SuperRetailTraderSkuMappingEntity> superRetailTraderSkuList = new PagedQueryResult<T_SuperRetailTraderSkuMappingEntity>();
+
             //获取分销商Sku列表
-            List<T_SuperRetailTraderSkuMappingEntity> superRetailTraderSkuList = superRetailTraderSkuMappingBll.GetSuperRetailTraderSkuList("",rp.ItemName,rp.Status,rp.PageSize,rp.PageIndex);
+            superRetailTraderSkuList = superRetailTraderSkuMappingBll.GetSuperRetailTraderSkuList("",rp.ItemName,rp.Status,rp.PageSize,rp.PageIndex);
             //获取分销商怕配置信息
             T_SuperRetailTraderConfigEntity superRetailTraderConfigEntity = superRetailTraderConfigBll.QueryByEntity(new T_SuperRetailTraderConfigEntity(){CustomerId = CurrentUserInfo.ClientID},null).FirstOrDefault();
 
@@ -47,7 +46,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.SuperRetailTrader.Item
             {
                 CustomerProfit = Convert.ToDecimal(superRetailTraderConfigEntity.CustomerProfit); //商家分润
             }
-            List<SuperRetailTraderItemInfo> SkuList = superRetailTraderSkuList.Select(n => new SuperRetailTraderItemInfo()
+            List<SuperRetailTraderItemInfo> SkuList = superRetailTraderSkuList.Entities.Select(n => new SuperRetailTraderItemInfo()
             {
                 ItemId = n.ItemId,
                 ItemName = n.ItemName,
@@ -62,10 +61,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.SuperRetailTrader.Item
             }).ToList();
             rd.SuperRetailTraderItemList.AddRange(SkuList);
 
-            rd.TotalCount = superRetailTraderItemList.RowCount;
-            rd.TotalPageCount = superRetailTraderItemList.PageCount;
+            rd.TotalCount = superRetailTraderSkuList.RowCount;
+            rd.TotalPageCount = superRetailTraderSkuList.PageCount;
             
-
             
             return rd;
         }

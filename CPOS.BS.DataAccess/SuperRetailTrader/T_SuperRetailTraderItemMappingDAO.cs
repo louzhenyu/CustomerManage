@@ -82,8 +82,9 @@ namespace JIT.CPOS.BS.DataAccess
 
 
             //记录总条数
-            totalCountSql.AppendFormat(@" select Count(1)
-                                        from  vw_item_detail a  ");
+            totalCountSql.AppendFormat(@"  select Count(1) from( 
+                                           select a.item_Id
+                                           from  vw_item_detail a  ");
 
             totalCountSql.AppendFormat(@"  left join vw_sku_detail b on a.item_id = b.item_id and b.CustomerId = @CustomerId and b.status = 1 ");
             totalCountSql.AppendFormat(@"  left join T_SuperRetailTraderSkuMapping d on b.sku_id = d.SkuId and d.CustomerId = @CustomerId and d.IsDelete = 0"); ;
@@ -96,7 +97,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 totalCountSql.AppendFormat(" and a.item_name like @ItemName ");
             }
-            totalCountSql.AppendFormat(@" group by a.item_id");
+            totalCountSql.AppendFormat(@" group by a.item_id ) x");
 
             SqlParameter[] parameters = 
             {

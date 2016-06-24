@@ -39,7 +39,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="ItemName"></param>
         /// <param name="itemCategoryId"></param>
         /// <returns></returns>
-        public List<T_SuperRetailTraderSkuMappingEntity> GetSkuList(string ItemName, string itemCategoryId,int pageSize,int pageIndex)
+        public PagedQueryResult<T_SuperRetailTraderSkuMappingEntity> GetSkuList(string ItemName, string itemCategoryId, int pageSize, int pageIndex)
         {
             return _currentDAO.GetSkuList(ItemName, itemCategoryId, pageSize, pageIndex);
         }
@@ -49,7 +49,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="itemName"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public List<T_SuperRetailTraderSkuMappingEntity> GetSuperRetailTraderSkuList(string itemCategoryId, string itemName, int status,int pageSize,int pageIndex)
+        public PagedQueryResult<T_SuperRetailTraderSkuMappingEntity> GetSuperRetailTraderSkuList(string itemCategoryId, string itemName, int status, int pageSize, int pageIndex)
         {
             return _currentDAO.GetSuperRetailTraderSkuList(itemCategoryId,itemName,status,pageSize,pageIndex);
         }

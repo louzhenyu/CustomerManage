@@ -31,7 +31,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.SuperRetailTrader.Item
             //获取商品列表
             PagedQueryResult<T_SuperRetailTraderItemMappingEntity> superRetailTraderItemMappingList = superRetailTraderItemMappingBll.GetItemList(rp.ItemName, rp.ItemCategoryId,rp.PageSize,rp.PageIndex);
             //获取Sku列表
-            List<T_SuperRetailTraderSkuMappingEntity> superRetailTraderSkuMappingList = superRetailTraderSkuMappingBll.GetSkuList(rp.ItemName, rp.ItemCategoryId,rp.PageSize,rp.PageIndex);
+            PagedQueryResult<T_SuperRetailTraderSkuMappingEntity> superRetailTraderSkuMappingList = superRetailTraderSkuMappingBll.GetSkuList(rp.ItemName, rp.ItemCategoryId, rp.PageSize, rp.PageIndex);
 
             List<BaseItemInfo> ItemList = superRetailTraderItemMappingList.Entities.Select(t => new BaseItemInfo()
             {
@@ -46,7 +46,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.SuperRetailTrader.Item
             }).ToList();
 
             //根据ItemId匹配相关Sku和商品
-            List<BaseItemInfo> SkuList = superRetailTraderSkuMappingList.Join(superRetailTraderItemMappingList.Entities.ToList(), n => n.ItemId, t => t.ItemId, (n, t) => new BaseItemInfo()
+            List<BaseItemInfo> SkuList = superRetailTraderSkuMappingList.Entities.Join(superRetailTraderItemMappingList.Entities.ToList(), n => n.ItemId, t => t.ItemId, (n, t) => new BaseItemInfo()
             {
                 ItemId = t.ItemId,
                 ItemName = t.ItemName,
