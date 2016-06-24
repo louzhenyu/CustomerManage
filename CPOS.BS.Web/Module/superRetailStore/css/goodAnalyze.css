@@ -49,10 +49,10 @@
 .onePanelDiv .bottom .l{width: 156px; height: 35px ;border-right: 1px solid #f0f0f2;}
 .onePanelDiv .bottom .r{width: 156px;}
 .onePanelDiv .centerDiv{ width: auto; display: inline-block;margin: 0 auto;}
-.onePanelDiv .bottom p{height: 13px;line-height: 13px;padding-left:0;width: auto;display: block;margin: 0 auto;}
+.onePanelDiv .bottom p{height: 13px;line-height: 13px;padding-left:0;width: auto;display: block;margin: 0 auto;padding-top: 34px;}
 .onePanelDiv .bottom p em{width: 10px;height: 10px;border-radius: 5px;display: inline-block;margin-right: 8px;}
-.onePanelDiv .bottom p.red{color:#ff4d4d;font-size: 14px;line-height: 36px;padding-left: 18px;}
-.onePanelDiv .bottom p.red i{ font-size: 18px;}
+.onePanelDiv .bottom p.red{color:#ff4d4d;font-size: 14px;line-height: 36px;padding-left: 18px;display: none;}
+.onePanelDiv .bottom p.red i{font-size: 18px;display: none;}
 
 .color0{ background-color: #d9f1fc}
 .color0Hover{background-color: #01a1ff}
@@ -87,7 +87,7 @@
 .panelCol div.col3{background-color: #71ba36; left:162px;}
 .panelCol div.col4{background-color: #f8b62c;left:241px; margin-right: 0;}
 #dataDay{ font-size: 12px;}
-#dataDay em{width: 76px;display: inline-block;text-align: center;}
+#dataDay em{width: 76px;display: inline-block;text-align: center; }
 .listBtn{ width: 238px; height: 36px; margin: 0 auto}
 .cancelBtn{ background-color: #fff; border: 2px solid #00a0e8; color: #00a0e8; margin: 0; line-height: 36px; height: 36px;}
 .cancelBtn:hover{ color: #00a0e8}

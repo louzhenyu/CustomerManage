@@ -136,7 +136,7 @@ namespace JIT.CPOS.BS.DataAccess
                         LEFT JOIN T_LEventsSharePersonLog SP ON SP.ObjectId=ST.ObjectId AND SP.ShareVipID='{0}' AND SP.BeShareVipID='{2}' AND SP.ShareVipType='{1}' WHERE 1=1 AND ST.ToolType='SetoffPoster' AND ST.[Status]='10'
                         UNION ALL
                         SELECT distinct ST.SetoffEventID,ST.CustomerId,ST.SetoffToolID AS 'SetoffToolID',ST.ObjectId,Title AS 'SetOffToolName',CONVERT(varchar(100),cast(WMaterialText.CreateTime as datetime),23) AS 'StartTime',  IsNull(null,null)as 'EndTime',ST.ToolType,ISNULL(OriginalUrl,null) AS 'URL',
-                        ISNULL(WMaterialText.[Text],'') AS 'Description',SUW.NoticePlatformType,ISNULL(NULL,0) AS 'ServiceLife',ISNULL(SP.BeShareVipID,0) as IsPush,ISNULL(IsOpen,0)as IsRead FROM SetoffTools ST
+                        ISNULL(WMaterialText.[Author],'') AS 'Description',SUW.NoticePlatformType,ISNULL(NULL,0) AS 'ServiceLife',ISNULL(SP.BeShareVipID,0) as IsPush,ISNULL(IsOpen,0)as IsRead FROM SetoffTools ST
                         LEFT JOIN WMaterialText ON ST.ObjectId=WMaterialText.TextId AND ISNULL(WMaterialText.IsAuth,0)!=1
                         LEFT JOIN SetoffToolUserView SUW ON SUW.SetoffToolID=ST.SetoffToolID AND  UserID='{0}' AND NoticePlatformType='{1}'
                         LEFT JOIN T_LEventsSharePersonLog SP ON SP.ObjectId=ST.ObjectId AND SP.ShareVipID='{0}' AND SP.BeShareVipID='1' AND SP.ShareVipType='{1}' WHERE 1=1 AND ST.ToolType='Material' AND ST.[Status]='10'
@@ -200,7 +200,7 @@ namespace JIT.CPOS.BS.DataAccess
                         LEFT JOIN T_LEventsSharePersonLog SP ON SP.ObjectId=ST.ObjectId AND SP.ShareVipID='{0}' AND SP.ShareVipType='{1}' WHERE 1=1 AND ST.ToolType='SetoffPoster' AND ST.[Status]='10'
                         UNION ALL
                         SELECT distinct ST.SetoffEventID,ST.CustomerId,ST.SetoffToolID AS 'SetoffToolID',ST.ObjectId,Title AS 'SetOffToolName',CONVERT(varchar(100),cast(WMaterialText.CreateTime as datetime),23) AS 'StartTime',  IsNull(null,null)as 'EndTime',ST.ToolType,ISNULL(OriginalUrl,null) AS 'URL',
-                        ISNULL(WMaterialText.[Text],'') AS 'Description',SUW.NoticePlatformType,ISNULL(NULL,0) AS 'ServiceLife',ISNULL(SP.ShareVipID,0) as IsPush,ISNULL(IsOpen,0)as IsRead FROM SetoffTools ST
+                        ISNULL(WMaterialText.[Author],'') AS 'Description',SUW.NoticePlatformType,ISNULL(NULL,0) AS 'ServiceLife',ISNULL(SP.ShareVipID,0) as IsPush,ISNULL(IsOpen,0)as IsRead FROM SetoffTools ST
                         LEFT JOIN WMaterialText ON ST.ObjectId=WMaterialText.TextId AND ISNULL(WMaterialText.IsAuth,0)!=1
                         LEFT JOIN SetoffToolUserView SUW ON SUW.SetoffToolID=ST.SetoffToolID AND  UserID='{0}' AND NoticePlatformType='{3}'
                         LEFT JOIN T_LEventsSharePersonLog SP ON SP.ObjectId=ST.ObjectId AND SP.ShareVipID='{0}' AND SP.ShareVipType='{1}' WHERE 1=1 AND ST.ToolType='Material' AND ST.[Status]='10'
