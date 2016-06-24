@@ -98,17 +98,17 @@
                     </div>
                     <div class="systemSet" style="text-align:right">
                        <span style="margin-right:12px">商品销售佣金比例：</span>
-		               <input type="text" class="easyui-numberbox systemInput" name="SkuCommission" data-options="min:0,max:99.9,precision:1">
+		               <input type="text" class="easyui-numberbox systemInput" name="SkuCommission" data-options="min:0.1,max:99.9,precision:1">
                        <span>%</span> 
                     </div>
                     <div class="systemSet" style="text-align:right">
                        <span style="margin-right:12px">分销商分润比例：</span>
-		               <input type="text" class="easyui-numberbox systemInput" name="DistributionProfit" data-options="min:0,max:99.9,precision:1">
+		               <input type="text" class="easyui-numberbox systemInput" name="DistributionProfit" data-options="min:0.1,max:99.9,precision:1">
                        <span>%</span> 
                     </div>
                     <div class="systemSet" style="text-align:right">
                        <span style="margin-right:12px">商家利润比例：</span>
-		               <input type="text" class="easyui-numberbox systemInput" name="CustomerProfit" data-options="min:0,max:99.9,precision:1">
+		               <input type="text" class="easyui-numberbox systemInput" name="CustomerProfit" data-options="min:0.1,max:99.9,precision:1">
                        <span>%</span>
                     </div>
                     <a href="javascript:;" class="commonBtn queryBtn" >一键分销</a>

@@ -474,7 +474,9 @@
 			
             //$('.priceContentfour').css('width', widthFour + last + 'px');
 			if (widthFour < 52) {
-				var averageLast = Math.ceil((52 - (widthFour + last))/3),
+				/*
+				var maxW = 0,
+					averageLast = Math.ceil((52 - (widthFour + last))/3),
 					oneWidth = $('.priceContentone').width(),
 					twoWidth = $('.priceContenttwo').width(),
 					threeWidth = $('.priceContentthree').width(),
@@ -486,6 +488,38 @@
 				$('.priceContentthree').css('width', threeW + 'px');
                 $('.priceContentfour').css('width', 52 + 'px');
 				$('.priceContentfour>div>span').text('成本');
+				*/
+				
+				var maxW = 0,
+					averageLast = 52 - (widthFour + last),
+					oneWidth = $('.priceContentone').width(),
+					twoWidth = $('.priceContenttwo').width(),
+					threeWidth = $('.priceContentthree').width(),
+					oneW,
+					twoW,
+					threeW;
+				
+				if(oneWidth>twoWidth){
+					if(threeWidth>oneWidth){
+						threeW = threeWidth - averageLast;
+						$('.priceContentthree').css('width', threeW + 'px');
+					}else{
+						oneW = oneWidth - averageLast;
+						$('.priceContentone').css('width',  oneW + 'px');
+					}
+				}else{
+					if(threeWidth>twoWidth){
+						threeW = threeWidth - averageLast;
+						$('.priceContentthree').css('width', threeW + 'px');
+					}else{
+						twoW = twoWidth - averageLast;
+						$('.priceContenttwo').css('width', twoW + 'px');
+					}
+				}
+				
+				$('.priceContentfour').css('width', 52 + 'px');
+				$('.priceContentfour>div>span').text('成本');
+				
             }else{
 				$('.priceContentfour').css('width', widthFour + last + 'px');
 				$('.priceContentfour>div>span').text('分销商品成本比例');
