@@ -124,7 +124,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.SuperRetailTrader.SuperRet
                         Profit = parameter.SkuCommission,
                         IsDelete = 0,
                         Status = "10",
-                        ProfitType = "Precent",
+                        ProfitType = "Percent",
                         RefSuperRetailTraderProfitConfigId = null,
                         SuperRetailTraderProfitConfigId = Guid.NewGuid()
                     });
