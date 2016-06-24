@@ -196,8 +196,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipGolden
                                     {
                                         CustomerId = CurrentUserInfo.CurrentUser.customer_id,
                                         CouponTypeId = para.ObjectId
-                                    });
-                                    setoffToolDetailRD.Name = couponTypeInfo[0].CouponTypeName + ",已飞入您的账户";
+                                    });                              
+                                    setoffToolDetailRD.Name = couponTypeInfo[0].CouponTypeName+",已飞入您的账户";
                                 }
                                 catch (Exception ex)
                                 {
