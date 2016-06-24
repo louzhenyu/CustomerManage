@@ -411,11 +411,13 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
 
             //确认发布
             $('#saveSetOff').bind('click',function(){
-                var setOff=[];
-                var setMessage=[];
-                var tt={};
-                var isSuccess = true;
-                that.update();
+                var ilength = $('.contentsTool ul li').length;
+                if(ilength!=0){
+                    that.update();
+                }else{
+                    alert('请先添加工具');
+                }
+
             });
 
             /**************** -------------------弹出easyui 控件 start****************/
@@ -1372,9 +1374,10 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
         //获取分销效果
         getStatistics:function(data,isTools){
             var list = data.List;
+            var html = "<div class='noContents'><p>你还没有添加工具<a>请点击添加工具</a>，拓展工具可以更好的帮助分销商拓展下线哟!</p></div>";
             for(var i=0;i<list.length;i++){
                 if(isTools==true){
-                    if(Number(list[i].LinkRelativeCount)>0){
+                    if(Number(list[i].LinkRelativeCount)>=0){
                         var html1 = "<p><em class='totle'>"+list[i].Count+"</em><i>人</i></p><span><i class='top'></i><em>"+list[i].LinkRelativeCount+"</em>人</span>";
                         var html2 = "<p><em class='totle'>"+list[i].Count+"</em><i>次</i></p><span><i class='top'></i><em>"+list[i].LinkRelativeCount+"</em>次</span>";
                     }else{
@@ -1401,11 +1404,8 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     else if(list[i].Type=='6'){
                         $('#poster').find('.record').html(html1);
                     }
-                    $('.day30Totle .noContents').hide();
-                    $('.day30Totle .day30Area').show();
                 }else{
-                    $('.day30Totle .day30Area').hide();
-                    $('.day30Totle .noContents').show();
+                    $('.day30Totle').html(html);
                 }
             }
         },

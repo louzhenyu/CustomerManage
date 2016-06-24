@@ -24,7 +24,7 @@
 .item .content span{color:#aaa;}
 .item .content span i{margin-left:5px;}
 .ModuleContent{display:inline-block;width:100%;}
-.day30Totle{width:940px;height:340px;margin-left:94px;}
+.day30Totle{width:940px;height:340px;margin:0 auto;display:block;}
 .day30Totle .noContents{display:table;width:100%;height:100%;}
 .day30Totle .noContents p{width:100%;vertical-align: middle;text-align:center;display:table-cell;}
 .day30Totle .noContents p a{color:#00a0e8;cursor:pointer;}

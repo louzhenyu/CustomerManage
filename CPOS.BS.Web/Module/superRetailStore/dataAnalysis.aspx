@@ -87,7 +87,7 @@
                                  </div>
                              </div>
                              <div id="pagecontianer">
-                                 <div class="dataMessage" style="position:relative;margin:0;">没有符合条件的查询记录</div>
+                                 <div class="dataMessage">没有符合条件的查询记录</div>
                                  <div id="kkpager" ></div>
                              </div>
                          </div>

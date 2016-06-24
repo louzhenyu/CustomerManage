@@ -3,7 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>分销拓展行动</title>
-    <link href="<%=StaticUrl+"/module/SuperDistributionExpand/css/expandActivity.css?v=0.5"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/SuperDistributionExpand/css/expandActivity.css?v=0.6"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="allPage" id="section" data-js="js/expandActivity.js?ver=0.1" >
@@ -91,11 +91,6 @@
                              </div>
                         </div>
                     </div>
-                </div>
-                <div class="noContents" style="display: none">
-                    <p>
-                        你还没有添加工具<a>请点击添加工具</a>，拓展工具可以更好的帮助分销商拓展下线哟！
-                    </p>
                 </div>
             </div>
             <div class="ModuleHead toolData">

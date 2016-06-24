@@ -61,7 +61,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     $('#activeCharts').find('.acount').html(Day30RTCount);
                     $('#completeCharts').find('.acount').html(Day30SalesRTCount);
                     $('#expandCharts').find('.acount').html(Day30ExpandRTCount);
-                    if(Day30NoRTCount!=null||Day30RTCount!=0){
+                    if(Day30NoRTCount!=0||Day30RTCount!=0){
                         $('#activeCharts .charts').highcharts({
                             chart: {
                                 plotBackgroundColor:null,
@@ -114,7 +114,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                         //return false;
                     }
 
-                    if(Day30SalesExpandRTCount!=null||Day30NoExpandRTCount!=null){
+                    if(Day30SalesExpandRTCount!=0||Day30NoExpandRTCount!=0){
                         $('#completeCharts .charts').highcharts({
                             chart: {
                                 plotBackgroundColor:null,
@@ -166,7 +166,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                         $('#staffCharts').parents('.contents').children('.noContents').hide();
                         //return false;
                     }
-                    if(Day30JoinSalesRTCount!=null||Day30NoSalesRTCount!=null){
+                    if(Day30JoinSalesRTCount!=0||Day30NoSalesRTCount!=0){
                         $('#expandCharts .charts').highcharts({
                             chart: {
                                 plotBackgroundColor:null,
@@ -518,7 +518,6 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     if(data.rows.length>0) {
                         that.elems.datamessage.hide();
                     }else{
-                        $('#gridRank').parents('.datagrid').hide();
                         that.elems.datamessage.show();
                     }
                 },
