@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using RedisOpenAPIClient.MethodExtensions.ObjectExtensions;
 namespace JIT.CPOS.BS.BLL.RedisOperationBLL.CouponsUpcomingExpired
 {
     //往缓存里写数据

@@ -79,9 +79,6 @@ namespace JIT.CPOS.BS.Entity
         /// </summary>
         public string ClientName { get; set; }
 
-        public string JsonSerialize()
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }
