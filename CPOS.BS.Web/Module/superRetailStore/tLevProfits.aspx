@@ -224,8 +224,8 @@
                       </div>
                 </div>
                 <div class="btnWrap messageBtn" id="btnWrap" data-options="region:'south'">
+                	<a class="easyui-linkbutton commonBtn cancelBtn cancel" style="height:35px;line-height:35px;margin-left:0;margin-right:15px;" href="javascript:void(0)" onclick="javascript:$('#winmessage').window('close')" >取消</a>
                     <a class="easyui-linkbutton commonBtn saveBtn">确定</a>
-                    <a class="easyui-linkbutton commonBtn cancelBtn cancel" style="height:35px;line-height:35px;" href="javascript:void(0)" onclick="javascript:$('#winmessage').window('close')" >取消</a>
                 </div>
             </div>
         </div>
