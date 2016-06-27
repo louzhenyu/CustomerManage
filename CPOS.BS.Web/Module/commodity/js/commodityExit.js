@@ -240,6 +240,7 @@
                            //window.d.close();
                           /* var mid = JITMethod.getUrlParam("mid");
                            location.href = "queryList.aspx?&mid=" + mid;*/
+                           window.notShow=true;
                            $.util.toNewUrlPath("queryList.aspx");
                        });
                    }
@@ -772,8 +773,8 @@
             }).delegate(".addSKU", "click", function (e,data) {  //添加sku分类事件
                 $("#dataState").fadeOut(10);
                 var long = that.elems.sku.find(".skuList").length;
-                if (long >= 3) {
-                    alert("最多只能添加3个规格");
+                if (long >= 2) {
+                    alert("最多只能添加2个规格");
                     return;
                 }
                 if(that.elems.allData.SKUPropList.length==long&&!data){

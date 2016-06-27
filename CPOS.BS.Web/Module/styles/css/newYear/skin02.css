@@ -153,7 +153,7 @@ body{overflow-x: hidden;}
 .commonNav li.on{background: #0c5e99;}
 .commonNav li.dropDown{background:url(../../images/newYear/jiantou.png) no-repeat center center}
 .commonNav li.dropDown{ position: relative; width: 36px;z-index: 999}
-.commonNav li.dropDown ul{ background:#00cccc;  position: absolute; top: 67px; left: 0;z-index: 998}
+.commonNav li.dropDown ul{ background:#0f74bc;  position: absolute; top: 50px; left: 0;z-index: 998}
 .commonNav li.dropDown ul li{ float: none; height: 32px; line-height: 32px; }
 .commonNav li.dropDown ul li a{ height: 32px; line-height: 32px; font-size: 14px;}
 /*全局菜单*/

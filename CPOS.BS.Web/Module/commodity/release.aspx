@@ -6,6 +6,15 @@
     <title>商品发布</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="<%=StaticUrl+"/module/commodity/css/release.css?v=0.4"%>" rel="stylesheet" type="text/css" />
+         <script type="text/javascript">
+    window.onbeforeunload = function() {
+    var n = window.event.screenX - window.screenLeft;
+    var b = n > document.documentElement.scrollWidth - 20;
+    if ((!(b && window.event.clientY < 0 || window.event.altKey))&&!window.notShow){
+    window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以放置你想做的操作代码
+    }
+    }
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 

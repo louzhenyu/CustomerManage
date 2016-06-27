@@ -313,6 +313,7 @@
                        that.loadData.addCommodity(function (data) {
                            $.messager.confirm("商品操作提示", "商品已添加成功,确定要继续添加商品吗？", function (r) {
                                var mid = JITMethod.getUrlParam("mid");
+                               window.notShow=true;
                                if (r) {//location.href = "queryList.aspx?Item_Id=" + rowData.Item_Id + "&mid=" + mid;
 								 //  location.href = "release.aspx?&mid=" + mid;
                                    $.util.toNewUrlPath("release.aspx");
@@ -555,8 +556,8 @@
             }).delegate(".addSKU","click",function(data){  //添加sku品类事件
                 $("#dataState").fadeOut(10);
                 var long=that.elems.sku.find(".skuList").length;
-                if(long>=3){
-                    alert("最多只能添加3个规格");
+                if(long>=2){
+                    alert("最多只能添加2个规格");
                     return;
                 }
                 if(that.elems.allData.SKUPropList.length==long&&!data){
