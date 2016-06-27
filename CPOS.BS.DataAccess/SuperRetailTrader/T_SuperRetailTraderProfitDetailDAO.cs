@@ -53,9 +53,9 @@ namespace JIT.CPOS.BS.DataAccess
             string strSql = string.Format(@"
                                             DECLARE @page INT ={2}
                                             DECLARE @size INT ={3}
-                                            SELECT v.SuperRetailTraderName Name, sr.OrderNo,sr.OrderDate,Profit Commission,sr.OrderActualAmount
+                                            SELECT v.VipName Name, sr.OrderNo,sr.OrderDate,Profit Commission,sr.OrderActualAmount
                                             FROM dbo.T_SuperRetailTraderProfitDetail sr WITH(NOLOCK) 
-                                            INNER JOIN T_SuperRetailTrader v WITH(NOLOCK)  ON sr.SuperRetailTraderID=v.SuperRetailTraderID  AND v.CustomerId='{1}'
+                                             INNER JOIN dbo.Vip v WITH ( NOLOCK ) ON sr.VipId=v.VIPID AND v.ClientID='{1}'
                                             WHERE sr.SuperRetailTraderID='{0}'
                                             AND Level=1
                                             ORDER BY sr.OrderDate DESC  OFFSET (@page -1) * @size ROWS
