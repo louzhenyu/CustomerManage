@@ -30,18 +30,6 @@
             var that = this;
             //点击查询按钮进行数据查询
             //
-
-            $("#leftMenu li").each(function(){
-                debugger;
-                $(this).removeClass("on");
-                   var urlPath= location.pathname.replace(/\//g, "_");
-                var classNameList=$(this).find("em").attr("class").split(" ");
-                if(classNameList.length>1){
-                    if(urlPath.indexOf(classNameList[1])!=-1){
-                        $(this).addClass("on");
-                    }
-                }
-            });
             that.elems.sectionPage.delegate(".queryBtn","click", function (e) {
                 //调用设置参数方法   将查询内容  放置在this.loadData.args对象中
                 that.setCondition();
@@ -303,17 +291,6 @@
                     },
                 ]],
                 columns : [[
-                  /*  {field : 'Image_Url',title : '图片',width:50,align:'left',resizable:false,
-                        formatter:function(value ,row,index){
-                            var html=' <img src="images/商品.png" width="40" height="40"  />';
-                            if(value){
-                                html=' <img src="'+value+'" width="40" height="40"  />'
-                            }
-
-                            return html;
-                        }
-
-                    },*/
                     {field : 'Item_Name',title : '商品名称',width:120,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             var long=56;
@@ -324,7 +301,7 @@
                             }
                         }
                     },
-                    {field : 'ifservice',title : '商品类型',width:60,align:'center',resizable:false,
+                    {field : 'ifservice',title : '商品类型',width:50,align:'center',resizable:false,
                         formatter:function(value ,row,index){
                             var long=56;
                             if(value==1){
@@ -335,7 +312,7 @@
                         }
                     } ,
                     {field : 'minPrice',title : '价格(元)',width:50,resizable:false,align:'center'},
-                    {field : 'stock',title : '库存',width:50,align:'center',resizable:false,
+                    {field : 'stock',title : '库存',width:40,align:'center',resizable:false,
                         formatter:function(value,row,index){
                            if(isNaN(parseInt(value))){
                              return 0;
@@ -344,7 +321,7 @@
                            }
                         }
                     },
-                    {field : 'SalesCount',title : '销量',width:50,align:'center',resizable:false,
+                    {field : 'SalesCount',title : '销量',width:40,align:'center',resizable:false,
                         formatter:function(value,row,index){
                             if(isNaN(parseInt(value))){
                                 return 0;
@@ -352,20 +329,20 @@
                                 return parseInt(value);
                             }
                         }},
-                    {field : 'SalesPromotion',title : '商品分组',width:60,align:'left',resizable:false,
+                    {field : 'SalesPromotion',title : '商品分组',width:100,align:'left',resizable:false,
                         formatter:function(value ,row,index){
-                            var long=18;
+                            var long=12;
                             var html=""
                             if(value&&value.length>long){
-                                html=  '<div class="rowTextnew" title="'+value+'">'+value.substring(0,long)+'...</div>'
+                                html=  '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
                             }else{
-                                 html='<div class="rowTextnew">'+value+'</div>'
+                                 html='<div class="rowText">'+value+'</div>'
                             }
 
                             return  html
                     }},
-                    {field : 'Item_Category_Name',title : '商品品类',width:60,align:'left',resizable:false} ,
-                    {field : 'Modify_Time',title : '更新时间',width:60,align:'left',resizable:false,
+                    {field : 'Item_Category_Name',title : '商品品类',width:50,align:'left',resizable:false} ,
+                    {field : 'Modify_Time',title : '更新时间',width:80,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             return new Date(value).format("yyyy-MM-dd hh:mm");
                         }
@@ -390,7 +367,7 @@
                         }
                     },
 					{
-                        field: 'customer_id', title: '操作', width:60, align: 'left', resizable: false,
+                        field: 'customer_id', title: '操作', width:30, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
 							var hast = location.host,
 								hastname = '',

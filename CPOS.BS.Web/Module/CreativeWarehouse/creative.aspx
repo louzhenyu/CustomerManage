@@ -141,7 +141,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
 
                                <div class="draggable" data-edit="true"  data-size="'120X120" data-imgurl="images/logo.png" data-imgcode="LogoImageUrl" ><img src="images/logo.png" width="39" data-imgcode="LogoImageUrl" height="39" ></div>
 
-                               <div class="action"> <div><img src="images/packetClose.png"   data-imgcode="NotReceiveImageUrl"/>  <img src="images/packetOpen.png" class="hide" data-imgcode="ReceiveImageUrl" /> <em style="display: none"> 活动规则 <i>&gt;</i> </em></div> </div>
+                               <div class="action"> <div><img src="images/packetClose.png" width="210"   data-imgcode="NotReceiveImageUrl" />  <img src="images/packetOpen.png" width="210" class="hide" data-imgcode="ReceiveImageUrl" /> <em style="display: none"> 活动规则 <i>&gt;</i> </em></div> </div>
 
                             </div>
                 </div> <!--spreadPanel-->

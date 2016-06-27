@@ -88,10 +88,10 @@
                 </div>
 
                 
-                <div class="tableWrap" id="tableWrap" style="display:inline-block;width:100%;">
+                <div class="tableWrap cursorDef" id="tableWrap" style="display:inline-block;width:100%;">
 
-                   <div class="dataTable" id="gridTable">
-                         <!-- <div  class="loading">
+                   <div class="dataTable " id="gridTable">
+                        <!--  <div  class="loading">
                                    <span>
                                  <img src="../../static/images/loading.gif"></span>
                             </div>-->

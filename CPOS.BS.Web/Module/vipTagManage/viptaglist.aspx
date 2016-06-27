@@ -14,7 +14,7 @@
         <div class="allPage" id="section" data-js="js/viptaglist.js">
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
-                    <div class="tableWrapText" id="tableWrap">
+                    <div class="tableWrapText cursorDef" id="tableWrap">
                                    <div class="optionBtn">
                                    <div class="commonBtn icon icon_add w100 r" data-flag="add">新增标签</div>
 

@@ -2000,9 +2000,15 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','js/salesPromotion.j
                                                 $(this).css({"backgroundImage":'url('+imgObj.ImageURL+')' });
                                             }
                                         }else if($(this).is("img")){
-                                            if($(this).data("imgcode").indexOf("ReceiveImageUrl")==-1) {
+                                            debugger;
+                                            if($(this).data("imgcode").indexOf("ReceiveImageUrl")==0&&imgObj.BatId=="Receive") {
+
+                                                $(this).attr("src", imgObj.ImageURL);
+
+                                            } else if($(this).data("imgcode").indexOf("ReceiveImageUrl")==3&&imgObj.BatId=="NotReceive"){
                                                 $(this).attr("src", imgObj.ImageURL);
                                             }
+
 
                                         }
                                     }
@@ -2479,10 +2485,20 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','js/salesPromotion.j
                         GameEventInfo["LotteryNum"] = $("#frequency").numberbox("getValue");
                     }
                     var imgList = [];
-                    imgList.push({BatId: "BackGround", ImageURL: $('[data-imgcode="BackGroundImageUrl"]').data("imgurl")})
-                    imgList.push({BatId: "Logo", ImageURL: $('[data-imgcode="LogoImageUrl"]').data("imgurl")})
-                    imgList.push({BatId: "NotReceive", ImageURL: $('[data-imgcode="NotReceiveImageUr"]').data("imgurl")})
-                    imgList.push({BatId: "Receive", ImageURL: $('[data-imgcode="ReceiveImageUr"]').data("imgurl")})
+                    imgList.push({BatId: "BackGround", ImageURL: $('[data-imgcode="BackGroundImageUrl"]').data("imgurl")});
+                    imgList.push({BatId: "Logo", ImageURL: $('[data-imgcode="LogoImageUrl"]').data("imgurl")});
+                    if($('[data-imgcode="NotReceiveImageUrl"]').is("img")){
+                        imgList.push({BatId: "NotReceive", ImageURL: $('[data-imgcode="NotReceiveImageUrl"]').attr("src")});
+                    } else{
+                        imgList.push({BatId: "NotReceive", ImageURL: $('[data-imgcode="NotReceiveImageUrl"]').data("imgurl")});
+                    }
+
+                    if($('[data-imgcode="ReceiveImageUrl"]').is("img")){
+                        imgList.push({BatId: "Receive", ImageURL: $('[data-imgcode="ReceiveImageUrl"]').attr("src")});
+                    } else{
+                        imgList.push({BatId: "Receive", ImageURL: $('[data-imgcode="ReceiveImageUrl"]').data("imgurl")});
+                    }
+
 
                     GameEventInfo["ImageList"] = imgList;
                     GameEventInfo["PrizeList"] = that.prizeListHB;

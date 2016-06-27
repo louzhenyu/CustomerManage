@@ -101,8 +101,27 @@
     background-position:center center;
 }
 .tree-checkbox0{ background-image:url("../images/check.png")}
-.tree-checkbox2 { background-image:url("../images/check.png")}
+.tree-checkbox2 { background-image:url("../images/solidChek.png")}
 .tree-checkbox1{ background-image:url("../images/checkon.png")}
-#unitTreeSelect .tree-title{ width: 258px;}
-#unitTreeSelect .tree-title .delete{float: right;}
-.content .datagrid-header-check, .content .datagrid-cell-check { background-position:left center;}
+#unitTreeSelect .tree-title{width: 258px;height: 40px;line-height: 40px; text-align: center}
+#unitTreeSelect .tree-title .delete{float: right;height: 40px;}
+#unitTreeSelect .tree-expanded,
+#unitTreeSelect .tree-collapsed,#unitTreeSelect .tree-checkbox{
+    display: inline-block;
+    width: 20px;
+    height: 40px;
+    vertical-align:middle;
+    overflow: hidden;
+    background-position:center center;
+}
+#unitTreeSelect  .tree-node{height: 49px;line-height:49px; border-bottom:1px solid #e1e7ea;}
+#unitTreeSelect .bg{background-color:#f2f2f2;height: 40px;line-height:40px}
+#unitTreeSelect .bg  .tree-title{ text-align: left;}
+
+.datagrid-header-check,
+.datagrid-cell-check {
+    width: 40px;
+    height: 20px;
+    background-position: center center;
+
+}

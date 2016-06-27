@@ -53,7 +53,7 @@
 .textList .commonSelectWrap .searchInput { width: auto;}
 
 #nav02 .commonBtn{ width: 80px; line-height: 30px; height: 30px;}
-#nav02 .optBtnPanel{ height: 76px;padding-left: 30px; padding-top: 22px;  border-bottom: 1px solid #d8d8d8;}
+#nav02 .optBtnPanel{ height: 76px;padding-left: 30px; padding-top: 22px;  border-bottom: 1px solid #d8d8d8;width: 100%;}
 .borderNone{ border: 1px solid  transparent;  background: none}
 
 .bgColor{ background-color: #efefef}

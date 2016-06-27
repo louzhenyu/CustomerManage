@@ -51,7 +51,7 @@
 
 
                      </div>
-                <div class="tableWrap" id="tableWrap">
+                <div class="tableWrap cursorDef" id="tableWrap">
                      
                     <div class="dataTable" id="gridTable">
                           <div  class="loading">

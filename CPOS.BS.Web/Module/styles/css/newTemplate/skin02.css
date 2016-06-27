@@ -401,4 +401,5 @@
 .datagrid-header td, .datagrid-footer td{cursor: default;}
 .cursorDef  .datagrid-body td{ cursor: default}
 .datagrid-view{ height: 200px;}
+.pageContianer{position: relative;}
 

@@ -154,6 +154,9 @@
     <Content Include="Framework\CssNew\reset.css" />
     <Content Include="Framework\CssNew\style.css" />
     <Content Include="Framework\CssNew\webcontrol.css" />
+    <Content Include="Framework\Image\leftImgList\09.png" />
+    <Content Include="Framework\Image\leftImgList\09L.png" />
+    <Content Include="Framework\Image\leftImgList\cjfxon.png" />
     <Content Include="Framework\Javascript\Biz\AlbumModuleType.js" />
     <Content Include="Framework\Javascript\Biz\AlbumType.js" />
     <Content Include="Framework\Javascript\Biz\DefrayType.js" />

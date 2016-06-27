@@ -16,12 +16,12 @@
             <div class="contentArea_vipquery">
                 <!--个别信息查询-->
                 
-                <div class="tableWrap" id="tableWrap">
+                <div class="tableWrap cursorDef" id="tableWrap">
                      <div class="optionBtn" data-opttype="staus">
                         <div class="commonBtn icon w100 icon_add r"  data-flag="add" data-showstaus="1" >新增假日</div>
 
                     </div>
-                    <div class="dataTable" id="gridTable">
+                    <div class="dataTable " id="gridTable">
                                                 <div  class="loading">
                                                          <span>
                                                        <img src="../static/images/loading.gif"></span>

@@ -291,7 +291,7 @@
                 },
                 onClickRow:function(rowindex,rowData){
                       debugger;
-                     if(that.elems.click){
+                  /*   if(that.elems.click){ //不要在多此一举添加事件了，有编辑按钮，不需要这个，bug都被提好几次了。手贱。
                          that.elems.optionType="exit";
                          that.update();
                          var row=rowData;
@@ -312,7 +312,7 @@
                              $('#addProm').form('load',row);
                          }
                          that.bindEvent();
-                     }
+                     }*/
 
                 },onClickCell:function(rowIndex, field, value){
                       if(field=="isParent"){

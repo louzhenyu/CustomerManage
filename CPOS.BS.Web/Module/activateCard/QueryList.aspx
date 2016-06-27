@@ -24,7 +24,7 @@
                     <!--<h2 class="commonTitle">会员查询</h2>-->
 
                 </div>
-                <div class="tableWrap" id="tableWrap">
+                <div class="tableWrap cursorDef" id="tableWrap" >
                    <div  id="gridTable" class="gridLoading">
                          <div  class="loading">
                                   <span>

@@ -523,11 +523,20 @@
                     debugger;
                     var s = node.text;
                     if (node.children){
-                       // s += '&nbsp;<span style=\'color:blue\'>(' + node.children.length + ')</span>';
+                        var long=18;
+
+                        if(s&&s.length>long){
+                            s= '<div class="bg"  title="'+s+'">'+s.substring(0,long)+'...</div>'
+                        }else{
+                            s= '<div class="bg" >'+s+'</div>'
+                        }
                     }else{
                          s+='<em class="delete" title="删除" data-target='+node.id+'></em>'
                     }
                     return s;
+                },onLoadSuccess:function() {
+
+                    $(".bg").parents(".tree-node").addClass("bg");
                 },
                 data:[]
 

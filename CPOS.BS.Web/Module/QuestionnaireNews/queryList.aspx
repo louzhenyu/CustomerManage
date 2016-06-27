@@ -45,7 +45,7 @@
             <div class="optionBtn" id="opt">
                 	<div class="commonBtn  icon w80  icon_add r" id="addUserBtn">新增</div>
                 </div>
-            <div class="tableWrap" id="tableWrap">
+            <div class="tableWrap cursorDef" id="tableWrap">
                 
                    <div class="">
                    		<div class="dataTable" id="gridTable">

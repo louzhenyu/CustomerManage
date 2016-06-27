@@ -130,7 +130,6 @@
                     })
                 }
                 if (optType == "exit") {
-                    var mid = $.util.getUrlParam("mid");
                     $.util.toNewUrlPath("birthDayDetail.aspx?ActivityID=" + row.ActivityID);
                 }
                 if(optType=="start"||optType=="end"){
@@ -292,11 +291,11 @@
                     }
                 },
                 onClickRow:function(rowindex,rowData){
-                    if (that.elems.click) {
+                   /* if (that.elems.click) {                   //有其他操作按钮了， 不要手贱加事件了。不要在加了，不要在加了，不要在加了，重要的事情说三遍
                         debugger;
                         that.elems.click = true;
                         if (rowData.Status == 1 || rowData.Status == 2) {
-                            var mid = $.util.getUrlParam("mid");
+                            var mid = $.util.getUrlParam("mid");   //toNewUrlPath 公共方法已经有mid不需要添加了，mid的现在也不需要了。
                             $.util.toNewUrlPath("birthDayDetail.aspx?mid=" + mid + "&ActivityID=" + rowData.ActivityID);
                         } else if (rowData.Status == 3) {
                             $.messager.alert("提示", "活动运行中,不可修改");
@@ -304,7 +303,7 @@
                             $.messager.alert( "提示","活动已经结束,不可修改");
 
                         }
-                    }
+                    }*/
                 },onClickCell:function(rowIndex, field, value){
                     if(field=="addOpt"||field=="addOptdel"){    //在每一列有操作 而点击行有跳转页面的操作  才使用该功能。 此处不注释 与注释都可以。
                         that.elems.click=false;
