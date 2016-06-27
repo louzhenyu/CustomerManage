@@ -1291,11 +1291,15 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
             // 获取分销工具列表；
             that.loadData.getExtendList(function(data){
                 // 获取集客行动奖励数据
-                if(data.List.length!=0){
-                   that.getAction(data);
-                    isTools = true;
+                if(data.List!=null){
+                    if(data.List.length!=0){
+                        that.getAction(data);
+                        isTools = true;
+                    }
+                    else{
+                        isTools = false;
+                    }
                 }else{
-                    that.loadData.setOff.isData=false;
                     isTools = false;
                 }
                 $('.ModuleList .title').find('li').eq(0).trigger('click');
@@ -1335,7 +1339,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
             var ToolsInfoList2 =[];
             var ToolsInfoList3 =[];
             var ToolsInfoList4 =[];
-            for(var i =0;i<list.length;i++){
+            for(var i =0;i<list;i++){
                 var toolType =list[i].ToolType;
                 if(toolType=='CTW'){
                     var listData = list[i];

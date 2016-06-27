@@ -20,3 +20,5 @@
 .day30Data .contents:nth-of-type(4) .chartsLegend p:nth-of-type(2) span{display:inline-block;width:10px;height:10px;border-radius:5px;margin-right:4px;background-color:#ff8a00}
 .btnWrap {padding: 20px 0 0; margin: 30px 0 0;clear: both;border-top: 1px solid #e1e7ea;}
 .btnWrap .cancelBtn{display:inline-block;height:38px;line-height:35px;border:2px solid #00a0e8;margin-top:-2px;border-radius:38px;width:110px;background:#fff;color:#00a0e8;margin-right:10px;}
+
+.datagrid-row{cursor:default;}

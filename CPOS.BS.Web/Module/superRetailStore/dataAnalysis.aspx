@@ -3,7 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>分销商数据分析</title>
-    <link href="<%=StaticUrl+"/module/superRetailStore/css/dataAnalysis.css?v=0.2"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/superRetailStore/css/dataAnalysis.css?v=0.3"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="allPage" id="section" data-js="js/dataAnalysis.js?ver=0.1" >
@@ -62,10 +62,12 @@
                         <li data-Field7="2"><em>分销商新增下线排名 </em></li>
                    </ul>
                 </div>
-                <div class="dataTable" id="gridTable">
-                    <div class="loading" style="padding-top:10px;">
-                         <span>
-                       <img src="../static/images/loading.gif"></span>
+                <div class="cursorDef">
+                    <div class="dataTable" id="gridTable">
+                        <div class="loading" style="padding-top:10px;">
+                             <span>
+                           <img src="../static/images/loading.gif"></span>
+                        </div>
                     </div>
                 </div>
                 <div id="pageContianer">

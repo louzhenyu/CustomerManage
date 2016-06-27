@@ -20,6 +20,7 @@
 #pageContianer2 .kkPager a{padding:2px;}
 
 /*对话框样式重构*/
-.easyui-linkbutton.commonBtn.saveBtn{margin-top:14px;}
 .panel.layout-panel.layout-panel-south{height:75px !important;overflow:hidden !important;border-top:1px solid #e1e7ea;}
 .panel.window{position:fixed !important;}
+.btnWrap .cancelBtn{display:inline-block;height:38px;line-height:35px;border:2px solid #00a0e8;margin-top:-2px;border-radius:38px;width:110px;background:#fff;color:#00a0e8;margin-right:10px;}
+.btnWrap .saveBtn{height:38px;line-height:38px;border-radius:38px;width:110px;margin-left:10px;}

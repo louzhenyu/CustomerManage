@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>分销商管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="<%=StaticUrl+"/module/superRetailStore/css/businessManages.css?v1.0"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/superRetailStore/css/businessManages.css?v1.1"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
         <div class="allPage" id="section" data-js="js/businessManages.js">
@@ -92,9 +92,10 @@
                         <div id="kkpager2">
                         </div>
                     </div>
-                    <div class="btnWrap" id="btnWrap" data-options="region:'south',border:false" style="height:80px;text-align:center;padding:5px 0 0;">
-                        <a class="easyui-linkbutton commonBtn saveBtn" href="javascript:;" >确定</a>
+                    <div class="btnWrap" id="btnWrap" data-options="region:'south',border:false" style="height:80px;text-align:center;padding:20px 0 0;">
                         <a class="easyui-linkbutton commonBtn cancelBtn">取消</a>
+                        <a class="easyui-linkbutton commonBtn saveBtn" href="javascript:;" >确定</a>
+
                     </div>
                 </div>
         
