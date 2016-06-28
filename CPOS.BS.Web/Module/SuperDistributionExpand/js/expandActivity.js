@@ -1339,22 +1339,22 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
             var ToolsInfoList2 =[];
             var ToolsInfoList3 =[];
             var ToolsInfoList4 =[];
-            for(var i =0;i<list;i++){
-                var toolType =list[i].ToolType;
+            for(var j = 0;j<list.length;j++){
+                var toolType = list[j].ToolType;
                 if(toolType=='CTW'){
-                    var listData = list[i];
+                    var listData = list[j];
                     listData=listData?listData:[];
                     ToolsInfoList1.push(listData);
                 }else if(toolType=='Coupon'){
-                    var listData = list[i];
+                    var listData = list[j];
                     listData=listData?listData:[];
                     ToolsInfoList2.push(listData);
                 }else if(toolType=='SetoffPoster'){
-                    var listData = list[i];
+                    var listData = list[j];
                     listData=listData?listData:[];
                     ToolsInfoList3.push(listData);
                 }else if(toolType=='Material'){
-                    var listData = list[i];
+                    var listData = list[j];
                     listData=listData?listData:[];
                     ToolsInfoList4.push(listData);
                 }
