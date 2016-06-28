@@ -604,17 +604,16 @@ namespace JIT.CPOS.BS.BLL
                         {
                             CC_PrizePool prizePool = new CC_PrizePool();
                             prizePool.CustomerId = this.CurrentUserInfo.ClientID;
-                            prizePool.EventId = strEventId;
+                            prizePool.EventId = contactEvent.ContactEventId.ToString();
 
                             var resultPrizePool = redisPrizePoolsBLL.GetPrizePoolsFromRedis(prizePool);
                             if (resultPrizePool.Code == ResponseCode.Success && resultPrizePool.Result.PrizePoolsID == null)
                             {
-                                DataSet dsPrizePools = bllPrizePools.GetRandomPrizeByEventId(strEventId);
+                                DataSet dsPrizePools = bllPrizePools.GetRandomPrizeByEventId(contactEvent.ContactEventId.ToString());
                                 if (dsPrizePools != null && dsPrizePools.Tables[0].Rows.Count > 0)
                                 {
                                     entityPrizePool = DataTableToObject.ConvertToObject<LPrizePoolsEntity>(dsPrizePools.Tables[0].Rows[0]);
                                     //PrizePools×´Ì¬¸üÐÂ
-                                    entityPrizePool.PrizePoolsID = entityPrizePool.PrizePoolsID;
                                     entityPrizePool.Status = 0;
                                     bllPrizePool.Update(entityPrizePool, false);
                                 }
@@ -655,7 +654,7 @@ namespace JIT.CPOS.BS.BLL
                                 {
                                     CustomerId = this.CurrentUserInfo.ClientID,
                                     CouponTypeId = dr["CouponTypeID"].ToString()
-                                }, strEventId, strVipId, strType);
+                                }, contactEvent.ContactEventId.ToString(), strVipId, strType);
                             }
                         }
                     }
@@ -665,12 +664,12 @@ namespace JIT.CPOS.BS.BLL
                         {
                             CC_PrizePool prizePool = new CC_PrizePool();
                             prizePool.CustomerId = this.CurrentUserInfo.ClientID;
-                            prizePool.EventId = strEventId;
+                            prizePool.EventId = contactEvent.ContactEventId.ToString();
 
                             var resultPrizePool = redisPrizePoolsBLL.GetPrizePoolsFromRedis(prizePool);
                             if (resultPrizePool.Code == ResponseCode.Success && resultPrizePool.Result.PrizePoolsID == null)
                             {
-                                DataSet dsPrizePools = bllPrizePools.GetRandomPrizeByEventId(strEventId);
+                                DataSet dsPrizePools = bllPrizePools.GetRandomPrizeByEventId(contactEvent.ContactEventId.ToString());
                                 if (dsPrizePools != null && dsPrizePools.Tables[0].Rows.Count > 0)
                                 {
                                     entityPrizePool = DataTableToObject.ConvertToObject<LPrizePoolsEntity>(dsPrizePools.Tables[0].Rows[0]);
