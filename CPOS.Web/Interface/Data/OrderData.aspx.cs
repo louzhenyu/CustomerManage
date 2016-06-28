@@ -838,9 +838,10 @@ namespace JIT.CPOS.Web.Interface.Data
                             return x;
                         }).Trim('|');
 
-                        if (Encoding.Default.GetBytes(itemNameList).Length > 128)
+                        //修订购买多个商品会抛异常的问题
+						if (itemNameList.Length >= 45)
                         {
-                            itemNameList = itemNameList.Substring(0, 60) + "......";
+                            itemNameList = itemNameList.Substring(0, 42) + "...";
                         }
                         itemNameList = itemNameList.Replace("+", "");
                         itemNameList = itemNameList.Replace(" ", "-");
