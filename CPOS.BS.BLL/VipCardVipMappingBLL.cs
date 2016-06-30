@@ -282,10 +282,10 @@ namespace JIT.CPOS.BS.BLL
             };
             vipCardStatusChangeLogBLL.Create(vipCardStatusChangeLogEntity, pTran);
 
-            var vipCardVipMappingEntity = new VipCardVipMappingEntity()
-            {
-                LastUpdateTime = DateTime.Now
-            };
+            
+            var vipCardVipMappingEntity = vipCardVipMappingBLL.QueryByEntity(new VipCardVipMappingEntity(){ VipCardID = vipCardInfo.VipCardID },null).FirstOrDefault();
+            vipCardVipMappingEntity.LastUpdateTime = DateTime.Now;
+
             vipCardVipMappingBLL.Update(vipCardVipMappingEntity, pTran);
             //绑定会员卡和会员
             //var vipCardVipMappingEntity = new VipCardVipMappingEntity()
