@@ -42,5 +42,9 @@ namespace JIT.CPOS.BS.BLL
         {
             return _currentDAO.GetMainUnit(clientID);
         }
+		public bool CreateUnitRelation(string sql)
+        {
+            return _currentDAO.CreateUnitRelation(sql);
+        }
     }
 }

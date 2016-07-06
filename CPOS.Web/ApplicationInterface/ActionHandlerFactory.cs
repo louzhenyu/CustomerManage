@@ -52,7 +52,7 @@ namespace JIT.CPOS.Web.ApplicationInterface
         /// <param name="pAction">接口请求操作</param>
         /// <param name="pVersion">接口版本号</param>
         /// <returns>接口请求处理器</returns>
-        public static IActionHandler GetActionHandler(APITypes pType,string pAction)
+        public static IActionHandler GetActionHandler(APITypes pType, string pAction)
         {
             var sections = pAction.Split(new string[] { "." }, StringSplitOptions.RemoveEmptyEntries);
             switch (pType)
@@ -62,17 +62,19 @@ namespace JIT.CPOS.Web.ApplicationInterface
                     {
                         if (sections.Length < 3)
                         {
-                            throw new APIException(ERROR_CODES.INVALID_REQUEST_INVALID_ACTION_FORMAT,"action值的格式错误,在产品接口下,action的格式为：[模块名].[对象名].[操作名]");
+                            throw new APIException(ERROR_CODES.INVALID_REQUEST_INVALID_ACTION_FORMAT, "action值的格式错误,在产品接口下,action的格式为：[模块名].[对象名].[操作名]");
                         }
-                        var className = string.Format("{0}.{1}.{2}.{3}AH", ActionHandlerFactory.PRODUCT_ACTION_HANDLER_BASE_NAMESPACE,sections[0],sections[1],sections[2]);
+                        var className = string.Format("{0}.{1}.{2}.{3}AH", ActionHandlerFactory.PRODUCT_ACTION_HANDLER_BASE_NAMESPACE, sections[0], sections[1], sections[2]);
                         IActionHandler handler = null;
                         try
                         {
                             var oh = Activator.CreateInstance(null, className);
-                            if(oh!=null)
-                                handler = oh.Unwrap() as  IActionHandler;
+                            if (oh != null)
+                            {
+                                handler = oh.Unwrap() as IActionHandler;
+                            }
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             throw new APIException(ERROR_CODES.INVALID_REQUEST_CAN_NOT_FIND_ACTION_HANDLER, string.Format("根据action找不到指定的ActionHandler类.原因：[{0}]", ex.Message), ex);
                         }
@@ -87,13 +89,15 @@ namespace JIT.CPOS.Web.ApplicationInterface
                         {
                             throw new APIException(ERROR_CODES.INVALID_REQUEST_INVALID_ACTION_FORMAT, "action值的格式错误,在产品接口下,action的格式为：[客户ID].[模块名].[对象名].[操作名]");
                         }
-                        var className = string.Format("{0}.{1}.{2}.{3}.{4}AH", ActionHandlerFactory.PROJECT_ACTION_HANDLER_BASE_NAMESPACE, sections[0], sections[1], sections[2],sections[3]);
+                        var className = string.Format("{0}.{1}.{2}.{3}.{4}AH", ActionHandlerFactory.PROJECT_ACTION_HANDLER_BASE_NAMESPACE, sections[0], sections[1], sections[2], sections[3]);
                         IActionHandler handler = null;
                         try
                         {
                             var oh = Activator.CreateInstance(null, className);
                             if (oh != null)
+                            {
                                 handler = oh.Unwrap() as IActionHandler;
+                            }
                         }
                         catch (Exception ex)
                         {

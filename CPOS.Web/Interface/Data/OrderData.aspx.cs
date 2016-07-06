@@ -13,6 +13,13 @@ using JIT.CPOS.Web.OnlineShopping.data;
 using System.Web;
 using System.Net;
 using System.IO;
+using CPOS.BS.BLL;
+using CPOS.BS.Entity;
+using CPOS.Common;
+using JIT.CPOS.BS.BLL.PA;
+using JIT.CPOS.DTO.Module.Order.Order.Response;
+using JIT.CPOS.DTO.Module.PA.Response;
+using JIT.CPOS.DTO.Module.PA.Request;
 
 namespace JIT.CPOS.Web.Interface.Data
 {
@@ -52,6 +59,9 @@ namespace JIT.CPOS.Web.Interface.Data
                         break;
                     case "GetOrderStatusList":      //获取订单的下一个状态集合Jermyn20140313
                         content = GetOrderStatusList();
+                        break;
+                    case "GetPALifePayParm":      //获取旺财支付参数
+                        content = GetPALifePayParm();
                         break;
                     default:
                         break;
@@ -597,7 +607,47 @@ namespace JIT.CPOS.Web.Interface.Data
                 respData.content = new GetPaymentListRespContentData();
                 respData.content.paymentList = new List<PaymentEntity>();
 
-                DataSet ds = new TPaymentTypeBLL(loggingSessionInfo).GetPaymentListByCustomerId(customerId, channelId);
+                var vipBll = new VipBLL(loggingSessionInfo);
+                var wxUserBll = new WXUserInfoBLL(loggingSessionInfo);
+                var vipEntitys = new VipEntity[] { new VipEntity() };
+                var vipEntity = new VipEntity();
+                var wxappid = string.Empty;
+                var weixinid = string.Empty;
+                if (!string.IsNullOrEmpty(reqObj.common.openId))
+                {
+                    vipEntity = vipBll.QueryByEntity(new VipEntity { WeiXinUserId = reqObj.common.openId, IsDelete = 0, ClientID = customerId }, null).FirstOrDefault();
+                    if (vipEntity == null)
+                    {
+                        var wxUserInfo = wxUserBll.QueryByEntity(new WXUserInfoEntity() { VipID = reqObj.common.userId, WeiXinUserID = reqObj.common.openId }, null).FirstOrDefault();
+                        if (wxUserInfo != null)
+                        {
+                            weixinid = wxUserInfo.WeiXin;
+                        }
+                    }
+                    else
+                    {
+                        weixinid = vipEntity.WeiXin;
+                    }
+
+                    var appService = new WApplicationInterfaceBLL(loggingSessionInfo);
+                    var appEntity = appService.QueryByEntity(new WApplicationInterfaceEntity() { WeiXinID = weixinid, CustomerId = customerId, IsPayments = 1 }, null).FirstOrDefault();
+                    if (appEntity != null && !string.IsNullOrEmpty(appEntity.AppID))
+                    {
+                        wxappid = appEntity.AppID;
+                    }
+                    else
+                    {
+                        appEntity = appService.QueryByEntity(new WApplicationInterfaceEntity() { CustomerId = customerId, IsPayments = 1 }, null).FirstOrDefault();
+                        if (appEntity != null && !string.IsNullOrEmpty(appEntity.AppID))
+                        {
+                            wxappid = appEntity.AppID;
+                        }
+                    }
+                }
+
+
+                //DataSet ds = new TPaymentTypeBLL(loggingSessionInfo).GetPaymentListByCustomerId(customerId, channelId);
+                DataSet ds = new TPaymentTypeBLL(loggingSessionInfo).GetPaymentListByAppId(customerId, channelId, wxappid);
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
                     if (string.IsNullOrWhiteSpace(reqObj.common.plat))
@@ -657,6 +707,126 @@ namespace JIT.CPOS.Web.Interface.Data
         #endregion
 
         #region SetPayOrder 订单支付  qianzhi20140312
+
+
+        /// <summary>
+        /// 获取旺财支付参数
+        /// </summary>
+        public string GetPALifePayParm()
+        {
+            string content = string.Empty;
+
+            var respData = new PALifePayParmRD();
+            try
+            {
+                string reqContent = Request["ReqContent"];
+                Loggers.Debug(new DebugLogInfo()
+                {
+                    Message = string.Format("GetPALifePayParm: {0}", reqContent)
+                });
+                var reqObj = reqContent.DeserializeJSONTo<PALifePayParmRP>();
+                LoggingSessionInfo loggingSessionInfo = Default.GetBSLoggingSession(reqObj.special.CustomerId, reqObj.special.OpenId);
+
+                var payNo = new PA_PrepayNoBLL(loggingSessionInfo);
+                // 读取预付单号
+                PA_PrepayNoEntity paPrepayNoEntity = payNo.GetByID(reqObj.special.OrderId);
+
+                PALifePayParm parm = new PALifePayParm()
+                {
+                    appId = ConfigHelper.GetAppSetting("MerchantCode", "2016051000000041"),
+                    openId = reqObj.special.OpenId,
+                    timestamp = PAAppBLL.ConvertDateTimeInt(DateTime.Now),
+                    package = "prepayId=" + paPrepayNoEntity.PrepayNo
+                };
+                // 签名
+                parm.GetSecuritySign();
+                respData.Result = parm;
+
+                respData.Code = 200;
+                respData.Msg = "success";
+                content = respData.ToJSON();
+
+                LogConsole.PrintLog("调用支付参数："+ content);
+
+                #region 同步订单到交易中心
+
+                var tinoutBll = new T_InoutBLL(loggingSessionInfo);
+                var payTypeBll = new TPaymentTypeCustomerMappingBLL(loggingSessionInfo);
+                TPaymentTypeCustomerMappingEntity[] payTypes = payTypeBll.QueryByEntity(new TPaymentTypeCustomerMappingEntity()
+                {
+                    PaymentTypeID = reqObj.special.PaymentId
+                }, new OrderBy[] { });
+
+                GetOrderDetailRD pOrderInfo = tinoutBll.GetInoutDetail(reqObj.special.OrderId, loggingSessionInfo);
+
+                decimal appOrderAmount = new OnlineShoppingItemBLL(loggingSessionInfo).GetOrderAmmount(reqObj.special.OrderId);
+
+                var itemNameList = pOrderInfo.OrderListInfo.OrderDetailInfo.Aggregate("", (x, j) =>
+                {
+                    x += j.ItemName;
+                    return x;
+                }).Trim('|');
+                var para = new
+                {
+                    PayChannelID = payTypes[0].ChannelId,
+                    AppOrderID = reqObj.special.OrderId,
+                    AppOrderTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"),
+                    AppOrderAmount = (Int32)(appOrderAmount * 100),
+                    AppOrderDesc = string.IsNullOrEmpty(itemNameList) ? "chainclouds" : itemNameList,
+                    Currency = 1,
+                    MobileNO = pOrderInfo.OrderListInfo.Mobile,
+                    ReturnUrl = string.Empty,
+                    DynamicID = string.Empty,
+                    DynamicIDType = string.Empty,
+                    Paras = new Dictionary<string, object>(),
+                    OpenId = pOrderInfo.OrderListInfo.VipID,
+                    ClientIP = string.Empty
+                };
+
+                var request = new
+                {
+                    AppID = payTypes[0].APPId,
+                    ClientID = ConfigHelper.GetAppSetting("customer_id"),
+                    UserID = pOrderInfo.OrderListInfo.VipID,
+                    Parameters = para
+                };
+                //Json参数准备
+                string pUrlPath = ConfigurationManager.AppSettings["paymentcenterUrl"];
+                string jsonString = string.Format("action=CreateOrder&request={0}", request.ToJSON());
+                Loggers.Debug(new DebugLogInfo()
+                {
+                    Message = "创建订单到交易中心，请求地址：" + pUrlPath + ",请求参数：" + jsonString
+                });
+                LogConsole.PrintLog("创建订单到交易中心，请求地址：" + pUrlPath + ",请求参数：" + jsonString);
+                string httpResponse = SendHttpRequest(pUrlPath, jsonString);
+                LogConsole.PrintLog("交易中心返回结果：" + httpResponse);
+
+                Loggers.Debug(new DebugLogInfo()
+                {
+                    Message = string.Format("交易中心返回结果：{0}", httpResponse)
+                });
+
+                //反序列化
+                var payres = httpResponse.DeserializeJSONTo<orderPayCenterContentData>();
+
+                if (payres.ResultCode == 0)
+                {
+                    new OnlineShoppingItemBLL(loggingSessionInfo).SetOrderPayCenterCode(reqObj.special.OrderId, payres.Datas.OrderID);
+                }
+                else
+                {
+                    respData.Code = 500;
+                    respData.Msg = "同步订单到交易中心失败！";
+                }
+                #endregion 
+            }
+            catch (Exception ex)
+            {
+                respData.Code = 500;
+                respData.Msg = ex.ToString();
+            }
+            return content;
+        }
 
         /// <summary>
         /// 订单支付
@@ -741,7 +911,7 @@ namespace JIT.CPOS.Web.Interface.Data
                     var result = server.SetVirtualOrderInfo(ToStr(reqObj.special.orderId)
                                                         , ToStr(reqObj.common.customerId)
                                                         , ToStr(reqObj.special.unitId)
-                        //, ToStr(reqObj.common.userId)  //Henry 
+                                                        //, ToStr(reqObj.common.userId)  //Henry 
                                                         , ToStr(loggingSessionInfo.UserID)
                                                         , ToStr(reqObj.special.dataFromId)
                                                         , amount.ToString(), "", "", ToStr(loggingSessionInfo.UserID));
@@ -753,8 +923,45 @@ namespace JIT.CPOS.Web.Interface.Data
                     }
                 }
 
+                var vipBll = new VipBLL(loggingSessionInfo);
+                var wxUserBll = new WXUserInfoBLL(loggingSessionInfo);
+                var vipEntitys = new VipEntity[] { new VipEntity() };
+                var vipEntity = new VipEntity();
+                var wxappid = string.Empty;
+                var weixinid = string.Empty;
+                if (!string.IsNullOrEmpty(reqObj.common.openId))
+                {
+                    vipEntity = vipBll.QueryByEntity(new VipEntity { WeiXinUserId = reqObj.common.openId, IsDelete = 0, ClientID = customerId }, null).FirstOrDefault();
+                    if (vipEntity == null)
+                    {
+                        var wxUserInfo = wxUserBll.QueryByEntity(new WXUserInfoEntity() { VipID = reqObj.common.userId, WeiXinUserID = reqObj.common.openId }, null).FirstOrDefault();
+                        if (wxUserInfo != null)
+                        {
+                            weixinid = wxUserInfo.WeiXin;
+                        }
+                    }
+                    else
+                    {
+                        weixinid = vipEntity.WeiXin;
+                    }
+                    var appService = new WApplicationInterfaceBLL(loggingSessionInfo);
+                    var appEntity = appService.QueryByEntity(new WApplicationInterfaceEntity() { WeiXinID = weixinid, CustomerId = customerId, IsPayments = 1 }, null).FirstOrDefault();
+                    if (appEntity != null && !string.IsNullOrEmpty(appEntity.AppID))
+                    {
+                        wxappid = appEntity.AppID;
+                    }
+                    else
+                    {
+                        appEntity = appService.QueryByEntity(new WApplicationInterfaceEntity() { CustomerId = customerId, IsPayments = 1 }, null).FirstOrDefault();
+                        if (appEntity != null && !string.IsNullOrEmpty(appEntity.AppID))
+                        {
+                            wxappid = appEntity.AppID;
+                        }
+                    }
+                }
+
                 var ds = new TPaymentTypeBLL(loggingSessionInfo).
-                     GetPaymentByCustomerIdAndPaymentID(reqObj.common.customerId, reqObj.special.paymentId);
+                     GetPaymentByAppIdAndPaymentID(reqObj.common.customerId, reqObj.special.paymentId, wxappid);
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
                     DataRow dr = ds.Tables[0].Rows[0];
@@ -850,7 +1057,7 @@ namespace JIT.CPOS.Web.Interface.Data
 
                         var appInterfaceBLL = new WApplicationInterfaceBLL(loggingSessionInfo);
                         var wxUserBLL = new WXUserInfoBLL(loggingSessionInfo);
-                        var appInterfaceInfo = appInterfaceBLL.QueryByEntity(new WApplicationInterfaceEntity() { CustomerId = loggingSessionInfo.ClientID, IsPayments = 1 }, null).FirstOrDefault();
+                        var appInterfaceInfo = appInterfaceBLL.QueryByEntity(new WApplicationInterfaceEntity() { AppID = wxappid, CustomerId = loggingSessionInfo.ClientID, IsPayments = 1 }, null).FirstOrDefault();
                         string payNotice = string.Empty;
                         if (appInterfaceInfo != null)
                         {
@@ -876,7 +1083,7 @@ namespace JIT.CPOS.Web.Interface.Data
                             AppOrderDesc = string.IsNullOrEmpty(itemNameList) ? "chainclouds" : itemNameList,
                             Currency = 1,
                             MobileNO = reqObj.special.mobileNo,
-                            ReturnUrl = HttpUtility.UrlEncode(pReturnUrl),
+                            ReturnUrl = pReturnUrl,
                             DynamicID = reqObj.special.dynamicId,
                             DynamicIDType = reqObj.special.dynamicIdType,
                             Paras = dic,

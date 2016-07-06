@@ -97,7 +97,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Report.VipReport
                         m.MembershipTime = Convert.ToDateTime(ds.Tables[0].Rows[i]["MembershipTime"]).ToString("yyyy-MM-dd");
                     }
                     //最近消费
-                    m.SpendingDateShow ="近月"+para.Consumption.ToString()+"消费";
+                    m.SpendingDateShow = "近" + para.Consumption.ToString() + "个月消费";
 
                     rd.VipBirthdayInfoList.Add(m);
                 }

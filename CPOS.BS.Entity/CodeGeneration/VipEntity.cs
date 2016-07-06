@@ -130,7 +130,7 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 积分
 		/// </summary>
-		public Decimal? Integration { get; set; }
+		public int? Integration { get; set; }
 
 		/// <summary>
 		/// 客户标识

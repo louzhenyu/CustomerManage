@@ -183,6 +183,13 @@ namespace JIT.CPOS.BS.Entity
         /// 提货结束时间
         /// </summary>
         public string ReserveDateEnd { get; set; }
-
+		/// <summary>
+        /// 完成日期结束【yyyy-MM-dd】
+        /// </summary>
+        public string reserveDay_begin { get; set; }
+        /// <summary>
+        /// 预计日期开始
+        /// </summary>
+        public string reserveDay_end { get; set; }
     }
 }

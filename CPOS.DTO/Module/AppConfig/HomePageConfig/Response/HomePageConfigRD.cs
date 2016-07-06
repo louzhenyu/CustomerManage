@@ -245,6 +245,10 @@ namespace JIT.CPOS.DTO.Module.AppConfig.HomePageConfig.Response
         public int showSalesQty { get; set; }
         public int showDiscount { get; set; }
         public int displayIndex { get; set; }
+        /// <summary>
+        /// 类别ID
+        /// </summary>
+        public string categoryId { get; set; }
     }
     public class ProductInfo
     {
@@ -298,6 +302,11 @@ namespace JIT.CPOS.DTO.Module.AppConfig.HomePageConfig.Response
         /// 商品折扣		【必须】
         /// </summary>
         public string DiscountRate { get; set; }
+
+        /// <summary>
+        /// sku  id集合
+        /// </summary>
+        public List<string> SkuList { get; set; }
 
     }
 

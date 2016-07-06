@@ -61,7 +61,7 @@ namespace JIT.CPOS.BS.DataAccess
             string id = pID.ToString();
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select *,CONVERT(date,Birthday,23) as NewBirthday from [Vip] where VIPID='{0}'  and isdelete=0 ", id.ToString());
+            sql.AppendFormat("select *,Birthday as NewBirthday from [Vip] where VIPID='{0}'  and isdelete=0 ", id.ToString());
             //读取数据
             VipEntity m = null;
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -69,10 +69,10 @@ namespace JIT.CPOS.BS.DataAccess
                 while (rdr.Read())
                 {
                     this.Load(rdr, out m);
-                    if (rdr["NewBirthday"] != DBNull.Value)
-                    {
-                        m.NewBirthday = Convert.ToDateTime(rdr["NewBirthday"]);
-                    }
+                    //if (rdr["NewBirthday"] != DBNull.Value)
+                    //{
+                    //    m.NewBirthday = Convert.ToDateTime(rdr["NewBirthday"]);
+                    //}
                     break;
                 }
             }
@@ -119,17 +119,17 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="HigherVipID"></param>
         /// <returns></returns>
-        public DataSet GetVipFansList(string Col20, string Code, string VipName, int StartPage, int EndPage)
+        public DataSet GetVipFansList(string HigherVipID, string Code, string VipName, int StartPage, int EndPage)
         {
             var ds = new DataSet();
-            if (!string.IsNullOrWhiteSpace(Col20))
+            if (!string.IsNullOrWhiteSpace(HigherVipID))
             {
                 StringBuilder sqlstr = new StringBuilder();
                 sqlstr.AppendFormat(@"SELECT * FROM (select ROW_NUMBER() Over(order by a.LastUpdateTime desc ) as rowNum,a.vipid,a.HeadImgUrl,a.vipname,c.prices,a.Phone,a.col48 from Vip as a 
                                         left join VipCardVipMapping as m on a.VIPID=m.VIPID and m.IsDelete=0 
                                         left join VipCard as b on m.vipcardid=b.VipCardID and b.IsDelete =0  
                                         left join SysVipCardType as c on b.VipCardTypeID=c.VipCardTypeID and c.IsDelete=0 
-                                where a.ClientID='{0}' and a.Col20='{1}' ", CurrentUserInfo.ClientID, Col20);
+                                where a.ClientID='{0}' and a.HigherVipID='{1}' ", CurrentUserInfo.ClientID, HigherVipID);
 
                 if (!string.IsNullOrWhiteSpace(Code))
                 {
@@ -1953,10 +1953,16 @@ select @ReturnValue", pCustomerID);
             sql.Append(" ValidDateDesc = '有效期：' ");
             sql.Append(" + CONVERT(NVARCHAR(10), a.BeginDate, 121) + '--' ");
             sql.Append(" + CONVERT(NVARCHAR(10), a.EndDate, 121) , ");
-            sql.Append(" EnableFlag = CASE WHEN b.ConditionValue <= @pTotalPayAmount ");
-            sql.Append(" THEN 1 ");
-            sql.Append(" ELSE 0 ");
-            sql.Append(" END ");
+            sql.Append(" a.Status , ");
+            sql.Append(" b.CouponTypeCode , ");
+            sql.Append(" b.CouponCategory , ");
+            if (totalPayAmount != 0)
+            {
+                sql.Append(" EnableFlag = CASE WHEN b.ConditionValue <= @pTotalPayAmount ");
+                sql.Append(" THEN 1 ");
+                sql.Append(" ELSE 0 ");
+                sql.Append(" END ");
+            }            
             sql.Append(" FROM Coupon a ");
             sql.Append(" INNER JOIN CouponType b ON CONVERT(NVARCHAR(200), a.CouponTypeID) = CONVERT(NVARCHAR(200), b.CouponTypeID) ");
             sql.Append(" INNER JOIN VipCouponMapping c ON c.CouponID = a.CouponID ");
@@ -1966,8 +1972,14 @@ select @ReturnValue", pCustomerID);
             sql.Append(" AND EndDate > GETDATE() ");
             sql.Append(" AND c.VIPID = @pVipId ");
             sql.Append(" AND c.IsDelete = 0 ");
-            sql.Append(" AND b.UsableRange = @UsableRange ");
-            sql.Append(" AND ( b.SuitableForStore = 1 OR d.ObjectID = @ObjectID  )");
+            if(usableRange != 0)
+            {
+                sql.Append(" AND b.UsableRange = @UsableRange ");
+            }
+            if(!string.IsNullOrEmpty(objectID))
+            {
+                sql.Append(" AND ( b.SuitableForStore = 1 OR d.ObjectID = @ObjectID  )");
+            }            
             if (type > 0)
             {
                 sql.Append(" AND b.ParValue>0 ");
@@ -2304,7 +2316,7 @@ select @ReturnValue", pCustomerID);
                 where  a.IsDelete = 0 and b.IsDelete = 0  
                  and c.IsDelete = 0  and b.vipId = '{0}' and a.EndDate>GetDate() 
                  ) t 
-                where t._row > {1} and t._row <= {2}";
+                where t._row between {1} and {2}";
 
             return this.SQLHelper.ExecuteDataset(string.Format(sql.ToString(), vipId, (pageIndex - 1) * pageSize, pageIndex * pageSize, sortType));
         }
@@ -2736,19 +2748,27 @@ select @ReturnValue", pCustomerID);
         /// <param name="idnumber"></param>
         /// <param name="vipcardcode"></param>
         /// <returns></returns>
-        public DataSet GetVipCardInfo(string phone, string idnumber, string vipcardcode)
+        public DataSet GetVipCardInfo(string phone, string idnumber, string vipcardcode, string vipcardisn)
         {
-            string sql = @"SELECT vc.VipCardCode cardno, v.VipName vipname, svct.VipCardTypeCode viplevel, vc.VipCardStatusId status
+            string sql = @"SELECT v.vipid, vc.VipCardCode cardno, v.VipName vipname, v.VipRealName viprealname, svct.VipCardTypeCode viplevel,svct.IntegralMultiples disccode, vc.VipCardStatusId status
                         FROM dbo.Vip v INNER JOIN dbo.VipCardVipMapping vcvm ON v.VIPID = vcvm.VIPID 
                         INNER JOIN dbo.VipCard vc ON vcvm.VipCardID = vc.VipCardID
                         LEFT JOIN dbo.SysVipCardType svct ON vc.VipCardTypeID = svct.VipCardTypeID
-                        WHERE 1=1 ";
+                        WHERE 1=1 and vc.IsDelete = 0 and v.IsDelete = 0 ";
+
+            //string sql = @"SELECT distinct vc.VipCardCode cardno, v.VipName vipname, v.viplevel, vc.VipCardStatusId status
+            //            FROM dbo.Vip v  
+            //            INNER JOIN dbo.VipCard vc ON v.VipCode = vc.VipCardCode
+            //            WHERE 1=1 ";
+
             if (!string.IsNullOrWhiteSpace(phone))
                 sql += " AND (v.Phone = '" + phone + "') ";
             if (!string.IsNullOrWhiteSpace(idnumber))
                 sql += " AND (v.IDNumber = '" + idnumber + "') ";
             if (!string.IsNullOrWhiteSpace(vipcardcode))
                 sql += " AND (vc.VipCardCode = '" + vipcardcode + "') ";
+            if (!string.IsNullOrWhiteSpace(vipcardisn))
+                sql += " AND (vc.VipCardISN = '" + vipcardisn + "') ";
             sql += " AND (v.ClientID = '" + this.CurrentUserInfo.ClientID + "') ";
             DataSet ds = new DataSet();
             ds = this.SQLHelper.ExecuteDataset(sql);
@@ -2762,20 +2782,85 @@ select @ReturnValue", pCustomerID);
         /// <param name="idnumber"></param>
         /// <param name="vipcardcode"></param>
         /// <returns></returns>
-        public DataSet GetVipCardDetail(string phone, string idnumber, string vipcardcode)
+        public DataSet GetVipCardDetail(string phone, string idnumber, string vipcardcode, string vipcardisn)
         {
-            string sql = @"SELECT vc.VipCardCode cardno, v.VipName vipname, svct.VipCardTypeCode viplevel, vc.VipCardStatusId status,
+            string sql = @"SELECT v.vipid, vc.VipCardCode cardno, v.VipName vipname, v.VipRealName viprealname, svct.VipCardTypeCode viplevel, vc.VipCardStatusId status,
                         v.birthday, v.gender, v.idnumber, v.phone, v.DeliveryAddress address, v.email
                         FROM dbo.Vip v INNER JOIN dbo.VipCardVipMapping vcvm ON v.VIPID = vcvm.VIPID 
                         INNER JOIN dbo.VipCard vc ON vcvm.VipCardID = vc.VipCardID
                         LEFT JOIN dbo.SysVipCardType svct ON vc.VipCardTypeID = svct.VipCardTypeID
-                        WHERE 1=1 ";
+                        WHERE 1=1 and vc.IsDelete = 0 and v.IsDelete = 0 ";
+            //string sql = @"SELECT vc.VipCardCode cardno, v.VipName vipname, v.viplevel, vc.VipCardStatusId status,
+            //            v.birthday, v.gender, v.idnumber, v.phone, v.DeliveryAddress address, v.email
+            //            FROM dbo.Vip v 
+            //            INNER JOIN dbo.VipCard vc ON  v.VipCode = vc.VipCardCode
+            //            LEFT JOIN dbo.SysVipCardType svct ON vc.VipCardTypeID = svct.VipCardTypeID
+            //            WHERE 1=1 ";
             if (!string.IsNullOrWhiteSpace(phone))
                 sql += " AND (v.Phone = '" + phone + "') ";
             if (!string.IsNullOrWhiteSpace(idnumber))
                 sql += " AND (v.IDNumber = '" + idnumber + "') ";
             if (!string.IsNullOrWhiteSpace(vipcardcode))
                 sql += " AND (vc.VipCardCode = '" + vipcardcode + "') ";
+            if (!string.IsNullOrWhiteSpace(vipcardisn))
+                sql += " AND (vc.VipCardISN = '" + vipcardisn + "') ";
+            sql += " AND (v.ClientID = '" + this.CurrentUserInfo.ClientID + "') ";
+            DataSet ds = new DataSet();
+            ds = this.SQLHelper.ExecuteDataset(sql);
+            return ds;
+        }
+
+        /// <summary>
+        /// 会员卡余额
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <param name="idnumber"></param>
+        /// <param name="vipcardcode"></param>
+        /// <returns></returns>
+        public DataSet GetVipCardBalance(string phone, string idnumber, string vipcardcode, string vipcardisn)
+        {
+            string sql = @"SELECT v.vipid, v.VipName vipname, v.VipRealName viprealname, vc.VipCardCode cardno, 
+                        vi.ValidIntegral points_balance, vc.BalanceAmount acc_balance, vc.BalanceBonus bonus_balance, vc.VipCardStatusId status
+                        FROM dbo.Vip v INNER JOIN dbo.VipCardVipMapping vcvm ON v.VIPID = vcvm.VIPID 
+                        INNER JOIN dbo.VipCard vc ON vcvm.VipCardID = vc.VipCardID
+                        LEFT JOIN dbo.VipIntegral vi ON vi.VipID = v.VIPID
+                        WHERE 1=1 and vc.IsDelete = 0 and v.IsDelete = 0 ";
+            //string sql = @"SELECT vc.VipCardCode cardno, v.VipName vipname, v.viplevel, vc.VipCardStatusId status,
+            //            v.birthday, v.gender, v.idnumber, v.phone, v.DeliveryAddress address, v.email
+            //            FROM dbo.Vip v 
+            //            INNER JOIN dbo.VipCard vc ON  v.VipCode = vc.VipCardCode
+            //            LEFT JOIN dbo.SysVipCardType svct ON vc.VipCardTypeID = svct.VipCardTypeID
+            //            WHERE 1=1 ";
+            if (!string.IsNullOrWhiteSpace(phone))
+                sql += " AND (v.Phone = '" + phone + "') ";
+            if (!string.IsNullOrWhiteSpace(idnumber))
+                sql += " AND (v.IDNumber = '" + idnumber + "') ";
+            if (!string.IsNullOrWhiteSpace(vipcardcode))
+                sql += " AND (vc.VipCardCode = '" + vipcardcode + "') ";
+            if (!string.IsNullOrWhiteSpace(vipcardisn))
+                sql += " AND (vc.VipCardISN = '" + vipcardisn + "') ";
+            sql += " AND (v.ClientID = '" + this.CurrentUserInfo.ClientID + "') ";
+            DataSet ds = new DataSet();
+            ds = this.SQLHelper.ExecuteDataset(sql);
+            return ds;
+        }
+
+        /// <summary>
+        /// 使用会员查询会员卡信息
+        /// </summary>
+        /// <param name="vipid"></param>
+        /// <param name="vipcode"></param>
+        /// <returns></returns>
+        public DataSet GetVipCardByVip(string vipid, string vipcode)
+        {
+            string sql = @"SELECT v.vipid, v.VipCode, vc.VipCardID, vc.VipCardCode, v.VipName vipname, v.VipRealName viprealname
+                        FROM dbo.Vip v INNER JOIN dbo.VipCardVipMapping vcvm ON v.VIPID = vcvm.VIPID 
+                        INNER JOIN dbo.VipCard vc ON vcvm.VipCardID = vc.VipCardID
+                        WHERE 1=1 and vc.IsDelete = 0 and v.IsDelete = 0 ";
+            if (!string.IsNullOrWhiteSpace(vipid))
+                sql += " AND (v.VipID = '" + vipid + "') ";
+            if (!string.IsNullOrWhiteSpace(vipcode))
+                sql += " AND (v.VipCode = '" + vipcode + "') ";
             sql += " AND (v.ClientID = '" + this.CurrentUserInfo.ClientID + "') ";
             DataSet ds = new DataSet();
             ds = this.SQLHelper.ExecuteDataset(sql);
@@ -2794,7 +2879,7 @@ select @ReturnValue", pCustomerID);
             string sql = "insert into [ImportVipTemp] values";
             sql += "('" + dr[0].ToString() + "','" + dr[1].ToString() + "','" + dr[2].ToString() + "','" + dr[3].ToString() + "','" + dr[4].ToString() + "',";
             sql += "'" + dr[5].ToString() + "','" + dr[6].ToString() + "','" + dr[7].ToString() + "','" + dr[8].ToString() + "','" + dr[9].ToString() + "',";
-            sql += "'" + dr[10].ToString() + "','" + dr[11].ToString() + "',";
+            sql += "'" + dr[10].ToString() + "','" + dr[11].ToString() + "','" + dr[12].ToString() + "','" + dr[13].ToString() + "','" + dr[14].ToString() + "','" + dr[15].ToString() + "',";
             sql += "'" + strCreateUserId + "','" + strCustomerId + "')";
             SqlCommand cmd = new SqlCommand(sql, conn);
             cmd.ExecuteNonQuery();

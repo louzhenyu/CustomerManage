@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [VipCard](");
-            strSql.Append("[VipCardTypeID],[VipCardGradeID],[VipCardCode],[VipCardISN],[VipCardName],[BatchNo],[VipCardStatusId],[MembershipTime],[MembershipUnit],[BeginDate],[EndDate],[TotalAmount],[BalanceAmount],[BalancePoints],[BalanceBonus],[CumulativeBonus],[PurchaseTotalAmount],[PurchaseTotalCount],[CheckCode],[SingleTransLimit],[IsOverrunValid],[RechargeTotalAmount],[LastSalesTime],[IsGift],[SalesAmount],[SalesUserId],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[CustomerID],[SalesUserName],[VipCardID])");
+            strSql.Append("[VipCardTypeID],[VipCardGradeID],[VipCardCode],[VipCardISN],[VipCardName],[BatchNo],[VipCardStatusId],[MembershipTime],[MembershipUnit],[BeginDate],[EndDate],[TotalAmount],[BalanceAmount],[BalancePoints],[BalanceBonus],[CumulativeBonus],[PurchaseTotalAmount],[PurchaseTotalCount],[CheckCode],[SingleTransLimit],[IsOverrunValid],[RechargeTotalAmount],[LastSalesTime],[IsGift],[SalesAmount],[SalesUserId],[SalesUserName],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[CustomerID],[Operator],[VipCardID])");
             strSql.Append(" values (");
-            strSql.Append("@VipCardTypeID,@VipCardGradeID,@VipCardCode,@VipCardISN,@VipCardName,@BatchNo,@VipCardStatusId,@MembershipTime,@MembershipUnit,@BeginDate,@EndDate,@TotalAmount,@BalanceAmount,@BalancePoints,@BalanceBonus,@CumulativeBonus,@PurchaseTotalAmount,@PurchaseTotalCount,@CheckCode,@SingleTransLimit,@IsOverrunValid,@RechargeTotalAmount,@LastSalesTime,@IsGift,@SalesAmount,@SalesUserId,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@CustomerID,@SalesUserName,@VipCardID)");            
+            strSql.Append("@VipCardTypeID,@VipCardGradeID,@VipCardCode,@VipCardISN,@VipCardName,@BatchNo,@VipCardStatusId,@MembershipTime,@MembershipUnit,@BeginDate,@EndDate,@TotalAmount,@BalanceAmount,@BalancePoints,@BalanceBonus,@CumulativeBonus,@PurchaseTotalAmount,@PurchaseTotalCount,@CheckCode,@SingleTransLimit,@IsOverrunValid,@RechargeTotalAmount,@LastSalesTime,@IsGift,@SalesAmount,@SalesUserId,@SalesUserName,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@CustomerID,@Operator,@VipCardID)");            
 
 			string pkString = pEntity.VipCardID;
 
@@ -115,13 +115,14 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@IsGift",SqlDbType.Int),
 					new SqlParameter("@SalesAmount",SqlDbType.NVarChar),
 					new SqlParameter("@SalesUserId",SqlDbType.NVarChar),
+					new SqlParameter("@SalesUserName",SqlDbType.NVarChar),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
 					new SqlParameter("@CreateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
 					new SqlParameter("@CustomerID",SqlDbType.NVarChar),
-					new SqlParameter("@SalesUserName",SqlDbType.NVarChar),
+					new SqlParameter("@Operator",SqlDbType.NVarChar),
 					new SqlParameter("@VipCardID",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.VipCardTypeID;
@@ -150,14 +151,15 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[23].Value = pEntity.IsGift;
 			parameters[24].Value = pEntity.SalesAmount;
 			parameters[25].Value = pEntity.SalesUserId;
-			parameters[26].Value = pEntity.CreateTime;
-			parameters[27].Value = pEntity.CreateBy;
-			parameters[28].Value = pEntity.LastUpdateTime;
-			parameters[29].Value = pEntity.LastUpdateBy;
-			parameters[30].Value = pEntity.IsDelete;
-			parameters[31].Value = pEntity.CustomerID;
-			parameters[32].Value = pEntity.SalesUserName;
-			parameters[33].Value = pkString;
+			parameters[26].Value = pEntity.SalesUserName;
+			parameters[27].Value = pEntity.CreateTime;
+			parameters[28].Value = pEntity.CreateBy;
+			parameters[29].Value = pEntity.LastUpdateTime;
+			parameters[30].Value = pEntity.LastUpdateBy;
+			parameters[31].Value = pEntity.IsDelete;
+			parameters[32].Value = pEntity.CustomerID;
+			parameters[33].Value = pEntity.Operator;
+			parameters[34].Value = pkString;
 
             //执行并将结果回写
             int result;
@@ -303,16 +305,17 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[SalesAmount]=@SalesAmount,");
             if (pIsUpdateNullField || pEntity.SalesUserId!=null)
                 strSql.Append( "[SalesUserId]=@SalesUserId,");
+            if (pIsUpdateNullField || pEntity.SalesUserName!=null)
+                strSql.Append( "[SalesUserName]=@SalesUserName,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.CustomerID!=null)
                 strSql.Append( "[CustomerID]=@CustomerID,");
-            if (pIsUpdateNullField || pEntity.SalesUserName!=null)
-                strSql.Append( "[SalesUserName]=@SalesUserName,");
-            if (pIsUpdateNullField || pEntity.CreateBy != null)
-                strSql.Append("[CreateBy]=@CreateBy ");
+            if (pIsUpdateNullField || pEntity.Operator!=null)
+                strSql.Append( "[Operator]=@Operator");
+            
             strSql.Append(" where VipCardID=@VipCardID ");
             SqlParameter[] parameters = 
             {
@@ -342,11 +345,11 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@IsGift",SqlDbType.Int),
 					new SqlParameter("@SalesAmount",SqlDbType.NVarChar),
 					new SqlParameter("@SalesUserId",SqlDbType.NVarChar),
+					new SqlParameter("@SalesUserName",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@CustomerID",SqlDbType.NVarChar),
-					new SqlParameter("@SalesUserName",SqlDbType.NVarChar),
-                    new SqlParameter("@CreateBy",SqlDbType.NVarChar),
+					new SqlParameter("@Operator",SqlDbType.NVarChar),
 					new SqlParameter("@VipCardID",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.VipCardTypeID;
@@ -375,19 +378,21 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[23].Value = pEntity.IsGift;
 			parameters[24].Value = pEntity.SalesAmount;
 			parameters[25].Value = pEntity.SalesUserId;
-			parameters[26].Value = pEntity.LastUpdateTime;
-			parameters[27].Value = pEntity.LastUpdateBy;
-			parameters[28].Value = pEntity.CustomerID;
-			parameters[29].Value = pEntity.SalesUserName;
-            parameters[30].Value = pEntity.CreateBy;
+			parameters[26].Value = pEntity.SalesUserName;
+			parameters[27].Value = pEntity.LastUpdateTime;
+			parameters[28].Value = pEntity.LastUpdateBy;
+			parameters[29].Value = pEntity.CustomerID;
+			parameters[30].Value = pEntity.Operator;
 			parameters[31].Value = pEntity.VipCardID;
 
             //执行语句
+            string sql = strSql.ToString().Replace(", where", " where");
+
             int result = 0;
             if (pTran != null)
-                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql, parameters);
             else
-                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters);
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql, parameters);
         }
 
         /// <summary>
@@ -720,6 +725,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "SalesAmount", Value = pQueryEntity.SalesAmount });
             if (pQueryEntity.SalesUserId!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "SalesUserId", Value = pQueryEntity.SalesUserId });
+            if (pQueryEntity.SalesUserName!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "SalesUserName", Value = pQueryEntity.SalesUserName });
             if (pQueryEntity.CreateTime!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
             if (pQueryEntity.CreateBy!=null)
@@ -732,8 +739,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
             if (pQueryEntity.CustomerID!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = pQueryEntity.CustomerID });
-            if (pQueryEntity.SalesUserName!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "SalesUserName", Value = pQueryEntity.SalesUserName });
+            if (pQueryEntity.Operator!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Operator", Value = pQueryEntity.Operator });
 
             return lstWhereCondition.ToArray();
         }
@@ -857,6 +864,10 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.SalesUserId =  Convert.ToString(pReader["SalesUserId"]);
 			}
+			if (pReader["SalesUserName"] != DBNull.Value)
+			{
+				pInstance.SalesUserName =  Convert.ToString(pReader["SalesUserName"]);
+			}
 			if (pReader["CreateTime"] != DBNull.Value)
 			{
 				pInstance.CreateTime =  Convert.ToDateTime(pReader["CreateTime"]);
@@ -881,9 +892,9 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.CustomerID =  Convert.ToString(pReader["CustomerID"]);
 			}
-			if (pReader["SalesUserName"] != DBNull.Value)
+			if (pReader["Operator"] != DBNull.Value)
 			{
-				pInstance.SalesUserName =  Convert.ToString(pReader["SalesUserName"]);
+				pInstance.Operator =  Convert.ToString(pReader["Operator"]);
 			}
 
         }

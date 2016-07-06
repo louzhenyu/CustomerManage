@@ -29,7 +29,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.KeyWord
            
             if (ds.Tables[0].Rows.Count > 0)
             {
-                var replyId = ds.Tables[0].Rows[0]["ReplyId"].ToString();//只去取第一行，就一条数据
+                var replyId = ds.Tables[0].Rows[0]["ReplyId"].ToString();//只去取第一行？
 
                 var textDs = bll.GetWMaterialTextByReplyId(replyId);
 
@@ -50,6 +50,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.KeyWord
                         string.IsNullOrEmpty(t["KeywordType"].ToString())
                             ? 0
                             : Convert.ToInt32(t["KeywordType"].ToString()),
+                            //取关键回复下面所属的图文素材
                     MaterialTextIds = textDs.Tables[0].AsEnumerable().Select(tt => new MaterialTextIdInfo()
                     {
                         TestId = string.IsNullOrEmpty(tt["TextId"].ToString()) ? "" : tt["TextId"].ToString(),
@@ -66,7 +67,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.KeyWord
                     }).DefaultIfEmpty().ToArray()
                 });
 
-                rd.KeyWordList = temp.FirstOrDefault();
+                rd.KeyWordList = temp.FirstOrDefault();//只取第一个，而不是数组
             }
             else
             {

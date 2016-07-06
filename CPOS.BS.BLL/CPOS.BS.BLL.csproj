@@ -52,6 +52,18 @@
     <Reference Include="log4net">
       <HintPath>..\ReferenceDll\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferenceDll\Newtonsoft.Json.dll</HintPath>
@@ -63,8 +75,21 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.IO.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Threading.Tasks, Version=2.6.10.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.10\lib\net40\System.Threading.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
@@ -195,6 +220,7 @@
     <Compile Include="CodeGeneration\CustomerWithdrawalDetailBLL.cs" />
     <Compile Include="CodeGeneration\CustomerWithdrawalTransferBLL.cs" />
     <Compile Include="CodeGeneration\CustomerWithdrawalTransferMappingBLL.cs" />
+    <Compile Include="CodeGeneration\DataQueueBLL.cs" />
     <Compile Include="CodeGeneration\DefaultTopicBLL.cs" />
     <Compile Include="CodeGeneration\DefrayTypeBLL.cs" />
     <Compile Include="CodeGeneration\DeliveryBLL.cs" />
@@ -380,6 +406,8 @@
     <Compile Include="CodeGeneration\PanicbuyingKJEventJoinBLL.cs" />
     <Compile Include="CodeGeneration\PanicbuyingKJEventJoinDetailBLL.cs" />
     <Compile Include="CodeGeneration\PanicbuyingKJEventSkuMappingBLL.cs" />
+    <Compile Include="CodeGeneration\PA_PrepayNoBLL.cs" />
+    <Compile Include="CodeGeneration\PA_UserInfoBLL.cs" />
     <Compile Include="CodeGeneration\PgUserBLL.cs" />
     <Compile Include="CodeGeneration\POPGroupBLL.cs" />
     <Compile Include="CodeGeneration\PowerHourBLL.cs" />
@@ -532,6 +560,7 @@
     <Compile Include="CodeGeneration\T_HierarchySystemExNodeBLL.cs" />
     <Compile Include="CodeGeneration\T_InoutBLL.cs" />
     <Compile Include="CodeGeneration\T_Inout_DetailBLL.cs" />
+    <Compile Include="CodeGeneration\T_Inout_ExpandBLL.cs" />
     <Compile Include="CodeGeneration\T_ItemBLL.cs" />
     <Compile Include="CodeGeneration\T_ItemSkuPropBLL.cs" />
     <Compile Include="CodeGeneration\T_Item_CategoryBLL.cs" />
@@ -540,6 +569,7 @@
     <Compile Include="CodeGeneration\T_Item_PropertyBLL.cs" />
     <Compile Include="CodeGeneration\T_LEventsRegVipLogBLL.cs" />
     <Compile Include="CodeGeneration\T_LEventsSharePersonLogBLL.cs" />
+    <Compile Include="CodeGeneration\T_Order_Reason_TypeBLL.cs" />
     <Compile Include="CodeGeneration\T_Payment_detailBLL.cs" />
     <Compile Include="CodeGeneration\T_Payment_TypeBLL.cs" />
     <Compile Include="CodeGeneration\T_PropBLL.cs" />
@@ -786,6 +816,7 @@
     <Compile Include="CustomerWithdrawalTransferBLL.cs" />
     <Compile Include="CustomerWithdrawalTransferMappingBLL.cs" />
     <Compile Include="cXMLService.cs" />
+    <Compile Include="DataQueueBLL.cs" />
     <Compile Include="DataTableToObject.cs" />
     <Compile Include="DefrayTypeBLL.cs" />
     <Compile Include="DeliveryBLL.cs" />
@@ -846,6 +877,7 @@
     <Compile Include="Extension\X_VipPointMarkDetailBLL.cs" />
     <Compile Include="FStaffBLL.cs" />
     <Compile Include="GetResponseParams.cs" />
+    <Compile Include="GlobalConfigData.cs" />
     <Compile Include="GOrderBLL.cs" />
     <Compile Include="HolidayBLL.cs" />
     <Compile Include="HotelDynamicPriceBLL.cs" />
@@ -859,6 +891,7 @@
     <Compile Include="InoutService.cs" />
     <Compile Include="IntegralRuleBLL.cs" />
     <Compile Include="InterfaceWebLogBLL.cs" />
+    <Compile Include="Invoice\InvoiceBll.cs" />
     <Compile Include="IsNullOrEmptyCondition.cs" />
     <Compile Include="ItemCategoryMappingBLL.cs" />
     <Compile Include="ItemCategoryService.cs" />
@@ -888,6 +921,7 @@
     <Compile Include="LNewsCommentBLL.cs" />
     <Compile Include="LNewsMicroMappingBLL.cs" />
     <Compile Include="LNumberTypeMappingBLL.cs" />
+    <Compile Include="LogConsole.cs" />
     <Compile Include="LPrizeLocationBLL.cs" />
     <Compile Include="Marketing\ActivityCommonBLL.cs" />
     <Compile Include="Marketing\C_ActivityBLL.cs" />
@@ -1016,6 +1050,11 @@
     <Compile Include="PanicbuyingKJEventItemMappingBLL.cs" />
     <Compile Include="PanicbuyingKJEventJoinBLL.cs" />
     <Compile Include="PanicbuyingKJEventJoinDetailBLL.cs" />
+    <Compile Include="PA\PAAppApiBLL.cs" />
+    <Compile Include="PA\PAAppBLL.cs" />
+    <Compile Include="PA_PrepayNoBLL.cs" />
+    <Compile Include="PA_UserInfoBLL.cs" />
+    <Compile Include="PGPushIOSMessage.cs" />
     <Compile Include="PanicbuyingKJEventSkuMappingBLL.cs" />
     <Compile Include="PosService.cs" />
     <Compile Include="PrizeCouponTypeMappingBLL.cs" />
@@ -1137,6 +1176,19 @@
     <Compile Include="Order\SalesReturn\T_RefundOrderBLL.cs" />
     <Compile Include="Order\SalesReturn\T_SalesReturnBLL.cs" />
     <Compile Include="Order\SalesReturn\T_SalesReturnHistoryBLL.cs" />
+    <Compile Include="SapMessage\BaseSapMsg.cs" />
+    <Compile Include="SapMessage\SapUDAOITCMsg.cs" />
+    <Compile Include="SapMessage\SapProductTreesMsg.cs" />
+    <Compile Include="SapMessage\SapUDIOOSOMsg.cs" />
+    <Compile Include="SapMessage\SapUSORDERINVOICEMsg.cs" />
+    <Compile Include="SapMessage\SapUDSORDERMsg.cs" />
+    <Compile Include="SapMessage\SapUDSORDRMsg.cs" />
+    <Compile Include="SapMessage\SapBusinessPartnersMsg.cs" />
+    <Compile Include="SapMessage\SapItemOnHandMsg.cs" />
+    <Compile Include="SapMessage\SapItemsLocationMsg.cs" />
+    <Compile Include="SapMessage\SapUDAOREWMsg.cs" />
+    <Compile Include="SapMessage\SapItemsMsg.cs" />
+    <Compile Include="SapMessage\SapMessageApiBLL.cs" />
     <Compile Include="R_SRT_ShareCountBLL.cs" />
     <Compile Include="R_WxO2OPanel_30DaysBLL.cs" />
     <Compile Include="R_WxO2OPanel_7DaysBLL.cs" />
@@ -1205,6 +1257,11 @@
     <Compile Include="TPaymentOrderLogBLL.cs" />
     <Compile Include="TPaymentTypeBLL.cs" />
     <Compile Include="TPaymentTypeCustomerMappingBLL.cs" />
+    <Compile Include="Transport\EMSBll.cs" />
+    <Compile Include="Transport\HeiMaoBll.cs" />
+    <Compile Include="Transport\ITransportHandler.cs" />
+    <Compile Include="Transport\ShunFengBll.cs" />
+    <Compile Include="Transport\YunDaBll.cs" />
     <Compile Include="TUnitExpandBLL.cs" />
     <Compile Include="TUnitSortBLL.cs" />
     <Compile Include="TUnitUnitSortMappingBLL.cs" />
@@ -1219,6 +1276,7 @@
     <Compile Include="t_customerBLL.cs" />
     <Compile Include="T_HierarchySystemExNodeBLL.cs" />
     <Compile Include="T_InoutBLL.cs" />
+    <Compile Include="T_Inout_ExpandBLL.cs" />
     <Compile Include="T_ItemBLL.cs" />
     <Compile Include="T_ItemSkuPropBLL.cs" />
     <Compile Include="T_Item_CategoryBLL.cs" />
@@ -1227,6 +1285,7 @@
     <Compile Include="T_Item_PropertyBLL.cs" />
     <Compile Include="T_LEventsRegVipLogBLL.cs" />
     <Compile Include="T_LEventsSharePersonLogBLL.cs" />
+    <Compile Include="T_Order_Reason_TypeBLL.cs" />
     <Compile Include="T_Payment_detailBLL.cs" />
     <Compile Include="T_Payment_TypeBLL.cs" />
     <Compile Include="T_PropBLL.cs" />
@@ -1261,6 +1320,7 @@
     <Compile Include="VipGold\SetoffPosterBLL.cs" />
     <Compile Include="VipGold\SetoffToolsBLL.cs" />
     <Compile Include="VipGold\SetoffToolUserViewBLL.cs" />
+    <Compile Include="WxNativeNotify.cs" />
     <Compile Include="WXTMConfigBLL.cs" />
     <Compile Include="UnitCommentBLL.cs" />
     <Compile Include="UserFeedbackBLL.cs" />
@@ -1454,8 +1514,6 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /r /y $(TargetFileName) $(ProjectDir)..\ReferenceDll\</PostBuildEvent>

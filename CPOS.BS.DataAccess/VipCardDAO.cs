@@ -42,6 +42,32 @@ namespace JIT.CPOS.BS.DataAccess
     /// </summary>
     public partial class VipCardDAO : Base.BaseCPOSDAO, ICRUDable<VipCardEntity>, IQueryable<VipCardEntity>
     {
+
+        public VipCardEntity GetByID(object pID,string CustomerID)
+        {
+            //参数检查
+            if (pID == null)
+                return null;
+            if (string.IsNullOrWhiteSpace(CustomerID))
+                return null;
+            string id = pID.ToString();
+            //组织SQL
+            StringBuilder sql = new StringBuilder();
+            sql.AppendFormat("select * from [VipCard] where VipCardID='{0}' and CustomerID='{1}'  and isdelete=0 ", id.ToString(),CustomerID);
+            //读取数据
+            VipCardEntity m = null;
+            using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
+            {
+                while (rdr.Read())
+                {
+                    this.Load(rdr, out m);
+                    break;
+                }
+            }
+            //返回
+            return m;
+        }
+
         #region 查询会员卡信息
         public DataSet SearchTopVipCard(VipCardEntity entity)
         {
@@ -503,14 +529,14 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="EndDate"></param>
         /// <param name="UnitID"></param>
         /// <returns></returns>
-        public DataSet GetDayReconciliation(DateTime StareDate, DateTime EndDate, string UnitID, string CustomerID)
+        public DataSet GetDayReconciliation(DateTime StareDate, DateTime EndDate,int Days,string UnitID, string CustomerID)
         {
-            var parm = new SqlParameter[4];
+            var parm = new SqlParameter[5];
             parm[0] = new SqlParameter("@StareDate", System.Data.SqlDbType.DateTime) { Value = StareDate };
             parm[1] = new SqlParameter("@EndDate", System.Data.SqlDbType.DateTime) { Value = EndDate };
-            parm[2] = new SqlParameter("@UnitID", System.Data.SqlDbType.NVarChar) { Value = UnitID };
-            parm[3] = new SqlParameter("@CustomerID", System.Data.SqlDbType.NVarChar) { Value = CustomerID };
-
+            parm[2] = new SqlParameter("@Days", System.Data.SqlDbType.Int) { Value = Days };
+            parm[3] = new SqlParameter("@UnitID", System.Data.SqlDbType.NVarChar) { Value = UnitID };
+            parm[4] = new SqlParameter("@CustomerID", System.Data.SqlDbType.NVarChar) { Value = CustomerID };
             Loggers.Debug(new DebugLogInfo()
             {
                 Message = parm.ToJSON()

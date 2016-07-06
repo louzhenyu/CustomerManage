@@ -461,7 +461,7 @@ namespace JIT.CPOS.Common
         #region GetIntVal
         public static int GetIntVal(object obj)
         {
-            return obj == DBNull.Value || obj == null || obj.ToString() == string.Empty ? 
+            return obj == DBNull.Value || obj == null || obj.ToString() == string.Empty ?
                 0 : int.Parse(obj.ToString());
         }
         #endregion
@@ -554,12 +554,12 @@ namespace JIT.CPOS.Common
         #region SMSSend Obsoleted
         public static string SMSSendOrder(string mobileNO, string SMSContent)
         {
-            var para = new { MobileNO = mobileNO, SMSContent};
+            var para = new { MobileNO = mobileNO, SMSContent };
             var request = new { Action = "SendMessage", Parameters = para };
             string str = string.Format("request={0}", request.ToJSON());
 
-           string url = ConfigurationManager.AppSettings["SMSURL"];
-            if(string.IsNullOrEmpty(url))//用来测试
+            string url = ConfigurationManager.AppSettings["SMSURL"];
+            if (string.IsNullOrEmpty(url))//用来测试
             {
                 url = @"http://www.jitmarketing.cn:10001/Geteway.ashx";
             }
@@ -582,19 +582,20 @@ namespace JIT.CPOS.Common
             {
                 return 0;
             }
-            else { 
+            else
+            {
                 string returnvalue = "";
                 string s = obj.ToString();
-                int i = s.IndexOf( "." );
-                if ( i > 0 )
+                int i = s.IndexOf(".");
+                if (i > 0)
                 {
-                    returnvalue = s.Substring( 0,i );
+                    returnvalue = s.Substring(0, i);
                 }
                 else
                 {
                     returnvalue = s;
                 }
-                return int.Parse( returnvalue );
+                return int.Parse(returnvalue);
             }
         }
         #endregion
@@ -796,6 +797,46 @@ PixelFormat.Format8bppIndexed
                 return false;
             }
         }  
+        #endregion
+		#region 生成二维码
+        public static string GenerateQRCodeWx(string info, string domain, string sourcePath, string targetPath)
+        {
+            #region 处理图片
+            QRCodeEncoder qrCodeEncoder = new QRCodeEncoder();
+            qrCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
+            qrCodeEncoder.QRCodeScale = 5;
+            qrCodeEncoder.QRCodeVersion = 0;
+            qrCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.L;
+            System.Drawing.Image qrImage = qrCodeEncoder.Encode(info, Encoding.UTF8);
+            System.Drawing.Image bitmap = new System.Drawing.Bitmap(210, 210);
+            System.Drawing.Graphics g2 = System.Drawing.Graphics.FromImage(bitmap);
+            g2.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
+            g2.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            g2.Clear(System.Drawing.Color.Transparent);
+            g2.DrawImage(qrImage, new System.Drawing.Rectangle(0, 0, 210, 210), new System.Drawing.Rectangle(0, 0, qrImage.Width, qrImage.Height), System.Drawing.GraphicsUnit.Pixel);
+            string fileName = System.Guid.NewGuid().ToString().Replace("-", "") + ".jpg";
+            string host = domain;
+            if (!host.EndsWith("/")) host += "/";
+            string fileUrl = host + "file/images/qrcode/" + fileName;
+            string newFilePath = string.Empty;
+            string newFilename = string.Empty;
+            System.Drawing.Image imgSrc = System.Drawing.Image.FromFile(sourcePath);
+            System.Drawing.Image imgWarter = bitmap;
+            using (Graphics g = Graphics.FromImage(imgSrc))
+            {
+                g.DrawImage(imgWarter, new Rectangle(0, 0, imgWarter.Width, imgWarter.Height),
+                    0, 0, imgWarter.Width, imgWarter.Height, GraphicsUnit.Pixel);
+            }
+            imgSrc.Save(targetPath + fileName, System.Drawing.Imaging.ImageFormat.Jpeg);
+            imgWarter.Dispose();
+            imgSrc.Dispose();
+            qrImage.Dispose();
+            bitmap.Dispose();
+            g2.Dispose();
+
+            return fileUrl;
+            #endregion
+        }
         #endregion
 
         #region SendSMSCode,发送验证码
@@ -1004,7 +1045,7 @@ PixelFormat.Format8bppIndexed
                 }
             }
             return result;
-        } 
+        }
 
         #endregion
 
@@ -1140,7 +1181,49 @@ PixelFormat.Format8bppIndexed
                 }
             }
         }
-  
+        #region 获取微信时间戳
+        /// <summary>
+        /// 获取微信时间戳
+        /// </summary>
+        /// <returns></returns>
+        public static string GetWxTimeStamp()
+        {
+            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return Convert.ToInt64(ts.TotalSeconds).ToString();
+        }
+        #endregion
+
+        #region 获取随机字符串
+        /// <summary>
+        /// 获取随机字符串
+        /// </summary>
+        /// <returns></returns>
+        public static string GenerateNonceStr()
+        {
+            return Guid.NewGuid().ToString().Replace("-", "");
+        }
+        #endregion
+
+        #region 获取请求ip地址
+        /// <summary>
+        /// 获取请求ip地址
+        /// </summary>
+        /// <returns></returns>
+        public static string GetLocalIp()
+        {
+            try
+            {
+                IPAddress ipAddr =
+                    Dns.GetHostByName(Dns.GetHostName()).AddressList[0];//获得当前IP地址
+                string ip = ipAddr.ToString();
+                return ip;
+            }
+            catch (Exception)
+            {
+                return "192.168.1.1";
+            }
+        }
+        #endregion
     }
 
     public class Response

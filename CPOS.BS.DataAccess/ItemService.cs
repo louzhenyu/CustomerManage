@@ -573,6 +573,7 @@ namespace JIT.CPOS.BS.DataAccess
         public string GetWelfareItemListSql(string userId, string itemName, string itemTypeId, bool isKeep, string isExchange, string storeId)
         {
             string sql = " SELECT itemId = a.item_id ";
+            sql += " ,itemCode = a.item_code ";
             sql += " ,itemName = a.item_name ";
             sql += " ,imageUrl = a.imageUrl ";
             sql += " ,price = a.Price ";
@@ -583,7 +584,9 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " ,pTypeCode = a.PTypeCode ";
             sql += " ,CouponURL = a.CouponURL ";
             sql += " ,salesPersonCount = a.SalesPersonCount ";
+            sql += " ,itemCategoryId = a.item_category_id ";
             sql += " ,itemCategoryName = a.ItemCategoryName ";
+            sql += " ,itemIntroduce = a.ItemIntroduce ";
             sql += " ,skuId = a.SkuId ";
             sql += " ,isShoppingCart = case when c.vipid is null then 0 else 1 end ";
             sql += ",CONVERT(NVARCHAR(10),a.CreateTime,120) createDate ";
@@ -591,6 +594,8 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " ,itemSortDesc = a.itemSortDesc ";
             sql += " ,salesQty = a.salesQty ";
             sql += " ,remark = a.item_remark ";
+            sql += " ,status = a.status ";
+            sql += " ,endTime = a.EndTime ";
             sql += ",IsExchange=a.IsExchange";
             sql += ",IntegralExchange=a.IntegralExchange";
             sql += " into #tmp ";
@@ -611,7 +616,7 @@ namespace JIT.CPOS.BS.DataAccess
                 sql += " INNER JOIN (SELECT * FROM ItemStoreMapping WHERE UnitId='" + storeId + "') d ON(a.item_id = d.ItemId) ";
             }
 
-            sql += " WHERE 1 = 1 and a.customerId = '" + this.CurrentUserInfo.CurrentLoggingManager.Customer_Id + "' ";
+            sql += " WHERE 1 = 1 and data_from != '18' and a.customerId = '" + this.CurrentUserInfo.CurrentLoggingManager.Customer_Id + "' ";
             sql += " AND (a.BeginTime <= GETDATE() AND a.EndTime >= GETDATE()) ";
 
             if (!string.IsNullOrEmpty(itemName))

@@ -17,6 +17,7 @@ namespace JIT.CPOS.DTO.Module.Event.EventPrizes.Request
         public string RecommandId { get; set; }
 
         public string EventId { get; set; }
+        public string PrizeId { get; set; }
 
         public float Longitude { get; set; }
 

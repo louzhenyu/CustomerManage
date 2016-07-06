@@ -54,7 +54,7 @@ namespace JIT.CPOS.BS.DataAccess
                 ,b.city3_name DistrictName
             FROM vipaddress  a
             left join T_City b on a.CityID=b.city_id
-            WHERE vipid='{0}' AND isdelete=0", pVipID);
+            WHERE vipid='{0}' AND a.isdelete=0", pVipID);
 
             DataSet ds = this.SQLHelper.ExecuteDataset(sql.ToString());
             if (ds != null

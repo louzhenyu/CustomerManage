@@ -161,7 +161,8 @@
             <!--会员详情菜单-->
             <div class="subMenu lineTitle">
                 <ul class="clearfix">
-                <li data-id="nav02" class="nav02">交易记录</li>
+                <li data-id="nav02" class="nav02">订单记录</li>
+                <li data-id="nav014" class="nav014">交易记录</li>
                 <li data-id="nav07" class="nav07">客服记录</li>
                 <li data-id="nav04" class="nav04">电子优惠券</li>
                 <li data-id="nav09" class="nav09">会员标签</li>
@@ -736,6 +737,25 @@
                     <!--分页-->
                 </div>
             </div>
+             <!--交易记录-->
+            <div id="nav014" style="display:none;">
+                <div class="tableWrap cursorDef">
+
+                    <!-- 已确认名单表格 -->
+                    <div id="transactionContent"  class="gridLoading">
+
+                       <div  class="loading">
+                             <span><img src="../static/images/loading.gif"></span>
+                       </div>
+
+                    </div>
+                     <div id="pageContianer">
+                            <div class="dataMessage" >该会员没有任何消费记录</div>
+                    </div>
+                    <!--分页-->
+                </div>
+            </div>
+            
             <!--表格操作按钮-->
             
            <!-- 分页 --> 
@@ -1036,7 +1056,7 @@
     
     
     
-    <!--调整余额-->
+    <!--调整余额--返现-->
     <script id="tpl_adjustCash" type="text/html">
     <form id="optionform">
 

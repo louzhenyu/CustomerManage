@@ -88,7 +88,7 @@ namespace JIT.CPOS.BS.DataAccess
                     {
                         m.BeginDate =Convert.ToDateTime(rdr["BeginDate"].ToString());
                     }
-                    if (rdr["SpecialId"] != DBNull.Value)
+                    if (rdr["EndDate"] != DBNull.Value)
                     {
                         m.EndDate = Convert.ToDateTime(rdr["EndDate"].ToString());
                     }

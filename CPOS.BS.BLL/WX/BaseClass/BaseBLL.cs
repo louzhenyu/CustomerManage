@@ -81,37 +81,37 @@ namespace JIT.CPOS.BS.BLL.WX
                 }
                 
             }
-            //else if (!string.IsNullOrEmpty(FromUserName) && !string.IsNullOrEmpty(CreateTime))
-            //{
-            //    var eventMsgId = FromUserName + CreateTime;
-            //    if (JIT.CPOS.BS.BLL.WX.Const.Config.ListMsgId.ContainsKey(eventMsgId))
-            //    {
-            //        httpContext.Response.Write("");
-            //        httpContext.Response.Write("success");
-            //        // httpContext.Response.End();
-            //        return;
-            //    }
-            //    else
-            //    {
-            //        JIT.CPOS.BS.BLL.WX.Const.Config.ListMsgId.Add(eventMsgId, CreateTime);
-            //    }
-            //}
-            ////删除超过十分钟的数据
-            // List<string> msgTemp = new List<string>();
-            //foreach (var item in JIT.CPOS.BS.BLL.WX.Const.Config.ListMsgId)
-            //{
-            //      var a=  DateTime.Parse(new CommonBLL().GetRealTime(item.Value));//timestamp转换成的时间
-            //    TimeSpan ts = DateTime.Now -  DateTime.Parse(  new CommonBLL().GetRealTime(item.Value));
-            //    if (ts.TotalMinutes > 10)
-            //    {
-            //        msgTemp.Add(item.Key);                    
-            //    }                
-            //}
-            ////遍历删除数据
-            //foreach (var item in msgTemp)
-            //{
-            //    JIT.CPOS.BS.BLL.WX.Const.Config.ListMsgId.Remove(item);
-            //}
+            else if (!string.IsNullOrEmpty(FromUserName) && !string.IsNullOrEmpty(CreateTime))
+            {
+                var eventMsgId = FromUserName + CreateTime;
+                if (JIT.CPOS.BS.BLL.WX.Const.Config.ListMsgId.ContainsKey(eventMsgId))
+                {
+                    httpContext.Response.Write("");
+                    httpContext.Response.Write("success");
+                   // httpContext.Response.End();
+                    return;
+                }
+                else
+                {
+                    JIT.CPOS.BS.BLL.WX.Const.Config.ListMsgId.Add(eventMsgId, CreateTime);
+                }
+            }
+            //删除超过十分钟的数据
+             List<string> msgTemp = new List<string>();
+            foreach (var item in JIT.CPOS.BS.BLL.WX.Const.Config.ListMsgId)
+            {
+                  var a=  DateTime.Parse(new CommonBLL().GetRealTime(item.Value));//timestamp转换成的时间
+                TimeSpan ts = DateTime.Now -  DateTime.Parse(  new CommonBLL().GetRealTime(item.Value));
+                if (ts.TotalMinutes > 10)
+                {
+                    msgTemp.Add(item.Key);                    
+                }                
+            }
+            //遍历删除数据
+            foreach (var item in msgTemp)
+            {
+                JIT.CPOS.BS.BLL.WX.Const.Config.ListMsgId.Remove(item);
+            }
     
 
 

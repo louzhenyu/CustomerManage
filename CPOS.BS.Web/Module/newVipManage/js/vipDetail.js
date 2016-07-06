@@ -2,7 +2,7 @@
     KE = KindEditor;
     var page = {
         createPager: function (dataId, pageIndex, totalPage, totalCount) {
-            debugger;
+           
             if (totalPage < 1) return;
             var that = this;
             kkpager.generPageHtml({
@@ -30,6 +30,7 @@
 
             }, true);
             var tbl = $('#' + dataId);
+            console.log(that.elems.pager);
             tbl.append(that.elems.pager);
         },
         elems: {
@@ -51,7 +52,8 @@
             servicesLog:$('#servicesLog'),
             consumerTable: $('#tblConsumer'),
             pager: $('#kkpager'),
-            vipInfo:[]
+            vipInfo: [],
+            transactionContent: $("#transactionContent")//交易记录
         },
         init: function () {
             //获得地址栏参数为vipId的值
@@ -98,7 +100,7 @@
             });
         },
         hidePanels: function () {
-            $('#nav01,#nav02,#nav03,#nav04,#nav05,#nav06,#nav07,#nav08,#nav09,#nav010,#nav011,#nav012,#nav013').hide();
+            $('#nav01,#nav02,#nav03,#nav04,#nav05,#nav06,#nav07,#nav08,#nav09,#nav010,#nav011,#nav012,#nav013,#nav014').hide();
         },
         //没有数据的table提示
         showTableTips: function (jqObj, tips) {
@@ -409,18 +411,16 @@
                 switch (type){
                     case "integral": that.adjustIntegral();//调整积分
                      break;
-                    case "balance":  that.adjustBalance();
+                    case "balance":  that.adjustBalance();//调整余额
                         that.loadData.args.OperationType=$(this).data("optiontype");
                     //调整余额
                      break;
-					 case "cash":
+					 case "cash"://返现
 					 	that.adjustCash();
                         //that.loadData.args.OperationType=$(this).data("optiontype");
                     //调整返现
                      break;
                 }
-
-
             });
               ///标签事件的绑定和操作
             $('#nav09').delegate(".icon", "click", function () {   //删除操作按钮操作
@@ -654,13 +654,14 @@
                 var amount = that.loadData.args.amount;
                 var online = that.loadData.args.onlineOffline;
                 var order = that.loadData.args.order;
+                var deal = that.loadData.args.deal;
 				var integralList = that.loadData.args.integralList;//新积分列表
                 var consumerCard = that.loadData.args.consumerCard;
                 var logs = that.loadData.args.logs;
                 var ServicesLog = that.loadData.args.ServicesLog;
                 if (panel.attr(loadKey)) {
                     switch (panelId){
-                        case 'nav02'://交易记录
+                        case 'nav02'://订单记录
 							/*
 							that.loadData.getVipOrderList(function (data) {
                                 var list = data.Data.VipOrderList;
@@ -668,9 +669,22 @@
                                 that.elems.content.datagrid("loadData", list);
                             });
 							*/
+
 							that.createPager('nav02', order.PageIndex,
                                 order.TotalPages, order.TotalCount);
-                         break;
+							break;
+                        case 'nav014'://交易记录
+                            /*
+							that.loadData.getVipOrderList(function (data) {
+                                var list = data.Data.VipOrderList;
+                                list = list ? list : [];
+                                that.elems.content.datagrid("loadData", list);
+                            });
+							*/
+
+                            that.createPager('nav014', deal.PageIndex,
+                                deal.TotalPages, deal.TotalCount);
+                            break;
                         case 'nav03'://卡操作记录
                             that.createPager('nav03', point.PageIndex,
                                 point.TotalPages, point.TotalCount);
@@ -680,7 +694,7 @@
                                 amount.TotalPages, amount.TotalCount);
                             break;
                         case 'nav06':
-                            that.createPager('nav06', online.PageIndex,
+                            that.createPager('nav04', online.PageIndex,
                                 online.TotalPages, online.TotalCount);
                             break;
                         case 'nav05':
@@ -758,7 +772,8 @@
 
                         break;
 
-                    case 'nav02':  //交易记录
+                    case 'nav02':  //订单记录
+
                         that.loadData.getVipOrderList(function (data) {
                             var list = data.Data.VipOrderList;
                             list = list ? list : [];
@@ -809,8 +824,10 @@
 
                                 onLoadSuccess : function(data) {
                                     debugger;
+                                    that.elems.transactionContent.hide();
                                     that.elems.content.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
-                                    if(data.rows.length>0) {
+                                   
+                                    if (data.rows.length > 0) {
                                         that.elems.dataMessage.hide();
                                     }else{
                                         that.elems.dataMessage.show();
@@ -826,6 +843,99 @@
 
                             panel.attr(loadKey, true);
                         });
+                        break;
+                    case 'nav014':  //交易记录
+
+                        that.loadData.getVipCardTransLogList(function (data) {
+                            var list = data.Data.VipCardTransLogList;
+                            list = list ? list : [];
+                            debugger;
+                            //用百度模板引擎渲染成html字符串
+                            /*   *//*   var html = bd.template("tpl_content", { list: list });
+                                //将数据添加到页面的id=content的对象节点中*//*
+                                that.elems.content.datagrid();*/
+                            that.elems.transactionContent.datagrid({
+                                data: list,
+                                striped: false,
+                                singleSelect: true,
+                                fitColumns: true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+                                rowStyler: function (index, row) {
+                                    if (row.OldVipCardCode) {
+                                        return 'background-color:#edeeee;';
+                                    }
+                                },
+                                //"BillNo" : "",
+                                //"Cash" : 0.00,
+                                //"Points" : 137.00,
+                                //"Bonus" : 0.00,
+                                //"UnitCode" : "S99",
+                                //"TransTime" : "2016/4/25 0:00:00",
+                                //"VipCardCode" : "Vip00012393",
+                                //"OldVipCardCode" : ""
+
+                                columns: [[
+
+                                    {
+                                        field: 'BillNo', title: '订单号', width: 100, align: 'center',
+                                        formatter: function (value, row, index) {
+                                            if (value) {
+                                                return value;
+                                            } else {
+                                                return "";
+                                            }
+                                        }
+                                    },
+                                    { field: 'Cash', title: '现金', width: 60, align: 'center' },
+                                    { field: 'Points', title: '积分', width: 60, align: 'center' },
+                                   { field: 'Bonus', title: '额外奖赏', width: 60, align: 'center' },
+                                    {
+                                        field: 'UnitCode', title: '消费门店', width: 100, align: 'center',
+                                        formatter: function (value, row, index) {
+                                            var long = 56;
+                                            if (value && value.length > long) {
+                                                return '<div class="rowText" title="' + value + '">' + value.substring(0, long) + '...</div>'
+                                            } else {
+                                                return '<div class="">' + value + '</div>'
+                                            }
+                                        }
+
+                                    },
+                                    {
+                                        field: 'TransTime', title: '日期', width: 100, align: 'center',
+                                        formatter: function (value, row, index) {
+                                            debugger;
+                                            if (!isNaN(new Date(value))) {
+                                                return new Date(value).format("yyyy-MM-dd")
+                                            }
+
+                                        }
+                                    }
+
+                                ]],
+
+                                onLoadSuccess: function (data) {
+                                    debugger;
+                                    that.elems.transactionContent.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+                                    that.elems.transactionContent.hide();
+                                    if (data.rows.length > 0) {
+                                        that.elems.dataMessage.hide();
+                                    } else {
+                                        that.elems.transactionContent.hide();
+                                        that.elems.dataMessage.show();
+                                    }
+                                }
+
+                            });
+                           
+                            deal.TotalCount = data.Data.TotalCount;
+                            deal.TotalPages = data.Data.TotalPages;
+                            if (data.Data.TotalPages > 0) {
+                                that.createPager('nav014', 1, data.Data.TotalPages, data.Data.TotalCount);
+                            }
+
+                            panel.attr(loadKey, true);
+                        });
+                       
                         break;
                     case 'nav08': //操作日志
                         that.loadData.getVipLogs(function (data) {
@@ -1011,7 +1121,12 @@
                                         }
                                     }
                                 });
-
+                                point.TotalCount = data.Data.TotalCount;
+                                point.TotalPages = data.Data.TotalPageCount;
+								
+								if (data.Data.TotalPageCount > 0) {
+                                    that.createPager('nav03', 1, data.Data.TotalPageCount, data.Data.TotalCount);
+                                }
 							
                             panel.attr(loadKey, true);
                         });
@@ -1073,7 +1188,6 @@
                         break;
                     case 'nav04':  //优惠券
                         that.loadData.getVipConsumeCardList(function (data) {
-                            debugger;
                             var list = data.Data.VipConsumeCardList;
                             list = list ? list : [];
 
@@ -1838,7 +1952,13 @@
                         list = list ? list : [];
                         debugger;
                         if (list.length) {
+                            ServicesLog.TotalCount = data.Data.TotalCount;
+                            ServicesLog.TotalPages = data.Data.TotalPageCount;
                             that.elems.servicesLog.datagrid("loadData",list);
+
+                            if (data.Data.TotalPages > 0) {
+                                that.createPager('nav07', 1, data.Data.TotalPageCount, data.Data.TotalCount);
+                            }
                         }else {
 
                         }
@@ -1871,7 +1991,6 @@
                 //帐内余额
                 case 'nav04':
                     this.loadData.args.amount.PageIndex = currentPage;
-                    debugger;
                     that.loadData.getVipConsumeCardList(function (data) {
                         var list = data.Data.VipConsumeCardList;
                         list = list ? list : [];
@@ -1881,7 +2000,7 @@
                         }*/ that.elems.amountTable.datagrid("loadData", list);
                     });
                     break;
-                //交易记录
+                //订单记录
                 case "nav02":
                     this.loadData.args.order.PageIndex = currentPage;
                     that.loadData.getVipOrderList(function (data) {
@@ -1897,6 +2016,24 @@
                             that.showTableTips(that.elems.content, "该会员暂无消费记录!");
                         }*/
 						that.elems.content.datagrid("loadData", list);//that.elems.amountTable
+                    });
+                    break;
+                //交易记录
+                case "nav014":
+                    this.loadData.args.deal.PageIndex = currentPage;
+                    that.loadData.getVipCardTransLogList(function (data) {
+                        var list = data.Data.VipCardTransLogList;
+                        list = list ? list : [];   //模板引擎没有判断传递的list是否为null  次数判断
+                        /* if (list.length) {
+                              //用百度模板引擎渲染成html字符串
+                              var html = bd.template("tpl_content", { list: list });
+                              //将数据添加到页面的id=content的对象节点中
+                              that.elems.content.html(html);
+                          } else {
+                              //没有内容的提示
+                              that.showTableTips(that.elems.content, "该会员暂无消费记录!");
+                          }*/
+                        that.elems.transactionContent.datagrid("loadData", list);//that.elems.amountTable
                     });
                     break;
 				//返现
@@ -2090,7 +2227,7 @@
                     OrderType: 'DESC'
                 },
 
-                //交易记录
+                //订单记录
                 order: {
                     PageIndex: 1,
                     PageSize: 10,
@@ -2098,10 +2235,18 @@
                     TotalCount: 0,
                     OrderType:'DESC'
                 },
-
-                amount: {
+                //交易记录
+                deal: {
                     PageIndex: 1,
                     PageSize: 10,
+                    TotalPages: 0,
+                    TotalCount: 0,
+                    OrderType: 'DESC'
+                },
+                //帐内余额
+                amount: {
+                    PageIndex: 1,
+                    PageSize: 20,
                     TotalPages: 0,
                     TotalCount: 0,
                     OrderType:'DESC'
@@ -2264,7 +2409,7 @@
                 });
             },
 
-            //获得会员订单
+            //获得会员订单---//丰收日定制版: 订单记录
             getVipOrderList: function (callback) {
                 $.util.ajax({
                     url: "/ApplicationInterface/Vip/VipGateway.ashx",
@@ -2286,7 +2431,7 @@
                     }
                 });
             },
-             //获取会员消费记录
+            //获取会员消费记录-原版 交易记录
             getVipCardTransLogList: function (callback) {
                 $.util.ajax({
                     url: "/ApplicationInterface/Gateway.ashx",
@@ -2361,8 +2506,8 @@
                     data: {
                         action: 'GetVipConsumeCardList',
                         VipId:this.args.VipId,
-                        PageIndex: this.args.amount.PageIndex,
-                        PageSize: this.args.amount.PageSize
+                        PageIndex: this.args.consumerCard.PageIndex,
+                        PageSize: this.args.consumerCard.PageSize
                     },
                     success: function (data) {
                         if (data.IsSuccess && data.ResultCode == 0) {
@@ -2402,7 +2547,7 @@
 
              // 按钮操作接口调用
             operation:function(pram,operationType,callback){
-                debugger;
+                
                 var prams={data:{action:""}};
                 var submit={is:true,msg:""};
                 var  VipIntegral=0;
@@ -2476,7 +2621,7 @@
                       break;
                     case "VipCardUpdate":
 
-
+                      
 
 
                         $.each(pram,function(index,field){
@@ -2507,12 +2652,17 @@
 
                         }
 
+
+                        
+                        prams.data["BalanceMoney"] = prams.data["Amount"];
+                        prams.data["VipCode"] ="";
                         prams.data["VipCardID"]= this.args.VipCardId;
                         prams.data["OperationType"]= this.args.OperationType;
 						prams.data["AmountSourceID"]= '23';
-                        if(this.args.OperationType==1) {  //累计积分，余额  返现, 调用接口，
-                            prams.data.action = "VIP.VipAmount.SetVipAmount";
-                        }else {
+						//if (this.args.OperationType == 1) {  //累计积分，余额  返现, 调用接口，
+
+                            //prams.data.action = "VIP.VipAmount.SetVipAmount";
+                       //}else {
                             prams.data.action = "VIP.VIPCard.SetVipCard";
 							
 							
@@ -2527,7 +2677,10 @@
                         break;
 					case "VipCashUpdate":
 
-                        prams.data.action="VIP.VipAmount.SetVipAmount";
+					    // prams.data.action="VIP.VipAmount.SetVipAmount";
+
+					    prams.data.action = "VIP.VIPCard.SetVipCard";
+
                         $.each(pram,function(index,field){
                             prams.data[field.name]=field.value;
                             if(field.name=="Amount"&&field.value==0){
@@ -2556,11 +2709,12 @@
                             }
 
                         }
-
+                        prams.data["BalanceMoney"] = prams.data["Amount"];
+                        prams.data["VipCode"] = "";
                         prams.data["VipCardID"]= this.args.VipCardId;
 						prams.data["AmountSourceID"]= '24';
-						
-                        //prams.data["OperationType"]= this.args.OperationType;
+						console.log("OperationType:" + this.args.OperationType)
+                        prams.data["OperationType"]= this.args.OperationType;
 
                         break;	
 						

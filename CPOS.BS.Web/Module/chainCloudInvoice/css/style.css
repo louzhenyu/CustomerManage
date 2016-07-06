@@ -1,0 +1,75 @@
+﻿@charset "utf-8";
+
+.optionBtn .batch{ position:relative;background:url("../images/jiantouD.png") 90% center no-repeat #00a0e8;}
+.optionBtn .export{float: right; margin-right: 35px; width: 83px; text-align:right;background: url("../images/Share.png") #82ba38 no-repeat 14px center ; padding-right: 18px; }
+.panelTab{display: none; position: absolute; top:0; left: 0; background-color:#fff;width: 108px; border: 1px solid #d0d5d8; border-radius: 3px;}
+.panelTab p{border-bottom: 1px solid #d0d5d8; display: inline-block; color:#999; height: 33px; line-height:33px;padding-right: 10px; text-align: right; background: 10px center no-repeat  ; width: 100%;   }
+.panelTab p.on{ color: #00a0e8;}
+.panelTab p.check01{ background-image: url("../images/check01.png")  }
+.panelTab p.check02{ background-image: url("../images/check02.png") }
+.panelTab p.check03{ background-image: url("../images/check03.png") }
+.panelTab p.check01.on{ background-image: url("../images/check_01.png") }
+.panelTab p.check02.on{ background-image: url("../images/check_02.png") }
+.panelTab p.check03.on{ background-image: url("../images/check_03.png") }
+.queryTermArea{padding-left: 0; padding-right:0}
+.rowText{ line-height: 22px; white-space:initial; width: 100%; text-align: left; color: #999;}
+.rowText p{ color: #666;}
+.imgTable .datagrid-row-checked {background-color:#b2f0f0;}
+.imgTable .datagrid-row  img{ float: left;margin-right: 10px;}
+.rowStatusStyle{color: #00a0e8;}
+.dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
+.commonSelectWrap .searchInput.whauto{ width: auto; height: auto;}
+.commonSelectWrap .searchInput .line{ height: 46px;}
+.commonSelectWrap .searchInput input {color:#999;}
+.commonSelectWrap .tit {color:#999;}
+.commonSelectWrap .searchInput .linetext{ height: 28px; line-height: 28px; padding-left:10px;   color: #666; float: left; display: inline;}
+.commonSelectWrap .searchInput .linetext input{ width: 100px; height: 28px; }
+.commonSelectWrap .searchInput .linetext span{  margin-left:5px; }
+.commonSelectWrap .searchInput textarea{line-height:34px;font-size:12px;background:none;color:#999;height: 35px; }
+.panlDiv .commonSelectWrap .searchInput{ border-width:0;background:none;  width: 370px;}
+
+.forminput .commonSelectWrap .searchInput{ border-width:1px;background:#fff;}
+
+.forminput .commonSelectWrap .bordrnone.searchInput{ border-width:0;}
+.panlDiv{ display: block;  border-bottom: 1px solid #d0d5d8; padding-top:5px; padding-bottom: 5px; position: relative;margin-left: 35px; }
+.panlDiv .title{ color: #666666; font-size: 16px; line-height: 43px;}
+.panlDiv .panlText{ display: inline-block; width: 100%;margin-left: 44px;}
+.panlDiv .panlL{ float: left; width: auto;}
+.panlDiv .panlR{float: left; margin-left: 65px;}
+.panlDiv .panlL .commonSelectWrap{ float: none;}
+
+.fontC{width: 56px; text-align: left; float: left;}
+.updateBtn{ float: right; width: 160px; margin-right: 65px;}
+.updateBtn .commonBtn { width: 58px; margin-right:12px; float: left; height: 28px; line-height: 28px; display: none}
+
+.actuallyDetailBox{display:inline-block;width:100%;}
+.actuallyDetail{position:relative;display:inline-block;padding-top:10px;}
+.actuallyDetail a{line-height:33px;text-decoration:underline;color:#00a0e8;}
+.otherInfoBox{display:none;position:absolute;top:50px;left:-55px;width:200px;height:350px;padding:0 20px;border:1px solid #d0d5d8;border-radius:4px;font-size:14px;background:#fff;color:#999;z-index:99;}
+.actuallyDetail:hover .otherInfoBox,.actuallyDetail:hover .arrIcon{display:block;}
+.otherInfoBox .commonSelectWrap{width:100%;margin:0;}
+.otherInfoBox .commonSelectWrap .tit{width:80px;}
+.otherInfoBox .commonSelectWrap .searchInput{width:75px;height:33px;margin-left:0;}
+.actuallyDetail .arrIcon{display:none;width:20px;height:11px;position:absolute;top:41px;left:32px;background:url(../images/arr.png) no-repeat 0 0;z-index:99;}
+.otherInfoBox .infoBox{display:inline-block;padding:10px 0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;}
+.otherInfoBox .infoBox .commonSelectWrap{margin-bottom:5px;}
+
+
+
+.quicklyBox{width:613px;margin:40px auto 0;}
+.quicklyBtnBox{height:20px;line-height:20px;margin-top:8px;margin-bottom:20px;}
+.quicklyBtnBox a{float:left;width:33.33%;text-align:center;font-size:14px;color:#00a1e6;}
+.quicklyBtnBox a span{padding-right:18px;background:url(../images/icon-href.png) no-repeat right center;}
+.nextNotShow span{display:inline-block;margin-left:10px;line-height:20px;padding-left:22px;font-size:12px;background:url(../images/icon-check.png) no-repeat left center;color:#666;cursor:pointer;}
+.nextNotShow span.on{background:url(../images/icon-checked.png) no-repeat left center;}
+
+.icon_merge{background-image:url(../images/files.png);width:100px;}
+.optionBtn div.icon_merge.on {background-color:#00a0e8;}
+.optionBtn div.icon_merge {background-color:#cccccc;}
+
+/*发票表格操作列样式*/
+.invoice_operation_on {color:#00a0e8;}
+.invoice_operation_off {color:#cccccc;}
+
+/*复选框灰掉样式*/
+.checkbox_disable {background:url("../images/checkdisable.png") right center no-repeat !important}

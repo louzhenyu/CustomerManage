@@ -402,6 +402,17 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetCouponDetail(couponID, userID);
         }
+
+        /// <summary>
+        /// 获取详情信息
+        /// </summary>
+        /// <param name="couponCode"></param>
+        /// <returns></returns>
+        public DataSet GetCouponDetail(string couponCode)
+        {
+            return this._currentDAO.GetCouponDetail(couponCode);
+        }
+
         #endregion
 
         #region 使用优惠劵
@@ -413,6 +424,15 @@ namespace JIT.CPOS.BS.BLL
         public int BestowCoupon(string couponID, string doorID)
         {
             return this._currentDAO.BestowCoupon(couponID, doorID);
+        }
+        /// <summary>
+        /// 使用优惠劵
+        /// </summary>
+        /// <param name="couponID"></param>
+        /// <returns></returns>
+        public int ConsumeCoupon(string couponID, string doorID, string billNo)
+        {
+            return this._currentDAO.ConsumeCoupon(couponID, doorID, billNo);
         }
         #endregion
 
@@ -764,6 +784,21 @@ namespace JIT.CPOS.BS.BLL
 
             return result;
         }
+        #endregion
+
+        #region 批量核销优惠券
+
+        /// <summary>
+        /// 批量核销优惠券
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        public string BatWriteOffCoupon(DataTable dt)
+        {
+            return this._currentDAO.BatUpdateCouponUse(dt);
+        }
+
+
         #endregion
 
         #region 分发优惠券记录

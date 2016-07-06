@@ -19,16 +19,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using System.Data.SqlClient;
 using System.Reflection;
 using JIT.Utility;
 using JIT.Utility.ExtensionMethod;
 using JIT.CPOS.BS.DataAccess;
 using JIT.CPOS.BS.Entity;
+using JIT.CPOS.DTO.Base;
+using JIT.CPOS.DTO.Module.VIP.VIPCardManage.Request;
 using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
 
 namespace JIT.CPOS.BS.BLL
-{   
+{
     /// <summary>
     /// 业务处理：  
     /// </summary>
@@ -64,7 +67,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
         public void Create(VipCardEntity pEntity, IDbTransaction pTran)
         {
-            _currentDAO.Create(pEntity,pTran);
+            _currentDAO.Create(pEntity, pTran);
         }
 
         /// <summary>
@@ -90,7 +93,7 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>        
-        public void Update(VipCardEntity pEntity , IDbTransaction pTran)
+        public void Update(VipCardEntity pEntity, IDbTransaction pTran)
         {
             _currentDAO.Update(pEntity, pTran);
         }
@@ -119,7 +122,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
         public void Delete(VipCardEntity pEntity, IDbTransaction pTran)
         {
-            _currentDAO.Delete(pEntity,pTran);
+            _currentDAO.Delete(pEntity, pTran);
         }
 
         /// <summary>
@@ -129,7 +132,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
         public void Delete(object pID, IDbTransaction pTran)
         {
-            _currentDAO.Delete(pID,pTran);
+            _currentDAO.Delete(pID, pTran);
         }
 
         /// <summary>
@@ -139,7 +142,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
         public void Delete(VipCardEntity[] pEntities, IDbTransaction pTran)
         {
-            _currentDAO.Delete(pEntities,pTran);
+            _currentDAO.Delete(pEntities, pTran);
         }
 
         /// <summary>
@@ -147,7 +150,7 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
         public void Delete(VipCardEntity[] pEntities)
-        { 
+        {
             _currentDAO.Delete(pEntities);
         }
 
@@ -165,12 +168,60 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="pIDs">标识符值数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(object[] pIDs, IDbTransaction pTran) 
+        public void Delete(object[] pIDs, IDbTransaction pTran)
         {
-            _currentDAO.Delete(pIDs,pTran);
+            _currentDAO.Delete(pIDs, pTran);
         }
         #endregion
 
+        /// <summary>
+        /// 丰收日余额和返现调整后进行VIPCARD表冗余处理
+        /// </summary>
+        /// <param name="para"></param>
+        /// <param name="pChangeEntity"></param>
+        /// <param name="pLoggingSessionInfo"></param>
+        /// <param name="pTran"></param>
+        /// <param name="pNewMoney"></param>
+        /// <param name="pOldMoney"></param>
+        public void VipCardProcess(SetVipCardRP para, VipCardEntity pChangeEntity
+            , LoggingSessionInfo pLoggingSessionInfo, SqlTransaction pTran, decimal pNewMoney
+            , decimal pOldMoney)
+        {
+            //会员卡
+            var VipCardBLL = new VipCardBLL(pLoggingSessionInfo);
+
+            if (para.AmountSourceID == "23")
+            {
+                //计算累计充值，小于0的不算
+                if (para.BalanceMoney > 0)
+                {
+                    pChangeEntity.RechargeTotalAmount += para.BalanceMoney;
+                    if (pChangeEntity.RechargeTotalAmount < 0)
+                    {
+                        throw new APIException("调整后的余额小于0！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
+                    }
+                }
+                pChangeEntity.BalanceAmount = pNewMoney;
+            }
+            else if (para.AmountSourceID == "24")
+            {
+                pChangeEntity.CumulativeBonus = pChangeEntity.CumulativeBonus ?? 0;
+                pChangeEntity.BalanceBonus = pChangeEntity.BalanceBonus ?? 0;
+                //计算累计返现，小于0的不算
+                if (para.BalanceMoney > 0)
+                {
+                    pChangeEntity.CumulativeBonus += para.BalanceMoney;
+                    if (pChangeEntity.CumulativeBonus < 0)
+                    {
+                        throw new APIException("调整后的累计返现小于0！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
+                    }
+                }
+                pChangeEntity.BalanceBonus += para.BalanceMoney;
+            }
+
+            //执行更新
+            VipCardBLL.Update(pChangeEntity, pTran);
+        }
         #region IQueryable 成员
         /// <summary>
         /// 执行查询
@@ -180,7 +231,7 @@ namespace JIT.CPOS.BS.BLL
         /// <returns></returns>
         public VipCardEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
         {
-           return _currentDAO.Query(pWhereConditions,pOrderBys);
+            return _currentDAO.Query(pWhereConditions, pOrderBys);
         }
 
         /// <summary>
@@ -193,7 +244,7 @@ namespace JIT.CPOS.BS.BLL
         /// <returns></returns>
         public PagedQueryResult<VipCardEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
-           return _currentDAO.PagedQuery(pWhereConditions,pOrderBys,pPageSize,pCurrentPageIndex);
+            return _currentDAO.PagedQuery(pWhereConditions, pOrderBys, pPageSize, pCurrentPageIndex);
         }
 
         /// <summary>
@@ -204,7 +255,7 @@ namespace JIT.CPOS.BS.BLL
         /// <returns>符合条件的实体集</returns>
         public VipCardEntity[] QueryByEntity(VipCardEntity pQueryEntity, OrderBy[] pOrderBys)
         {
-           return _currentDAO.QueryByEntity(pQueryEntity,pOrderBys);
+            return _currentDAO.QueryByEntity(pQueryEntity, pOrderBys);
         }
 
         /// <summary>
@@ -215,7 +266,7 @@ namespace JIT.CPOS.BS.BLL
         /// <returns>符合条件的实体集</returns>
         public PagedQueryResult<VipCardEntity> PagedQueryByEntity(VipCardEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
-           return _currentDAO.PagedQueryByEntity(pQueryEntity,pOrderBys,pPageSize,pCurrentPageIndex);
+            return _currentDAO.PagedQueryByEntity(pQueryEntity, pOrderBys, pPageSize, pCurrentPageIndex);
         }
 
         #endregion

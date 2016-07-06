@@ -21,6 +21,9 @@ using JIT.Utility.Web;
 using JIT.CPOS.Web.SendSMSService;
 using JIT.Utility.Notification;
 using System.Collections;
+using CPOS.BS.BLL;
+using CPOS.BS.Entity;
+using CPOS.Common;
 
 namespace JIT.CPOS.Web.OnlineShopping.data
 {
@@ -110,10 +113,18 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
 
                 var basicSettingBll = new CustomerBasicSettingBLL(loggingSessionInfo);
-                Hashtable htSetting = basicSettingBll.GetSocialSetting();   //获取社会化销售配置 
+                Hashtable htSetting = basicSettingBll.GetSocialSetting();   //获取社会化销售配置
 
-                var dsItems = itemService.GetWelfareItemList(userId, itemName, itemTypeId, page, pageSize, false, isExchange, storeId, isGroupBy, reqObj.common.channelId, reqObj.special.isStore, int.Parse(htSetting["socialSalesType"].ToString()), reqObj.special.sortName == null ? "create_time" : reqObj.special.sortName, reqObj.special.sort == null ? "desc" : reqObj.special.sort, intVirtual,Price);
-                sw.Stop(); Loggers.Debug(new DebugLogInfo() { Message = "获取所有藏商品列表，执行时长：[" + sw.ElapsedMilliseconds.ToString() + "]毫秒" });
+                var dsItems = itemService.GetWelfareItemList(userId, itemName, itemTypeId, page,
+                    pageSize, false, isExchange, storeId, isGroupBy, reqObj.common.channelId,
+                    reqObj.special.isStore, int.Parse(htSetting["socialSalesType"].ToString()),
+                    reqObj.special.sortName == null ? "create_time" : reqObj.special.sortName,
+                    reqObj.special.sort == null ? "desc" : reqObj.special.sort, intVirtual, Price);
+                sw.Stop();
+                Loggers.Debug(new DebugLogInfo()
+                {
+                    Message = "获取所有藏商品列表，执行时长：[" + sw.ElapsedMilliseconds.ToString() + "]毫秒"
+                });
 
                 if (dsItems != null && dsItems.Tables.Count > 0 && dsItems.Tables[0].Rows.Count > 0)
                 {
@@ -140,7 +151,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     }
 
                     sw = new Stopwatch(); sw.Start();
-                    var totalCount = ToInt(dsItems.Tables[1].Rows[0][0].ToString());
+                    var totalCount = TypeParse.ToInt(dsItems.Tables[1].Rows[0][0].ToString());
                     sw.Stop(); Loggers.Debug(new DebugLogInfo() { Message = "获取商品总数列表，执行时长：[" + sw.ElapsedMilliseconds.ToString() + "]毫秒" });
 
                     int PageCount = totalCount / Convert.ToInt32(pageSize);
@@ -204,21 +215,33 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                                     item.ReturnAmount = Math.Round(item.salesPrice * (decimal.Parse(htSetting["eOrderCommissionPer"].ToString()) / 100),2);
                                 }
                             }
+                            else if (reqObj.common.channelId == "7")//一起发码
+                            {
+                                var bll = new SysRetailRewardRuleBLL(loggingSessionInfo);
+                                SysRetailRewardRuleEntity en = new SysRetailRewardRuleEntity();
+                                en.RetailTraderID = reqObj.special.RetailTraderId;
+                                en.CustomerId = loggingSessionInfo.ClientID;
+                                var ds = bll.GetSysRetailRewardRule(en).Where(a => a.CooperateType == "Sales").FirstOrDefault();
+                                if (ds != null)
+                                {
+                                    //--如果渠道是一起发码，当前价格取一起发码价
+                                    if (ds.ItemSalesPriceRate > 0)
+                                    {
+                                        item.salesPrice = item.salesPrice * (decimal)ds.ItemSalesPriceRate / 100;
+                                    }
+                                }
+                            }
                         }
                         else //商品人人销售价格
+                        {
                             item.salesPrice = item.EveryoneSalesPrice;
-
+                        }
                     }
                 }
 
                 sw = new Stopwatch(); sw.Start();
                 var dsItemKeeps = new DataSet();//itemService.GetWelfareItemList(userId, itemName, itemTypeId, page, pageSize, true, isExchange, storeId);
                 sw.Stop(); Loggers.Debug(new DebugLogInfo() { Message = "获取已收藏商品列表，执行时长：[" + sw.ElapsedMilliseconds.ToString() + "]毫秒" });
-
-                //if (dsItemKeeps != null && dsItemKeeps.Tables.Count > 0 && dsItemKeeps.Tables[0].Rows.Count > 0)
-                //{
-                //    respData.content.ItemKeeps = DataTableToObject.ConvertToList<getItemListRespContentDataItem>(dsItemKeeps.Tables[0]);
-                //}
             }
             catch (Exception ex)
             {
@@ -310,6 +333,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
         {
             public string itemName { get; set; }    //模糊查询商品名称
             public string itemTypeId { get; set; }  //商品类别标识
+            public string RetailTraderId { get; set; }  // 一起发码分销商id -- add by zzt 2016-04-22 17:19:22
             public int page { get; set; } // 老接口对应的页码
             public int pageIndex { get; set; }           //页码
             public int pageSize { get; set; }       //页面数量
@@ -490,11 +514,11 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                             item.salesPrice = Math.Round(item.salesPrice, 2); //精确两位小数
                         }
                     }
-                    if (reqObj.common.channelId == "7")//一起发码
+                    else if (reqObj.common.channelId == "7")//一起发码
                     {
                         var bll = new SysRetailRewardRuleBLL(loggingSessionInfo);
                         SysRetailRewardRuleEntity en = new SysRetailRewardRuleEntity();
-                        en.RetailTraderID = reqObj.special.RetailTraderId;
+                        en.RetailTraderID = !string.IsNullOrEmpty(reqObj.special.RetailTraderId) ? reqObj.special.RetailTraderId : reqObj.common.userId;
                         en.CustomerId = loggingSessionInfo.ClientID;
                         var ds = bll.GetSysRetailRewardRule(en).Where(a => a.CooperateType == "Sales").FirstOrDefault();
                         if (ds != null)
@@ -2283,10 +2307,17 @@ namespace JIT.CPOS.Web.OnlineShopping.data
         public string SetOrderInfo()
         {
             string content = string.Empty;
-            
+
             var respData = new setOrderInfoNewRespData();
             try
             {
+                #region TestData
+                /*
+                reqContent = "{"common":{"locale":"zh","userId":"c45f87741005ab3a4d9a6b6da21e9162","openId":"c45f87741005ab3a4d9a6b6da21e9162","customerId":"f6a7da3d28f74f2abedfc3ea0cf65c01"},"special":{"skuId":"","qty":"","storeId":"","salesPrice":"","stdPrice":"","totalAmount":"640","tableNumber":"","username":"","mobile":"","email":"","remark":"1","deliveryId":"1","deliveryAddress":"","deliveryTime":"","orderDetailList":[{"skuId":"648245A5233C48D9817B561139CE9548","salesPrice":"640","qty":"1"}]}}";
+                */
+                #endregion
+
+                #region 1.处理验证请求参数
                 string reqContent = HttpContext.Current.Request["ReqContent"];
 
                 Loggers.Debug(new DebugLogInfo()
@@ -2329,19 +2360,19 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     return respData.ToJSON().ToString();
                 }
                 #endregion
-                #region //判断客户ID是否传递
+
+                #region 2.判断客户ID是否传递
+
                 if (!string.IsNullOrEmpty(reqObj.common.customerId))
                 {
                     customerId = reqObj.common.customerId;
                 }
-                //var loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");//通过customerID,来获取用哪个数据库
                 var loggingSessionInfo = Default.GetBSLoggingSession(customerId, reqObj.common.userId, reqObj.common.IsAToC);//通过customerID,来获取用哪个数据库
                 #endregion
 
                 #region 设置参数
                 InoutService service = new InoutService(loggingSessionInfo);
                 SetOrderEntity orderInfo = new SetOrderEntity();
-                //orderInfo.SkuId = reqObj.special.skuId;
                 int itemTotalQty = 0;
                 foreach (var detail in reqObj.special.orderDetailList)
                 {
@@ -2357,15 +2388,6 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 #region 如果选择到店自提sales_unit_id保存门店id，否则保存在线商城的Unit_id update by wzq
                 if (reqObj.special.storeId == null || reqObj.special.storeId.Trim().Equals(""))
                 {
-                    ////人人销售分配发货门店 add by Henry 2014-11-27
-                    //if (reqObj.common.channelId == "6")
-                    //{
-                    //    var vipInfo = new VipBLL(loggingSessionInfo).GetByID(reqObj.common.userId);
-                    //    if (!string.IsNullOrEmpty(vipInfo.CouponInfo))
-                    //        orderInfo.StoreId = vipInfo.CouponInfo;
-                    //    //根据收货地址获取经纬度，后期处理
-                    //}
-                    //else
                     orderInfo.StoreId = unitServer.GetUnitByUnitTypeForWX("OnlineShopping", null).Id; //获取在线商城的门店标识
                 }
                 else    //送货到家***
@@ -2375,17 +2397,10 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 }
                 #endregion
 
-                //if (orderInfo.StoreId == null || orderInfo.StoreId.Equals(""))//在线商城 注释update by Henry 2014-11-27
-                //{
-                //    respData.code = "2206";
-                //    respData.description = "该客户未配置在线商城.";
-                //    return respData.ToJSON().ToString();
-                //}
-
                 #region 重新计算商品价格以及总价
 
                 SkuPriceService SkuPriceBll = new SkuPriceService(loggingSessionInfo);
-
+                string skuId = string.Empty;
                 StringBuilder skuIds = new StringBuilder();
                 for (int j = 0; j < reqObj.special.orderDetailList.Count(); j++)
                 {
@@ -2393,9 +2408,9 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     {
                         skuIds.Append(",");
                     }
-                    skuIds.Append(string.Format("'{0}'", reqObj.special.orderDetailList[j].skuId));
+                    skuId = reqObj.special.orderDetailList[j].skuId;
+                    skuIds.Append(string.Format("'{0}'", skuId));
                 }
-
                 //团购活动ID                
                 if (!string.IsNullOrWhiteSpace(reqObj.special.isGroupBy))
                 {
@@ -2409,7 +2424,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     }
                 }
 
-
+                IList<SkuPrice> skuPriceList = SkuPriceBll.GetPriceListBySkuIds(skuIds.ToString(), reqObj.special.isGroupBy);
+                decimal CardFaceValue = 0.00m;
                 decimal TotalAmount = 0.00m;
                 decimal TotalReturnCash = 0.00m;
 
@@ -2488,15 +2504,11 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
                 #endregion
 
-                //orderInfo.SalesPrice = Convert.ToDecimal(reqObj.special.salesPrice);
-                //orderInfo.StdPrice = Convert.ToDecimal(reqObj.special.stdPrice);
                 orderInfo.TotalAmount = Convert.ToDecimal(reqObj.special.totalAmount);
                 orderInfo.ReturnCash = TotalReturnCash;
                 orderInfo.Mobile = ToStr(reqObj.special.mobile);
                 orderInfo.Email = ToStr(reqObj.special.email);
                 orderInfo.Remark = ToStr(reqObj.special.remark);
-                //orderInfo.CreateBy = ToStr(reqObj.common.userId);
-                //orderInfo.LastUpdateBy = ToStr(reqObj.common.userId);
 
                 //不能从common直接获取userId，ALD同步会员是userID已经重新被赋值到loggingSessionInfo.UserID中
                 orderInfo.CreateBy = ToStr(loggingSessionInfo.UserID);
@@ -2509,6 +2521,12 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 orderInfo.OpenId = ToStr(reqObj.common.openId);
                 orderInfo.username = ToStr(reqObj.special.username);
                 orderInfo.tableNumber = ToStr(reqObj.special.tableNumber);
+
+                if (String.IsNullOrEmpty(orderInfo.tableNumber) && reqObj.common.channelId == "7")
+                {
+                    orderInfo.tableNumber = reqObj.special.RetailTraderId;
+                }
+
                 orderInfo.CouponsPrompt = ToStr(reqObj.special.couponsPrompt);
                 orderInfo.Remark = ToStr(reqObj.special.remark);
                 orderInfo.JoinNo = ToInt(reqObj.special.joinNo);
@@ -2636,7 +2654,6 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                         orderInfo.VipCardCode = vip.VipCode;
                     }
                     orderDetailInfo.discount_rate = rate;
-                    //orderDetailInfo.discount_rate = 100
 
                     decimal ReturnCash = 0.00m;
                     decimal.TryParse(detail.ReturnCash, out ReturnCash);
@@ -2663,6 +2680,49 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                         var inoutServiceBLL = new InoutService(loggingSessionInfo);
                         var inoutDetailList = inoutServiceBLL.GetInoutDetailInfoByOrderId(orderInfo.OrderId);
                         inoutBll.SetStock(orderInfo.OrderId, inoutDetailList, 1, loggingSessionInfo);
+                    }
+
+                    if (!string.IsNullOrEmpty(reqObj.special.CardNo))
+                    {
+                        VipCardEntity cardEntity = new VipCardEntity();
+                        cardEntity.VipCardID = Utils.NewGuid();
+                        cardEntity.BalanceAmount = 0;
+                        cardEntity.BalanceBonus = 0;
+                        cardEntity.BalancePoints = 0;
+                        cardEntity.BatchNo = "";
+                        cardEntity.BeginDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        cardEntity.CheckCode = reqObj.special.CardNo;
+                        cardEntity.CreateBy = reqObj.common.userId;
+                        cardEntity.CreateTime = DateTime.Now;
+                        cardEntity.CumulativeBonus = 0;
+                        cardEntity.CustomerID = reqObj.common.customerId;
+                        cardEntity.EndDate = "1900-1-1";
+                        cardEntity.IsDelete = 0;
+                        cardEntity.IsGift = 0;
+                        cardEntity.IsOverrunValid = 0;
+                        cardEntity.LastSalesTime = DateTime.Now;
+                        cardEntity.LastUpdateBy = reqObj.common.userId;
+                        cardEntity.LastUpdateTime = DateTime.Now;
+                        cardEntity.maxRowCount = 0;
+                        cardEntity.MembershipTime = null;
+                        cardEntity.MembershipUnit = "";
+                        cardEntity.PurchaseTotalAmount = 0;
+                        cardEntity.PurchaseTotalCount = 0;
+                        cardEntity.RechargeTotalAmount = CardFaceValue;
+                        cardEntity.SalesAmount = "";
+                        cardEntity.SalesUserId = reqObj.common.userId;
+                        cardEntity.SalesUserName = reqObj.common.userId;
+                        cardEntity.SingleTransLimit = 10;
+                        cardEntity.TotalAmount = CardFaceValue;
+                        cardEntity.VipCardCode = reqObj.special.CardNo ?? "";
+                        cardEntity.VipCardGradeID = 0;
+                        cardEntity.VipCardISN = orderInfo.OrderId;
+                        cardEntity.VipCardName = "多利农庄卡";
+                        cardEntity.VipCardStatusId = 1;
+                        cardEntity.VipCardTypeID = GetVipCardTypeIdBySkuId(skuId, loggingSessionInfo);
+
+                        VipCardBLL cardbll = new VipCardBLL(loggingSessionInfo);
+                        cardbll.Create(cardEntity);
                     }
                 }
                 #endregion
@@ -2698,192 +2758,19 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 }
                 #endregion
 
-                #region 记录日志
-
-                //var inoutStatusBll = new TInoutStatusBLL(loggingSessionInfo);
-                //inoutStatusBll.Create(new TInoutStatusEntity
-                //{
-                //    InoutStatusID = Guid.Parse(Utils.NewGuid()),
-                //    OrderID = orderInfo.OrderId,
-                //    OrderStatus = Convert.ToInt32(orderInfo.Status),
-                //    CustomerID = orderInfo.CustomerId,
-                //    Remark = "生成订单",
-                //    StatusRemark = "生成订单[操作人:" + loggingSessionInfo.CurrentUser.User_Name + "]"
-                //});
-
-                #endregion
-
-
-
                 //如果是送货到家，根据订单和用户ID来给总金额和实际支付金额加上运费
                 TOrderCustomerDeliveryStrategyMappingBLL tOrderCustomerDeliveryStrategyMappingBLL = new TOrderCustomerDeliveryStrategyMappingBLL(loggingSessionInfo);
                 tOrderCustomerDeliveryStrategyMappingBLL.UpdateOrderAddDeliveryAmount(orderInfo.OrderId, customerId);
 
-                #region 判断是否是阿拉丁平台的订单,如果是则向阿拉丁同步订单
-                //if (reqObj.common.isALD == "1")
-                //{
-
-                //    //因为配送费用逻辑后，订单的费用有改变。所以重新查总金额和实际支付金额
-                //    T_InoutBLL inoutBll = new T_InoutBLL(loggingSessionInfo);
-                //    T_InoutEntity inoutEntiy = inoutBll.QueryByEntity(
-                //            new T_InoutEntity()
-                //            {
-                //                order_id = orderInfo.OrderId
-                //            }
-                //            , null
-                //        ).OrderByDescending(m => m.create_time)
-                //        .FirstOrDefault();
-
-
-
-                //    //同步阿拉丁平台的用户信息   qianzhi   2014-03-19
-                //    new VipBLL(loggingSessionInfo).SyncAladingUserInfo(reqObj.common.userId, reqObj.common.customerId);
-
-                //    var store = unitServer.GetUnitById(orderInfo.StoreId);
-                //    if (bReturn)
-                //    {//o2o下单成功后,将订单同时发送给ALD
-                //        ALDOrder aldOrder = new ALDOrder();
-                //        aldOrder.SourceOrdersID = orderInfo.OrderId;
-                //        aldOrder.SourceOrdersNO = orderInfo.OrderCode;
-                //        aldOrder.SourceOrderDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                //        aldOrder.SourceStoreID = orderInfo.StoreId;
-                //        aldOrder.SourceStoreName = store != null ? store.Name : "阿拉丁";
-                //        aldOrder.SourceStoreAddress = store.Address;
-                //        aldOrder.SourceStoreTel = store.Telephone;
-                //        aldOrder.DataDeployName = unitServer.GetCustomerDataDeploy(orderInfo.CustomerId);
-                //        aldOrder.SourceClientID = orderInfo.CustomerId;
-                //        aldOrder.Status = orderInfo.Status;
-                //        aldOrder.Remark = orderInfo.Remark;
-                //        aldOrder.DeliverType = orderInfo.DeliveryId;
-                //        aldOrder.ConsigneeAddress = orderInfo.DeliveryAddress;
-                //        aldOrder.ConsigneePhoneNO = orderInfo.Mobile;
-                //        aldOrder.ConsigneeName = orderInfo.username;
-                //        aldOrder.OrderTotalAmount = inoutEntiy.total_amount;
-                //        aldOrder.OrderFactAmount = inoutEntiy.actual_amount;
-                //        aldOrder.OrderItemTotalCount = itemTotalQty;
-                //        aldOrder.MemberID = new Guid(reqObj.common.userId);
-
-                //        //订单明细
-                //        aldOrder.OrderDetails = new List<ALDOrderDetail>();
-                //        if (orderInfo.OrderDetailInfoList != null && orderInfo.OrderDetailInfoList.Count > 0)
-                //        {
-                //            List<string> skuIDs = new List<string>();
-                //            foreach (var detail in orderInfo.OrderDetailInfoList)
-                //            {
-                //                var aldOrderDetail = new ALDOrderDetail();
-                //                aldOrderDetail.SourceSKUID = detail.sku_id;
-                //                aldOrderDetail.Quantity = Convert.ToInt32(detail.order_qty);
-                //                aldOrderDetail.Price = detail.std_price;
-                //                aldOrder.OrderDetails.Add(aldOrderDetail);
-                //                //
-                //                skuIDs.Add(detail.sku_id);
-                //            }
-                //            //根据SKU查找订单商品项的SKU详细信息：商品名称、商品图片、规格 etc..
-                //            var skuService = new SkuService(loggingSessionInfo);
-                //            var skuInfos = skuService.GetSKUAndItemBySKUIDs(skuIDs.ToArray());
-                //            foreach (var detail in aldOrder.OrderDetails)
-                //            {
-                //                foreach (DataRow dr in skuInfos.Rows)
-                //                {
-                //                    if (dr["sku_id"] != DBNull.Value && Convert.ToString(dr["sku_id"]).ToLower() == detail.SourceSKUID.ToLower())
-                //                    {
-                //                        if (dr["item_id"] != DBNull.Value)
-                //                        {
-                //                            detail.SourceItemID = Convert.ToString(dr["item_id"]);
-                //                        }
-                //                        if (dr["item_name"] != DBNull.Value)
-                //                        {
-                //                            detail.SourceItemName = Convert.ToString(dr["item_name"]);
-                //                        }
-                //                        if (dr["imageurl"] != DBNull.Value)
-                //                        {
-                //                            detail.SourceItemImageUrl = Convert.ToString(dr["imageurl"]);
-                //                        }
-                //                        if (dr["prop_1_detail_name"] != DBNull.Value)
-                //                        {
-                //                            detail.SourceSKUProp1 = Convert.ToString(dr["prop_1_name"]) + ":" + Convert.ToString(dr["prop_1_detail_name"]);
-                //                            if (detail.SourceSKUProp1 == ":")
-                //                            {
-                //                                detail.SourceSKUProp1 = "";
-                //                            }
-                //                        }
-                //                        if (dr["prop_2_detail_name"] != DBNull.Value)
-                //                        {
-                //                            detail.SourceSKUProp2 = Convert.ToString(dr["prop_2_name"]) + ":" + Convert.ToString(dr["prop_2_detail_name"]);
-                //                            if (detail.SourceSKUProp2 == ":")
-                //                            {
-                //                                detail.SourceSKUProp2 = "";
-                //                            }
-                //                        }
-                //                        if (dr["prop_3_detail_name"] != DBNull.Value)
-                //                        {
-                //                            detail.SourceSKUProp3 = Convert.ToString(dr["prop_3_name"]) + ":" + Convert.ToString(dr["prop_3_detail_name"]);
-                //                            if (detail.SourceSKUProp3 == ":")
-                //                            {
-                //                                detail.SourceSKUProp3 = "";
-                //                            }
-                //                        }
-                //                        if (dr["prop_4_detail_name"] != DBNull.Value)
-                //                        {
-                //                            detail.SourceSKUProp4 = Convert.ToString(dr["prop_4_name"]) + ":" + Convert.ToString(dr["prop_4_detail_name"]);
-                //                            if (detail.SourceSKUProp4 == ":")
-                //                            {
-                //                                detail.SourceSKUProp4 = "";
-                //                            }
-                //                        }
-                //                        break;
-                //                    }
-                //                }
-                //            }
-                //            //向阿拉丁提交订单
-                //            ALDOrderRequest aldRequest = new ALDOrderRequest();
-                //            aldRequest.BusinessZoneID = 1;
-
-                //            if (!string.IsNullOrWhiteSpace(reqObj.common.locale))
-                //            {
-                //                switch (reqObj.common.locale.ToLower())
-                //                {
-                //                    case "zh":
-                //                        aldRequest.Locale = 1;
-                //                        break;
-                //                }
-                //            }
-                //            else
-                //            {
-                //                aldRequest.Locale = 1;
-                //            }
-                //            aldRequest.UserID = new Guid(reqObj.common.userId);
-                //            aldRequest.Parameters = aldOrder;
-
-                //            var url = ConfigurationManager.AppSettings["ALDGatewayURL"];
-                //            if (string.IsNullOrEmpty(url))
-                //                throw new Exception("未配置阿拉丁平台接口URL:ALDGatewayURL");
-                //            var postContent = string.Format("Action=TransportOrders&ReqContent={0}", aldRequest.ToJSON());
-                //            var strAldRsp = HttpWebClient.DoHttpRequest(url, postContent);
-                //            var aldRsp = strAldRsp.DeserializeJSONTo<ALDResponse>();
-                //            if (aldRsp == null || aldRsp.IsSuccess() == false)
-                //            {
-                //                respData.code = "114";
-                //                respData.description = string.Format("向阿拉丁提交订单失败[{0}].", aldRsp != null ? aldRsp.Message : string.Empty);
-                //                content = respData.ToJSON();
-                //                return content;
-                //            }
-                //        }
-                //    }
-                //}
-
-                #endregion
-
-                //订单消息推送应该在提交订单时处理 annotation by Henry 2015-03-03
-                //if (!string.IsNullOrEmpty(reqObj.special.reqBy) && reqObj.special.reqBy.Equals("1"))
-                //{
-                //    //订单消息推送
-                //    var inoutServer = new InoutService(loggingSessionInfo);
-                //    inoutServer.OrderPushMessage(orderInfo.OrderId, "100");
-                //}
                 #region 返回信息设置
                 respData.content = new setOrderInfoNewRespContentData();
                 respData.content.orderId = orderInfo.OrderId;
+                if (reqObj.common.channelId == "7")
+                {
+                    string payQrCodeUrl =
+                        GerneratePayQrCode(loggingSessionInfo, orderInfo.OrderId);   // 生成支付二维码
+                    respData.content.wxPayQrCodeUrl = payQrCodeUrl;
+                }
                 respData.exception = strError;
                 respData.description = strMsg;
                 if (!bReturn)
@@ -2905,6 +2792,126 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             content = respData.ToJSON();
             return content;
         }
+
+        /// <summary>
+        /// /获取虚拟卡的vipcardTypeId
+        /// </summary>
+        /// <param name="skuIds"></param>
+        /// <returns></returns>
+        private int GetVipCardTypeIdBySkuId(string skuId, LoggingSessionInfo loggingSessionInfo)
+        {
+            T_VirtualItemTypeSettingBLL service = new T_VirtualItemTypeSettingBLL(loggingSessionInfo);
+            T_VirtualItemTypeSettingEntity setting = service.QueryByEntity(new T_VirtualItemTypeSettingEntity() { SkuId = skuId }, null).FirstOrDefault();
+            if (setting != null)
+            {
+                return Convert.ToInt32(setting.ObjecetTypeId);
+            }
+            return 0;
+        }
+
+        #region 验证下单参数是否正确
+        /// <summary>
+        /// 验证下单参数是否正确
+        /// </summary>
+        /// <param name="strReqData"></param>
+        /// <returns></returns>
+        private Tuple<setOrderInfoNewReqData, setOrderInfoNewRespData> ValidateReqData(string strReqData)
+        {
+            setOrderInfoNewRespData respData = new setOrderInfoNewRespData();
+            setOrderInfoNewReqData reqObj = null;
+            try
+            {
+                reqObj = strReqData.DeserializeJSONTo<setOrderInfoNewReqData>();//解析request参数,转换成对象
+                reqObj = reqObj ?? new setOrderInfoNewReqData();
+
+                if (reqObj.special == null)
+                {
+                    reqObj.special = new setOrderInfoNewReqSpecialData();
+                }
+
+                if (string.IsNullOrEmpty(reqObj.common.userId))
+                {
+                    respData.code = "102";
+                    respData.description = "会员信息不存在";
+                    return new Tuple<setOrderInfoNewReqData, setOrderInfoNewRespData>(reqObj, respData);
+                }
+
+                if (reqObj.special.orderDetailList == null || reqObj.special.orderDetailList.Count == 0)//商品数量为0
+                {
+                    respData.code = "2201";
+                    respData.description = "必须选择商品";
+                    return new Tuple<setOrderInfoNewReqData, setOrderInfoNewRespData>(reqObj, respData);
+                }
+
+                if (reqObj.common.userId == null || reqObj.common.userId.Equals(""))
+                {
+                    respData.code = "2206";
+                    respData.description = "userId不能为空";
+                    return new Tuple<setOrderInfoNewReqData, setOrderInfoNewRespData>(reqObj, respData);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                respData.code = "101";
+                respData.description = "参数校验错误" + ex.Message;
+                respData.exception = ex.ToString();
+            }
+            return new Tuple<setOrderInfoNewReqData, setOrderInfoNewRespData>(reqObj, respData);
+        }
+        #endregion
+
+        /// <summary>
+        /// 生成支付二维码
+        /// </summary>
+        /// <param name="loggingSessionInfo"></param>
+        /// <param name="orderID"></param>
+        /// <returns></returns>
+        private string GerneratePayQrCode(LoggingSessionInfo loggingSessionInfo, string orderID)
+        {
+            var TPaymentType = new TPaymentTypeCustomerMappingBLL(loggingSessionInfo);
+            var paymentTypeEntity = TPaymentType.QueryByEntity(new TPaymentTypeCustomerMappingEntity()
+            {
+                CustomerId = loggingSessionInfo.ClientID,
+                // AccountIdentity = "wxa0db700325ddd846"   // tonys
+                AccountIdentity = "wxb4f8f3d799d22f03"   // zmind
+            }, null).FirstOrDefault();
+
+            WxPayData data = new WxPayData();
+            // data.SetValue("appid", "wxb4f8f3d799d22f03");//公众帐号id---appEntity.AppID
+            data.SetValue("appid", paymentTypeEntity.AccountIdentity);//公众帐号id---appEntity.AppID
+            data.SetValue("mch_id", paymentTypeEntity.TenPayIdentity);//商户号
+            data.SetValue("time_stamp", Utils.GetWxTimeStamp());//时间戳
+            data.SetValue("nonce_str", Utils.GenerateNonceStr());//随机字符串
+            data.SetValue("product_id", orderID);//商品ID
+            data.SetValue("sign", data.MakeSign(paymentTypeEntity.TenPayKey));//签名
+            string str = ToUrlParams(data.GetValues());//转换为URL串
+            string payUrl = "weixin://wxpay/bizpayurl?" + str;
+
+            string currentDomain = HttpContext.Current.Request.Url.Host;//当前项目域名
+            string sourcePath = HttpContext.Current.Server.MapPath("/Images/qrcode2.jpg");
+            string targetPath = HttpContext.Current.Server.MapPath("/file/images/qrcode/");
+            var payQrCodeUrl = Utils.GenerateQRCodeWx(payUrl, currentDomain, sourcePath, targetPath);
+            return payQrCodeUrl;
+
+        }
+
+        /**
+        * 参数数组转换为url格式
+        * @param map 参数名与参数值的映射表
+        * @return URL字符串
+        */
+        private string ToUrlParams(SortedDictionary<string, object> map)
+        {
+            string buff = "";
+            foreach (KeyValuePair<string, object> pair in map)
+            {
+                buff += pair.Key + "=" + pair.Value + "&";
+            }
+            buff = buff.Trim('&');
+            return buff;
+        }
+
         /// <summary>
         /// 根据custoerID和总金额、运送方式(DeliveryId)取得运费
         /// </summary>
@@ -3075,6 +3082,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
         public class setOrderInfoNewRespContentData
         {
             public string orderId { get; set; }
+            public string wxPayQrCodeUrl { get; set; }
         }
         /// <summary>
         /// 传输的参数对象
@@ -3112,7 +3120,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public int dataFromId { get; set; }
             public string SalesUser { get; set; } //店员ID add by donal 2014-9-25 18:07:11
             public string RetailTraderId { get; set; }  //分销商id
-           // public string IsShared { get; set; }  //超级分销分享订单 0 - 否 1 - 是 
+            public string CardNo { get; set; }  //卡号
         }
 
 
@@ -4019,6 +4027,23 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 orderInfo.linkTel = ToStr(reqObj.special.linkTel);
                 orderInfo.address = ToStr(reqObj.special.address);
 
+                #region 把其他详细地址信息存到扩展表
+                var expandBll = new T_Inout_ExpandBLL(loggingSessionInfo);
+                T_Inout_ExpandEntity[] expandEntitys = expandBll.QueryByEntity(new T_Inout_ExpandEntity()
+                {
+                    OrderId = reqObj.special.orderID
+                },
+                    new OrderBy[] { });
+                expandEntitys[0].Province = reqObj.special.province;
+                expandEntitys[0].ProvinceCode = reqObj.special.provinceCode;
+                expandEntitys[0].CityCode = reqObj.special.cityCode;
+                expandEntitys[0].City = string.IsNullOrEmpty(reqObj.special.city.Trim())? reqObj.special.province: reqObj.special.city;
+                expandEntitys[0].Area = string.IsNullOrEmpty(reqObj.special.area.Trim()) ? expandEntitys[0].City : reqObj.special.area;
+                expandEntitys[0].AreaCode = reqObj.special.areaCode;
+                expandBll.Update(expandEntitys[0]);
+
+                #endregion
+
                 if (service.SetOrderAddress(orderInfo))
                 {
                     respData.code = "200";
@@ -4058,6 +4083,12 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public string linkMan { get; set; }
             public string linkTel { get; set; }
             public string address { get; set; }
+            public string provinceCode { get; set; }
+            public string province { get; set; }
+            public string city { get; set; }
+            public string cityCode { get; set; }
+            public string area { get; set; }
+            public string areaCode { get; set; }
         }
         #endregion
 
@@ -4278,7 +4309,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
                 var vipId = "";
                 var VipData = new VipBLL(loggingSessionInfo).GetByID(reqObj.common.userId);
-                if (VipData!=null) {
+                if (VipData != null)
+                {
                     vipId = VipData.VIPID;
                 }
                 //var vipList = (new VipBLL(loggingSessionInfo)).QueryByEntity(new VipEntity()
@@ -4489,101 +4521,6 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             content = respData.ToJSON();
             return content;
         }
-        #endregion
-
-        #region GetVIPAddressDefault
-        //public string SetVIPAddress()
-        //{
-        //    string content = string.Empty;
-        //    var respData = new getVipAddressRespData();
-        //    try
-        //    {
-        //        string reqContent = HttpContext.Current.Request["ReqContent"];
-
-        //        Loggers.Debug(new DebugLogInfo()
-        //        {
-        //            Message = string.Format("SetVIPAddress: {0}", reqContent)
-        //        });
-
-        //        //解析请求字符串
-        //        var reqObj = reqContent.DeserializeJSONTo<getVipAddressReqData>();
-        //        reqObj = reqObj == null ? new getVipAddressReqData() : reqObj;
-
-        //        //判断客户ID是否传递
-        //        if (!string.IsNullOrEmpty(reqObj.common.customerId))
-        //        {
-        //            customerId = reqObj.common.customerId;
-        //        }
-        //        var loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
-
-        //        if (reqObj.special == null)
-        //        {
-        //            reqObj.special = new getVipAddressReqSpecialData();
-        //            reqObj.special.page = 1;
-        //            reqObj.special.pageSize = 15;
-        //        }
-        //        if (reqObj.special == null)
-        //        {
-        //            respData.code = "102";
-        //            respData.description = "没有特殊参数";
-        //            return respData.ToJSON().ToString();
-        //        }
-
-        //        if (reqObj.common.openId == null || reqObj.common.openId.Equals(""))
-        //        {
-        //            respData.code = "2202";
-        //            respData.description = "openId不能为空";
-        //            return respData.ToJSON().ToString();
-        //        }
-
-        //        var vipId = "";
-        //        var vipList = (new VipBLL(loggingSessionInfo)).QueryByEntity(new VipEntity()
-        //        {
-        //            WeiXinUserId = reqObj.common.openId
-        //        }, null);
-        //        if (vipList != null && vipList.Length > 0) vipId = vipList[0].VIPID;
-        //        if (vipId == null || vipId.Length == 0)
-        //        {
-        //            //respData.code = "2200";
-        //            //respData.description = "未查询到匹配的VIP信息";
-        //            //return respData.ToJSON().ToString();
-        //            vipId = ToStr(reqObj.common.userId);
-        //        }
-
-        //        respData.content = new getVipAddressRespContentData();
-
-        //        VipAddressBLL service = new VipAddressBLL(loggingSessionInfo);
-
-        //        VipAddressEntity entity = new VipAddressEntity();
-        //        entity.VipAddressID = reqObj.special.vipAddressID;
-        //        entity.VIPID = vipId;
-        //        entity.LinkMan = reqObj.special.linkMan;
-        //        entity.LinkTel = reqObj.special.linkTel;
-        //        entity.CityID = reqObj.special.cityID;
-        //        entity.Address = reqObj.special.address;
-        //        entity.IsDefault = ToInt(reqObj.special.isDefault);
-        //        entity.IsDelete = ToInt(reqObj.special.isDelete);
-
-        //        if (service.EditVipAddress(entity))
-        //        {
-        //            respData.code = "200";
-        //            respData.description = "操作成功";
-        //        }
-        //        else
-        //        {
-        //            respData.code = "111";
-        //            respData.description = "操作失败";
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        respData.code = "103";
-        //        respData.description = "数据库操作错误";
-        //        respData.exception = ex.ToString();
-        //    }
-        //    content = respData.ToJSON();
-        //    return content;
-        //}
         #endregion
 
         #region GetVipValidIntegral

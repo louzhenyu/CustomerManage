@@ -112,7 +112,7 @@ namespace JIT.CPOS.BS.DataAccess
 
         public DataSet GetAreaListByCity(string city_code)
         {
-            string sql = "select a.*,city3_name city_name From t_city a where SUBSTRING(a.city_code,1,4) = '" + city_code + "';";
+            string sql = "select [city_id],[city1_name],[city2_name],[city3_name],[city_code],[city3_name] AS [city_name],[parent_id],[city_type_id],[city_type_name],[status],[CreateTime],[LastUpdateTime],[IsDelete],[CreateBy],[LastUpdateBy],[CustomerID] From t_city a where SUBSTRING(a.city_code,1,4) = '" + city_code + "';";
             DataSet ds = new DataSet();
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;

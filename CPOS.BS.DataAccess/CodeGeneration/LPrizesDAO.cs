@@ -130,8 +130,7 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[17].Value = pEntity.PrizeTypeId;
 			parameters[18].Value = pEntity.Point;
 			parameters[19].Value = pEntity.IsAutoPrizes;
-            parameters[20].Value = pkString;
-
+			parameters[20].Value = pkString;
 
             //执行并将结果回写
             int result;
@@ -274,7 +273,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@PrizeTypeId",SqlDbType.Int),
 					new SqlParameter("@Point",SqlDbType.Int),
 					new SqlParameter("@IsAutoPrizes",SqlDbType.Int),
-					new SqlParameter("@PrizesID",SqlDbType.NVarChar),
+					new SqlParameter("@PrizesID",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.PrizeName;
 			parameters[1].Value = pEntity.PrizeShortDesc;
@@ -292,7 +291,7 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[13].Value = pEntity.LastUpdateTime;
 			parameters[14].Value = pEntity.PrizeTypeId;
 			parameters[15].Value = pEntity.Point;
-            parameters[16].Value = pEntity.IsAutoPrizes;
+			parameters[16].Value = pEntity.IsAutoPrizes;
 			parameters[17].Value = pEntity.PrizesID;
 
             //执行语句

@@ -72,9 +72,13 @@ namespace JIT.CPOS.BS.DataAccess
             BasicUserInfo pUserInfo = new BasicUserInfo();
 
             string sql = "";
-            sql += "SELECT a.* "
-                + " ,DisplayIndexLast = row_number() over(order by a.DisplayIndex ) "
+            sql += "SELECT a.PrizesID, PrizeName, PrizeShortDesc, PrizeDesc, LogoURL, ImageUrl, "
+                + "ContentText, ContentUrl, ct.ParValue as Price, DisplayIndex, CountTotal, CountLeft, EventId, "
+                +"a.CreateTime, a.CreateBy, a.LastUpdateBy, a.LastUpdateTime, a.IsDelete, PrizeTypeId, Point, "
+                +"IsAutoPrizes, PrizeLevel, Probability, DisplayIndexLast = row_number() over(order by a.DisplayIndex ) "
                 + " into #tmp FROM LPrizes a "
+                + "left join PrizeCouponTypeMapping pctm on pctm.PrizesID = a.PrizesID "
+                + "left join CouponType ct on ct.CouponTypeID = pctm.CouponTypeID "
                 + " where a.IsDelete='0' and a.EventID = '" + EventID + "' ";
             //sql += " order by a.DisplayIndex ";
             return sql;

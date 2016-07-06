@@ -43,6 +43,16 @@ namespace JIT.CPOS.BS.BLL
     public partial class T_InoutBLL
     {
         /// <summary>
+        /// 获取指定订单佣金信息
+        /// </summary>
+        /// <param name="pOrderId">订单id</param>
+        /// <returns></returns>
+        public DataTable GetCommissionList(string pOrderId)
+        {
+            return _currentDAO.GetCommissionList(pOrderId);
+        }
+
+        /// <summary>
         /// 取消订单(Api和后台通用)
         /// </summary>
         /// <param name="orderId"></param>

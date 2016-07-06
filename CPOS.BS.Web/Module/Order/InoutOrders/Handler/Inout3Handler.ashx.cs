@@ -20,6 +20,9 @@ using System.Threading;
 using System.Configuration;
 using JIT.CPOS.BS.BLL.WX;
 using JIT.CPOS.DTO.Base;
+using System.Threading.Tasks;
+using JIT.CPOS.BS.BLL.SapMessage;
+using JIT.CPOS.BS.BLL.PA;
 using JIT.CPOS.BS.BLL.RedisOperationBLL.OrderPaySuccess;
 using JIT.CPOS.BS.BLL.RedisOperationBLL.OrderSend;
 
@@ -208,7 +211,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 case "GetOrderStatusList":
                     content = GetOrderStatusList();
                     break;
-                //jifeng.cao end
+                    //jifeng.cao end
 
             }
             pContext.Response.Write(content);
@@ -262,7 +265,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
             StringBuilder propDetailName = new StringBuilder();//"商品规格"字符串
             for (int i = 0; i < propValueList.Count && i < propNameList.Count; i++)
             {
-                string prop_detail_name = setPropDetailName(propValueList[i]);
+                string prop_detail_name = setPropDetailName(propNameList[i], propValueList[i]);
                 if (prop_detail_name != string.Empty)
                     propDetailName.AppendFormat("{0};", prop_detail_name);
             }
@@ -316,7 +319,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
             r.H4 = orderInfo.order_no;
             r.J4 = orderInfo.Field2;
             r.C5 = orderInfo.Field4;
-            r.H5 = orderInfo.create_time;
+            r.H5 = orderInfo.reserveTime;//orderInfo.create_time原来是订单时间，现在改为配送时间段
             r.J5 = orderInfo.payment_name;
             r.Details = detail.Tables[0];
             r.PropDetailName = propDetailName.ToString();
@@ -334,9 +337,8 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
             if (r.payPoints != null)
             {
                 VipBLL vipBll = new VipBLL(this.CurrentUserInfo);
-                //decimal integralAmountPre = vipBll.GetIntegralAmountPre(this.CurrentUserInfo.ClientID);//获取积分金额比例
-                //r.payPointsAmount = Math.Abs(r.payPoints.Value) * (integralAmountPre > 0 ? integralAmountPre : 0.01M);
-                r.payPointsAmount = vipBll.GetAmountByIntegralPer(CurrentUserInfo.ClientID, Math.Abs(r.payPoints.Value));
+                decimal integralAmountPre = vipBll.GetIntegralAmountPre(this.CurrentUserInfo.ClientID);//获取积分金额比例
+                r.payPointsAmount = Math.Abs(r.payPoints.Value) * (integralAmountPre > 0 ? integralAmountPre : 0.01M);
             }
             //r.vipEndAmount = orderInfo.Field3 == "1" ? 0 :
             //    (
@@ -631,7 +633,6 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
             string status = FormatParamValue(form.status);
             string order_date_begin = FormatParamValue(form.order_date_begin);
             string order_date_end = FormatParamValue(form.order_date_end);
-
             string complete_date_begin = FormatParamValue(form.complete_date_begin);
             string complete_date_end = FormatParamValue(form.complete_date_end);
             string data_from_id = FormatParamValue(form.data_from_id);
@@ -658,7 +659,9 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
             {
                 key = Request("id").ToString().Trim();
             }
-
+            // 配送日期
+            string reserveDay_begin = FormatParamValue(form.reserveDay_begin);
+            string reserveDay_end = FormatParamValue(form.reserveDay_end);
             data = inoutService.SearchInoutInfo_lj(
                 PayStatus,
                 order_no,
@@ -680,7 +683,8 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 , purchase_warehouse_id
                 , sales_warehouse_id
                 , Field7, DeliveryId, DefrayTypeId, Field9_begin, Field9_end, ModifyTime_begin, ModifyTime_end, "", vip_no,
-                CurrentUserInfo.CurrentUserRole.UnitId, null, InoutSort);
+                CurrentUserInfo.CurrentUserRole.UnitId, null, InoutSort
+                , false, reserveDay_begin, reserveDay_end);
             //只返回了订单列表和订单数量
             content = string.Format("{{\"totalCount\":{1},\"topics\":{0}}}",
                data.InoutInfoList.ToJSON(),
@@ -762,6 +766,10 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
             string Field9_end = FormatParamValue(form.Field9_end);
             string ModifyTime_begin = FormatParamValue(form.ModifyTime_begin);
             string ModifyTime_end = FormatParamValue(form.ModifyTime_end);
+            // 配送日期
+            string reserveDay_begin = FormatParamValue(form.reserveDay_begin);
+            string reserveDay_end = FormatParamValue(form.reserveDay_end);
+
 
             string purchase_warehouse_id = FormatParamValue(form.purchase_warehouse_id);
             string sales_warehouse_id = FormatParamValue(form.sales_warehouse_id);
@@ -813,7 +821,9 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 , purchase_warehouse_id
                 , sales_warehouse_id
                 , Field7, DeliveryId, DefrayTypeId, Field9_begin, Field9_end, ModifyTime_begin, ModifyTime_end, "", vip_no,
-                CurrentUserInfo.CurrentUserRole.UnitId, null, InoutSort);
+                CurrentUserInfo.CurrentUserRole.UnitId, null, InoutSort, false  //默认不取详细信息
+                , reserveDay_begin, reserveDay_end
+                );
             //只返回了订单列表和订单数量
             content = string.Format("{{\"totalCount\":{1},\"topics\":{0}}}",
                data.InoutInfoList.ToJSON(),
@@ -1341,6 +1351,9 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 //商户订单号，支付方式
                 string paymentcenter_id = FormatParamValue(form.paymentcenter_id);
                 string PayId = FormatParamValue(form.Field11);
+                // 配送日期
+                string reserveDay_begin = FormatParamValue(form.reserveDay_begin);
+                string reserveDay_end = FormatParamValue(form.reserveDay_end);
 
                 data = inoutService.SearchInoutInfo_lj4(
                 UnitId,
@@ -1369,11 +1382,11 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 purchase_warehouse_id,
                 sales_warehouse_id,
                 Field7, DeliveryId, DefrayTypeId, Field9_begin, Field9_end, ModifyTime_begin, ModifyTime_end, "", vip_no,
-                CurrentUserInfo.CurrentUserRole.UnitId, null, InoutSort, true);
+                CurrentUserInfo.CurrentUserRole.UnitId, null, InoutSort
+                , reserveDay_begin, reserveDay_end, true);
 
 
                 #endregion
-
                 string MapUrl = pContext.Server.MapPath(@"~/Framework/Upload/" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss.ms") + ".xls");
                 Aspose.Cells.License lic = new Aspose.Cells.License();
                 lic.SetLicense("Aspose.Total.lic");
@@ -1659,6 +1672,11 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 }
                 #endregion
 
+
+                #endregion
+
+
+
                 workbook.Save(MapUrl);
 
                 Utils.OutputExcel(pContext, MapUrl);//输出Excel文件
@@ -1669,18 +1687,43 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 throw (ex);
             }
         }
-
+        //处理属性信息
+        public string getSkuArr(string prop_1_detail_name, string prop_2_detail_name, string prop_3_detail_name, string prop_4_detail_name, string prop_5_detail_name)
+        {
+            string skuArr = "";
+            if (!string.IsNullOrEmpty(prop_1_detail_name))
+            {
+                skuArr += prop_1_detail_name;
+            }
+            if (!string.IsNullOrEmpty(prop_2_detail_name))
+            {
+                skuArr += "/" + prop_2_detail_name;
+            }
+            if (!string.IsNullOrEmpty(prop_3_detail_name))
+            {
+                skuArr += "/" + prop_3_detail_name;
+            }
+            if (!string.IsNullOrEmpty(prop_4_detail_name))
+            {
+                skuArr += "/" + prop_4_detail_name;
+            }
+            if (!string.IsNullOrEmpty(prop_5_detail_name))
+            {
+                skuArr += "/" + prop_5_detail_name;
+            }
+            return skuArr;
+        }
 
 
         #endregion
-        #endregion
+     
 
         #region "商品规格"属性名和属性值的字符串拼接
         //<summary>
         //完成订单中"商品规格"数据的字符串拼接
         //目前只完成三个参数的拼接,如果以后需要可在下面添加
         //</summary>
-        public string setPropDetailName(InoutDetailInfo pPropDetailName)
+		public string setPropDetailName(InoutDetailInfo pPropDetailName)
         {
             string propDetailName = string.Empty;
 
@@ -1696,6 +1739,25 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 propDetailName = propDetailName + "," + pPropDetailName.prop_3_name.ToString() + ":" + pPropDetailName.prop_3_detail_name.ToString();
             else if (propDetailName == string.Empty && string.IsNullOrEmpty(pPropDetailName.prop_3_detail_name) && !string.IsNullOrEmpty(pPropDetailName.prop_3_name))
                 propDetailName = propDetailName + pPropDetailName.prop_3_name.ToString() + ":" + pPropDetailName.prop_3_detail_name.ToString();
+
+            return propDetailName;
+        }
+        public string setPropDetailName(SkuInfo pSkuInfo, InoutDetailInfo pInoutDetilInfo)
+        {
+            string propDetailName = string.Empty;
+
+            if (!string.IsNullOrEmpty(pInoutDetilInfo.prop_1_detail_name) && !string.IsNullOrEmpty(pSkuInfo.prop_1_name))
+                propDetailName = pSkuInfo.prop_1_name.ToString() + ":" + propDetailName + pInoutDetilInfo.prop_1_detail_name.ToString();
+
+            if (propDetailName != string.Empty && !string.IsNullOrEmpty(pInoutDetilInfo.prop_2_detail_name) && !string.IsNullOrEmpty(pSkuInfo.prop_2_name))
+                propDetailName = propDetailName + "," + pSkuInfo.prop_2_name.ToString() + ":" + pInoutDetilInfo.prop_2_detail_name.ToString();
+            else if (propDetailName == string.Empty && !string.IsNullOrEmpty(pInoutDetilInfo.prop_2_detail_name) && !string.IsNullOrEmpty(pSkuInfo.prop_2_name))
+                propDetailName = propDetailName + pSkuInfo.prop_2_name.ToString() + ":" + pInoutDetilInfo.prop_2_detail_name.ToString();
+
+            if (propDetailName != string.Empty && !string.IsNullOrEmpty(pInoutDetilInfo.prop_3_detail_name) && !string.IsNullOrEmpty(pSkuInfo.prop_3_name))
+                propDetailName = propDetailName + "," + pSkuInfo.prop_3_name.ToString() + ":" + pInoutDetilInfo.prop_3_detail_name.ToString();
+            else if (propDetailName == string.Empty && string.IsNullOrEmpty(pInoutDetilInfo.prop_3_detail_name) && !string.IsNullOrEmpty(pSkuInfo.prop_3_name))
+                propDetailName = propDetailName + pSkuInfo.prop_3_name.ToString() + ":" + pInoutDetilInfo.prop_3_detail_name.ToString();
 
             return propDetailName;
         }
@@ -2788,7 +2850,6 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                         }
                         else if (status == "700")//完成操作
                         {
-
                             if (string.IsNullOrEmpty(order.Field1) || order.Field1 == "0")
                             {
                                 responseData.success = true;
@@ -2796,48 +2857,82 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                                 return responseData.ToJSON();
                             }
                         }
+                        else if (status == "500" || status == "510")//审核通过操作  500是正常单子   510是门店单子
+                        {
+                            if (!order.Field1.Equals("1"))
+                            {
+                                responseData.success = true;
+                                responseData.msg = "请先支付完成";
+                                return responseData.ToJSON();
+                            }
+                        }
 
-                        #region 添加日志信息
-                        if (!string.IsNullOrEmpty(rParams["PayMethod"]))
-                        {
-                            info.PayMethod = int.Parse(rParams["PayMethod"]);
-                        }
-                        if (!string.IsNullOrEmpty(rParams["CheckResult"]))
-                        {
-                            info.CheckResult = int.Parse(rParams["CheckResult"]);
-                        }
-                        if (!string.IsNullOrEmpty(rParams["PicUrl"]))
-                        {
-                            UploadFile(pContext.Request.Files, ref filePath);
-                            info.PicUrl = filePath;
-                        }
-                        if (!string.IsNullOrEmpty(rParams["DeliverOrder"]))
-                        {
-                            order.Field2 = rParams["DeliverOrder"];//快递单号
-                            info.DeliverOrder = rParams["DeliverOrder"];//快递单号
-                        }
-                        if (!string.IsNullOrEmpty(rParams["DeliverCompany"]))
-                        {
-                            order.carrier_id = rParams["DeliverCompany"];
-                            info.DeliverCompanyID = rParams["DeliverCompany"];//快递公司
-                        }
-                        if (status == "600" || !string.IsNullOrEmpty(rParams["DeliverOrder"]) || !string.IsNullOrEmpty(rParams["DeliverCompany"]))
-                        {
-                            order.Field9 = DateTime.Now.ToSQLFormatString();
-                            //更新订单配送商及配送单号
-                            inoutService.Update(order, out error);
-                        }
-                        #endregion
 
-                        info.OrderStatus = int.Parse(status);
-
-                        string statusDesc = GetStatusDesc(status);//变更后的状态名称
-
-                        if (info.OrderStatus == 10000)
+                        string errorMsg = string.Empty;
+                        // 通知SAP
+                        if (status == "500" || status == "510")// 如果是审核通过操作则同步到SAP
                         {
-                            //付款
-                            info.StatusRemark = "订单收款成功[操作人:" + CurrentUserInfo.CurrentUser.User_Name + "]";
-                            inoutStatusnode.SetOrderPayment(order.order_id, out error);
+                            errorMsg = SapMessageApiBLL.AddOrderMsg(CurrentUserInfo, orderId);
+                        }
+                        else if (status == "800" && order.Field8.Equals("1"))// 如果是取消订单操作则同步到SAP(门店订单除外)
+                        {
+                            errorMsg = SapMessageApiBLL.CanelOrder(CurrentUserInfo, orderId);
+                            // 删除佣金分润
+                            PAAppApiBLL.DisableCommission(order.order_id, CurrentUserInfo);
+                        }
+                        if (string.IsNullOrEmpty(errorMsg))// 如果错误消息为空表示成功
+                        {
+                            // 同步到SAP完成后才进行佣金分润
+                            if (status == "500" || status == "510")//  500是正常单子   510是门店单子
+                            {
+                                LoggingSessionInfo tmpUser = CurrentUserInfo;
+                                Task.Factory.StartNew(() =>
+                                {
+                                    // 异步佣金分润  分润方法内部已经处理非平安订单不分润过滤
+                                    PAAppApiBLL.Commission(order.order_id, tmpUser);
+                                });
+                            }
+                            #region 添加日志信息
+                            if (!string.IsNullOrEmpty(rParams["PayMethod"]))
+                            {
+                                info.PayMethod = int.Parse(rParams["PayMethod"]);
+                            }
+                            if (!string.IsNullOrEmpty(rParams["CheckResult"]))
+                            {
+                                info.CheckResult = int.Parse(rParams["CheckResult"]);
+                            }
+                            if (!string.IsNullOrEmpty(rParams["PicUrl"]))
+                            {
+                                UploadFile(pContext.Request.Files, ref filePath);
+                                info.PicUrl = filePath;
+                            }
+                            if (!string.IsNullOrEmpty(rParams["DeliverOrder"]))
+                            {
+                                order.Field2 = rParams["DeliverOrder"];//快递单号
+                                info.DeliverOrder = rParams["DeliverOrder"];//快递单号
+                            }
+                            if (!string.IsNullOrEmpty(rParams["DeliverCompany"]))
+                            {
+                                order.carrier_id = rParams["DeliverCompany"];
+                                info.DeliverCompanyID = rParams["DeliverCompany"];//快递公司
+                            }
+                            if (status == "600" || !string.IsNullOrEmpty(rParams["DeliverOrder"]) || !string.IsNullOrEmpty(rParams["DeliverCompany"]))
+                            {
+                                order.Field9 = DateTime.Now.ToSQLFormatString();
+                                //更新订单配送商及配送单号
+                                inoutService.Update(order, out error);
+                            }
+                            #endregion
+
+                            info.OrderStatus = int.Parse(status);
+
+                            string statusDesc = GetStatusDesc(status);//变更后的状态名称
+
+                            if (info.OrderStatus == 10000)
+                            {
+                                //付款
+                                info.StatusRemark = "订单收款成功[操作人:" + CurrentUserInfo.CurrentUser.User_Name + "]";
+                                inoutStatusnode.SetOrderPayment(order.order_id, out error);
 
                             ///超级分销商订单入队列
                             if (order.data_from_id == "35" || order.data_from_id == "36")
@@ -2862,40 +2957,38 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                             new SendOrderPaySuccessMsgBLL().SentPaymentMessage(InoutEntity, vipInfo.WeiXinUserId, vipInfo.VIPID, CurrentUserInfo);
                             #endregion
 
-                            //处理库存和销量
-                            //var inoutDetailList = service.GetInoutDetailInfoByOrderId(orderId);
-                            //inoutBLL.SetStock(orderId, inoutDetailList, 1, CurrentUserInfo);
-                            inoutBLL.SetVirtualItem(CurrentUserInfo, orderId);  //支付回调/收款处理虚拟商品订单
-                        }
-                        else
-                        {
-                            info.StatusRemark = "订单状态从" + order.status_desc + "变为" + statusDesc + "[操作人:" + CurrentUserInfo.CurrentUser.User_Name + "]";
-                            service.UpdateOrderDeliveryStatus(order.order_id, status, Utils.GetNow());
-                        }
+                                //处理库存和销量
+                                //var inoutDetailList = service.GetInoutDetailInfoByOrderId(orderId);
+                                //inoutBLL.SetStock(orderId, inoutDetailList, 1, CurrentUserInfo);
+                                inoutBLL.SetVirtualItem(CurrentUserInfo, orderId);  //支付回调/收款处理虚拟商品订单
+                            }
+                            else
+                            {
+                                info.StatusRemark = "订单状态从" + order.status_desc + "变为" + statusDesc + "[操作人:" + CurrentUserInfo.CurrentUser.User_Name + "]";
+                                service.UpdateOrderDeliveryStatus(order.order_id, status, Utils.GetNow());
+                            }
 
-                      
+                            inoutStatus.Create(info);
 
-                        inoutStatus.Create(info);
+                            #region 处理积分返现和退款
 
-                        #region 处理积分返现和退款
-
-                        if (statusDesc == "已取消")//取消订单
-                        {
-                            //执行取消订单业务 reconstruction By Henry 2015-10-20
-                            inoutBLL.SetCancelOrder(orderId, 0, CurrentUserInfo);
-                        }
+                            if (statusDesc == "已取消")//取消订单
+                            {
+                                //执行取消订单业务 reconstruction By Henry 2015-10-20
+                                inoutBLL.SetCancelOrder(orderId, 0, CurrentUserInfo);
+                            }
 
 
-                        #endregion
+                            #endregion
 
-                        #region 处理订单发货发送微信模板消息
-                        if (statusDesc == "已发货")
-                        {
-                            //获取会员信息
-                            var vipBll = new VipBLL(CurrentUserInfo);
-                            var vipInfo = vipBll.GetByID(order.vip_no);
-                            //物流公司
-                            order.carrier_name = inoutService.GetCompanyName(order.carrier_id);
+                            #region 处理订单发货发送微信模板消息
+                            if (statusDesc == "已发货")
+                            {
+                                //获取会员信息
+                                var vipBll = new VipBLL(CurrentUserInfo);
+                                var vipInfo = vipBll.GetByID(order.vip_no);
+                                //物流公司
+                                order.carrier_name = inoutService.GetCompanyName(order.carrier_id);
 
                             //var CommonBLL = new CommonBLL();
                             //CommonBLL.SentShipMessage(order, vipInfo.WeiXinUserId, order.vip_no, CurrentUserInfo);
@@ -2905,7 +2998,20 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                         responseData.success = true;
                         responseData.msg = "操作成功";
                     }
-                    #endregion
+                        else
+                        {
+                            responseData.msg = "同步到SAP失败，错误消息：" + errorMsg;
+                        }
+                        #endregion
+                    }
+                    else
+                    {
+                        responseData.msg = "同步订单到SAP失败，请重试或联系管理员！";
+                    }
+                }
+                else
+                {
+                    responseData.msg = "操作失败，请检查是否已支付";
                 }
 
             }
@@ -3443,6 +3549,8 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
         public string VipCardTypeID; //会员卡等级id
         public string ReserveDateBegin; //提货开始日期
         public string ReserveDateEnd; //提货结束日期
+        public string reserveDay_begin;//配送时间
+        public string reserveDay_end;
     }
     #endregion
 }

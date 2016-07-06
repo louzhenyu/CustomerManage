@@ -19,6 +19,7 @@ using System.Web.Script.Serialization;
 using JIT.CPOS.BS.Web.ApplicationInterface.Vip;
 using JIT.CPOS.Common;
 using JIT.CPOS.BS.Web.Module.WEvents.Handler;
+using JIT.Utility.DataAccess.Query;
 using RedisOpenAPIClient.Models.CC;
 
 namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
@@ -411,14 +412,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
                         return errRsp.ToJSON();
                     }
                 }
-                ////优惠券未被使用了的数量
-                //int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
-                //if (intUnUsedCouponCount < rp.Parameters.CountTotal)
-                //{
-
-                //    var errRsp = new ErrorResponse(-1, "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString());
-                //    return errRsp.ToJSON();
-                //}
             }
 
             entity.EventId = rp.Parameters.EventId;
@@ -480,14 +473,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
                         return errRsp.ToJSON();
                     }
                 }
-                //int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
-                //int intHaveCout =(int)bllPrizes.GetByID(rp.Parameters.PrizesId).CountTotal;
-                //if (intUnUsedCouponCount < (rp.Parameters.CountTotal + intHaveCout))
-                //{
-
-                //    var errRsp = new ErrorResponse(-1, "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString());
-                //    return errRsp.ToJSON();
-                //}
             }
             
             var entity = new LPrizesEntity();
@@ -698,7 +683,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
                 case "DZP":
                     rd.ModulePage = SysModuleList.Where(p => p.PageKey == "BigDial").SingleOrDefault();//大转盘
                     break;
-                case "QN":
+                case "GGK":
+                    rd.ModulePage = SysModuleList.Where(p => p.PageKey == "BigDial").SingleOrDefault();//大转盘
+                    break;
+				case "QN":
                     rd.ModulePage = SysModuleList.Where(p => p.PageKey == "Questionnaire").SingleOrDefault();//问卷
                     break;
                 default:
@@ -717,16 +705,17 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             var rp = pRequest.DeserializeJSONTo<APIRequest<SaveEventStep3RP>>();
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
 
-            var para = rp.Parameters;
-   
             //微信 公共平台
+            var lstOrder = new List<OrderBy> { };  //排序参数
+            lstOrder.Add(new OrderBy() { FieldName = "CreateTime", Direction = OrderByDirections.Asc });
             var wapentity = new WApplicationInterfaceBLL(loggingSessionInfo).QueryByEntity(new WApplicationInterfaceEntity
             {
                 CustomerId = loggingSessionInfo.ClientID,
                 IsDelete = 0
-            }, null).FirstOrDefault();//取默认的第一个微信
+            }, lstOrder.ToArray()).FirstOrDefault();//取创建时间最早的微信
 
             #region 生成图文素材
+            var para = rp.Parameters;
 
             #region 获取Page信息
             var pageBll = new SysPageBLL(loggingSessionInfo);
@@ -997,7 +986,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             #endregion
 
 
-
             var rd = new EmptyRD();
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();
@@ -1071,14 +1059,14 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             try
             {
                 //微信 公共平台
+                var lstOrder = new List<OrderBy> { };  //排序参数
+                lstOrder.Add(new OrderBy() { FieldName = "CreateTime", Direction = OrderByDirections.Asc });
                 var wapentity = new WApplicationInterfaceBLL(loggingSessionInfo).QueryByEntity(new WApplicationInterfaceEntity
                 {
-
                     CustomerId = loggingSessionInfo.ClientID,
                     IsDelete = 0
-
-                }, null).FirstOrDefault();
-
+                }, lstOrder.ToArray()).FirstOrDefault();//取创建时间最早的微信
+               
                 //获取当前二维码 最大值
                 var MaxWQRCod = new WQRCodeManagerBLL(loggingSessionInfo).GetMaxWQRCod() + 1;
 

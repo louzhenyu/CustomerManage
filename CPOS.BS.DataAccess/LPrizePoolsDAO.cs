@@ -75,27 +75,25 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="latitude"></param>
         /// <param name="customerId"></param>
         /// <returns></returns>
-        public DataSet GetEventWinningInfo(string userName, string vipId, string eventId, float longitude, float latitude, string customerId, string reCommandId, int pointsLotteryFlag)
+        public DataSet GetEventWinningInfo(string userName, string vipId, string eventId, string prizeId, float longitude, float latitude, string customerId, string reCommandId, int pointsLotteryFlag)
         {
             //string sql = "exec GetEventWinningInfo '" + vipId + "','"
             //    + userName + "','" + customerId + "'," + longitude + "," + latitude + ",'" + eventId + "' ";
 
-            var parm = new SqlParameter[8];
+            var parm = new SqlParameter[9];
             parm[0] = new SqlParameter("@pVipId", System.Data.SqlDbType.NVarChar, 100) { Value = vipId };
             parm[1] = new SqlParameter("@pUserName", System.Data.SqlDbType.NVarChar, 100) { Value = userName };
             parm[2] = new SqlParameter("@pLongitude", System.Data.SqlDbType.Float, 4) { Value = longitude };
             parm[3] = new SqlParameter("@pLatitude", System.Data.SqlDbType.Float, 4) { Value = latitude };
             parm[4] = new SqlParameter("@pEventId", System.Data.SqlDbType.NVarChar, 100) { Value = eventId };
             parm[5] = new SqlParameter("@pCustomerId", System.Data.SqlDbType.NVarChar, 100) { Value = customerId };
-
             parm[6] = new SqlParameter("@pRecommandId", System.Data.SqlDbType.NVarChar, 100) { Value = reCommandId };
-
             parm[7] = new SqlParameter("@pPointsLotteryFlag", System.Data.SqlDbType.Int) { Value = pointsLotteryFlag };
-
+            parm[8] = new SqlParameter("@pPrizeId", System.Data.SqlDbType.NVarChar, 100) { Value = prizeId };
 
             Loggers.Debug(new DebugLogInfo()
             {
-                Message = parm.ToJSON()
+                Message = "vipId:" + vipId + ",userName:" + userName  + ",eventId:" + eventId  + ",prizeId:" + prizeId
             });
 
             return this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "GetEventWinningInfo", parm);
@@ -167,7 +165,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns></returns>
         public DataSet GetRandomPrizeByEventId(string strEventId)
         {
-            string strSql = string.Format("SELECT TOP 1* FROM dbo.LPrizePools with(nolock) WHERE Status=1 AND EventId='{0}'	ORDER BY NEWID()", strEventId);
+            string strSql = string.Format("SELECT TOP 1* FROM dbo.LPrizePools with(nolock) WHERE Status=1 AND IsDelete =0 AND EventId='{0}'	ORDER BY NEWID()", strEventId);
             return SQLHelper.ExecuteDataset(strSql);
         }
         public DataSet GetPrizePoolsByEvent(string strCustomerId,string strEventId)

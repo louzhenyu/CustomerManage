@@ -142,6 +142,8 @@
     <Compile Include="Module\CreativityWarehouse\Theme\Response\ApplyRD.cs" />
     <Compile Include="Module\CreativityWarehouse\Theme\Response\ThemeListRD.cs" />
     <Compile Include="Module\Event\Bargain\Request\AddKJEventJoinDetailRP.cs" />
+    <Compile Include="Module\Event\Bargain\Request\BargainListRP.cs" />
+    <Compile Include="Module\Event\Bargain\Request\ChangeStatusRP.cs" />
     <Compile Include="Module\Event\Bargain\Request\DeleteKJEventJoinRP.cs" />
     <Compile Include="Module\Event\Bargain\Request\EventListRP.cs" />
     <Compile Include="Module\Event\Bargain\Request\GetBargainDetailsRP.cs" />
@@ -157,6 +159,8 @@
     <Compile Include="Module\Event\Bargain\Request\SetBargainDetailsRP.cs" />
     <Compile Include="Module\Event\Bargain\Request\SetBargainRP.cs" />
     <Compile Include="Module\Event\Bargain\Response\AddKJEventJoinDetailRD.cs" />
+    <Compile Include="Module\Event\Bargain\Response\BargainListRD.cs" />
+    <Compile Include="Module\Event\Bargain\Response\ChangeStatusRD.cs" />
     <Compile Include="Module\Event\Bargain\Response\EventListRD.cs" />
     <Compile Include="Module\Event\Bargain\Response\GetBargainDetailsRD.cs" />
     <Compile Include="Module\Event\Bargain\Response\GetBargainItemRD.cs" />
@@ -241,6 +245,21 @@
     <Compile Include="Module\Order\SalesReturn\Response\GetRefundOrderListRD.cs" />
     <Compile Include="Module\Order\SalesReturn\Response\GetSalesReturnDetailRD.cs" />
     <Compile Include="Module\Order\SalesReturn\Response\GetSalesReturnListRD.cs" />
+    <Compile Include="Module\PA\Request\CommissionRP.cs" />
+    <Compile Include="Module\PA\Request\GetAddressRP.cs" />
+    <Compile Include="Module\PA\Request\GetOrderInfoRP.cs" />
+    <Compile Include="Module\PA\Request\PALifePayParmRP.cs" />
+    <Compile Include="Module\PA\Request\PAOrderDetailRP.cs" />
+    <Compile Include="Module\PA\Request\RefuntAmountRP.cs" />
+    <Compile Include="Module\PA\Request\SaveOrderInfoRP.cs" />
+    <Compile Include="Module\PA\Request\UpdateOrderDetailRP.cs" />
+    <Compile Include="Module\PA\Request\UpdateOrderInfoRP.cs" />
+    <Compile Include="Module\PA\Response\AddressRD.cs" />
+    <Compile Include="Module\PA\Response\GetAccessTokenRD.cs" />
+    <Compile Include="Module\PA\Response\PALifePayParmRD.cs" />
+    <Compile Include="Module\PA\Response\PAResponseRD.cs" />
+    <Compile Include="Module\PA\Response\RefuntAmountRD.cs" />
+    <Compile Include="Module\PA\Response\SaveOrderRD.cs" />
     <Compile Include="Module\Questionnaire\ActivityQuestionnaireMapping\Request\GetActivityIDAndQuestionnaireIDRP.cs" />
     <Compile Include="Module\Questionnaire\ActivityQuestionnaireMapping\Response\GetActivityIDAndQuestionnaireIDRD.cs" />
     <Compile Include="Module\Questionnaire\QuestionnaireAnswerRecord\Request\DelQuestionnaireAnswerRecordRP.cs" />
@@ -290,6 +309,15 @@
     <Compile Include="Module\Report\StoreManagerReport\Response\UnitVipOverviewReportRD.cs" />
     <Compile Include="Module\Report\VipReport\Request\VipBirthdayRP.cs" />
     <Compile Include="Module\Report\VipReport\Response\VipBirthdayRD.cs" />
+    <Compile Include="Module\SapMessageApi\Request\AddMsgObjRP.cs" />
+    <Compile Include="Module\SapMessageApi\Request\RegisterUserRP.cs" />
+    <Compile Include="Module\SapMessageApi\Request\ResetMsgContentRP.cs" />
+    <Compile Include="Module\SapMessageApi\Request\SetMsgHandResultRP.cs" />
+    <Compile Include="Module\SapMessageApi\Response\GetMsgObjRD.cs" />
+    <Compile Include="Module\SapMessageApi\Response\RedisOpenApiRD.cs" />
+    <Compile Include="Module\SapMessageApi\Response\RegisterUserRD.cs" />
+    <Compile Include="Module\SapMessageApi\Response\SapMessageApiRD.cs" />
+    <Compile Include="Module\SapMessageApi\Response\TokenRD.cs" />
     <Compile Include="Module\SuperRetailTraderProfit\Request\CreateQRCodeForSalesRP.cs" />
     <Compile Include="Module\SuperRetailTraderProfit\Request\GetLoginInfoRP.cs" />
     <Compile Include="Module\SuperRetailTraderProfit\Request\GetSuperRetailTraderIncomeAndUnderlingInfoRP.cs" />
@@ -611,6 +639,8 @@
     <Compile Include="ValueObject\APITypes.cs" />
     <Compile Include="ValueObject\Locales.cs" />
     <Compile Include="ValueObject\Modules.cs" />
+    <Compile Include="ValueObject\SapObjectType.cs" />
+    <Compile Include="ValueObject\SapTransType.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CPOS.BS.Entity\CPOS.BS.Entity.csproj">
@@ -626,7 +656,6 @@
     <Folder Include="Module\Basic\User\Response\" />
     <Folder Include="Module\HtmlApp\Config\Request\" />
     <Folder Include="Module\Market\MarketSignIn\Response\" />
-    <Folder Include="Module\SuperRetailTraderProfit\RTExtend\Request\" />
     <Folder Include="Module\VIP\VipIntegral\Response\" />
     <Folder Include="Product\Eclub\Module\" />
   </ItemGroup>

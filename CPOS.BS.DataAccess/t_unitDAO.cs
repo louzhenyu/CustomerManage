@@ -42,6 +42,10 @@ namespace JIT.CPOS.BS.DataAccess
     /// </summary>
     public partial class t_unitDAO : Base.BaseCPOSDAO, ICRUDable<t_unitEntity>, IQueryable<t_unitEntity>
     {
+        public bool CreateUnitRelation(string sql)
+        {
+            return this.SQLHelper.ExecuteNonQuery(sql) > 0;
+        }
         public t_unitEntity GetMainUnit(string clientID)
         {
             string sql =string.Format(@" SELECT top 1 t_unit.unit_id ,

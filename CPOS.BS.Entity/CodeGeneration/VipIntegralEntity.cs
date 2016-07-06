@@ -33,6 +33,7 @@ namespace JIT.CPOS.BS.Entity
         /// </summary>
         public VipIntegralEntity()
         {
+            ImminentInvalidIntegral = 0;
         }
         #endregion     
 

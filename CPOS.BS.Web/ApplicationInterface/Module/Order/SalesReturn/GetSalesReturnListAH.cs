@@ -73,8 +73,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
 
                 salesReturnInfo.SalesReturnID = item.SalesReturnID.ToString();
                 salesReturnInfo.SalesReturnNo = item.SalesReturnNo;
-                salesReturnInfo.ItemName = drItem["item_name"].ToString();
-                salesReturnInfo.SalesPrice = Convert.ToDecimal(drItem["enter_price"]);
+                salesReturnInfo.ItemName = drItem != null ? drItem["item_name"].ToString() : "未知商品";
+                salesReturnInfo.SalesPrice = drItem != null ? Convert.ToDecimal(drItem["enter_price"]) : 0;
                 salesReturnInfo.Qty = item.Qty;
                 salesReturnInfo.Status = item.Status;
                 salesReturnInfo.ImageUrl = ImagePathUtil.GetImagePathStr(itemImage, "240");

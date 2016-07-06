@@ -898,13 +898,32 @@ namespace JIT.CPOS.BS.BLL
             sendMessageCount = 0;//有多少条图文信息***
             try
             {
+                VipBLL vipBll = new VipBLL(loggingSessionInfo);
+                //var vipEntity = new VipEntity();
+                var vipEntity = vipBll.QueryByEntity(new VipEntity()
+                {
+                    WeiXinUserId = openId,
+                    ClientID = loggingSessionInfo.ClientID
+                }, null).FirstOrDefault();
+                if (vipEntity == null)
+                {
+                    //从支持多号运营的表中取
+                    var wxUserInfoBLL = new WXUserInfoBLL(loggingSessionInfo);
+                    var wxUserInfo = wxUserInfoBLL.QueryByEntity(new WXUserInfoEntity() { CustomerID = loggingSessionInfo.ClientID, WeiXinUserID = openId }, null).FirstOrDefault();
+                    if (wxUserInfo != null)
+                    {
+                        vipEntity = vipBll.QueryByEntity(new VipEntity() { ClientID = loggingSessionInfo.ClientID, UnionID = wxUserInfo.UnionID }, null).FirstOrDefault();
+                    }
+                }
+                
                 var qrCodeBll = new WQRCodeManagerBLL(loggingSessionInfo);
+
                 var qrCodeEntity = qrCodeBll.QueryByEntity(new WQRCodeManagerEntity()
                 {
                     CustomerId = customerId,
                     QRCode = qrCode
                 }, null).FirstOrDefault();
-                Loggers.Debug(new DebugLogInfo() { Message = string.Format("zk qrCodeEntity != null:{0},customerId:{1},qrCode:{2}", qrCodeEntity != null, customerId, qrCode) });
+                Loggers.Debug(new DebugLogInfo() { Message = string.Format("zk qrCodeEntity != null:{0},customerId:{1},qrCode:{2}", qrCodeEntity != null,customerId,qrCode) });
                 if (qrCodeEntity != null)
                 {
                     #region Jermyn20140819 判断二维码类型
@@ -914,21 +933,21 @@ namespace JIT.CPOS.BS.BLL
                         QRCodeTypeId = qrCodeEntity.QRCodeTypeId
                     }, null).FirstOrDefault();
                     //根据openid获取会员信息
-                    VipBLL vipBll = new VipBLL(loggingSessionInfo);
-                    var vipEntity = vipBll.QueryByEntity(new VipEntity()
-                    {
-                        WeiXinUserId = openId
-                    }, null).FirstOrDefault();
+                    //VipBLL vipBll = new VipBLL(loggingSessionInfo);
+                    //vipEntity = vipBll.QueryByEntity(new VipEntity()
+                    //{
+                    //    WeiXinUserId = openId
+                    //}, null).FirstOrDefault();
                     //在这里记录永久二维码的扫描信息                  
                     QRCodeScanLogEntity qrCodeScanLogEntity = new QRCodeScanLogEntity();
                     qrCodeScanLogEntity.QRCodeScanLogID = Guid.NewGuid();
-                    qrCodeScanLogEntity.VipID = vipEntity.VIPID;
+                    qrCodeScanLogEntity.VipID = vipEntity != null ? vipEntity.VIPID : string.Empty;
                     qrCodeScanLogEntity.OpenID = openId;
                     qrCodeScanLogEntity.WeiXin = weixinId;
                     qrCodeScanLogEntity.QRCodeID = qrCodeEntity.QRCodeId.ToString();//记录主键值，而不是二维码code
                     qrCodeScanLogEntity.CustomerId = customerId;
                     qrCodeScanLogEntity.QRCodeType = 1;//  二维码类型：1.永久二维码  2.临时二维码
-                    qrCodeScanLogEntity.BusTypeCode = qrCodeTypeInfo.TypeCode;//业务类型编码(记录永久二维码类型表里的场景值)
+                    qrCodeScanLogEntity.BusTypeCode = qrCodeTypeInfo != null ? qrCodeTypeInfo.TypeCode : string.Empty;//业务类型编码(记录永久二维码类型表里的场景值)
                     qrCodeScanLogEntity.ObjectId = qrCodeEntity.ObjectId;//二维码对应的对象
                     qrCodeScanLogEntity.IsDelete = 0;
                     qrCodeScanLogEntity.CreateBy = "永久二维码扫描记录";
@@ -959,7 +978,6 @@ namespace JIT.CPOS.BS.BLL
                         string strConponInfo = unitInfoServer.GetUnitByUnitTypeForWX("总部", null).Id; //获取总部门店标识
                         switch (qrCodeTypeInfo.TypeCode.ToString().ToLower())
                         {
-
                             case "userqrcode"://店员二维码
                                 #region 绑定会籍店
 

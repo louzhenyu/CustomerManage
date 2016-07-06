@@ -338,6 +338,8 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
 
             string key = string.Empty;
             string user_id = string.Empty;
+            try
+            {
             if (Request("user") != null && Request("user") != string.Empty)
             {
                 key = Request("user").ToString().Trim();
@@ -532,6 +534,12 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
 
             responseData.success = true;
             responseData.msg = error;
+            }
+            catch (Exception ex)
+            {
+                responseData.success = false;
+                responseData.msg = ex.ToString();
+            }
 
 
             content = responseData.ToJSON();
@@ -592,6 +600,10 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 }
                 else {
                     errorMsg = "生成二维码失败";
+                    if (wapentity == null)
+                    {
+                        errorMsg += "：未配置微信公众号";
+                    }
                 }
 
                 var WQRCodeManagerbll = new WQRCodeManagerBLL(loggingSessionInfo);//兼容模式

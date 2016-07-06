@@ -4,7 +4,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-<link rel="icon" href="/favicon.ico" type="image/x-icon" /><link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
     <script type="text/javascript" language="javascript">
         var __button = eval("");
@@ -32,7 +33,7 @@
         var apiurl = '<%=System.Web.Configuration.WebConfigurationManager.AppSettings["interfacehost"] %>';
         window.apiurl = apiurl;
 </script>
-
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
      <%--模板 公共样式strart--%>   
      <link href="<%=StaticUrl+"/module/static/css/easyui.css"%>" rel="stylesheet" type="text/css" />   
        <%--分页--%>

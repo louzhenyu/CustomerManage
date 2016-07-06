@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
@@ -33,24 +33,24 @@ namespace JIT.CPOS.BS.DataAccess
 {
     
     /// <summary>
-    /// Êı¾İ·ÃÎÊ£º  
-    /// ±íVipCardTransLogµÄÊı¾İ·ÃÎÊÀà 
+    /// æ•°æ®è®¿é—®ï¼š  
+    /// è¡¨VipCardTransLogçš„æ•°æ®è®¿é—®ç±» 
     /// TODO:
-    /// 1.ÊµÏÖICRUDable½Ó¿Ú
-    /// 2.ÊµÏÖIQueryable½Ó¿Ú
-    /// 3.ÊµÏÖLoad·½·¨
+    /// 1.å®ç°ICRUDableæ¥å£
+    /// 2.å®ç°IQueryableæ¥å£
+    /// 3.å®ç°Loadæ–¹æ³•
     /// </summary>
     public partial class VipCardTransLogDAO : Base.BaseCPOSDAO, ICRUDable<VipCardTransLogEntity>, IQueryable<VipCardTransLogEntity>
     {
         /// <summary>
-        /// »ñÈ¡»áÔ±¿¨½»Ò×¼ÇÂ¼
+        /// è·å–ä¼šå‘˜å¡äº¤æ˜“è®°å½•
         /// </summary>
         /// <param name="VipCardCode"></param>
         /// <returns></returns>
         public DataSet GetVipCardTransLogList(string VipCardCode)
         {
-            string sql = string.Format(@"
-                    	--´´½¨Ïû·Ñ¼ÇÂ¼ÁÙÊ±±í
+            var sql = string.Format(@"
+                    	--åˆ›å»ºæ¶ˆè´¹è®°å½•ä¸´æ—¶è¡¨
 	                    CREATE TABLE #tempTable
 		                    (
 		                      TransTime DATETIME ,
@@ -62,46 +62,50 @@ namespace JIT.CPOS.BS.DataAccess
 		                      Bonus DECIMAL(18, 2) ,
 		                      Points DECIMAL(18, 2)
 		                    )
-	                    DECLARE @iniPoint DECIMAL(18, 2)=0	--ÆÚ³õ»ı·Ö
-	                    DECLARE @iniCash DECIMAL(18, 2)=0	--ÆÚ³õÓà¶î
-	                    DECLARE @iniBonus DECIMAL(18, 2)=0	--ÆÚ³õ½±Àø
+	                    DECLARE @iniPoint DECIMAL(18, 2)=0	--æœŸåˆç§¯åˆ†
+	                    DECLARE @iniCash DECIMAL(18, 2)=0	--æœŸåˆä½™é¢
+	                    DECLARE @iniBonus DECIMAL(18, 2)=0	--æœŸåˆå¥–åŠ±
 
-	                    --»ñÈ¡ÆÚ³õ»ı·Ö¡¢Óà¶î¡¢¶îÍâ½±Àø
-	                    SELECT TOP 1 @iniPoint =LastValue FROM dbo.VipCardTransLog WHERE VipCardCode='{0}' and TransType='P' ORDER BY TransTime ASC
-	                    SELECT TOP 1 @iniCash =LastValue FROM dbo.VipCardTransLog WHERE VipCardCode='{0}' and TransType='C' ORDER BY TransTime ASC
-	                    SELECT TOP 1 @iniBonus =LastValue FROM dbo.VipCardTransLog WHERE VipCardCode='{0}' and TransType='B' ORDER BY TransTime ASC
+	                    --è·å–æœŸåˆç§¯åˆ†ã€ä½™é¢ã€é¢å¤–å¥–åŠ±
+	                    SELECT TOP 1 @iniPoint =LastValue FROM dbo.VipCardTransLog WHERE IsDelete=0 and  VipCardCode='{0}' and TransType='P' ORDER BY TransTime ASC
+	                    SELECT TOP 1 @iniCash =LastValue FROM dbo.VipCardTransLog WHERE IsDelete=0 and  VipCardCode='{0}' and TransType='C' ORDER BY TransTime ASC
+	                    SELECT TOP 1 @iniBonus =LastValue FROM dbo.VipCardTransLog WHERE IsDelete=0 and  VipCardCode='{0}' and TransType='B' ORDER BY TransTime ASC
 
-	                    --ÆÚ³õÊı¾İ²åÈëÁÙÊ±±í
+	                    --æœŸåˆæ•°æ®æ’å…¥ä¸´æ—¶è¡¨
 	                    INSERT	INTO #tempTable  
 	                    SELECT NULL,'','','','',@iniCash,@iniBonus,@iniPoint
 
-	                    --»ñÈ¡Ã÷Ï¸Êı¾İ²åÈëÁÙÊ±±í
+	                    --è·å–æ˜ç»†æ•°æ®æ’å…¥ä¸´æ—¶è¡¨
 	                    INSERT INTO #tempTable
 	                    SELECT CAST(TransTime AS DATE) TransTime,UnitCode,VipCardCode,OldVipCardCode,BillNo,
 			                    SUM(CASE TransType WHEN 'C' THEN TransAmount ELSE 0 END) AS 'Cash',
 			                    SUM(CASE TransType WHEN 'B' THEN TransAmount ELSE 0 END) AS 'Bonus',
 			                    SUM(CASE TransType WHEN 'P' THEN TransAmount ELSE 0 END) AS 'Points' 
 	                    FROM dbo.VipCardTransLog
-	                    WHERE VipCardCode='{0}' 
+	                    WHERE VipCardCode='{0}' and IsDelete=0 
 	                    GROUP BY VipCardCode ,BillNo,CAST(TransTime AS DATE),UnitCode,OldVipCardCode 
 	                    order BY TransTime
 
-	                    --²éÑ¯ÁÙÊ±±í£¬ÁªºÏ»ã×ÜÊı¾İ
+	                    --æŸ¥è¯¢ä¸´æ—¶è¡¨ï¼Œè”åˆæ±‡æ€»æ•°æ®
 	                    SELECT * FROM #tempTable WHERE  Cash<>0 OR Bonus<>0 OR Points<>0
 	                    UNION ALL
-	                    SELECT  NULL,'','','','×Ü¼Æ',SUM(Cash)Cash,SUM(Bonus)Bonus,SUM(Points)Points FROM #tempTable
-	                    --É¾³ıÁÙÊ±±í
+	                    SELECT  NULL,'','','','æ€»è®¡',SUM(Cash)Cash,SUM(Bonus)Bonus,SUM(Points)Points FROM #tempTable
+	                    --åˆ é™¤ä¸´æ—¶è¡¨
 	                    DROP TABLE #tempTable
                 ", VipCardCode);
             return this.SQLHelper.ExecuteDataset(sql);
         }
         /// <summary>
-        /// ĞŞ¸Ä½»Ò×¼ÇÂ¼
+        /// ä¿®æ”¹äº¤æ˜“è®°å½•
         /// </summary>
         /// <param name="p_StrSql"></param>
-        public void UpdateVipCardTransLog(string p_StrSql)
+        public void UpdateVipCardTransLog(string p_StrSql, IDbTransaction pTran)
         {
-            this.SQLHelper.ExecuteNonQuery(p_StrSql);
+            //this.SQLHelper.ExecuteNonQuery(p_StrSql);
+            if (pTran!=null)
+            {
+                this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, p_StrSql.ToString());
+            }
         }
     }
 }

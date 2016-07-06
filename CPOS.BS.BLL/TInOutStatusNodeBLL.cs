@@ -72,8 +72,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="strError">错误提示</param>
         /// <param name="ChannelId">支付渠道标识</param>
         /// <returns></returns>
-        public bool SetOrderPayment(string orderId, out string strError, string ChannelId = null, string SerialPay = null)
-        //public bool SetOrderPayment(string orderId, out string strError, string ChannelId = null)
+        public bool SetOrderPayment(string orderId, out string strError, string ChannelId = null, string SerialPay = null, string isTonyCard = null)
         {
             MarketSendLogBLL logSerer = new MarketSendLogBLL(this.CurrentUserInfo);
             MarketSendLogEntity logInfo = new MarketSendLogEntity();
@@ -84,38 +83,16 @@ namespace JIT.CPOS.BS.BLL
             logInfo.SendTypeId = "3";
             try
             {
-                bool bReturn = this._currentDAO.SetOrderPayment(orderId, out strError, ChannelId);
+                bool bReturn = this._currentDAO.SetOrderPayment(orderId, out strError, ChannelId, isTonyCard);
                 if (bReturn)
                 {
-                    //算积分
-                    //var bll = new JIT.CPOS.BS.BLL.InoutService(this.CurrentUserInfo);
-                    //var orderInfo = bll.GetInoutInfoById(orderId);
-                    //VipIntegralBLL vipIntegralServer = new VipIntegralBLL(this.CurrentUserInfo);
-
-                    //Loggers.Debug(new DebugLogInfo()
-                    //{
-                    //    Message = string.Format("SetOrderPayment-参数: sourceId={0},customerId={1},vipId={2},orderId={3}", 1, this.CurrentUserInfo.CurrentUser.customer_id, orderInfo.vip_no, orderId)
-                    //});
-                    //vipIntegralServer.ProcessPoint(1, this.CurrentUserInfo.CurrentUser.customer_id, orderInfo.vip_no, orderId);
-
                     this._currentDAO.OrderPayCallBack(orderId, SerialPay, this.CurrentUserInfo.ClientID, Convert.ToInt32(ChannelId));
 
-                    strError = "成功.";
+                    strError = "成功：" + strError;
                     logInfo.TemplateContent = strError;
                     logSerer.Create(logInfo);
 
-                    //记录日志  qianzhi 2014-03-17
-                    //var inoutStatus = new TInoutStatusBLL(CurrentUserInfo);
-                    //TInoutStatusEntity info = new TInoutStatusEntity();
-                    //info.InoutStatusID = Guid.Parse(Utils.NewGuid());
-                    //info.OrderID = orderId;
-                    //info.CustomerID = CurrentUserInfo.CurrentLoggingManager.Customer_Id;
-                    //info.OrderStatus = 10000; //支付方式
-                    //info.Remark = "支付成功";
-                    //info.StatusRemark = "订单支付成功[操作人:" + CurrentUserInfo.CurrentUser.User_Name + "]";
-                    //inoutStatus.Create(info);
-
-                    T_InoutBLL inoutBLL=new T_InoutBLL(this.CurrentUserInfo);
+                    T_InoutBLL inoutBLL = new T_InoutBLL(this.CurrentUserInfo);
                     inoutBLL.SetVirtualItem(CurrentUserInfo, orderId);//支付回调/收款处理虚拟商品订单
 
                     return true;

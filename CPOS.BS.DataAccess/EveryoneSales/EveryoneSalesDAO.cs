@@ -109,7 +109,7 @@ namespace JIT.CPOS.BS.DataAccess.EveryoneSales
         /// <returns></returns>
         public DataSet GetVipAccount(string CustomerID, int PageSize, int PageIndex, string ChanelId)
         {
-            var parm = new SqlParameter[5];
+            var parm = new SqlParameter[4];
             parm[0] = new SqlParameter("@CustomerID", CustomerID);
             parm[1] = new SqlParameter("@PageSize", PageSize);
             parm[2] = new SqlParameter("@PageIndex", PageIndex);

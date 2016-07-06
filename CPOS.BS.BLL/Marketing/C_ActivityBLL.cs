@@ -83,6 +83,15 @@ namespace JIT.CPOS.BS.BLL
         {
             return _currentDAO.GetSendPrizeVipID(activityId, prizesId, vipCardTypeID);
         }
-        
+
+        /// <summary>
+        /// 获取会员信息
+        /// </summary>
+        /// <param name="vipCardTypeID"></param>
+        /// <returns></returns>
+        public DataSet GetAllVipInfoList(string vipCardTypeID)
+        {
+            return _currentDAO.GetAllVipInfoList(vipCardTypeID);
+        }
     }
 }

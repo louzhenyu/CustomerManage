@@ -17,6 +17,7 @@ using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.Common;
 using System.Configuration;
+using CPOS.BS.Entity;
 using JIT.CPOS.BS.BLL.RedisOperationBLL.OrderReward;
 
 namespace JIT.CPOS.BS.BLL
@@ -1298,6 +1299,23 @@ namespace JIT.CPOS.BS.BLL
                 inoutInfo.sales_user = SetOrderInfo.SalesUser; //销售ID add by donal 2014-9-26 14:39:45
                 inoutInfo.ChannelId = SetOrderInfo.ChannelId; // 渠道ID add by donal 2014-9-28 14:39:45
                 inoutInfo.ReturnCash = SetOrderInfo.ReturnCash;//佣金 add by donal 2014-12-9 10:46:33
+                inoutInfo.InoutExpandEntity = new T_Inout_ExpandEntity()
+                {
+                    OrderId = SetOrderInfo.OrderId,
+                    OrderExpandID = SetOrderInfo.OrderId,
+                    DeliveryMode = string.Empty,
+                    LogisticRemark = string.Empty,
+                    TransType = "PA",
+                    CreateTime = DateTime.Now,
+                    CreateBy = SetOrderInfo.CreateBy,
+                    LastUpdateTime = DateTime.Now,
+                    LastUpdateBy = SetOrderInfo.CreateBy,
+                    IsDelete = 0,
+                    CustomerID = SetOrderInfo.CustomerId,
+                    DiscRemarks = string.Empty,
+                    IsCallBeDeli = "N",
+                    GoodsAndInvoice = "Y"
+                };
 
                 if (SetOrderInfo.PurchaseUnitId != null)
                 {
@@ -1762,10 +1780,11 @@ namespace JIT.CPOS.BS.BLL
                     var orderInfo = inoutBLL.GetInoutInfo(orderId, this.loggingSessionInfo);
                     if (orderInfo != null && orderInfo.status != "700")//完成订单时处理积分、返现、佣金[和确认收货一致]
                     {
-                        //new VipIntegralBLL(this.loggingSessionInfo).OrderReward(orderInfo, tran);
-                        new SendOrderRewardMsgBLL().OrderReward(orderInfo, this.loggingSessionInfo, tran);////存入到缓存
+                        // VIP余额返现等处理
+                        new VipIntegralBLL(this.loggingSessionInfo).OrderReward(orderInfo, tran);
+                        // VIPCard虚拟账户返现等处理
+
                     }
-                        
                 }
                 inoutService.UpdateOrderDeliveryStatus(orderId, status, statusDesc, null, null, tableNo);
                 if (status == "600")
@@ -1781,7 +1800,7 @@ namespace JIT.CPOS.BS.BLL
                 }
 
                 //订单消息推送 update by Henry 2015-4-15 洗e客-商城不用推送商品订单
-                //OrderPushMessage(orderId, status);
+                OrderPushMessage(orderId, status);
 
                 return true;
             }
@@ -2390,6 +2409,7 @@ namespace JIT.CPOS.BS.BLL
                     inoutInfo.purchase_unit_id = SetOrderInfo.StoreId; //到店提货的店标识
                     inoutInfo.unit_id = SetOrderInfo.StoreId;
                     inoutInfo.sales_unit_id = SetOrderInfo.StoreId;
+                    inoutInfo.create_unit_id = SetOrderInfo.StoreId;
                 }
                 #endregion
 

@@ -433,6 +433,49 @@ as CollectIncome");
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="userId"></param>
+        /// <param name="isPayment"></param>
+        /// <param name="orderNo"></param>
+        /// <param name="customerId"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="OrderChannelID"></param>
+        /// <returns></returns>
+        public DataSet GetRetailTraderOrdersList(string retailTraderId, string orderStatusList, string isPayment, string customerId, int pageSize, int pageIndex)
+        {
+            List<SqlParameter> paras = new List<SqlParameter> { };
+            paras.Add(new SqlParameter() { ParameterName = "@pCustomerId", Value = customerId });
+            paras.Add(new SqlParameter() { ParameterName = "@pRetailTraderId", Value = retailTraderId });
+            paras.Add(new SqlParameter() { ParameterName = "@pPageSize", Value = pageSize });
+            paras.Add(new SqlParameter() { ParameterName = "@pPageIndex", Value = pageIndex });
+
+            StringBuilder sql = new StringBuilder();
+            sql.Append(" SELECT DISTINCT * FROM ");
+            sql.Append(" ( SELECT    DENSE_RANK() OVER ( ORDER BY a.create_time DESC ) _row ,");
+            sql.Append(" a.order_id, a.order_no, ISNULL(a.Field8, '0') AS DeliveryTypeId, a.create_time OrderDate, ");
+            sql.Append(" a.status_desc OrderStatusDesc, c.VipName AS VipName, create_time,");
+            sql.Append(" a.status OrderStatus, ISNULL(a.total_qty, 0) TotalQty,");
+            sql.Append(" ISNULL(a.total_retail, 0) TotalAmount, total_amount,");//total_retail是商品零售价，total_amount才是总额
+            sql.Append(@" ISNULL((select RetailTraderName from RetailTrader  where RetailTraderID=c.Col20),'') as RetailTraderName
+,ISNULL((select user_name from T_User  where user_id=a.sales_user),'') as ServiceMan
+,ISNULL((select top 1 Amount from VipAmountDetail where ObjectId=a.order_id and VipId= c.SetoffUserId and AmountSourceId='10'),0)
++   -----OBJECT_ID是订单号，vipID是获取收益的人(集客员工),防止出现脏数据才用了top 1的方式
+ISNULL((select top 1 Amount from VipAmountDetail  where ObjectId=a.order_id and AmountSourceId in ('14','15') and VipId=(select SellUserID from RetailTrader where RetailTraderID=c.Col20)),0)
+as CollectIncome");
+            sql.Append(" from t_inout a with(nolock) ");
+            sql.Append(" left join vip c on a.vip_no = c.vipId");
+            sql.Append(" where a.Field20=@pRetailTraderId AND a.customer_id=@pCustomerId ");
+            sql.Append(" and a.status not in( '-1' ) AND a.data_from_id = '19' and a.Field1=1 ");
+            sql.Append(" ) t where t._row>@pPageIndex*@pPageSize and t._row<=(@pPageIndex+1)*@pPageSize");
+            sql.Append("  ORDER BY create_time DESC ");
+
+            return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), paras.ToArray());
+        }
+
 
         public DataSet GetCollectOrderList(string order_no, string OrderChannelID, string userId, string customerId, int? pageSize, int? pageIndex)
         {

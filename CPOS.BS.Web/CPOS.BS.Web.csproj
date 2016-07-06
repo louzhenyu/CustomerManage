@@ -94,12 +94,11 @@
     </Reference>
     <Reference Include="Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ReferenceDll\Utility.dll</HintPath>
+      <HintPath>..\..\..\OpenService\ReferenceDll\Utility.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationInterface\NwEvents\Demo.htm" />
-    <Content Include="bin\Utility.dll" />
     <Content Include="Base\XML\RedisReadDBCount.xml" />
     <Content Include="ComingSoon.aspx" />
     <Content Include="Config\config.xml" />
@@ -558,55 +557,6 @@
     <Content Include="Module\ActivityManage\ActivityEdit.aspx" />
     <Content Include="Module\ActivityManage\SignupManage.aspx" />
     <Content Include="Module\ActivityManage\ApplyManage.aspx" />
-    <Content Include="Module\AppConfigbak\css\jquery-ui.min.css" />
-    <Content Include="Module\AppConfigbak\css\style.css" />
-    <Content Include="Module\AppConfigbak\HomePageConfig.aspx" />
-    <Content Include="Module\AppConfigbak\images\001.jpg" />
-    <Content Include="Module\AppConfigbak\images\002.jpg" />
-    <Content Include="Module\AppConfigbak\images\003.jpg" />
-    <Content Include="Module\AppConfigbak\images\004.jpg" />
-    <Content Include="Module\AppConfigbak\images\005.jpg" />
-    <Content Include="Module\AppConfigbak\images\01.jpg" />
-    <Content Include="Module\AppConfigbak\images\02.jpg" />
-    <Content Include="Module\AppConfigbak\images\03.jpg" />
-    <Content Include="Module\AppConfigbak\images\addBtn.jpg" />
-    <Content Include="Module\AppConfigbak\images\banner.jpg" />
-    <Content Include="Module\AppConfigbak\images\bottom.png" />
-    <Content Include="Module\AppConfigbak\images\clock.png" />
-    <Content Include="Module\AppConfigbak\images\daohang.png" />
-    <Content Include="Module\AppConfigbak\images\defImg01.png" />
-    <Content Include="Module\AppConfigbak\images\defImg02.png" />
-    <Content Include="Module\AppConfigbak\images\defImg03.png" />
-    <Content Include="Module\AppConfigbak\images\dhicon01.png" />
-    <Content Include="Module\AppConfigbak\images\dhicon02.png" />
-    <Content Include="Module\AppConfigbak\images\dhicon03.png" />
-    <Content Include="Module\AppConfigbak\images\dhicon04.png" />
-    <Content Include="Module\AppConfigbak\images\graph.png" />
-    <Content Include="Module\AppConfigbak\images\group.png" />
-    <Content Include="Module\AppConfigbak\images\img01.jpg" />
-    <Content Include="Module\AppConfigbak\images\img02.png" />
-    <Content Include="Module\AppConfigbak\images\line.png" />
-    <Content Include="Module\AppConfigbak\images\logo.png" />
-    <Content Include="Module\AppConfigbak\images\menuOn.jpg" />
-    <Content Include="Module\AppConfigbak\images\my.png" />
-    <Content Include="Module\AppConfigbak\images\nullBg.png" />
-    <Content Include="Module\AppConfigbak\images\pic.png" />
-    <Content Include="Module\AppConfigbak\images\rightOn.png" />
-    <Content Include="Module\AppConfigbak\images\searchBtn.jpg" />
-    <Content Include="Module\AppConfigbak\images\searchIcon.png" />
-    <Content Include="Module\AppConfigbak\images\sm.png" />
-    <Content Include="Module\AppConfigbak\images\ss.png" />
-    <Content Include="Module\AppConfigbak\images\time.png" />
-    <Content Include="Module\AppConfigbak\js\homePageConfig.js" />
-    <Content Include="Module\AppConfigbak\js\main.js" />
-    <Content Include="Module\AppConfigbak\js\tempModel.js" />
-    <Content Include="Module\AppConfigbak\lib\jquery-1.8.3.min.js" />
-    <Content Include="Module\AppConfigbak\lib\require.js" />
-    <Content Include="Module\AppConfigbak\main.js" />
-    <Content Include="Module\AppConfigbak\plugin\jquery.jqpagination.js" />
-    <Content Include="Module\AppConfigbak\plugin\kindeditor.js" />
-    <Content Include="Module\AppConfigbak\plugin\template.js" />
-    <Content Include="Module\AppConfigbak\plugin\touchslider.js" />
     <Content Include="Module\AppConfig\css\detail.css" />
     <Content Include="Module\AppConfig\css\jquery-ui.min.css" />
     <Content Include="Module\AppConfig\css\queryList.css" />
@@ -721,6 +671,7 @@
     <Content Include="Module\AppConfig\plugin\kindeditor.js" />
     <Content Include="Module\AppConfig\plugin\template.js" />
     <Content Include="Module\AppConfig\plugin\touchslider.js" />
+    <Content Include="Module\AppConfig\QueryList.aspx" />
     <Content Include="Module\bargainManage\addCommodity.aspx" />
     <Content Include="Module\bargainManage\css\addCoupon.css" />
     <Content Include="Module\bargainManage\css\style.css" />
@@ -742,7 +693,7 @@
     <Content Include="Module\bargainManage\images\start.png" />
     <Content Include="Module\bargainManage\js\addBargin.js" />
     <Content Include="Module\bargainManage\js\queryList.js" />
-    <Content Include="Module\bargainManage\Querylist.aspx" />
+    <Content Include="Module\bargainManage\QueryList.aspx" />
     <Content Include="Module\Basic\ItemCategoryNew\Controller\ItemCategoryManagementCtl.js" />
     <Content Include="Module\Basic\ItemCategoryNew\ItemCategoryManagement.aspx" />
     <Content Include="Module\Basic\ItemCategoryNew\Model\ItemCategoryVM.js" />
@@ -773,6 +724,16 @@
     <Content Include="Module\Basic\Unit\css\images\pointer-icon.png" />
     <Content Include="Module\Basic\Unit\css\images\uploadBtn.jpg" />
     <Content Include="Module\Basic\Unit\css\keywords.css" />
+    <Content Include="Module\chainCloudInvoice\css\style.css" />
+    <Content Include="Module\chainCloudInvoice\images\arr.png" />
+    <Content Include="Module\chainCloudInvoice\images\checkdisable.png" />
+    <Content Include="Module\chainCloudInvoice\images\files.png" />
+    <Content Include="Module\chainCloudInvoice\images\商品.png" />
+    <Content Include="Module\chainCloudInvoice\js\orderDetail.js" />
+    <Content Include="Module\chainCloudInvoice\js\queryList.js" />
+    <Content Include="Module\chainCloudInvoice\orderDetail.aspx" />
+    <Content Include="Module\chainCloudInvoice\QueryList2.aspx" />
+    <Content Include="Module\chainCloudInvoice\QueryList.aspx" />
     <Content Include="Module\chainCloudOrder\css\style.css" />
     <Content Include="Module\chainCloudOrder\images\arr.png" />
     <Content Include="Module\chainCloudOrder\images\商品.png" />
@@ -867,6 +828,25 @@
     <Content Include="Module\createCard\css\style.css" />
     <Content Include="Module\createCard\js\queryList.js" />
     <Content Include="Module\createCard\QueryList.aspx" />
+    <Content Include="Module\CreativeWarehouse\css\style.css" />
+    <Content Include="Module\CreativeWarehouse\images\2_03.png" />
+    <Content Include="Module\CreativeWarehouse\images\2_06.jpg" />
+    <Content Include="Module\CreativeWarehouse\images\2_06.png" />
+    <Content Include="Module\CreativeWarehouse\images\2_09.png" />
+    <Content Include="Module\CreativeWarehouse\images\2_11.png" />
+    <Content Include="Module\CreativeWarehouse\images\2_13.png" />
+    <Content Include="Module\CreativeWarehouse\images\2_17.png" />
+    <Content Include="Module\CreativeWarehouse\images\2_19.png" />
+    <Content Include="Module\CreativeWarehouse\images\2_22.png" />
+    <Content Include="Module\CreativeWarehouse\images\2_23.png" />
+    <Content Include="Module\CreativeWarehouse\images\apply.png" />
+    <Content Include="Module\CreativeWarehouse\images\creative-quickly.png" />
+    <Content Include="Module\CreativeWarehouse\images\icon-check.png" />
+    <Content Include="Module\CreativeWarehouse\images\icon-checked.png" />
+    <Content Include="Module\CreativeWarehouse\images\icon-href.png" />
+    <Content Include="Module\CreativeWarehouse\images\qcodeimg.png" />
+    <Content Include="Module\CreativeWarehouse\js\queryList.js" />
+    <Content Include="Module\CreativeWarehouse\QueryList.aspx" />
     <Content Include="Module\CustomerBasicSetting\Controller\CustomerBasicSettingCtl.js" />
     <Content Include="Module\CustomerBasicSetting\CustomerBasicSetting.aspx" />
     <Content Include="Module\CustomerBasicSetting\Model\CustomerBasicSettingVM.js" />
@@ -1450,6 +1430,50 @@
     <Content Include="Module\static\js\plugin\template.js" />
     <Content Include="Module\static\js\plugin\touchslider.js" />
     <Content Include="Module\static\js\Vip14\page.js" />
+    <Content Include="Module\storeManagement\css\release.css" />
+    <Content Include="Module\storeManagement\css\storeInfo.css" />
+    <Content Include="Module\storeManagement\css\style.css" />
+    <Content Include="Module\storeManagement\images\chenggong.png" />
+    <Content Include="Module\storeManagement\images\closeBtn02.png" />
+    <Content Include="Module\storeManagement\images\del.png" />
+    <Content Include="Module\storeManagement\images\delete.png" />
+    <Content Include="Module\storeManagement\images\exit.png" />
+    <Content Include="Module\storeManagement\images\icon-addPic.png" />
+    <Content Include="Module\storeManagement\images\icon-close-btn.png" />
+    <Content Include="Module\storeManagement\images\icon-end1.png" />
+    <Content Include="Module\storeManagement\images\icon-end2.png" />
+    <Content Include="Module\storeManagement\images\icon-export.png" />
+    <Content Include="Module\storeManagement\images\icon-import.png" />
+    <Content Include="Module\storeManagement\images\icon-on1.png" />
+    <Content Include="Module\storeManagement\images\icon-on2.png" />
+    <Content Include="Module\storeManagement\images\icon-trash.png" />
+    <Content Include="Module\storeManagement\images\lc_1.jpg" />
+    <Content Include="Module\storeManagement\images\lc_1.png" />
+    <Content Include="Module\storeManagement\images\lc_2.jpg" />
+    <Content Include="Module\storeManagement\images\lc_2.png" />
+    <Content Include="Module\storeManagement\images\lc_3.jpg" />
+    <Content Include="Module\storeManagement\images\lc_3.png" />
+    <Content Include="Module\storeManagement\images\loading.gif" />
+    <Content Include="Module\storeManagement\images\on-icon.png" />
+    <Content Include="Module\storeManagement\images\on-icon3.png" />
+    <Content Include="Module\storeManagement\images\pause.png" />
+    <Content Include="Module\storeManagement\images\pic.png" />
+    <Content Include="Module\storeManagement\images\qr-bg.png" />
+    <Content Include="Module\storeManagement\images\qr-createBtn.png" />
+    <Content Include="Module\storeManagement\images\qr-downBtn.png" />
+    <Content Include="Module\storeManagement\images\radio1.png" />
+    <Content Include="Module\storeManagement\images\running.png" />
+    <Content Include="Module\storeManagement\images\SelectBtn.png" />
+    <Content Include="Module\storeManagement\images\upload.png" />
+    <Content Include="Module\storeManagement\images\uploadimg.png" />
+    <Content Include="Module\storeManagement\images\商品.png" />
+    <Content Include="Module\storeManagement\js\main.js" />
+    <Content Include="Module\storeManagement\js\queryList.js" />
+    <Content Include="Module\storeManagement\js\storeInfo.js" />
+    <Content Include="Module\storeManagement\js\标注开发版.js" />
+    <Content Include="Module\storeManagement\QueryList.aspx" />
+    <Content Include="Module\storeManagement\storeInfo.aspx" />
+    <Content Include="Module\storeManagement\标准开发版列表.aspx" />
     <Content Include="Module\styles\css\alading\private.css" />
     <Content Include="Module\styles\css\alading\skin01.css" />
     <Content Include="Module\styles\css\alading\skin02.css" />
@@ -2916,6 +2940,8 @@
     <Content Include="js\jquery.js" />
     <Content Include="lj\Auth.aspx" />
     <Content Include="GoSso.aspx" />
+    <Content Include="Default.aspx" />
+    <Content Include="Error.aspx" />
     <Content Include="Framework\Css\basic.css" />
     <Content Include="Framework\Css\common.css" />
     <Content Include="Framework\Css\cpos.css" />
@@ -6869,15 +6895,10 @@
     <Compile Include="ApplicationInterface\Module\VIP\VipIntegral\SetVipIntegralAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipManager\GetVipListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipManager\UpdateVipAH.cs" />
-    <Compile Include="ApplicationInterface\Module\VIP\VIPCard\GetVipCardDetailAH.cs" />
-    <Compile Include="ApplicationInterface\Module\VIP\VIPCard\GetVipCardListAH.cs" />
-    <Compile Include="ApplicationInterface\Module\VIP\VIPCard\GetVipCardBalanceChangeListAH.cs" />
-    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\DeleteBargainAH.cs" />
     <Compile Include="ApplicationInterface\Module\WEvents\Bargain\DeleteBargainItemAH.cs" />
     <Compile Include="ApplicationInterface\Module\WEvents\Bargain\GetBargainDetailsAH.cs" />
     <Compile Include="ApplicationInterface\Module\WEvents\Bargain\GetBargainItemListAH.cs" />
     <Compile Include="ApplicationInterface\Module\WEvents\Bargain\GetBargainListAH.cs" />
-    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\SetBargainAH.cs" />
     <Compile Include="ApplicationInterface\Module\WEvents\Bargain\SetBargainDetailsAH.cs" />
     <Compile Include="ApplicationInterface\Module\WEvents\Bargain\SetBargainStatusAH.cs" />
     <Compile Include="ApplicationInterface\Module\WEvents\ContactEvent\ChangeContactEventStatusAH.cs" />
@@ -6890,9 +6911,16 @@
     <Compile Include="ApplicationInterface\Module\WEvents\EventsListHandler.ashx.cs">
       <DependentUpon>EventsListHandler.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationInterface\Module\VIP\VIPCard\GetVipCardDetailAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VIPCard\GetVipCardListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VIPCard\GetVipCardBalanceChangeListAH.cs" />
     <Compile Include="ApplicationInterface\Module\WEvents\EventsSaveHandler.ashx.cs">
       <DependentUpon>EventsSaveHandler.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\ChangeKJStatusAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\DeleteBargainAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\BargainListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\SetBargainAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\Customer\GetDisplaynoneAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\KeyWord\DeleteKeyWordAH.cs" />
     <Content Include="ApplicationInterface\Vip\VipGateway.ashx" />
@@ -6931,12 +6959,7 @@
     <Content Include="ApplicationInterface\Module\WEvents\EventsSaveHandler.ashx" />
     <Content Include="ApplicationInterface\Module\Order\SalesReturn\DownLoadSales.ashx" />
     <Content Include="ApplicationInterface\Module\Questionnaire\Questionnaire\DownLoadQuestionnaireInfor.ashx" />
-    <Content Include="ApplicationInterface\Module\Market\MarketNameApply\GenerateMarketEventQR.ashx" />
-    <Content Include="ApplicationInterface\Module\CreativityWarehouse\MarketingData\ExportExcelHandler.ashx" />
-    <Content Include="ApplicationInterface\Module\WEvents\EventShareHandler.ashx" />
-    <Content Include="ApplicationInterface\Module\WEvents\EventsListHandler.ashx" />
-    <Content Include="ApplicationInterface\Module\WEvents\EventsSaveHandler.ashx" />
-    <Content Include="ApplicationInterface\Module\SuperRetailTrader\SuperRetailTraderExport.ashx" />
+    <Content Include="ApplicationInterface\WXSalesRebate\Gateway.ashx" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\demo.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\file_manager_json.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\upload_json.jsp" />
@@ -8002,20 +8025,6 @@
     <Compile Include="ComingSoon.aspx.designer.cs">
       <DependentUpon>ComingSoon.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Error.aspx.cs">
-      <DependentUpon>Error.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Error.aspx.designer.cs">
-      <DependentUpon>Error.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Framework\Javascript\Biz\Handler\AlbumModuleTypeHandler.ashx.cs">
       <DependentUpon>AlbumModuleTypeHandler.ashx</DependentUpon>
     </Compile>
@@ -8278,6 +8287,20 @@
     <Compile Include="GoSso.aspx.designer.cs">
       <DependentUpon>GoSso.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Framework\Javascript\Biz\Handler\AppSysHandler.ashx.cs">
       <DependentUpon>AppSysHandler.ashx</DependentUpon>
     </Compile>
@@ -8371,9 +8394,6 @@
     </Compile>
     <Compile Include="Module\Album\Handler\AlbumHandler.ashx.cs">
       <DependentUpon>AlbumHandler.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Module\AppConfigbak\Handler\homepageHandleold.ashx.cs">
-      <DependentUpon>homepageHandleold.ashx</DependentUpon>
     </Compile>
     <Compile Include="Module\AppConfig\Handler\HomePageHandler.ashx.cs">
       <DependentUpon>HomePageHandler.ashx</DependentUpon>
@@ -8940,7 +8960,6 @@
     <Folder Include="Module\Coupon\Model\" />
     <Folder Include="Module\Coupon\Store\" />
     <Folder Include="Module\Coupon\View\" />
-    <Folder Include="Module\CreativeWarehouse\" />
     <Folder Include="Module\MapAnalysis\Common\LayoutResource\js\date\test\" />
     <Folder Include="Module\MapAnalysis\Common\LayoutResource\js\date\translations\" />
     <Folder Include="Module\VipCardCenter\Controller\" />
@@ -8953,7 +8972,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CPOS.BS.BLL\CPOS.BS.BLL.csproj">
-      <Project>{9adf4825-9b7c-4bb1-a05c-9c137b33d81b}</Project>
+      <Project>{9ADF4825-9B7C-4BB1-A05C-9C137B33D81B}</Project>
       <Name>CPOS.BS.BLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.DataAccess\CPOS.BS.DataAccess.csproj">
@@ -8973,7 +8992,7 @@
       <Name>CPOS.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\CPOS.DTO\CPOS.DTO.csproj">
-      <Project>{e90b49c0-4c8e-42ec-88ef-daccfd56f2b5}</Project>
+      <Project>{E90B49C0-4C8E-42EC-88EF-DACCFD56F2B5}</Project>
       <Name>CPOS.DTO</Name>
     </ProjectReference>
   </ItemGroup>

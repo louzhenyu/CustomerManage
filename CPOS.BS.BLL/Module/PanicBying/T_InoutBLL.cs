@@ -33,7 +33,9 @@ using JIT.CPOS.DTO.Module.VIP.Order.Response;
 using JIT.CPOS.DTO.Module.Order.Order.Response;
 using JIT.Utility.Log;
 using JIT.CPOS.Common;
-using JIT.CPOS.BS.BLL.RedisOperationBLL.OrderSend;
+using JIT.CPOS.BS.BLL.SapMessage;
+using System.Threading.Tasks;
+using JIT.CPOS.BS.BLL.PA;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -51,6 +53,9 @@ namespace JIT.CPOS.BS.BLL
         public int BatchCheckOrder(List<string> OrderIdList, string Remark, LoggingSessionInfo LoggingSessionInfo)
         {
             var UpdateOrderList = new List<InoutInfo>();
+
+            Dictionary<string, string> SapOrderList = new Dictionary<string, string>();
+
             foreach (var item in OrderIdList)
             {
                 var result = this._currentDAO.GetByID(item);
@@ -64,14 +69,35 @@ namespace JIT.CPOS.BS.BLL
                         status = "500",
                         status_desc = "未发货"
                     };
+
+
+                    // 判断商户是否是多利,否则
+                    if (LoggingSessionInfo.CurrentUser.customer_id.Equals("7e144bf108b94505a890ec3a7820db8d"))
+                    {
+                        string orderno = string.Empty;
+                        string xmlData = SapMessageApiBLL.GetOrderXML(LoggingSessionInfo, result.order_id, out orderno);
+                        SapOrderList.Add(result.order_id, orderno + "|A|" + xmlData);
+                    }
                     UpdateOrderList.Add(Entity);
                 }
             }
             //更新订单状态
-            int Num = this._currentDAO.BatchChangeOrderStatus(UpdateOrderList);
+            int Num = this._currentDAO.BatchChangeOrderStatus(UpdateOrderList, SapOrderList);
 
             if (Num > 0)
-            {//添加状态操作记录
+            {
+                // 判断商户是否是多利,否则记录佣金
+                if (LoggingSessionInfo.CurrentUser.customer_id.Equals("7e144bf108b94505a890ec3a7820db8d"))
+                {
+                    Task.Factory.StartNew(() =>
+                    {
+                        foreach (string oid in OrderIdList)
+                        {
+                            PAAppApiBLL.Commission(oid, LoggingSessionInfo);
+                        }
+                    });
+                }
+                //添加状态操作记录
                 var inoutStatus = new TInoutStatusBLL(LoggingSessionInfo);
                 foreach (var itemes in UpdateOrderList)
                 {
@@ -100,6 +126,7 @@ namespace JIT.CPOS.BS.BLL
         public int BatchInvalidOrder(List<InoutInfo> OrderList, string Remark, LoggingSessionInfo LoggingSessionInfo)
         {
             var UpdateOrderList = new List<InoutInfo>();
+            Dictionary<string, string> SapOrderList = new Dictionary<string, string>();
             foreach (var item in OrderList)
             {
                 var result = this._currentDAO.GetByID(item.order_id);
@@ -114,14 +141,37 @@ namespace JIT.CPOS.BS.BLL
                         status_desc = "已取消",
                         OldStatusDesc = item.OldStatusDesc
                     };
+                    // 判断商户是否是多利,否则
+                    if (LoggingSessionInfo.CurrentUser.customer_id.Equals("7e144bf108b94505a890ec3a7820db8d"))
+                    {
+                        //审核不通过:900
+                        //未发货：500
+                        //待提货：510
+                        //备货中：410
+                        //未审核：100
+                        if (item.status.Equals("500") || item.status.Equals("500"))
+                            SapOrderList.Add(result.order_id, result.order_no + "|C|");
+                    }
                     UpdateOrderList.Add(Entity);
                 }
             }
             //更新订单状态
-            int Num = this._currentDAO.BatchChangeOrderStatus(UpdateOrderList);
+            int Num = this._currentDAO.BatchChangeOrderStatus(UpdateOrderList, SapOrderList);
 
             if (Num > 0)
-            {//添加状态操作记录
+            {
+                // 判断商户是否是多利,否则把佣金置为不可用
+                if (LoggingSessionInfo.CurrentUser.customer_id.Equals("7e144bf108b94505a890ec3a7820db8d"))
+                {
+                    Task.Factory.StartNew(() =>
+                    {
+                        foreach (var item in OrderList)
+                        {
+                            PAAppApiBLL.DisableCommission(item.order_id, LoggingSessionInfo);
+                        }
+                    });
+                }
+                //添加状态操作记录
                 var inoutStatus = new TInoutStatusBLL(LoggingSessionInfo);
                 foreach (var itemes in UpdateOrderList)
                 {
@@ -203,8 +253,7 @@ namespace JIT.CPOS.BS.BLL
                         {
                             //物流公司
                             itemes.carrier_name = "";//inoutService.GetCompanyName(itemes.carrier_id);
-                      //  CommonBLL.SentShipMessage(itemes, vipInfo.WeiXinUserId, itemes.vip_no, LoggingSessionInfo);
-                        new SendOrderSendMsgBLL().SentShipMessage(itemes, vipInfo.WeiXinUserId, itemes.vip_no, LoggingSessionInfo);
+                            CommonBLL.SentShipMessage(itemes, vipInfo.WeiXinUserId, itemes.vip_no, LoggingSessionInfo);
                         }
                     }
                     #endregion
@@ -751,6 +800,25 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetServiceOrderList(order_no, OrderChannelID, userId, customerId, pageSize ?? 0,
                 pageIndex ?? 15);
         }
+
+        #region 获取经销商销售订单列表--商品
+        /// <summary>
+        /// 获取经销商销售订单列表--商品
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="userId"></param>
+        /// <param name="isPayment"></param>
+        /// <param name="orderNo"></param>
+        /// <param name="customerId"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public DataSet GetRetailTraderOrdersList(string retailTraderId, string orderStatusList, string isPayment, string customerId, int? pageSize, int? pageIndex)
+        {
+            return this._currentDAO.GetRetailTraderOrdersList(retailTraderId, orderStatusList, isPayment, customerId, pageSize ?? 0, pageIndex ?? 15);
+        }
+        #endregion
 
         //获取集客订单
         public DataSet GetCollectOrderList(string order_no, string OrderChannelID, string userId, string customerId, int? pageSize, int? pageIndex)

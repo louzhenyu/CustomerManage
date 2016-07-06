@@ -80,6 +80,52 @@ namespace JIT.CPOS.BS.DataAccess
             return ds;       
         }
         #endregion
+        
+
+              /// <summary>
+        /// 根据skuid获取sku价格及人人销售价
+        /// </summary>
+        /// <param name="skuIds"></param>
+        /// <returns></returns>
+        public DataSet GetOnlyBuyShopOrder(string skuIds, string userId)
+        { 
+            DataSet ds = new DataSet();
+
+            //旧的sql不包含团购价
+            //string sql = string.Format("select sku_id = a.sku_id,price= a.SalesPrice,EveryoneSalesPrice=a.EveryoneSalesPrice  from vw_sku_detail a where sku_id in ({0})", skuIds);
+
+            //modify by donal 2014-11-13 13:43:08  新的sql，团购ID不为空时，查询团购价。
+            string sql = @"
+                                    select a.sku_id,b.item_id,b.item_name
+                    ,isnull((select prop_value from  T_Item_Property x inner join T_Prop y on  x.prop_id=y.prop_id where y.prop_code='IsItemOnlyBuyOnce' and x.item_id=b.item_id ),'0') as IsItemOnlyBuyOnce
+                    ,isnull((select prop_value from  T_Item_Property x inner join T_Prop y on  x.prop_id=y.prop_id where y.prop_code='IsItemGoToShop'  and x.item_id=b.item_id  ),'0') as IsItemGoToShop
+                    ,isnull((select COUNT(x.order_id) from  T_Inout_Detail x  
+                            left join T_Inout y on  x.order_id=y.order_id
+                             where  y.status!='-99' and y.status!='800' and x.sku_id=a.sku_id and y.vip_no='{1}')  
+                             ,0) as OrderCount
+
+                    ,
+                    (case when c.item_category_name like '%双12%'  then 
+                       isnull((select COUNT(x.order_id) from  T_Inout_Detail x  
+			                       inner join T_Inout y on  x.order_id=y.order_id
+			                       inner join T_Sku z on z.sku_id=x.sku_id
+			                       inner join T_Item hh on z.item_id=hh.item_id
+			                     where  y.status!='-99' and y.status!='800' and y.vip_no='{1}' 
+			                      and hh.item_category_id=c.item_category_id )  
+                             ,0)
+                     else 0  end ) CategoryOrderCount
+                     from T_Sku a 
+                     inner join T_Item b on a.item_id=b.item_id 
+                     inner join T_Item_Category c on b.item_category_id=c.item_category_id---分类
+ 
+                    where a.status=1 
+                  ---  and item_category_name like '%双12%' 
+                and   a.sku_id in({0})"; // -----and b.status=1 
+          //  string sEventId = string.IsNullOrWhiteSpace(EventId)? "NULL" : "'"+EventId.ToString()+"'";
+            ds = this.SQLHelper.ExecuteDataset(string.Format(sql,skuIds,userId));   //只算这个员工的      
+            return ds;       
+        }
+
 
         #region 删除sku相关价格
         /// <summary>

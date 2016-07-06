@@ -42,8 +42,8 @@ namespace JIT.CPOS.BS.BLL
             {
                 if (item_name == null) item_name = "";
                 Hashtable _ht = new Hashtable();
-                _ht.Add("StartRow",startRowIndex);
-                _ht.Add("EndRow",startRowIndex + maxRowCount);
+                _ht.Add("StartRow", startRowIndex);
+                _ht.Add("EndRow", startRowIndex + maxRowCount);
                 _ht.Add("UnitId", unit_id);
                 _ht.Add("WarehouseId", warehouse_id);
                 _ht.Add("SkuId", sku_id);
@@ -52,7 +52,7 @@ namespace JIT.CPOS.BS.BLL
 
                 StockBalanceInfo stockBalanceInfo = new StockBalanceInfo();
                 int iCount = stockBalanceService.GetSearchStockBalanceCount(_ht);
-                
+
 
                 IList<StockBalanceInfo> stockBalanceInfoList = new List<StockBalanceInfo>();
                 DataSet ds = stockBalanceService.GetSearchStockBalanceInfoList(_ht);
@@ -65,13 +65,14 @@ namespace JIT.CPOS.BS.BLL
 
                 return stockBalanceInfo;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 throw (ex);
             }
         }
 
         public StockBalanceInfo GetStockBalanceListByUnitIdWarehouseId(
-            string unit_id, string warehouse_id, string item_name, 
+            string unit_id, string warehouse_id, string item_name,
             int maxRowCount, int startRowIndex)
         {
             return GetStockBalanceListByUnitIdWarehouseId(
@@ -143,10 +144,10 @@ namespace JIT.CPOS.BS.BLL
         /// <returns></returns>
         public int GetStockBalanceCountByUnitId(LoggingSessionInfo loggingSessionInfo, string unitId)
         {
-                Hashtable _ht = new Hashtable();
-                _ht.Add("UnitId", unitId);
-                //return cSqlMapper.Instance(loggingSessionInfo.CurrentLoggingManager).QueryForObject<int>("StockBalance.SelectByUnitIdCount", _ht);
-                return 0;
+            Hashtable _ht = new Hashtable();
+            _ht.Add("UnitId", unitId);
+            //return cSqlMapper.Instance(loggingSessionInfo.CurrentLoggingManager).QueryForObject<int>("StockBalance.SelectByUnitIdCount", _ht);
+            return 0;
         }
         /// <summary>
         /// 根据组织获取该组织的有库存记录的实时库存
@@ -168,7 +169,8 @@ namespace JIT.CPOS.BS.BLL
                 IList<StockBalanceInfo> stockBalanceInfoList = new List<StockBalanceInfo>();
                 return stockBalanceInfoList;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 throw (ex);
             }
         }
@@ -187,10 +189,31 @@ namespace JIT.CPOS.BS.BLL
             {
                 return stockBalanceService.SetStockBalance(order_id);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 throw (ex);
             }
         }
         #endregion
+
+        #region 保存库存
+        /// <summary>
+        /// 保存库存
+        /// </summary>
+        /// <param name="order_id"></param>
+        /// <returns></returns>
+        public bool InsertStockBalance(string sql)
+        {
+            try
+            {
+                return stockBalanceService.InsertStockBalance(sql);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+        #endregion
+
     }
 }

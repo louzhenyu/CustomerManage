@@ -381,6 +381,21 @@ namespace JIT.CPOS.BS.DataAccess
         /// ø≥º€¡–±Ì
         /// </summary>
         /// <returns></returns>
+		public DataSet GetKJEventList(int pageIndex, int pageSize, string strEventName, int intEventStatus, string strBeginTime, string strEndTime)
+        {
+            SqlParameter[] parameters = new SqlParameter[7] 
+            { 
+                new SqlParameter{ParameterName="@PageIndex",SqlDbType=SqlDbType.Int,Value=pageIndex},
+                new SqlParameter{ParameterName="@PageSize",SqlDbType=SqlDbType.Int,Value=pageSize},
+                new SqlParameter{ParameterName="@EventName",SqlDbType=SqlDbType.NVarChar,Value=strEventName},
+                new SqlParameter{ParameterName="@EventStatus",SqlDbType=SqlDbType.Int,Value=intEventStatus},
+                new SqlParameter{ParameterName="@BeginTime",SqlDbType=SqlDbType.DateTime,Value=strBeginTime},
+                new SqlParameter{ParameterName="@EndTime",SqlDbType=SqlDbType.DateTime,Value=strEndTime},
+                new SqlParameter{ParameterName="@CustomerId",SqlDbType=SqlDbType.NVarChar,Value=CurrentUserInfo.ClientID},
+            };
+
+            return this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "Proc_GetKJEventList", parameters);
+        }
         public DataSet BargainList(int pageIndex, int pageSize, string strEventName, int intEventStatus, string strBeginTime, string strEndTime)
         {
             SqlParameter[] parameters = new SqlParameter[7] 

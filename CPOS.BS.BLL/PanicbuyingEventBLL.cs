@@ -32,7 +32,7 @@ namespace JIT.CPOS.BS.BLL
     /// <summary>
     /// </summary>
     public partial class PanicbuyingEventBLL
-    {
+    {  
         /// <summary>
         /// 创建活动
         /// </summary>
@@ -42,7 +42,7 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.AddPanicbuyingEvent(pEntity, pTran);
         }
-        /// <summary>
+         /// <summary>
         /// 获取活动列表
         /// </summary>
         /// <param name="pWhereConditions">筛选条件</param>
@@ -72,6 +72,10 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetPanicbuyingEventDetails(pID);
         }
 
+        public DataSet GetKJEventList(int pageIndex, int pageSize, string strEventName, int intEventStatus, string strBeginTime, string strEndTime)
+        {
+            return this._currentDAO.GetKJEventList(pageIndex, pageSize, strEventName, intEventStatus, strBeginTime, strEndTime);
+        }
         public DataSet BargainList(int pageIndex, int pageSize, string strEventName, int intEventStatus, string strBeginTime, string strEndTime)
         {
             return this._currentDAO.BargainList(pageIndex, pageSize, strEventName, intEventStatus, strBeginTime, strEndTime);

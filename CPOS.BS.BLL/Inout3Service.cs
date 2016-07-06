@@ -166,7 +166,8 @@ namespace JIT.CPOS.BS.BLL
                                        , string DeliveryDateEnd    //
                                        , string CancelDateBegin
                                        , string CancelDateEnd, string order_id, string vipId,
-            string path_unit_id, string timestamp, string InoutSort, bool getDetail = false)//getDetail默认是false，不是取详细信息。
+            string path_unit_id, string timestamp, string InoutSort, bool getDetail = false  //getDetail默认是false，不是取详细信息。
+             , string reserveDay_begin = null, string reserveDay_end = null) //配送日期也是配置成可选的
         {
             InoutInfo inoutInfo = new InoutInfo();
             OrderSearchInfo orderSearchInfo = new OrderSearchInfo();
@@ -203,6 +204,9 @@ namespace JIT.CPOS.BS.BLL
             orderSearchInfo.timestamp = timestamp;
 
             orderSearchInfo.PayStatus = PayStatus;
+
+            orderSearchInfo.reserveDay_begin = reserveDay_begin;//配送日期
+            orderSearchInfo.reserveDay_end = reserveDay_end;
 
             inoutInfo = SearchInoutInfo_lj(orderSearchInfo, getDetail);
             return inoutInfo;
@@ -242,7 +246,9 @@ namespace JIT.CPOS.BS.BLL
                                     , string DeliveryDateEnd    //
                                     , string CancelDateBegin
                                     , string CancelDateEnd, string order_id, string vipId,
-         string path_unit_id, string timestamp, string InoutSort, bool getDetail = false)//getDetail默认是false，不是取详细信息。
+         string path_unit_id, string timestamp, string InoutSort, bool getDetail = false
+             , string reserveDay_begin=null, string reserveDay_end=null   //配送日期也是配置成可选的
+            )//getDetail默认是false，不是取详细信息。
         {
             InoutInfo inoutInfo = new InoutInfo();
             OrderSearchInfo orderSearchInfo = new OrderSearchInfo();
@@ -285,6 +291,8 @@ namespace JIT.CPOS.BS.BLL
             orderSearchInfo.VipCardTypeID = VipCardTypeID;
             orderSearchInfo.ReserveDateBegin = reserveDateBegin;
             orderSearchInfo.ReserveDateEnd = reserveDateEnd;
+			orderSearchInfo.reserveDay_begin = reserveDay_begin;//配送日期
+            orderSearchInfo.reserveDay_end = reserveDay_end;
 
             inoutInfo = SearchInoutInfo_lj2(orderSearchInfo, getDetail);
             return inoutInfo;
@@ -392,7 +400,7 @@ namespace JIT.CPOS.BS.BLL
                                    , string DeliveryDateEnd    //
                                    , string CancelDateBegin
                                    , string CancelDateEnd, string order_id, string vipId,
-        string path_unit_id, string timestamp, string InoutSort, bool getDetail = false)//getDetail默认是false，不是取详细信息。
+        string path_unit_id, string timestamp, string InoutSort, string reserveDay_begin, string reserveDay_end, bool getDetail = false)//getDetail默认是false，不是取详细信息。
         {
             InoutInfo inoutInfo = new InoutInfo();
             OrderSearchInfo orderSearchInfo = new OrderSearchInfo();

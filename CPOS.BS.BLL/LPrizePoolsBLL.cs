@@ -96,9 +96,9 @@ namespace JIT.CPOS.BS.BLL
         #endregion 
 
 
-        public DataSet GetEventWinningInfo(string userName, string vipId, string eventId, float longitude, float latitude, string customerId, string reCommandId, int pointsLotteryFlag)
+        public DataSet GetEventWinningInfo(string userName, string vipId, string eventId, string prizeId, float longitude, float latitude, string customerId, string reCommandId, int pointsLotteryFlag)
         {
-            return this._currentDAO.GetEventWinningInfo(userName, vipId, eventId, longitude, latitude, customerId, reCommandId, pointsLotteryFlag);
+            return this._currentDAO.GetEventWinningInfo(userName, vipId, eventId, prizeId, longitude, latitude, customerId, reCommandId, pointsLotteryFlag);
         }
 
         public DataSet GetPersonWinnerList(string vipId, string eventId)

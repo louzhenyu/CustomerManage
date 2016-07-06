@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015-4-16 17:36:32
+ * Create On	:2015-8-19 17:43:07
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -58,17 +58,27 @@ namespace JIT.CPOS.BS.Entity
 		public String VipID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 会员卡号
+		/// </summary>
+		public String VipCardNo { get; set; }
+
+		/// <summary>
+		/// 门店编号
+		/// </summary>
+		public String UnitCode { get; set; }
+
+		/// <summary>
+		/// 金额
 		/// </summary>
 		public Decimal? TotalAmount { get; set; }
 
 		/// <summary>
-		/// 
+		/// 实付金额
 		/// </summary>
 		public Decimal? ActuallyPaid { get; set; }
 
 		/// <summary>
-		/// 
+		/// 回馈金额
 		/// </summary>
 		public Decimal? ReturnAmount { get; set; }
 

@@ -41,13 +41,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
             #endregion
 
 
-
             using (pTran.Connection)
             {
                 try
                 {
-
-
                     if (string.IsNullOrWhiteSpace(para.VipCardID) || para.OperationType <= 0)
                     {
                         throw new APIException("卡ID或者操作类型参数不合法！") { ErrorCode = ERROR_CODES.INVALID_REQUEST_LACK_REQUEST_PARAMETER };
@@ -63,6 +60,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
                     #region 返回卡ID
                     rd.VipCardID = changeEntity.VipCardID;
                     #endregion
+                    changeEntity.Operator = loggingSessionInfo.UserID;
                     changeEntity.RechargeTotalAmount = changeEntity.RechargeTotalAmount ?? 0;
                     changeEntity.BalanceAmount = changeEntity.BalanceAmount ?? 0;
                     string OldVipCardCode = changeEntity.VipCardCode ?? "";//原卡号
@@ -92,7 +90,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
                     AddVCStatusEntity.Remark = para.Remark;
                     AddVCStatusEntity.UnitID = loggingSessionInfo.CurrentUserRole.UnitId;
                     #endregion
-
 
 
                     #region 新卡
@@ -136,7 +133,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
                         NewChangeVipCardData.CustomerID = changeEntity.CustomerID;
                         NewChangeVipCardData.MembershipTime = changeEntity.MembershipTime;
                         NewChangeVipCardData.SalesUserName = changeEntity.SalesUserName == null ? "" : changeEntity.SalesUserName;
-                        NewChangeVipCardData.CreateBy = changeEntity.CreateBy;
+                        //NewChangeVipCardData.CreateBy = changeEntity.CreateBy;
+                        NewChangeVipCardData.Operator = changeEntity.Operator;//操作人
                     }
                     #endregion
 
@@ -600,14 +598,15 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
                             throw new APIException("当前操作类型不匹配！") { ErrorCode = ERROR_CODES.INVALID_REQUEST_LACK_REQUEST_PARAMETER };
                             break;
                     };
-                    pTran.Commit();
                     #region 卡升级，转卡操作转移消费记录表
-                    if ((para.OperationType == 2 || para.OperationType == 5) && string.IsNullOrEmpty(para.VipCardTypeId.ToString())) //卡类型升级不执行此操作
+                    if (para.OperationType == 2 || para.OperationType == 5)
                     {
-                        string StrSql = string.Format("update VipCardTransLog set VipCardCode='{0}',OldVipCardCode='{1}' where VipCardCode='{1}'", NewVipCardCode,OldVipCardCode);   
-                        vipCardTransLogBLL.UpdateVipCardTransLog(StrSql);//执行
+                        string StrSql = string.Format("update VipCardTransLog set VipCardCode='{0}',OldVipCardCode='{1}' where VipCardCode='{1}'", NewVipCardCode, OldVipCardCode);
+                        vipCardTransLogBLL.UpdateVipCardTransLog(StrSql, pTran);//执行
                     }
                     #endregion
+                    pTran.Commit();
+
                 }
                 catch (APIException apiEx)
                 {

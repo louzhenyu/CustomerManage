@@ -160,61 +160,22 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="orderId">订单标识</param>
         /// <param name="strError">错误提示</param>
         /// <returns></returns>
-        public bool SetOrderPayment(string orderId, out string strError, string ChannelId)
+        public bool SetOrderPayment(string orderId, out string strError, string ChannelId, string isTonyCard)
         {
             try
             {
-                //var inoutDAO = new T_InoutDAO(CurrentUserInfo);
-                //var inoutInfo = inoutDAO.GetByID(orderId);
-                //if (inoutInfo != null)
-                //{
-                //    //如果是经销商订单，付款完成后，订单状态修改成完成状态
-                //    if (inoutInfo.data_from_id == "21")
-                //    {
-                //        inoutInfo.Field7 = "700";
-                //        inoutInfo.status = "700";
-                //        inoutDAO.Update(inoutInfo);
-                //        InoutService inoutService = new InoutService(CurrentUserInfo);
-                //        DataRow drItem = inoutService.GetInoutDetailInfoByOrderId(orderId).Tables[0].Rows[0];
-                //        string itemId = drItem["item_id"].ToString();
-                //        inoutService.GetInoutDetailInfoByOrderId(orderId);
-
-                //    }
-                //}
-                //string sql = "update T_Inout "
-                //        //+ " set status = b.NextValue "
-                //        //+ " ,Field7 = b.NextValue "
-                //        + " ,Field1 = '1' "
-                //        //+ " ,Field1 = '1' "
-                //        //+ " ,status_desc = case b.NextValue "
-                //        //+ " 		   when '300' then '未付款' "
-                //        //+ " 		   when '400' then '已付款' "
-                //        //+ " 		   when '500' then '未发货' "
-                //        //+ " 		   else a.Field10 end "
-                //        //+ " ,Field10 = case b.NextValue  "
-                //        //+ " 		   when '300' then '未付款' "
-                //        //+ " 		   when '400' then '已付款' "
-                //        //+ " 		   when '500' then '未发货' "
-                //        //+ " 		   else a.Field10 end "
-                //        + " ,modify_time = CONVERT(nvarchar(30), GETDATE(),120) "
-                //        + " from T_Inout a "
-                //        + " inner join ( "
-                //        + " select top 1 a.NextValue,a.NodeValue From TInOutStatusNode a "
-                //        + " where a.IsDelete = '0' "
-                //        + " and a.CustomerID = '"+this.CurrentUserInfo.CurrentUser.customer_id+"' "
-                //        + " and a.NodeValue = (select status From T_Inout where order_id='"+orderId+"') "
-                //        + " and a.NextValue < '600' and a.NextValue > '200') b "
-                //        + " on(a.status = b.NodeValue ) "
-                //        + " where a.order_id = '" + orderId + "'";
-
                 string sql = "update T_Inout set Field1 = '1' ";
+                if (isTonyCard == "1")
+                {
+                    sql += " ,status = 700,Field7='700',status_desc='已发货',Field10='已发货' ";
+                }
                 if (!string.IsNullOrEmpty(ChannelId))
                 {
                     sql += ",pay_id = (select top 1 PaymentTypeID from TPaymentTypeCustomerMapping where IsDelete = '0' and ChannelId = '" + ChannelId + "' and CustomerId='" + this.CurrentUserInfo.CurrentUser.customer_id.ToString() + "') ";
                 }
                 sql += ",modify_time = CONVERT(nvarchar(30), GETDATE(),120),complete_date = CONVERT(nvarchar(30), GETDATE(),120) where order_id = '" + orderId + "' ";
                 this.SQLHelper.ExecuteNonQuery(sql);
-                strError = "成功.";
+                strError = "成功." + sql;
                 return true;
             }
             catch (Exception ex)

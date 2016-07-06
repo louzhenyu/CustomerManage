@@ -84,6 +84,7 @@ namespace JIT.CPOS.DTO.Base
         /// 公共参数。渠道  add by donal 2014-9-24 19:21:24
         /// </summary>
         public string ChannelId { get; set; }
+        
         #endregion
 
         #region 接口参数

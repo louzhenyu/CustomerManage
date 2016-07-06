@@ -35,6 +35,142 @@ namespace JIT.CPOS.BS.BLL.WX
 
         #endregion
 
+
+        #region HttpGet 实现
+        /// <summary>
+        /// HttpGet 实现
+        /// </summary>
+        /// <param name="url">请求url</param>
+        /// <param name="data">请求数据</param>
+        /// <param name="timeOut">超时时间</param>
+        /// <param name="header">设置请求头</param>
+        /// <returns></returns>
+        public static string GetHttpResponse(string url, string data = "", int timeOut = 1000, string method = "GET")
+        {
+            string result = null;
+            string error = null;
+
+            try
+            {
+                if (!string.IsNullOrEmpty(data))
+                {
+                    url = string.Format("{0}?{1}", url, data);
+                }
+
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Method = method;
+                request.Accept = "application/json";
+                request.UserAgent = "Fiddler";
+
+                if (timeOut <= 10)
+                {
+                    timeOut = 100000;
+                }
+                request.Timeout = timeOut;
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                using (var resStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(resStream, Encoding.GetEncoding("UTF-8"));
+                    result = reader.ReadToEnd();
+                }
+            }
+            catch (WebException ex)
+            {
+                if (ex.Status == WebExceptionStatus.ProtocolError)
+                {
+                    var response = (HttpWebResponse)ex.Response;
+                    HttpStatusCode code = response.StatusCode;
+                    string statusDes = response.StatusDescription;
+                    using (var stream = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+                    {
+                        result = stream.ReadToEnd();
+                    }
+                    error = ex.Message;
+                }
+            }
+            catch (Exception ex)
+            {
+                result = error = ex.Message;
+            }
+            return result;
+        }
+        #endregion
+
+
+        #region HttpPost 实现
+        /// <summary>
+        /// HttpPost 实现
+        /// </summary>
+        /// <param name="url">请求地址</param>
+        /// <param name="data">请求数据</param>
+        /// <param name="timeOut">超时时间</param>
+        /// <param name="header">设置请求头</param>
+        /// <returns></returns>
+        public static string HttpPost(string url, string data="", int timeOut=5000)
+        {
+            string result = null;
+            string error = null;
+
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+                request.Method = "Post";
+                request.ContentType = "application/x-www-form-urlencoded";
+                byte[] reqData = null;
+                if (!string.IsNullOrEmpty(data))
+                {
+                    reqData = Encoding.GetEncoding("UTF-8").GetBytes(data);
+                    request.ContentLength = reqData.Length;
+                }
+
+                if (timeOut <= 10)
+                {
+                    timeOut = 100000;
+                }
+                request.Timeout = timeOut;
+
+                //if (header != null)
+                //{
+                //    request.Headers.Add(header);
+                //}
+
+                if (reqData != null)
+                {
+                    using (var reqStream = request.GetRequestStream())
+                    {
+                        reqStream.Write(reqData, 0, reqData.Length);
+                    }
+                }
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                using (var resStream = response.GetResponseStream())
+                {
+                    StreamReader reader = new StreamReader(resStream, Encoding.GetEncoding("UTF-8"));
+                    result = reader.ReadToEnd();
+                }
+            }
+            catch (WebException ex)
+            {
+                if (ex.Status == WebExceptionStatus.ProtocolError)
+                {
+                    var response = (HttpWebResponse)ex.Response;
+                    HttpStatusCode code = response.StatusCode;
+                    string statusDes = response.StatusDescription;
+                    using (var stream = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+                    {
+                        result = stream.ReadToEnd();
+                    }
+                    error = ex.Message;
+                }
+            }
+            catch (Exception ex)
+            {
+                result = error = ex.Message;
+            }
+            return result;
+        }
+        #endregion
+
         #region 提交表单数据
 
         /// <summary>

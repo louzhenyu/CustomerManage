@@ -147,6 +147,7 @@
     <Compile Include="CodeGeneration\CustomerWithdrawalDetailDAO.cs" />
     <Compile Include="CodeGeneration\CustomerWithdrawalTransferDAO.cs" />
     <Compile Include="CodeGeneration\CustomerWithdrawalTransferMappingDAO.cs" />
+    <Compile Include="CodeGeneration\DataQueueDAO.cs" />
     <Compile Include="CodeGeneration\DefaultTopicDAO.cs" />
     <Compile Include="CodeGeneration\DefrayTypeDAO.cs" />
     <Compile Include="CodeGeneration\DeliveryDAO.cs" />
@@ -326,6 +327,8 @@
     <Compile Include="CodeGeneration\PanicbuyingKJEventJoinDAO.cs" />
     <Compile Include="CodeGeneration\PanicbuyingKJEventJoinDetailDAO.cs" />
     <Compile Include="CodeGeneration\PanicbuyingKJEventSkuMappingDAO.cs" />
+    <Compile Include="CodeGeneration\PA_PrepayNoDAO.cs" />
+    <Compile Include="CodeGeneration\PA_UserInfoDAO.cs" />
     <Compile Include="CodeGeneration\PgUserDAO.cs" />
     <Compile Include="CodeGeneration\POPGroupDAO.cs" />
     <Compile Include="CodeGeneration\PowerHourDAO.cs" />
@@ -487,10 +490,12 @@
     <Compile Include="CodeGeneration\T_HierarchySystemExNodeDAO.cs" />
     <Compile Include="CodeGeneration\T_InoutDAO.cs" />
     <Compile Include="CodeGeneration\T_Inout_DetailDAO.cs" />
+    <Compile Include="CodeGeneration\T_Inout_ExpandDAO.cs" />
     <Compile Include="CodeGeneration\T_Item_CategoryDAO.cs" />
     <Compile Include="CodeGeneration\T_Item_PriceDAO.cs" />
     <Compile Include="CodeGeneration\T_Item_Price_TypeDAO.cs" />
     <Compile Include="CodeGeneration\T_Item_PropertyDAO.cs" />
+    <Compile Include="CodeGeneration\T_Order_Reason_TypeDAO.cs" />
     <Compile Include="CodeGeneration\T_LEventsRegVipLogDAO.cs" />
     <Compile Include="CodeGeneration\T_LEventsSharePersonLogDAO.cs" />
     <Compile Include="CodeGeneration\T_Payment_detailDAO.cs" />
@@ -691,6 +696,7 @@
     <Compile Include="CustomerWithdrawalDetailDAO.cs" />
     <Compile Include="CustomerWithdrawalTransferDAO.cs" />
     <Compile Include="CustomerWithdrawalTransferMappingDAO.cs" />
+    <Compile Include="DataQueueDAO.cs" />
     <Compile Include="DefrayTypeDAO.cs" />
     <Compile Include="DeliveryDAO.cs" />
     <Compile Include="DonateDAO.cs" />
@@ -882,6 +888,8 @@
     <Compile Include="PanicbuyingEventDAO.cs" />
     <Compile Include="PanicbuyingEventItemMappingDAO.cs" />
     <Compile Include="PanicbuyingEventSkuMappingDAO.cs" />
+    <Compile Include="PA_PrepayNoDAO.cs" />
+    <Compile Include="PA_UserInfoDAO.cs" />
     <Compile Include="PanicbuyingKJEventItemMappingDAO.cs" />
     <Compile Include="PanicbuyingKJEventJoinDAO.cs" />
     <Compile Include="PanicbuyingKJEventJoinDetailDAO.cs" />
@@ -1099,10 +1107,12 @@
     <Compile Include="t_customerDAO.cs" />
     <Compile Include="T_HierarchySystemExNodeDAO.cs" />
     <Compile Include="T_InoutDAO.cs" />
+    <Compile Include="T_Inout_ExpandDAO.cs" />
     <Compile Include="T_Item_CategoryDAO.cs" />
     <Compile Include="T_Item_PriceDAO.cs" />
     <Compile Include="T_Item_Price_TypeDAO.cs" />
     <Compile Include="T_Item_PropertyDAO.cs" />
+    <Compile Include="T_Order_Reason_TypeDAO.cs" />
     <Compile Include="T_LEventsRegVipLogDAO.cs" />
     <Compile Include="T_LEventsSharePersonLogDAO.cs" />
     <Compile Include="T_Payment_detailDAO.cs" />

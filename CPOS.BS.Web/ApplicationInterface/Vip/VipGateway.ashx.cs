@@ -14,6 +14,8 @@ using JIT.CPOS.BS.Web.Base.Excel;
 using JIT.CPOS.BS.Web.ApplicationInterface.Base;
 using JIT.CPOS.BS.Entity;
 using System.Web.Script.Serialization;
+using JIT.Utility.DataAccess.Query;
+using JIT.CPOS.DTO.Module.CardProduct.MakeVipCard.Request;
 
 namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
 {
@@ -392,27 +394,27 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
             ExportVipInfo(columns, ds.Tables[1], "会员列表");
         }
 
-        //#region 导出卡号
-        ///// <summary>
-        ///// 导出卡号
-        ///// </summary>
-        ///// <param name="pRequest"></param>
-        //public void ExportVipCardCode(string pRequest)
-        //{
-        //    var rp = pRequest.DeserializeJSONTo<APIRequest<ExportVipCardCodeRP>>();
-        //    if (!string.IsNullOrWhiteSpace(rp.Parameters.BatchNo))
-        //    {
-        //        var si = new SessionManager().CurrentUserLoginInfo;
-        //        if (null == si)
-        //            si = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
-        //        var VipCardBLL = new VipCardBLL(si);
-        //        var ds = VipCardBLL.ExportVipCardCode(rp.Parameters.BatchNo);
-        //        var columns = new Dictionary<string, string>();
-        //        columns.Add("VipCardCode", "卡号");
-        //        ExportVipInfo(columns, ds.Tables[0], "导出卡号");
-        //    }
-        //}
-        //#endregion
+        #region 导出卡号
+        /// <summary>
+        /// 导出卡号
+        /// </summary>
+        /// <param name="pRequest"></param>
+        public void ExportVipCardCode(string pRequest)
+        {
+            var rp = pRequest.DeserializeJSONTo<APIRequest<ExportVipCardCodeRP>>();
+            if (!string.IsNullOrWhiteSpace(rp.Parameters.BatchNo))
+            {
+                var si = new SessionManager().CurrentUserLoginInfo;
+                if (null == si)
+                    si = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
+                var VipCardBLL = new VipCardBLL(si);
+                var ds = VipCardBLL.ExportVipCardCode(rp.Parameters.BatchNo);
+                var columns = new Dictionary<string, string>();
+                columns.Add("VipCardCode", "卡号");
+                ExportVipInfo(columns, ds.Tables[0], "导出卡号");
+            }
+        }
+        #endregion
         /// <summary>
         ///  从dataTable数据转成列的定义到数据字典
         /// </summary>
@@ -547,7 +549,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                 var vipCardBLL = new VipCardBLL(loggingSessionInfo);//会员卡业务对象示例化
                 var vipCardVipMappingBLL = new VipCardVipMappingBLL(loggingSessionInfo);//会员卡和会员映射业务对象实例化
                 //获取会员卡信息
-                var vipCardInfo = vipCardBLL.QueryByEntity(new VipCardEntity() { VipCardISN = rp.Parameters.VipCardISN }, null).FirstOrDefault();
+                //var vipCardInfo = vipCardBLL.QueryByEntity(new VipCardEntity() { VipCardISN = rp.Parameters.VipCardISN }, null).FirstOrDefault();
+                //查询参数
+                List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
+                complexCondition.Add(new DirectCondition("VipCardCode='" + rp.Parameters.VipCardISN + "' or VipCardISN='" + rp.Parameters.VipCardISN + "' "));
+                var vipCardInfo = vipCardBLL.Query(complexCondition.ToArray(), null).FirstOrDefault();
+
                 if (vipCardInfo != null)
                 {
                     var mappingInfo = vipCardVipMappingBLL.QueryByEntity(new VipCardVipMappingEntity() { VipCardID = vipCardInfo.VipCardID }, null).FirstOrDefault();
@@ -590,6 +597,21 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                 {
                     rd.VipDetailInfo.VipEndAmount = vipAmountEntity.EndAmount ?? 0;
                 }
+                #region 获取会员卡类型名称
+                var VipCardBLL = new VipCardBLL(loggingSessionInfo);
+                //查询参数
+                List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
+                //条件
+                complexCondition.Add(new EqualsCondition() { FieldName = "a.CustomerID", Value = loggingSessionInfo.ClientID });
+                complexCondition.Add(new EqualsCondition() { FieldName = "a.VipCardStatusId", Value = 1 });
+                //排序参数
+                List<OrderBy> lstOrder = new List<OrderBy> { };
+                lstOrder.Add(new OrderBy() { FieldName = "MembershipTime", Direction = OrderByDirections.Desc });
+                //调用会员卡管理列表查询
+                var VipCardList = VipCardBLL.GetVipCardList(rp.Parameters.VipId, null, complexCondition.ToArray(), lstOrder.ToArray(), 1, 1);
+                if (VipCardList.Entities.Count() > 0)
+                    rd.VipDetailInfo.VipCardTypeName = VipCardList.Entities[0].VipCardTypeName;
+                #endregion
             }
             if (ds.Tables[1].Rows.Count > 0)
             {
@@ -629,7 +651,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                 var vipCardBLL = new VipCardBLL(loggingSessionInfo);//会员卡业务对象示例化
                 var vipCardVipMappingBLL = new VipCardVipMappingBLL(loggingSessionInfo);//会员卡和会员映射业务对象实例化
                 //获取会员卡信息
-                var vipCardInfo = vipCardBLL.QueryByEntity(new VipCardEntity() { VipCardISN = rp.Parameters.VipCardISN }, null).FirstOrDefault();
+                //获取会员卡信息
+                //var vipCardInfo = vipCardBLL.QueryByEntity(new VipCardEntity() { VipCardISN = rp.Parameters.VipCardISN }, null).FirstOrDefault();
+                //查询参数
+                List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
+                complexCondition.Add(new DirectCondition("VipCardCode='" + rp.Parameters.VipCardISN + "' or VipCardISN='" + rp.Parameters.VipCardISN + "' "));
+                var vipCardInfo = vipCardBLL.Query(complexCondition.ToArray(), null).FirstOrDefault();
                 if (vipCardInfo != null)
                 {
                     var mappingInfo = vipCardVipMappingBLL.QueryByEntity(new VipCardVipMappingEntity() { VipCardID = vipCardInfo.VipCardID }, null).FirstOrDefault();
@@ -649,17 +676,17 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                 rd.JsonColumns = ProcessXml.XmlToJSON2(xml);
             }
             rd.VipInfo = ds.Tables[1];
-            if (rd.VipInfo.Columns.Contains("Phone"))
-            {
-                for (int i = 0; i < rd.VipInfo.Rows.Count; i++)
-                {
-                    var phone = rd.VipInfo.Rows[i]["Phone"].ToString();
-                    if (!string.IsNullOrEmpty(phone))
-                    {
-                        rd.VipInfo.Rows[i]["Phone"] = phone.Substring(0, 3) + "****" + phone.Substring(7);
-                    }
-                }
-            }
+            //if (rd.VipInfo.Columns.Contains("Phone"))
+            //{
+            //    for (int i = 0; i < rd.VipInfo.Rows.Count; i++)
+            //    {
+            //        var phone = rd.VipInfo.Rows[i]["Phone"].ToString();
+            //        if (!string.IsNullOrEmpty(phone))
+            //        {
+            //            rd.VipInfo.Rows[i]["Phone"] = phone.Substring(0, 3) + "****" + phone.Substring(7);
+            //        }
+            //    }
+            //}
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();
         }
@@ -734,10 +761,11 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                     Date = t["CreateTime"].ToString(),
                     Integral = Convert.ToDecimal(t["Integral"].ToString()),
                     Remark = t["Remark"].ToString(),
-                    UnitName=t["UnitName"].ToString(),
-                    Reason=t["Reason"].ToString(),
+                    UnitName = t["UnitName"].ToString(),
+                    Reason = t["Reason"].ToString(),
                     IntegralSourceId = t["IntegralSourceId"].ToString(),
-                    CreateBy=t["CreateBy"].ToString()
+                    CreateBy = t["CreateBy"].ToString(),
+                    ImageUrl = t["ImageUrl"].ToString()
                 });
                 rd.VipIntegralList = temp.ToArray();
 
@@ -796,7 +824,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                     PayUnitName = t["UnitName"].ToString(),
                     CreateTime = t["create_time"].ToString(),
                     VipCardCode = t["VipCardCode"].ToString(),
-                    TotalAmount =Convert.ToDecimal(t["total_amount"].ToString())
+                    TotalAmount = Convert.ToDecimal(t["total_amount"].ToString())
                 });
                 rd.VipOrderList = temp.ToArray();
                 ds = bll.GetVipOrderList(rp.Parameters.VipId, loggingSessionInfo.ClientID, 1, Int32.MaxValue, rp.Parameters.OrderType);
@@ -844,13 +872,13 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                 var temp = ds.Tables[1].AsEnumerable().Select(t => new VipConsumeCardInfo()
                 {
                     CouponId = t["CouponID"].ToString(),
-                    CouponCode=t["CouponCode"].ToString(),
+                    CouponCode = t["CouponCode"].ToString(),
                     CouponName = t["CoupnName"].ToString(),
                     CouponType = t["CouponTypeName"].ToString(),
                     CouponStatus = t["CouponStatus"].ToString(),
                     CollarCardMode = t["OptionText"].ToString(),
                     Remark = t["CouponDesc"].ToString(),
-                    EndDate=t["EndDate"].ToString()
+                    EndDate = t["EndDate"].ToString()
                 });
                 rd.VipConsumeCardList = temp.ToArray();
             }
@@ -1061,21 +1089,22 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                     {
 
                         var Birthday = rd.VipTable.Rows[i]["Birthday"] == null || rd.VipTable.Rows[i]["Birthday"] is DBNull ? "" : rd.VipTable.Rows[i]["Birthday"].ToString();
-                        if (!string.IsNullOrEmpty(Birthday))
-                        {
-                            rd.VipTable.Rows[i]["Birthday"] = Convert.ToDateTime(rd.VipTable.Rows[i]["Birthday"]).ToString("yyyy-MM-dd");//隐藏中间的几列***
-                        }
+                        //不能进行生日格式化（数据库中是nvarchar格式）会影响正常使用的，请在提交时进行日期验证
+                        //if (!string.IsNullOrEmpty(Birthday))
+                        //{
+                        //    rd.VipTable.Rows[i]["Birthday"] = Convert.ToDateTime(rd.VipTable.Rows[i]["Birthday"]).ToString("yyyy-MM-dd");//隐藏中间的几列***
+                        //}
 
                     }
-                    if (rd.VipTable.Columns.Contains("Phone"))
-                    {
-                        var phone = rd.VipTable.Rows[i]["Phone"].ToString();
-                        if (!string.IsNullOrEmpty(phone) && phone.Length > 8)
-                        {
-                            rd.VipTable.Rows[i]["Phone"] = phone.Substring(0, 3) + "****" + phone.Substring(7);
+                    //if (rd.VipTable.Columns.Contains("Phone"))
+                    //{
+                    //    var phone = rd.VipTable.Rows[i]["Phone"].ToString();
+                    //    if (!string.IsNullOrEmpty(phone) && phone.Length > 8)
+                    //    {
+                    //        rd.VipTable.Rows[i]["Phone"] = phone.Substring(0, 3) + "****" + phone.Substring(7);
 
-                        }
-                    }
+                    //    }
+                    //}
                 }
                 rd.TotalPageCount = (int)rd.VipTable.Rows[0]["PageCount"];
                 rd.PageIndex = Convert.ToInt32(rd.VipTable.Rows[0]["PID"]);
@@ -1323,7 +1352,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
         public decimal CumulativeIntegral { get; set; }
         public decimal VipEndAmount { get; set; }
         public string Phone { get; set; }
-
+        /// <summary>
+        /// 会员卡类型名称
+        /// </summary>
+        public string VipCardTypeName { get; set; }
     }
     public class VipTag
     {
@@ -1360,6 +1392,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
         /// 操作人
         /// </summary>
         public string CreateByName { get; set; }
+
+        public string ImageUrl { get; set; }
     }
     public class VipAmountInfo
     {

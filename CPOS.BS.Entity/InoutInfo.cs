@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml.Serialization;
+using CPOS.BS.Entity;
 
 namespace JIT.CPOS.BS.Entity
 {
@@ -14,6 +15,22 @@ namespace JIT.CPOS.BS.Entity
     public class InoutInfo
     {
 
+
+        public int RefundStatus { get; set; }
+        public string RefundStatusDesc
+        {
+            get
+            {
+                if (RefundStatus == 1)
+                {
+                    return "待退款";
+                }
+                else if (RefundStatus == 2) { return "已完成"; } else { return ""; }
+            }
+        }
+        public string reserveDay { get; set; }
+        public string reserveQuantum { get; set; }
+        public string reserveTime { get; set; }
         /// <summary>
         /// 入出库单主标识 (必须)
         /// </summary>
@@ -594,6 +611,10 @@ namespace JIT.CPOS.BS.Entity
         /// 提货日期 + 时间
         /// </summary>
         public string ReserveTime { get; set; }
+		/// <summary>
+        /// 订单扩展表
+        /// </summary>
+        public T_Inout_ExpandEntity InoutExpandEntity { get; set; }
 
     }
 

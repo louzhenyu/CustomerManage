@@ -35,7 +35,7 @@ namespace JIT.CPOS.BS.BLL
     /// </summary>
     public partial class CouponUseBLL
     {
-        private LoggingSessionInfo CurrentUserInfo;
+        private BasicUserInfo CurrentUserInfo;
         private CouponUseDAO _currentDAO;
         #region ¹¹Ôìº¯Êý
         /// <summary>

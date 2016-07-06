@@ -24,7 +24,11 @@ using JIT.Utility.DataAccess.Query;
 using System.Collections;
 using JIT.CPOS.BS.Entity.Interface;
 using System.Text;
+using JIT.CPOS.BS.BLL.PA;
+using JIT.CPOS.BS.BLL.SapMessage;
 using JIT.CPOS.BS.BLL.WX;
+using JIT.CPOS.DTO.Module.Order.Order.Response;
+using JIT.CPOS.BS.Entity.EnumType;
 
 namespace JIT.CPOS.Web.ApplicationInterface.Vip
 {
@@ -147,7 +151,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
             ////应付金额
             var totalPayAmount = bll.GetTotalSaleAmountBySkuId(skuIdList);
-
             #region 启用积分
             if (rd.EnableIntegral == 1)
             {
@@ -421,24 +424,121 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
             //用户信息
             var vipEntity = new VipEntity();
-
-            if (!string.IsNullOrWhiteSpace(rp.Parameters.OwnerVipID))
+            // 如果openID=userid这时别的商户过来的用户，没哟绑定微信
+            if (string.IsNullOrEmpty(rp.UserID) && !string.IsNullOrEmpty(rp.OpenID) && !rp.UserID.Equals(rp.OpenID))
             {
-                vipEntity = bll.GetByID(rp.Parameters.OwnerVipID);
+                vipEntity = bll.QueryByEntity(new VipEntity()
+                {
+                    WeiXinUserId = rp.OpenID
+                }, null)[0];
             }
             else
             {
-                if (string.IsNullOrEmpty(rp.UserID) && !string.IsNullOrEmpty(rp.OpenID))
+                vipEntity = bll.GetByID(rp.UserID);
+            }
+
+            if (vipEntity == null)
+            {
+                throw new APIException("无效的会员ID") { ErrorCode = 121 };
+            }
+            else
+            {
+                rd.VipId = vipEntity.VIPID;
+                rd.Status = vipEntity.Status ?? 0;
+                rd.isStore = vipEntity.IsSotre ?? 0;
+                rd.HeadImgUrl = vipEntity.HeadImgUrl;
+                rd.VipName = vipEntity.VipName;
+                rd.UnitId = vipEntity.CouponInfo;
+                rd.Phone = vipEntity.Phone;
+                rd.Gender = vipEntity.Gender;
+                rd.VipSourceId = vipEntity.VipSourceId;
+                rd.City = vipEntity.City;
+                rd.Col1 = vipEntity.Col1 ?? "";
+                rd.Col2 = vipEntity.Col2 ?? "";
+                rd.Col3 = vipEntity.Col3 ?? "";
+            }
+
+            //用户余额信息
+            var vipAmountBll = new VipAmountBLL(loggingSessionInfo);
+            var vipAmountEntity = vipAmountBll.GetByID(vipEntity.VIPID);
+            if (vipAmountEntity != null)
+            {
+                rd.LockFlag = vipAmountEntity.IsLocking ?? 1;
+                rd.PasswordFlag = string.IsNullOrEmpty(vipAmountEntity.PayPassword) ? 0 : 1;
+                rd.EndAmount = vipAmountEntity.EndAmount;
+            }
+            else
+            {
+                rd.EndAmount = 0;
+            }
+
+            //用户积分信息
+            var vipIntegralBll = new VipIntegralBLL(loggingSessionInfo);
+            var vipIntegralEntity = vipIntegralBll.GetByID(vipEntity.VIPID);
+            if (vipIntegralEntity != null)
+            {
+                rd.EndIntegral = vipIntegralEntity.EndIntegral;
+            }
+            else
+            {
+                rd.EndIntegral = 0;
+            }
+
+            //邀请的小伙伴
+            rd.inviteCount = bll.GetInviteCount(rp.UserID);
+
+            VipAddressBLL service = new VipAddressBLL(loggingSessionInfo);
+
+            IList<VipAddressEntity> list = service.GetVIPAddressList(vipEntity.VIPID);
+
+            if (list != null)
+            {
+                rd.AddressList = new List<AddressInfo>();
+                foreach (var item in list)
                 {
-                    vipEntity = bll.QueryByEntity(new VipEntity()
-                            {
-                                WeiXinUserId = rp.OpenID
-                            }, null)[0];
+                    rd.AddressList.Add(new AddressInfo()
+                    {
+                        VipAddressID = item.VipAddressID,
+                        VipID = item.VIPID,
+                        LinkMan = item.LinkMan ?? "",
+                        LinkTel = item.LinkTel,
+                        CityID = item.CityID ?? "",
+                        isDefault = item.IsDefault == null ? 0 : item.IsDefault,
+                        Province = item.Province ?? "",
+                        CityName = item.CityName ?? "",
+                        DistrictName = item.DistrictName ?? "",
+                        Address = item.Address ?? "",
+                    });
                 }
-                else
+            }
+
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+
+            return rsp.ToJSON();
+        }
+        #endregion
+
+        #region 新增/修改会员信息
+        public string SetVipInfo(string pRequest)
+        {
+            var rp = pRequest.DeserializeJSONTo<APIRequest<SetVipInfoRP>>();
+            var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
+
+            var rd = new GetVipInfoRD();
+            var bll = new VipBLL(loggingSessionInfo);
+
+            //用户信息
+            var vipEntity = new VipEntity();
+            if (string.IsNullOrEmpty(rp.UserID) && !string.IsNullOrEmpty(rp.OpenID))
+            {
+                vipEntity = bll.QueryByEntity(new VipEntity()
                 {
-                    vipEntity = bll.GetByID(rp.UserID);
-                }
+                    WeiXinUserId = rp.OpenID
+                }, null)[0];
+            }
+            else
+            {
+                vipEntity = bll.GetByID(rp.UserID);
             }
 
             if (vipEntity == null)
@@ -447,7 +547,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             }
             else
             {
-                rd.VipId = rp.UserID;
+                rd.VipId = vipEntity.VIPID;
                 rd.Status = vipEntity.Status ?? 0;
                 rd.isStore = vipEntity.IsSotre ?? 0;
                 rd.HeadImgUrl = vipEntity.HeadImgUrl;
@@ -500,6 +600,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         /// <returns></returns>
         public string SetOrderStatus(string pRequest)
         {
+
+            LogConsole.PrintLog("收到更新订单请求：" + pRequest);
             var rp = pRequest.DeserializeJSONTo<APIRequest<SetOrderStatusRP>>();
             var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
 
@@ -509,9 +611,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             var sysVipCardGradeBLL = new SysVipCardGradeBLL(loggingSessionInfo);    //获取折扣表
             var vipBLL = new VipBLL(loggingSessionInfo);
             var unitBLL = new t_unitBLL(loggingSessionInfo);
+            var vipSourceBLL = new SysVipSourceBLL(loggingSessionInfo);
             var inoutServiceBLL = new InoutService(loggingSessionInfo);
             var skuPriceBLL = new T_Sku_PriceBLL(loggingSessionInfo);
             var inoutBll = new T_InoutBLL(loggingSessionInfo);//订单业务对象实例化
+            var vipCardBLL = new VipCardBLL(loggingSessionInfo);
 
 
             var orderId = rp.Parameters.OrderId;//订单ID
@@ -529,6 +633,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                 throw new APIException("订单状态不能为空【Status】") { ErrorCode = 121 };
 
             var tInoutEntity = tInoutBll.GetByID(orderId);
+            LogConsole.PrintLog("订单更新前：" + tInoutEntity.ToJSON());
             if (tInoutEntity == null)
                 throw new APIException("此订单Id无效") { ErrorCode = 103 };
             if (tInoutEntity.Field7 == "100")
@@ -536,13 +641,17 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
             #region 根据渠道判断订单来源
 
-            if (rp.ChannelId.Equals("6"))
+            if ((rp.ChannelId.Equals(((int)ChannelType.VipUnit).ToString())))
             {
                 tInoutEntity.DataFromID = "16";
                 if (!string.IsNullOrWhiteSpace(rp.Parameters.OwnerVipID))//店主vipid
                 {
                     tInoutEntity.SalesUser = rp.Parameters.OwnerVipID;
                 }
+            }
+            else if (rp.Parameters.AppFlag.Equals(((int)ChannelType.PAApp).ToString()))
+            {
+                tInoutEntity.DataFromID = "PALife";
             }
             #endregion
 
@@ -553,6 +662,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             #region 判断库存是否足够
             if (tInoutEntity.OrderReasonID == "2F6891A2194A4BBAB6F17B4C99A6C6F5" && tInoutEntity.DataFromID != "35" && tInoutEntity.DataFromID != "36") //普通商品订单判断
             {
+                string msg = string.Empty;
                 foreach (var detail in inoutDetailList)
                 {
                     //sku库存
@@ -562,8 +672,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                         int skuStock = Convert.ToInt32(skuStockInfo.sku_price.Value);
                         int qty = Convert.ToInt32(detail.enter_qty);
                         if (skuStock < qty)
-                            throw new APIException("库存不足") { ErrorCode = 121 };
+                        {
+                            msg += detail.item_name + ",";
+                        }
                     }
+                }
+                if (!string.IsNullOrEmpty(msg))
+                {
+                    throw new APIException(msg.Trim(',') + "库存不足") { ErrorCode = 121 };
                 }
             }
             #endregion
@@ -692,7 +808,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                         //vipIntegralBll.ProcessPoint(sourceId, rp.CustomerID, rp.UserID, orderId, (SqlTransaction)tran, null, -integral, null, rp.UserID);
                         var IntegralDetail = new VipIntegralDetailEntity()
                         {
-                            Integral = -integral,
+                            Integral = -Convert.ToInt32(integral),
                             IntegralSourceID = sourceId,
                             ObjectId = orderId
                         };
@@ -819,6 +935,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     var vipAmountDetailBll = new VipAmountDetailBLL(loggingSessionInfo);
 
                     var vipAmountEntity = vipAmountBll.QueryByEntity(new VipAmountEntity() { VipId = rp.UserID, VipCardCode = vipInfo.VipCode }, null).FirstOrDefault();
+                    var vipCardEntity = vipCardBLL.QueryByEntity(new VipCardEntity() { VipCardCode = vipInfo.VipCode }, null).FirstOrDefault();
                     if (vipAmountEntity != null)
                     {
                         //判断该会员账户是否被冻结
@@ -838,7 +955,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                             ObjectId = orderId,
                             AmountSourceId = "13"
                         };
-                        var vipAmountDetailId= vipAmountBll.AddReturnAmount(vipInfo, unitInfo, vipAmountEntity,ref detailInfo, (SqlTransaction)tran, loggingSessionInfo);
+                        var vipAmountDetailId = vipAmountBll.AddReturnAmount(vipInfo, unitInfo, vipAmountEntity, ref detailInfo, (SqlTransaction)tran, loggingSessionInfo, vipCardEntity);
                         if (!string.IsNullOrWhiteSpace(vipAmountDetailId))
                         {//发送返现到账通知微信模板消息
                             var CommonBLL = new CommonBLL();
@@ -856,13 +973,19 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                             AmountSourceId = "1",
                             ObjectId = orderId
                         };
-                        var vipAmountDetailId= vipAmountBll.AddVipAmount(vipInfo, unitInfo,ref vipAmountEntity, detailInfo, (SqlTransaction)tran, loggingSessionInfo);
+                        var vipAmountDetailId = vipAmountBll.AddVipAmount(vipInfo, unitInfo, ref vipAmountEntity, detailInfo, (SqlTransaction)tran, loggingSessionInfo, vipCardEntity);
                         if (!string.IsNullOrWhiteSpace(vipAmountDetailId))
                         {//发送微信账户余额变动模板消息
                             var CommonBLL = new CommonBLL();
                             CommonBLL.BalanceChangedMessage(tInoutEntity.OrderNo, vipAmountEntity, detailInfo, vipInfo.WeiXinUserId, vipInfo.VIPID, loggingSessionInfo);
                         }
                         discountAmount = discountAmount + vipEndAmount;
+                    }
+
+                    // 判断是否有使用余额和返现
+                    if (vipEndAmountFlag == 1 || returnAmountFlag == 1)
+                    {
+                        vipCardBLL.Update(vipCardEntity, tran);
                     }
 
                     #endregion
@@ -881,24 +1004,44 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     else
                         tInoutEntity.ActualAmount = tInoutEntity.TotalAmount - discountAmount;
 
-
-                    //订单金额正值(正常的买单),订单金额负值(退订订单)
-                    //if (tInoutEntity.ActualAmount >= 0)
-                    //    tInoutEntity.OrderReasonID = "2F6891A2194A4BBAB6F17B4C99A6C6F5";  //正常pos订单Order_Reason_id
-                    //else
-                    //    tInoutEntity.OrderReasonID = "21B88CE9916A4DB4A1CAD8E3B4618C10";
-
-
                     //如果实付金额 = 各种优惠活动的综合 设置付款状态=1【已付款】
                     if (tInoutEntity.TotalAmount + deliveryAmount == discountAmount || tInoutEntity.ActualAmount + deliveryAmount == 0)
                         tInoutEntity.Field1 = "1";
                     tInoutEntity.Remark = rp.Parameters.Remark;    //备注
                     tInoutEntity.Field19 = rp.Parameters.Invoice;  //发票信息
                     tInoutEntity.Field20 = rp.Parameters.RetailTraderId; //分销商Id
+
+                    DateTime reserveDay;
+                    DateTime reserveQuantum;
+                    var flag1 = DateTime.TryParse(rp.Parameters.reserveDay, out reserveDay);
+                    //  var flag2 = DateTime.TryParse(rp.Parameters.reserveQuantum, out reserveQuantum);//&& flag2 == true
+                    if (!string.IsNullOrEmpty(rp.Parameters.reserveDay) && flag1 == true
+                        && !string.IsNullOrEmpty(rp.Parameters.reserveQuantumID) && !string.IsNullOrEmpty(rp.Parameters.reserveQuantum))
+                    {
+                        List<reserveDays> reserveDaysList = GetReverserDay(loggingSessionInfo);//获取当前时间可以预订的时期
+                        if (reserveDaysList != null && reserveDaysList.Count != 0)
+                        {
+                            var first = reserveDaysList[0].reserveDay;
+                            if (Convert.ToDateTime(first) > reserveDay)//最早的一天也大于会员传过来的那一天，说明客户传过来的值太早了
+                            {
+                                throw new APIException("对不起，不支持您预约的配送日期") { ErrorCode = 333 };
+                            }
+                        }
+                        tInoutEntity.reserveDay = rp.Parameters.reserveDay;
+                        tInoutEntity.reserveQuantum = rp.Parameters.reserveQuantum;
+                        tInoutEntity.reserveQuantumID = rp.Parameters.reserveQuantumID;
+
+                    }
                     tInoutEntity.VipCardCode = vipInfo.VipCode;    //会员卡号
                     tInoutEntity.Field7 = status;  
                     tInoutEntity.OrderDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");  ///提交订单时间
                     tInoutBll.Update(tInoutEntity, tran);          //修改订单信息
+
+                    #region 更新订单详情实付金额
+
+                    #endregion
+
+                    LogConsole.PrintLog("更新订单：" + tInoutEntity.ToJSON());
 
                     #region [弃用]订单扩展表用于(人人销售、分润数据） add by donal 2014-10-14 09:40:12
                     //TInoutExpandBLL intoutExpandBll = new TInoutExpandBLL(loggingSessionInfo);
@@ -959,11 +1102,30 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                             var eventBll = new PanicbuyingEventBLL(loggingSessionInfo);
                             eventBll.SetKJEventOrder(loggingSessionInfo.ClientID, orderId, rp.Parameters.EventId,rp.Parameters.KJEventJoinId,inoutDetailList.ToList());
                         }
-
                     }
                     #endregion
 
-                    tran.Commit();
+                    // 同步订单到平安
+                    bool returnFlag = true;
+                    SysVipSourceEntity source = vipSourceBLL.GetByID(vipInfo.VipSourceId);
+
+                    // 实付金额
+                    decimal actAmount = Convert.ToDecimal(tInoutEntity.ActualAmount) + deliveryAmount;
+                    if (actAmount > 0 && source.VipSourceName.Equals("平安APP"))
+                    {
+                        GetOrderDetailRD pOrderInfo = inoutBll.GetInoutDetail(orderId, loggingSessionInfo);
+                        pOrderInfo.OrderListInfo.ActualDecimal = actAmount;
+                        returnFlag = PAAppApiBLL.SubmitOrderToPA(pOrderInfo, loggingSessionInfo);
+                    }
+                    // 如果同步到平安失败则回滚
+                    if (source.VipSourceName.Equals("平安APP") && !returnFlag)
+                    {
+                        throw new Exception("订单同步到平安失败！");
+                    }
+                    else
+                    {
+                        tran.Commit();
+                    }
 
                     if (deliveryAmount != 0)
                     {
@@ -994,6 +1156,74 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             return rsp.ToJSON();
         }
         #endregion
+
+        #region 获取配送日期和时间段信息
+        public List<reserveDays> GetReverserDay(LoggingSessionInfo loggingSessionInfo)
+        {
+
+            //获取支持预约的总天数
+            CustomerBasicSettingBLL _CustomerBasicSettingBLL = new CustomerBasicSettingBLL(loggingSessionInfo);
+            var reserveDays = _CustomerBasicSettingBLL.GetSettingValueByCode("reserveDays");//在方法的底层添加了this.CurrentUserInfo.ClientID参数
+            int _reserveDays = 5;//定义时间
+            if (string.IsNullOrEmpty(reserveDays) || int.TryParse(reserveDays, out _reserveDays) == false)//转换了数据
+            {
+                _reserveDays = 5;
+            }
+            if (_reserveDays < 1)
+            {
+                throw new APIException("该商户没有设置的预约时期小于1") { ErrorCode = 333 };
+            }
+
+            //查询配送的分割时间点
+            var TimeSplit = _CustomerBasicSettingBLL.GetSettingValueByCode("TimeSplit");//在方法的底层添加了this.CurrentUserInfo.ClientID参数
+            if (string.IsNullOrEmpty(TimeSplit))
+            {
+                TimeSplit = "17:00";
+            }
+
+            //取时间段配置，根据customerid和type来取数据
+            SysTimeQuantumBLL _SysTimeQuantumBLL = new SysTimeQuantumBLL(loggingSessionInfo);
+            var SysTimeQuantumList = _SysTimeQuantumBLL.Query(new IWhereCondition[] {
+                new EqualsCondition() { FieldName = "Type", Value ="1"},
+                new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID}
+            }, new OrderBy[] { new OrderBy() { FieldName = "DisplayIndex", Direction = OrderByDirections.Asc } });//查询字段
+            if (SysTimeQuantumList == null || SysTimeQuantumList.Length == 0)
+            {
+                throw new APIException("该商户没有设置配送时间段信息") { ErrorCode = 333 };
+            }
+            //根据时间点和配送总天数取时间
+            //当前时间
+            var today = DateTime.Now;
+            var startTime = Convert.ToDateTime(today.ToString("yyyy-MM-dd 17:00"));//
+            try
+            {
+                startTime = Convert.ToDateTime(today.ToString("yyyy-MM-dd " + TimeSplit));
+            }
+            catch
+            {
+                throw new APIException("该商户配置的时间分割点:" + reserveDays + "不是时间类型") { ErrorCode = 333 };
+            }
+            //如果当前小于时间分割点，则由明天的时间
+            List<reserveDays> reserveDaysList = new List<reserveDays>();
+            if (today < startTime)
+            {
+                var firstDay = today.AddDays(1).ToString("yyyy-MM-dd");
+                var first = new reserveDays { reserveDay = firstDay, TimeQuantums = SysTimeQuantumList.ToList() };
+                reserveDaysList.Add(first);
+            }
+            //第二天到总的预约天数
+            for (int i = 2; i <= _reserveDays; i++)
+            {
+                var day = today.AddDays(i).ToString("yyyy-MM-dd");
+                var oneDay = new reserveDays { reserveDay = day, TimeQuantums = SysTimeQuantumList.ToList() };
+                reserveDaysList.Add(oneDay);
+            }
+            return reserveDaysList;
+
+
+        }
+        #endregion
+
 
 
         #region 订单提交
@@ -1477,6 +1707,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             #region Update Coupon Status = 1
             couponEntity.Status = 1;
             couponBll.Update(couponEntity, null);
+            //少写了couponuse使用记录
+
             #endregion
 
             #endregion
@@ -1522,12 +1754,15 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             }
             else if (inoutInfo.status == "700")//已完成
             {
-                errorRsp.Message = "订单已完成，不能进行取消订单操作";
+                errorRsp.Message = "订单已发货，不能进行取消订单操作";
                 errorRsp.ResultCode = 302;
                 return errorRsp.ToJSON();
             }
             //执行取消订单业务 reconstruction By Henry 2015-10-20
             inoutBll.SetCancelOrder(orderId, 0, loggingSessionInfo);
+
+            // 通知SAP取消订单
+            SapMessageApiBLL.AddOrderMsg(loggingSessionInfo, orderId, "U", "L");
 
             //增加订单操作记录 Add By Henry 2015-8-18
             var tinoutStatusBLL = new TInoutStatusBLL(loggingSessionInfo);
@@ -1789,10 +2024,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
             vipEntity = null;
             vipEntity = bll.QueryByEntity(new VipEntity()
-                {
-                    VIPID = rp.UserID,
-                    VipPasswrod = rp.Parameters.OldPassword
-                }, null).FirstOrDefault();
+            {
+                VIPID = rp.UserID,
+                VipPasswrod = rp.Parameters.OldPassword
+            }, null).FirstOrDefault();
             if (vipEntity == null)
             {
                 throw new APIException("原密码不正确") { ErrorCode = 124 };
@@ -1993,8 +2228,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                 case "CheckVipPayPassword":
                     rst = this.CheckVipPayPassword(pRequest);
                     break;
-                case "GetVipInfo":
+                case "GetVipInfo"://获取会员信息
                     rst = this.GetVipInfo(pRequest);
+                    break;
+                case "SetVipInfo"://新增/修改会员信息
+                    rst = this.SetVipInfo(pRequest);
                     break;
                 case "SetOrderStatus":
                     rst = this.SetOrderStatus(pRequest);
@@ -2032,8 +2270,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                 case "VoucherCouponOrder":
                     rst = this.VoucherCouponOrder(pRequest);
                     break;
-
-
                 default:
                     throw new APIException(string.Format("找不到名为：{0}的action处理方法.", pAction))
                     {
@@ -2216,7 +2452,30 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         /// 用户名称
         /// </summary>
         public string VipName { get; set; }
-
+        /// <summary>
+        /// 手机
+        /// </summary>
+        public string Phone { get; set; }
+        /// <summary>
+        /// 性别
+        /// </summary>
+        public int? Gender { get; set; }
+        /// <summary>
+        /// 来源
+        /// </summary>
+        public string VipSourceId { get; set; }
+        /// <summary>
+        /// 城市
+        /// </summary>
+        public string City { get; set; }
+        public string Col1 { get; set; }
+        public string Col2 { get; set; }
+        public string Col3 { get; set; }
+        /// <summary>
+        /// 地址列表
+        /// </summary>
+        //public AddressInfo[] AddressList { get; set; }
+        public IList<AddressInfo> AddressList { get; set; }
         /// <summary>
         /// 用户汇集店
         /// </summary>
@@ -2291,6 +2550,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
     public class SetOrderStatusRP : IAPIRequestParameter
     {
+        //配送日期
+        public string reserveDay { get; set; }
+        //配送时间段
+        public string reserveQuantum { get; set; }
+        //配送时间段标识
+        public string reserveQuantumID { get; set; }
+
         public string OrderId { get; set; }
         public string Status { get; set; }
 
@@ -2372,6 +2638,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         /// 砍价参与主标识
         /// </summary>
         public string KJEventJoinId { get; set; }
+		/// <summary>
+        /// 平台表示    目前平安使用
+        /// </summary>
+        public string AppFlag { get; set; }
         public void Validate()
         {
         }

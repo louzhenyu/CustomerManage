@@ -49,7 +49,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.KeyWord
             {
                 if (string.IsNullOrEmpty(keywordList.Text) || keywordList.Text == "")
                 {
-                    //内容为空相当于关闭自动回复 - bob 2014-08-11
+                    //内容为空相当于关闭自动回复 - bob 2014-08-11****
                     //throw new APIException("文本不能为空") { ErrorCode = 120 }; 
                     entity.ReplyId = keywordList.ReplyId;
                     bll.Delete(entity);
@@ -84,7 +84,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.KeyWord
                 //    bll.Delete(keywordEntity);
                 //}
 
-                var replyId = Utils.NewGuid();
+                var replyId = Utils.NewGuid();//新建
                 entity.ReplyId = replyId;
                 bll.Create(entity);
 
@@ -92,7 +92,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.KeyWord
             }
             else
             {
-                entity.ReplyId = keywordList.ReplyId;
+                entity.ReplyId = keywordList.ReplyId;//修改
                 bll.Update(entity);
 
                 rd.ReplyId = keywordList.ReplyId;
@@ -111,9 +111,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.KeyWord
 
                 if (mappingEntity.Length > 0)
                 {
-                    mappingBll.Delete(mappingEntity);
+                    mappingBll.Delete(mappingEntity);//每一次都先删除，然后再添加
                 }
                 var textMappingEntity = new WMenuMTextMappingEntity();
+                
                 foreach (var materialTextIdInfo in keywordList.MaterialTextIds)
                 {
                     textMappingEntity.MappingId = Guid.NewGuid();

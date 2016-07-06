@@ -44,6 +44,10 @@ namespace JIT.CPOS.BS.Web.Module.Basic.ChangePWD.Handler
         private string SetPassWord(string pID,string pOldPWD,string pNewPWD)
         {
             string error = "";
+            if (pNewPWD.Length < 6)
+            {
+                return "{success:false,msg:'新密码不小于6位。'}";
+            }
             string pNewPass = MD5Helper.Encryption(pNewPWD);
             //pOldPWD = MD5Helper.Encryption(pOldPWD);
             pOldPWD = EncryptManager.Hash(pOldPWD, HashProviderType.MD5);

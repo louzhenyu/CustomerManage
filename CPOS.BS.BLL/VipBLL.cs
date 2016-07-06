@@ -39,6 +39,8 @@ using JIT.CPOS.DTO.Base;
 using JIT.CPOS.BS.BLL.WX;
 using JIT.CPOS.DTO.Module.Report.VipReport.Response;
 using JIT.CPOS.DTO.Module.VIP.Dealer.Response;
+using CPOS.Common;
+using CPOS.BS.BLL;
 using JIT.CPOS.Common;
 
 namespace JIT.CPOS.BS.BLL
@@ -419,7 +421,7 @@ namespace JIT.CPOS.BS.BLL
             {
                 string sql = string.Format(@"
                                             SELECT c.Prices FROM VipCardVipMapping as a 
-                                            inner join VipCard as b on a.vipcardid=b.VipCardID and b.IsDelete =0  
+                                            inner join VipCard as b on a.vipcardid=b.VipCardID and b.IsDelete =0 and b.VipCardStatusId=1 
                                             left join SysVipCardType as c on b.VipCardTypeID=c.VipCardTypeID and c.IsDelete=0 
                                             where a.IsDelete=0 and a.CustomerId='{0}' and a.VIPID='{1}'", CurrentUserInfo.ClientID, VipID);
                 decimal Prices = this._currentDAO.GetAmount(sql);
@@ -762,9 +764,9 @@ namespace JIT.CPOS.BS.BLL
         /// 获取vip编码
         /// </summary>
         /// <returns></returns>
-        public string GetVipCode()
+        public string GetVipCode(string pre = "Vip")
         {
-            return new AppSysService(this.CurrentUserInfo).GetNo("Vip");
+            return new AppSysService(this.CurrentUserInfo).GetNo(pre);
         }
         #endregion
 
@@ -1292,7 +1294,7 @@ namespace JIT.CPOS.BS.BLL
             string result = "200";
 
             RegisterValidationCodeDAO registerValidationCodeDAO = new RegisterValidationCodeDAO(this.CurrentUserInfo);
-            var validationCode = registerValidationCodeDAO.Query(new IWhereCondition[] { 
+            var validationCode = registerValidationCodeDAO.Query(new IWhereCondition[] {
                 new EqualsCondition(){ FieldName = "Mobile", Value = mobile}
             }, new OrderBy[] { new OrderBy() { FieldName = "CreateTime", Direction = OrderByDirections.Desc } }).FirstOrDefault();
 
@@ -2149,9 +2151,9 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="idnumber"></param>
         /// <param name="vipcardcode"></param>
         /// <returns></returns>
-        public DataSet GetVipCardInfo(string phone, string idnumber, string vipcardcode)
+        public DataSet GetVipCardInfo(string phone, string idnumber, string vipcardcode, string vipcardisn)
         {
-            return this._currentDAO.GetVipCardInfo(phone, idnumber, vipcardcode);
+            return this._currentDAO.GetVipCardInfo(phone, idnumber, vipcardcode, vipcardisn);
         }
         /// <summary>
         /// 会员卡详情
@@ -2160,17 +2162,40 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="idnumber"></param>
         /// <param name="vipcardcode"></param>
         /// <returns></returns>
-        public DataSet GetVipCardDetail(string phone, string idnumber, string vipcardcode)
+        public DataSet GetVipCardDetail(string phone, string idnumber, string vipcardcode, string vipcardisn)
         {
-            return this._currentDAO.GetVipCardDetail(phone, idnumber, vipcardcode);
+            return this._currentDAO.GetVipCardDetail(phone, idnumber, vipcardcode, vipcardisn);
+        }
+        /// <summary>
+        /// 会员卡余额
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <param name="idnumber"></param>
+        /// <param name="vipcardcode"></param>
+        /// <returns></returns>
+        public DataSet GetVipCardBalance(string phone, string idnumber, string vipcardcode, string vipcardisn)
+        {
+            return this._currentDAO.GetVipCardBalance(phone, idnumber, vipcardcode, vipcardisn);
         }
 
+        /// <summary>
         /// 事务
         /// </summary>
         /// <returns></returns>
         public SqlTransaction GetTran()
         {
             return this._currentDAO.GetTran();
+        }
+
+        /// <summary>
+        /// 根据会员获取会员卡信息
+        /// </summary>
+        /// <param name="vipid"></param>
+        /// <param name="vipcode"></param>
+        /// <returns></returns>
+        public DataSet GetVipCardByVip(string vipid, string vipcode)
+        {
+            return this._currentDAO.GetVipCardByVip(vipid, vipcode);
         }
         /// <summary>
         /// 获取会员列表-新版
@@ -2344,5 +2369,42 @@ namespace JIT.CPOS.BS.BLL
             return dsResult;
         }
 
+        /// <summary>
+        /// 获取VIPID   根据多利ID生成规则
+        /// </summary>
+        /// <returns></returns>
+        public string GetVipId(LoggingSessionInfo CurrentUserInfo)
+        {
+            string id = "";
+            string result = HttpHelper.GetData(string.Empty, string.Format("{0}{1}", ConfigHelper.GetAppSetting("QueueAddr", "http://182.254.242.12:8011"), "/keyvalue/GetIdentity"));
+
+            if (!string.IsNullOrEmpty(result) && !result.Equals("-1"))
+            {
+                id = result;
+                Loggers.Debug(new DebugLogInfo()
+                {
+                    Message = "获取多利用户ID成功,ID:" + result
+                });
+            }
+            else if (result.Equals("-1"))
+            {
+                var pabll = new PA_UserInfoBLL(CurrentUserInfo);
+                id = pabll.GetMaxVipId();
+                id = (Convert.ToInt64(id) + 1).ToString();
+                Loggers.Debug(new DebugLogInfo()
+                {
+                    Message = "初始化多利用户ID成功,ID:" + id
+                });
+                HttpHelper.GetData(string.Empty, string.Format("{0}{1}", ConfigHelper.GetAppSetting("QueueAddr", "http://182.254.242.12:8011"), "/keyvalue/set/Identity/" + id));
+            }
+            else
+            {
+                Loggers.Debug(new DebugLogInfo()
+                {
+                    Message = "生成多利用户ID失败,返回结果:" + result
+                });
+            }
+            return id;
+        }
     }
 }

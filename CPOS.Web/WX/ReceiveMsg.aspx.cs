@@ -164,7 +164,7 @@ namespace JIT.CPOS.Web.WX
             #region 通过微信类型生成对应的业务处理类
 
             var application = new WApplicationInterfaceBLL(requestParams.LoggingSessionInfo);
-            var appEntitys = application.QueryByEntity(new WApplicationInterfaceEntity() { WeiXinID = requestParams.WeixinId }, null);
+            var appEntitys = application.QueryByEntity(new WApplicationInterfaceEntity() { WeiXinID = requestParams.WeixinId,CustomerId = requestParams.LoggingSessionInfo.ClientID }, null);
 
             if (appEntitys != null && appEntitys.Length > 0)
             {
@@ -212,8 +212,5 @@ namespace JIT.CPOS.Web.WX
         }
 
         #endregion
-
-
-
     }
 }

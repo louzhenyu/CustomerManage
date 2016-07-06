@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
+using System.Xml.Linq;
 
 namespace JIT.CPOS.Common
 {
@@ -67,5 +68,46 @@ namespace JIT.CPOS.Common
             return GetXmlNodeValToBool(parentNode, nodeName, true);
         }
         #endregion
+
+
+        /// <summary>
+        /// 序列化为XML字窜
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <param name="OmitXmlDeclaration">是否忽略xml头</param>
+        /// <returns></returns>
+        public static string SerializeToXmlStr<T>(T obj, bool OmitXmlDeclaration = false)
+        {
+            XmlWriterSettings settings = new XmlWriterSettings();
+            //去除xml声明
+            settings.OmitXmlDeclaration = OmitXmlDeclaration;
+            settings.Encoding = Encoding.Default;
+            System.IO.MemoryStream mem = new MemoryStream();
+            using (XmlWriter writer = XmlWriter.Create(mem, settings))
+            {
+                //去除默认命名空间xmlns:xsd和xmlns:xsi
+                XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+                ns.Add("", "");
+                XmlSerializer formatter = new XmlSerializer(obj.GetType());
+                formatter.Serialize(writer, obj, ns);
+            }
+            return Encoding.Default.GetString(mem.ToArray());
+        }
+
+        /// <summary>
+        /// xml反序列化
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="xmlStr"></param>
+        /// <returns></returns>
+        public static T DeserializeFromXml<T>(string xmlStr)
+        {
+            Type type = typeof(T);
+            XElement xe = XElement.Parse(xmlStr);
+            XmlSerializer xs = new XmlSerializer(type);
+
+            return (T)xs.Deserialize(xe.CreateReader());
+        }
     }
 }

@@ -264,6 +264,21 @@ namespace JIT.CPOS.BS.DataAccess
             var Result = this.SQLHelper.ExecuteNonQuery(CommandType.StoredProcedure, "BatchAddPrizeReceive", parm);
         }
         #endregion
+		/// <summary>
+        /// 获取会员信息
+        /// </summary>
+        /// <param name="vipCardTypeID"></param>
+        /// <returns></returns>
+        public DataSet GetAllVipInfoList(string vipCardTypeID)
+        {
+            StringBuilder Str = new StringBuilder();
+            Str.Append("SELECT top 10 m.VipID,vp.VipCode,vp.WeiXinUserId,vp.Phone,vp.Email FROM VipCardVipMapping m ");
+            Str.Append("INNER JOIN VipCard vc ON vc.VipCardID = m.VipCardID and vc.IsDelete=0 ");
+            if (!string.IsNullOrWhiteSpace(vipCardTypeID))
+                Str.AppendFormat("and vc.VipCardTypeID={0} ", vipCardTypeID);
+            Str.Append("INNER JOIN Vip as vp on m.VIPID=vp.VIPID and vp.IsDelete=0 where m.IsDelete=0 ");
 
+            return this.SQLHelper.ExecuteDataset(Str.ToString());
+        }
     }
 }

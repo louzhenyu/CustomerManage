@@ -11,7 +11,8 @@ namespace JIT.CPOS.DTO.Module.VIP.Evaluation.Response
     /// </summary>
     public class SetEvaluationRD : IAPIResponseData
     {
-        
+        public bool Success { get; set; }
+        public string ErrMsg { get; set; }
     }
 
  

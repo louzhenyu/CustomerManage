@@ -83,6 +83,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.UnitAndType
             var t_TypeBLL = new T_TypeBLL(loggingSessionInfo);
             T_TypeEntity en = new T_TypeEntity();
             en.customer_id = loggingSessionInfo.ClientID;
+            en.status = 1;//仅使用正常状态
             var typeList = t_TypeBLL.QueryByEntity(en, null).Where(p => p.type_code != "OnlineShopping").OrderBy(p => p.type_Level).ToList();
             rd.HasSave = 1;//默认已经保存
             if (typeList != null && typeList.Count != 0)

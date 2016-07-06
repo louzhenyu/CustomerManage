@@ -1,4 +1,5 @@
 ﻿using JIT.CPOS.BS.BLL;
+using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.Web.ApplicationInterface.Base;
 using JIT.CPOS.BS.Web.Session;
 using JIT.CPOS.DTO.Base;
@@ -23,6 +24,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.SysVipCardType
             List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
             //商户条件
             complexCondition.Add(new EqualsCondition() { FieldName = "vct.CustomerID", Value = loggingSessionInfo.ClientID });
+            if (HttpContext.Current.Request["cardType"] != null)
+            {
+                complexCondition.Add(new EqualsCondition() { FieldName = "vct.Category", Value = HttpContext.Current.Request["cardType"] });
+            }
             //排序参数
             List<OrderBy> lstOrder = new List<OrderBy> { };
             lstOrder.Add(new OrderBy() { FieldName = "vct.VipCardLevel", Direction = OrderByDirections.Desc });

@@ -1,0 +1,251 @@
+﻿@charset "utf-8";
+#invoiceMenu {
+    display: inline-block;
+    width:100%;
+    height:100%;
+    background-color:#fafafa;
+    padding-bottom:10px;
+}
+   
+ .commonWrap {
+    font-size: 12px;
+    color: #999;
+    margin: 20px 10px 10px 40px;
+    margin-right: 50px;
+    width:580px;
+}
+ .commonWrap .label {
+        font-size:12px;
+        height:25px;
+        line-height: 25px;
+        float:left;
+    }
+.commonWrap .info {
+    float:left;
+    margin-bottom:10px;
+}
+.commonWrap .queryWrap {
+    float: left;
+}
+.commonWrap .queryWrap .queryBtn {
+    margin-left:10px;
+    width:70px;
+}
+
+.commonWrap .tit{
+    width: 480px;
+    height:25px;
+    
+    line-height: 25px;
+    text-align: left;
+    font-size: 12px;
+  
+}
+.commonWrap .tit > a, .commonSelectWrap .tit > a{
+      color: rgb(0,160,232);
+      margin-right:10px;
+      margin-left:10px;
+
+}
+.commonWrap .tit a:hover ,.commonSelectWrap .tit a:hover{
+      color: rgb(10, 28, 238);
+    
+}
+.commonWrap .info .selectBox {
+ 
+    float:left;
+}
+
+
+/*
+    录入发票 table
+*/
+.invoiceTable {
+    width:1128px;
+    height:100%;
+     
+}
+
+.invoiceTable>thead{
+    width:100%;
+    background-color:rgb(245,246,250);
+    border-top:1px dashed rgb(225,231,234);
+    border-bottom:1px solid rgb(225,231,234);
+  
+}
+.invoiceTable > thead tr td {
+    height:45px;
+    line-height:45px;
+    text-align:left;
+}
+.invoiceTable thead tr td:nth-of-type(1)  {
+    text-align:center;
+    width:60px;
+}
+  .invoiceTable thead tr td:nth-of-type(2)  {
+    width:120px;
+}    
+.invoiceTable tr td {
+    height:35px;
+    line-height:35px;
+    text-align:left;
+    border-bottom:1px solid rgb(225,231,234);
+}
+   
+.invoiceTable tr td input{
+    margin:0px;
+    padding:0px;
+    width:90%;
+    height:30px;
+}
+.invoiceTable tr td select{
+    margin:0px;
+    padding:0px;
+    width:90%;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    height: 30px;
+    height: 31px\9;
+    line-height: 30px\9;
+    text-indent: 5px;
+    font-family: "Microsoft YaHei";
+    color: #666;
+}
+.invoiceTable tbody tr td:nth-of-type(1) {
+    width:60px;
+    text-align:center;
+}  
+ .invoiceTable tbody tr td:nth-of-type(2)   {
+    width:80px;
+} 
+ .invoiceTable tbody tr td:nth-child(3)    {
+    width:160px;
+} 
+.invoiceTable tbody tr td:nth-child(4)  {
+    width:125px;
+} 
+ .invoiceTable tbody tr td:nth-child(5){
+    width:100px;
+} 
+    .invoiceTable tbody tr td:nth-child(6){
+    width:140px;
+}
+    .invoiceTable tbody tr td:nth-child(8){
+    width:80px;
+}
+.invoiceTable tbody tr td a {
+        color: rgb(0,160,232);
+}
+
+/*  录入发票合计*/
+.invoiceTableInfo {
+    margin-top:10px;
+    width:100%;
+    height:100%;
+}
+.invoiceTableInfo>thead{
+    width:100%;
+    background-color:rgb(245,246,250);
+    border-top:1px dashed;
+    border-bottom:1px solid rgb(225,231,234);
+}
+.invoiceTableInfo table {
+    width:95%;
+    text-align:center;
+    margin:15px auto;
+    border-bottom:1px solid rgb(225,231,234);
+}
+.invoiceTableInfo table tr:nth-child(1) td:nth-child(1) {
+    text-align:left;
+    font-size:12px;
+} 
+.invoiceTableInfo table tr td {
+    width:50%;
+    height:30px;
+    font-size:14px;
+    text-align:right;
+}
+.invoiceTableInfo table tr td em {
+    font-weight:bold;
+    }
+.invoiceTitle {
+     margin: 10px auto;
+    width: 95%;
+    font-size: 14px;
+
+}
+.invoiceTitle:before {
+    content:"|";
+    background-color:#00a0e8;
+    color:#00a0e8;
+    font-weight:120%;
+    margin-right:5px;
+
+}
+
+.incoice_panel {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 999999;
+
+}
+.incoice_panel_orderInfo {
+    width: 350px;
+    height: 550px;
+    position: fixed;
+    right: 0;
+    top: 50px;
+    z-index: 999999;
+    border: 1px solid;
+    background-color: white;
+}
+.panel_orderInfo_close {
+        position: absolute;
+    z-index: 99999999;
+    right: 0;
+    top: 10px;
+}
+.panel_orderInfo_body {
+
+}
+.panel_wrap {
+   
+}
+.panel_li {
+    float:left;
+    text-align:left;
+    margin-bottom: 10px;
+}
+.w160 {
+width:160px;
+}
+.w30 {
+width:30px;
+}
+.w50 {
+width:50px;
+}
+.w80 {
+width:80px;
+}
+
+.panel_wrap_info {
+     margin: 10px;
+}
+.Panel_orderInfo_foot {
+        position: absolute;
+    bottom: 0px;
+    right: 0px;
+    z-index: 99999;
+    font-weight: bold;
+    font-size: 14px;
+    width: 100%;
+    height: 40px;
+    text-align: right;
+    line-height: 40px;
+    padding-right: 10px;
+    background-color:gainsboro;
+}

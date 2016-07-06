@@ -31,27 +31,20 @@ namespace JIT.CPOS.Web.WXOAuth
         public string pageName = string.Empty;
         public string strAppId = string.Empty;//"wxeebb52e0aa813101"
         public string strAppSecret = string.Empty; //"22ac924a92e6caf176d6ba426d744adb";
-        public string strWeiXinId = string.Empty;   //Jermyn20140604 微信公众号码 
+        public string strWeiXinId = string.Empty;   // 微信公众号码 
         //会员分享的SourceId，ShareVipID，ObjectID
 
         public int SourceId = 0;// 1员工，2客服，3会员
         public string ShareVipID = string.Empty; //分享人的标识（SourceId为1，2时，这个是员工，为3时这个是会员）
         public string ObjectID = string.Empty;   //分享的链接代表的对象，活动或者商品、海报
         public string objectType = string.Empty; //分享的链接代表的对象的类型
-        
-
-
-        //public string customerId = "f6a7da3d28f74f2abedfc3ea0cf65c01";
-        //public string applicationId = "24F084EDA94648E4BEFBDB11597EC42A";
-        //public string goUrl = "dev.o2omarketing.cn:9004/_pageName_";
-        //public string pageName = "GoodsList";
-        //public string strAppId = "wxeebb52e0aa813101";
-        //public string strAppSecret = "22ac924a92e6caf176d6ba426d744adb";
+        public string strToken = string.Empty;   //微信公众号令牌
+        public DateTime strTokenExpirationTime = DateTime.Now;   //微信公众号令牌
 
         public string strState = string.Empty;
         public LoggingSessionInfo loggingSessionInfo = new LoggingSessionInfo();
         JIT.CPOS.BS.BLL.WX.AuthBLL authBll = new BS.BLL.WX.AuthBLL();
-
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             Response.Write("进入认证界面<br/>");
@@ -72,7 +65,7 @@ namespace JIT.CPOS.Web.WXOAuth
                         }
                         Loggers.Debug(new DebugLogInfo()
                         {
-                            Message = "State-Jermyn20140923：" + state
+                            Message = "State：" + state
                         });
                         #endregion
 
@@ -93,15 +86,12 @@ namespace JIT.CPOS.Web.WXOAuth
                         byte[] buff1 = Convert.FromBase64String(state);
                         state = Encoding.UTF8.GetString(buff1);
                         state = HttpUtility.UrlDecode(state, Encoding.UTF8);//转码
-
-
-
                         string[] array = state.Split(',');
                         customerId = array[1];
                         applicationId = array[2];
                         goUrl = array[0];
                         scope = array[3];
-                        if (array.Length >= 5)
+                        if(array.Length>=5)
                             this.pageName = array[4];
                         Loggers.Debug(new DebugLogInfo()
                         {
@@ -169,14 +159,14 @@ namespace JIT.CPOS.Web.WXOAuth
                     string token = "";
                     string openId = authBll.GetAccessToken(code, strAppId, strAppSecret, loggingSessionInfo, iRad, out token);//
                     //scope = ''
-
+                    
                     Response.Write("<br>");
                     Response.Write("OpenID:" + openId);
                     Loggers.Debug(new DebugLogInfo()
                     {
-                        Message = "3xx: OpenID:" + openId
+                        Message = "3xx: OpenID:" + openId + " , token: " + strToken
                     });
-                    PageRedict(applicationId, openId, token);//页面跳转，带着获取的openid和token
+                    PageRedict(applicationId, openId, strToken);//页面跳转，带着获取的openid和token
                 }
                 #endregion
             }
@@ -228,6 +218,8 @@ namespace JIT.CPOS.Web.WXOAuth
                 strAppId = info.AppID;
                 strAppSecret = info.AppSecret;
                 strWeiXinId = info.WeiXinID;
+                strToken = info.RequestToken;
+                strTokenExpirationTime = info.ExpirationTime == null ? strTokenExpirationTime : (DateTime)info.ExpirationTime;
             }
         }
         #endregion
@@ -236,7 +228,7 @@ namespace JIT.CPOS.Web.WXOAuth
         /// 页面跳转
         /// </summary>
         /// <param name="openId"></param>
-        private void PageRedict(string applicationId, string openId, string token)
+        private void PageRedict(string applicationId, string openId,string token)
         {
 
             //if (goUrl.IndexOf("HtmlApp/Lj/auth.html?pageName=GoodsList")>0)
@@ -264,7 +256,7 @@ namespace JIT.CPOS.Web.WXOAuth
             //    });
             //}
 
-            var decodeUrl = HttpUtility.UrlDecode(goUrl);
+            var decodeUrl = HttpUtility.UrlDecode(goUrl);//解码
             if (!decodeUrl.StartsWith("http://"))
             {
                 goUrl = "http://" + decodeUrl;
@@ -305,7 +297,23 @@ namespace JIT.CPOS.Web.WXOAuth
                 VipBLL vipServer = new VipBLL(loggingSessionInfo);
                 VipEntity vipInfo = new VipEntity();
 
-                vipInfo = authBll.GetUserIdByOpenId(loggingSessionInfo, openId);//根据openid获取会员信息 
+                vipInfo = vipServer.QueryByEntity(new VipEntity()
+                {
+                    WeiXinUserId = openId,
+                    ClientID = loggingSessionInfo.ClientID
+                }, null).FirstOrDefault();
+                if (vipInfo == null)
+                {
+                    //从支持多号运营的表中取
+                    var wxUserInfoBLL = new WXUserInfoBLL(loggingSessionInfo);
+                    var wxUserInfo = wxUserInfoBLL.QueryByEntity(new WXUserInfoEntity() { CustomerID = loggingSessionInfo.ClientID, WeiXinUserID = openId }, null).FirstOrDefault();
+                    if (wxUserInfo != null)
+                    {
+                        vipInfo = vipServer.QueryByEntity(new VipEntity() { ClientID = loggingSessionInfo.ClientID, UnionID = wxUserInfo.UnionID }, null).FirstOrDefault();
+                    }
+                }
+
+                //vipInfo = authBll.GetUserIdByOpenId(loggingSessionInfo, openId);
                 //Loggers.Debug(new DebugLogInfo()
                 //{
                 //    Message = string.Format("66x: openId：{0};", "进来了" + openId + "--openId")
@@ -317,7 +325,7 @@ namespace JIT.CPOS.Web.WXOAuth
                     Response.Write("会员不存在或没有关注");
                     VipEntity vipInfotmp = new VipEntity();
                     #region snsapi_userinfo 这种模式的
-                    if (scope.Equals("1"))
+                    if (scope.Equals("1"))//snsapi_userinfo 这种模式的
                     {
                         //封装方法，调用第四步，根据第四步的数据，新增一条vip数据
                         if (null == vipInfo || vipInfo.VIPID.Equals(""))
@@ -394,7 +402,7 @@ namespace JIT.CPOS.Web.WXOAuth
 
                         if (vipInfo == null || vipInfo.VIPID == null)
                         {
-                            
+                            //snsapi_base 这种模式下，获取不到会员的详细信息，只能获取到openid
                             vipInfotmp.VIPID = authBll.SetVipInfoByToken(token, openId, loggingSessionInfo, this.Response);
                             #region previous logic
                             /******
@@ -492,14 +500,6 @@ namespace JIT.CPOS.Web.WXOAuth
                     string strGotoUrl = "";//"/OnlineClothing/tmpGoUrl.html?customerId=" + customerId + "&openId=" + OpenId + "&userId=" + vipId + "&backUrl=" + HttpUtility.UrlEncode(goUrl) + "";
                     Random rad = new Random();
 
-                    //if (goUrl.IndexOf("?") > 0)
-                    //{
-                    //    strGotoUrl = goUrl + "&customerId=" + customerId + "&applicationId=" + applicationId + "&openId=" + openId + "&userId=" + vipInfo.VIPID + "&rid=" + rad.Next(1000, 100000) + "";
-                    //}
-                    //else
-                    //{
-                    //    strGotoUrl = goUrl + "?customerId=" + customerId + "&applicationId=" + applicationId + "&openId=" + openId + "&userId=" + vipInfo.VIPID + "&rid=" + rad.Next(1000, 100000) + "";
-                    //}
                     if (goUrl.IndexOf("?") > 0)
                     {
                         strGotoUrl = goUrl + "&customerId=" + customerId + "&applicationId=" + applicationId + "&rid=" + rad.Next(1000, 100000) + "";
