@@ -204,15 +204,15 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                                         item.ReturnAmount = ReturnAmount;
                                     else
                                         item.ReturnAmount = 0.00;
-                                    
+
                                 }
                             }
                             else if (reqObj.common.channelId == "10")//员工小店
                             {
                                 if (int.Parse(htSetting["enableEmployeeSales"].ToString()) > 0)//启用员工小店
                                 {
-                                    item.salesPrice = Math.Round(item.salesPrice * (decimal.Parse(htSetting["eDistributionPricePer"].ToString()) / 100),2);
-                                    item.ReturnAmount = Math.Round(item.salesPrice * (decimal.Parse(htSetting["eOrderCommissionPer"].ToString()) / 100),2);
+                                    item.salesPrice = Math.Round(item.salesPrice * (decimal.Parse(htSetting["eDistributionPricePer"].ToString()) / 100), 2);
+                                    item.ReturnAmount = Math.Round(item.salesPrice * (decimal.Parse(htSetting["eOrderCommissionPer"].ToString()) / 100), 2);
                                 }
                             }
                             else if (reqObj.common.channelId == "7")//一起发码
@@ -528,7 +528,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                                 //--如果渠道是一起发码，当前价格取一起发码价
                                 if (ds.ItemSalesPriceRate > 0)
                                 {
-                                    item.salesPrice = Math.Round((item.salesPrice * (decimal)ds.ItemSalesPriceRate) / 100,2);
+                                    item.salesPrice = Math.Round((item.salesPrice * (decimal)ds.ItemSalesPriceRate) / 100, 2);
                                 }
                             }
                         }
@@ -559,13 +559,13 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 }
                 #region 获取商品属性集合
                 var dsProp1 = itemService.GetItemProp1List(itemId);
-                 List<getItemDetailRespContentDataProp1> tempList = null;
+                List<getItemDetailRespContentDataProp1> tempList = null;
                 if (dsProp1 != null && dsProp1.Tables.Count > 0 && dsProp1.Tables[0].Rows.Count > 0)
                 {
                     tempList = DataTableToObject.ConvertToList<getItemDetailRespContentDataProp1>(dsProp1.Tables[0]);
                 }
                 //当Sku列表不为1，过滤属性为空
-                if(tempList.Count != 1)
+                if (tempList.Count != 1)
                 {
                     foreach (var item in tempList)
                     {
@@ -2424,7 +2424,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     }
                 }
 
-                IList<SkuPrice> skuPriceList = SkuPriceBll.GetPriceListBySkuIds(skuIds.ToString(), reqObj.special.isGroupBy);
+                //IList<SkuPrice> skuPriceList = SkuPriceBll.GetPriceListBySkuIds(skuIds.ToString(), reqObj.special.isGroupBy);
                 decimal CardFaceValue = 0.00m;
                 decimal TotalAmount = 0.00m;
                 decimal TotalReturnCash = 0.00m;
@@ -2546,7 +2546,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 {
                     orderInfo.DataFromId = 19;
                 }
-                else if( reqObj.common.channelId.Equals("11") )//超级分销订单
+                else if (reqObj.common.channelId.Equals("11"))//超级分销订单
                 {
                     orderInfo.DataFromId = 35;
                 }
@@ -2555,7 +2555,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 orderInfo.ChannelId = reqObj.common.channelId; //渠道 add by donal 2014-9-28 14:32:05
 
                 //如果是【人人销售/我的小店】销售人为空，销售人就是他自己6=会员小店;7=一起发码;10=员工小店
-                if ((orderInfo.ChannelId == "6" || orderInfo.ChannelId == "10"|| orderInfo.ChannelId == "7") && string.IsNullOrWhiteSpace(orderInfo.SalesUser))
+                if ((orderInfo.ChannelId == "6" || orderInfo.ChannelId == "10" || orderInfo.ChannelId == "7") && string.IsNullOrWhiteSpace(orderInfo.SalesUser))
                 {
                     orderInfo.SalesUser = reqObj.common.userId;
                 }
@@ -2792,6 +2792,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             content = respData.ToJSON();
             return content;
         }
+                #endregion
 
         /// <summary>
         /// /获取虚拟卡的vipcardTypeId
@@ -3005,7 +3006,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                             if (reqObj.special.IsAllService != 3)//不为虚拟商品
                                 getDeliveryAmountRespContentData.DeliveryAmount = (Convert.ToDecimal(reqObj.special.totalAmount) > customerDeliveryStrategyEntity.AmountEnd ? 0 : customerDeliveryStrategyEntity.DeliveryAmount).ToString();
                             else
-                                getDeliveryAmountRespContentData.DeliveryAmount ="0";
+                                getDeliveryAmountRespContentData.DeliveryAmount = "0";
                         }
                     }
                     //getDeliveryAmountRespContentData.DeliveryAmount =  TypeParse.ToStr(customerDeliveryStrategyEntity.DeliveryAmount);
@@ -4037,7 +4038,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 expandEntitys[0].Province = reqObj.special.province;
                 expandEntitys[0].ProvinceCode = reqObj.special.provinceCode;
                 expandEntitys[0].CityCode = reqObj.special.cityCode;
-                expandEntitys[0].City = string.IsNullOrEmpty(reqObj.special.city.Trim())? reqObj.special.province: reqObj.special.city;
+                expandEntitys[0].City = string.IsNullOrEmpty(reqObj.special.city.Trim()) ? reqObj.special.province : reqObj.special.city;
                 expandEntitys[0].Area = string.IsNullOrEmpty(reqObj.special.area.Trim()) ? expandEntitys[0].City : reqObj.special.area;
                 expandEntitys[0].AreaCode = reqObj.special.areaCode;
                 expandBll.Update(expandEntitys[0]);
