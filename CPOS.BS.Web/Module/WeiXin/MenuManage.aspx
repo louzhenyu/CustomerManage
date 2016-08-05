@@ -224,7 +224,7 @@
 	<div class="commonTitleWrap">
         <h2>添加图文消息</h2>
         <span class="cancelBtn commonBtn w80">取消</span>
-        <span class="saveBtn commonBtn w80">确定</span>
+        <span class="saveBtn commonBtn w80" style="height:30px;line-height:30px;">确定</span>
     </div>
     
     <div class="addImgMessageWrap clearfix">

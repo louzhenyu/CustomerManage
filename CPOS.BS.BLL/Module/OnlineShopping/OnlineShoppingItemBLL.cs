@@ -38,9 +38,9 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="isStore"></param>
         /// <param name="socialSalesType">类型(0=按订单；1=按商品)</param>
         /// <returns></returns>
-        public DataSet GetWelfareItemList(string userId, string itemName, string itemTypeId, int page, int pageSize, bool isKeep, string isExchange, string storeId, string isGroupBy, string ChannelId, int isStore, int socialSalesType, string strSortName, string strSort, int intVirtual,double Price)
+        public DataSet GetWelfareItemList(string userId, string itemName, string itemTypeId, int page, int pageSize, bool isKeep, string isExchange, string storeId, string isGroupBy, string ChannelId, int isStore, int socialSalesType, string strSortName, string strSort, int intVirtual, double Price)
         {
-            return itemService.GetWelfareItemList(userId, itemName, itemTypeId, page, pageSize, isKeep, isExchange, storeId, isGroupBy, ChannelId, isStore, socialSalesType, strSortName, strSort, intVirtual,Price);
+            return itemService.GetWelfareItemList(userId, itemName, itemTypeId, page, pageSize, isKeep, isExchange, storeId, isGroupBy, ChannelId, isStore, socialSalesType, strSortName, strSort, intVirtual, Price);
         }
 
         //public int GetWelfareItemListCount(string userId, string itemName, string itemTypeId, bool isKeep, string isExchange, string storeId)
@@ -147,8 +147,8 @@ namespace JIT.CPOS.BS.BLL
         {
             JIT.CPOS.BS.Entity.Interface.SetOrderEntity orderInfo = new JIT.CPOS.BS.Entity.Interface.SetOrderEntity();
             DataSet ds = new DataSet();
-          OnlineShoppingItemService onlineShoppingItemService= new OnlineShoppingItemService(loggingSessionInfo);
-          ds = onlineShoppingItemService.GetOrderOnline(OrderId);
+            OnlineShoppingItemService onlineShoppingItemService = new OnlineShoppingItemService(loggingSessionInfo);
+            ds = onlineShoppingItemService.GetOrderOnline(OrderId);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 orderInfo = DataTableToObject.ConvertToObject<JIT.CPOS.BS.Entity.Interface.SetOrderEntity>(ds.Tables[0].Rows[0]);
@@ -238,6 +238,8 @@ namespace JIT.CPOS.BS.BLL
             return itemService.GetOrderAmmount(pOrderID);
         }
         #endregion
+
+
         #region GetOrderPayCenterCode
         public string GetOrderPayCenterCode(string pOrderID)
         {
@@ -256,9 +258,9 @@ namespace JIT.CPOS.BS.BLL
             return itemService.GetStoreItemDailyStatuses(beginDate, endDate, storeId, itemId);
         }
 
-        public DataSet GetStoreItemDailyStatuses(string beginDate, string endDate, string storeId, string itemId,string userId,string customerId)
+        public DataSet GetStoreItemDailyStatuses(string beginDate, string endDate, string storeId, string itemId, string userId, string customerId)
         {
-            return itemService.GetStoreItemDailyStatuses(beginDate, endDate, storeId, itemId,userId,customerId);
+            return itemService.GetStoreItemDailyStatuses(beginDate, endDate, storeId, itemId, userId, customerId);
         }
 
         #region GetOrderIntegral
@@ -553,9 +555,9 @@ namespace JIT.CPOS.BS.BLL
             fs.SendFrom = "mailcenter@acmlife.org";
             fs.UserName = "mailcenter@acmlife.org";
             fs.Password = "asus+123456";
-            Mail.SendMail(fs, pMailTo, pTitle, pBody,null);
+            Mail.SendMail(fs, pMailTo, pTitle, pBody, null);
 
-            
+
         }
         #endregion
 
@@ -780,7 +782,7 @@ namespace JIT.CPOS.BS.BLL
             return itemService.AddEventStats(pNewsID, pVipID, pCountType, pNewsType);
         }
         #endregion
-   
+
         #region GetMostConcern
         /// <summary>
         /// 最受关注列表
@@ -848,11 +850,11 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="pVipID"></param>
         /// <returns></returns>
-        public List<VipViewEntity> GetUserList(string pVipName, string pClass, string pCompany, string pCity,string pVipID)
+        public List<VipViewEntity> GetUserList(string pVipName, string pClass, string pCompany, string pCity, string pVipID)
         {
             List<VipViewEntity> vipList = null;
             DataSet ds = new DataSet();
-            ds = itemService.GetUserList(pVipName, pClass, pCompany, pCity,pVipID);
+            ds = itemService.GetUserList(pVipName, pClass, pCompany, pCity, pVipID);
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
                 vipList = DataTableToObject.ConvertToList<VipViewEntity>(ds.Tables[0]);

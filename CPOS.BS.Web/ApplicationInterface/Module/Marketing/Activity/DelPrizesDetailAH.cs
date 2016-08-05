@@ -19,6 +19,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var PrizesDetailBLL = new C_PrizesDetailBLL(loggingSessionInfo);
+            var ActivityBLL = new C_ActivityBLL(loggingSessionInfo);
 
             try
             {
@@ -30,6 +31,15 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                 }
                 //执行
                 PrizesDetailBLL.Delete(DelData);
+                if (ActivityBLL.IsActivityValid(para.ActivityID))
+                {
+                    var activity = ActivityBLL.GetByID(para.ActivityID);
+                    if (activity != null)
+                    {
+                        activity.Status = 0;
+                    }
+                    ActivityBLL.Update(activity);
+                }
             }
             catch (APIException apiEx)
             {

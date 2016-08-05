@@ -121,7 +121,7 @@ namespace JIT.CPOS.BS.BLL
                         DiscountRate = t.DiscountRate.Value.ToString(),
                         DisplayIndex = t.DisplayIndex,
                         ItemCategoryName = t.ItemCategoryName,
-                        SalesPersonCount = t.SalesPersonCount,
+                        SalesPersonCount = Convert.ToInt64(t.RemainingSec) > 0?t.SalesPersonCount:0,
                         SkuId = t.SkuId,
                         CreateDate = t.CreateTime.Substring(0, 10),
                         SalesCount = t.SalesQty,

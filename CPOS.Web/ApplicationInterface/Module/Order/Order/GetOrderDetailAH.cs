@@ -9,7 +9,6 @@ using JIT.CPOS.BS.BLL;
 using JIT.CPOS.BS.Entity;
 using System.Data;
 using JIT.CPOS.Common;
-using JIT.CPOS.DTO.Base;
 using JIT.Utility.DataAccess.Query;
 
 namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
@@ -23,73 +22,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 
             rd.OrderListInfo = new OrderListInfo();
 
-            #region 获取配送日期和时间段信息
-            ////获取支持预约的总天数
-            // CustomerBasicSettingBLL _CustomerBasicSettingBLL = new CustomerBasicSettingBLL(this.CurrentUserInfo);
-            //var reserveDays= _CustomerBasicSettingBLL.GetSettingValueByCode("reserveDays");//在方法的底层添加了this.CurrentUserInfo.ClientID参数
-            //int _reserveDays = 5;//定义时间
-            //if (string.IsNullOrEmpty(reserveDays) || int.TryParse(reserveDays, out _reserveDays) == false)//转换了数据
-            //{
-            //    _reserveDays = 5;
-            //}
-            //if (_reserveDays < 1)
-            //{
-            //    throw new APIException("该客户没有设置的预约时期小于1") { ErrorCode = 333 };
-            //}
-
-            // //查询配送的分割时间点
-            //var TimeSplit = _CustomerBasicSettingBLL.GetSettingValueByCode("TimeSplit");//在方法的底层添加了this.CurrentUserInfo.ClientID参数
-            //if (string.IsNullOrEmpty(TimeSplit))
-            //{
-            //    TimeSplit = "17:00";
-            //}
-
-            // //取时间段配置，根据customerid和type来取数据
-            //SysTimeQuantumBLL _SysTimeQuantumBLL = new SysTimeQuantumBLL(this.CurrentUserInfo);
-            //var SysTimeQuantumList = _SysTimeQuantumBLL.Query(new IWhereCondition[] { 
-            //     new EqualsCondition() { FieldName = "Type", Value ="1"},
-            //     new EqualsCondition() { FieldName = "CustomerID", Value = this.CurrentUserInfo.ClientID}
-            // }, new OrderBy[] { new OrderBy() { FieldName = "DisplayIndex", Direction = OrderByDirections.Asc } });//查询字段
-            //if (SysTimeQuantumList == null || SysTimeQuantumList.Length == 0)
-            //{
-            //    throw new APIException("该客户没有设置配送时间段信息") { ErrorCode = 333 };
-            //}
-            ////根据时间点和配送总天数取时间
-            ////当前时间
-            //var today = DateTime.Now;
-            // var startTime= Convert.ToDateTime( today.ToString("yyyy-MM-dd 17:00" ));//
-            //try
-            //{
-            //     startTime = Convert.ToDateTime( today.ToString("yyyy-MM-dd " + TimeSplit));
-            //}
-            //catch
-            //{
-            //    throw new APIException("该客户配置的时间分割点:" + reserveDays + "不是时间类型") { ErrorCode = 333 };
-            //}
-            // //如果当前小于时间分割点，则由明天的时间
-            //List<reserveDays> reserveDaysList = new List<reserveDays>();
-            //if (today < startTime)
-            //{
-            //    var firstDay = today.AddDays(1).ToString("yyyy-MM-dd");
-            //    var first = new reserveDays { reserveDay = firstDay, TimeQuantums = SysTimeQuantumList.ToList() };
-            //    reserveDaysList.Add(first);
-            //}
-            // //第二天到总的预约天数
-            //for (int i = 2; i <= _reserveDays; i++)
-            //{
-            //    var day = today.AddDays(i).ToString("yyyy-MM-dd");
-            //    var oneDay = new reserveDays { reserveDay = day, TimeQuantums = SysTimeQuantumList.ToList() };
-            //    reserveDaysList.Add(oneDay);
-            //}
-
-            List<reserveDays> reserveDaysList = GetReverserDay(this.CurrentUserInfo);//获取当前时间可以预订的时期
-            rd.reserveDaysList = reserveDaysList;
-
-
-
-            #endregion
-
-
             #region 获取订单列表
 
             T_InoutBLL orderBll = new T_InoutBLL(this.CurrentUserInfo);
@@ -97,12 +29,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
             {
                 order_id = orderId
             }, null);
-            rd.OrderListInfo.reserveDay = orderList[0].reserveDay;
-            rd.OrderListInfo.reserveQuantum = orderList[0].reserveQuantum;
-            rd.OrderListInfo.reserveQuantumID = orderList[0].reserveQuantumID;
-            //   rd.OrderListInfo.reserveTime=orderList[0].reserveTime;
-
-
 
             #endregion
 
@@ -227,6 +153,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                 rd.OrderListInfo.OrderReasonTypeId = orderList[0].order_reason_id;
                 rd.OrderListInfo.ActualDecimal = orderList[0].actual_amount ?? 0;
 
+                 
+
                 rd.OrderListInfo.PaymentTypeCode = orderList[0].Payment_Type_Code;
                 rd.OrderListInfo.PaymentTypeName = orderList[0].Payment_Type_Name;
 
@@ -294,8 +222,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 
                 var tmp = ds.Tables[0].AsEnumerable().Select(t => new OrderDetailEntity()
                 {
-                    IsItemOnlyBuyOnce = t["IsItemOnlyBuyOnce"].ToString(),
-                    IsItemGoToShop = t["IsItemGoToShop"].ToString(),
                     ItemID = t["item_id"].ToString(),
                     ItemName = t["item_name"].ToString(),
                     SkuID = t["sku_id"].ToString(),
@@ -364,17 +290,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 
                 rd.OrderListInfo.OrderDetailInfo = tmp.ToArray();
             }
-            string IsItemGoToShop = "0";
-            var gotoShopCount = rd.OrderListInfo.OrderDetailInfo.Where(p => p.IsItemGoToShop == "1").Count();
-            if (gotoShopCount > 0)
-            {
-                IsItemGoToShop = "1";
-            }
-            rd.IsItemGoToShop = IsItemGoToShop;
+
+
             var vipIntegralDetailBll = new VipIntegralDetailBLL(this.CurrentUserInfo);
             // var integral = vipIntegralDetailBll.GetVipIntegralByOrder(orderId, pRequest.UserID);
             //使用积分
-            rd.OrderListInfo.OrderIntegral = Math.Abs(vipIntegralDetailBll.GetVipIntegralByOrder(orderId, pRequest.UserID));
+            rd.OrderListInfo.OrderIntegral = Math.Abs(vipIntegralDetailBll.GetVipIntegralByOrder(orderId, vipNo));
             //积分抵扣金额 add by Henry 2014-10-8
             //decimal integralAmountPre = vipBll.GetIntegralAmountPre(this.CurrentUserInfo.ClientID);//获取积分金额比例
             //rd.OrderListInfo.UseIntegralToAmount =rd.OrderListInfo.OrderIntegral*(integralAmountPre>0?integralAmountPre:0.01M);
@@ -388,13 +309,18 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 
             var vipAmountDetailBll = new VipAmountDetailBLL(this.CurrentUserInfo);
             //使用的账户余额
-            rd.OrderListInfo.VipEndAmount = Math.Abs(vipAmountDetailBll.GetVipAmountByOrderId(orderId, pRequest.UserID, 1));
+            rd.OrderListInfo.VipEndAmount = Math.Abs(vipAmountDetailBll.GetVipAmountByOrderId(orderId,vipNo, 1));
+            //使用余额，将余额从实付款中分开
+            if (rd.OrderListInfo.VipEndAmount != 0)
+            {
+                rd.OrderListInfo.ActualDecimal = rd.OrderListInfo.ActualDecimal - rd.OrderListInfo.VipEndAmount;
+            }
             //使用的返现金额
-            rd.OrderListInfo.ReturnAmount = Math.Abs(vipAmountDetailBll.GetVipAmountByOrderId(orderId, pRequest.UserID, 13));
+            rd.OrderListInfo.ReturnAmount = Math.Abs(vipAmountDetailBll.GetVipAmountByOrderId(orderId, vipNo, 13));
             //使用阿拉币和阿拉币抵扣 add by Henry 2014-10-13
             if (pRequest.ChannelId == "4")//阿拉丁APP调用
             {
-                decimal aldAmount = Math.Abs(vipAmountDetailBll.GetVipAmountByOrderId(orderId, pRequest.UserID, 11));
+                decimal aldAmount = Math.Abs(vipAmountDetailBll.GetVipAmountByOrderId(orderId, vipNo, 11));
                 rd.OrderListInfo.ALDAmount = aldAmount;
                 rd.OrderListInfo.ALDAmountMoney = aldAmount * 0.01M;
             }
@@ -453,131 +379,5 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
             #endregion
             return rd;
         }
-
-
-
-        #region 获取配送日期和时间段信息
-        public List<reserveDays> GetReverserDay(LoggingSessionInfo loggingSessionInfo)
-        {
-
-            //获取支持预约的总天数
-            CustomerBasicSettingBLL _CustomerBasicSettingBLL = new CustomerBasicSettingBLL(loggingSessionInfo);
-            var reserveDays = _CustomerBasicSettingBLL.GetSettingValueByCode("reserveDays");//在方法的底层添加了this.CurrentUserInfo.ClientID参数
-            int _reserveDays = 5;//定义时间
-            if (string.IsNullOrEmpty(reserveDays) || int.TryParse(reserveDays, out _reserveDays) == false)//转换了数据
-            {
-                _reserveDays = 5;
-            }
-            if (_reserveDays < 1)
-            {
-                throw new APIException("该商户没有设置的预约时期小于1") { ErrorCode = 333 };
-            }
-
-            //查询配送的分割时间点
-            var TimeSplit = _CustomerBasicSettingBLL.GetSettingValueByCode("TimeSplit");//在方法的底层添加了this.CurrentUserInfo.ClientID参数
-            if (string.IsNullOrEmpty(TimeSplit))
-            {
-                TimeSplit = "17:00";
-            }
-
-            //取时间段配置，根据customerid和type来取数据
-            SysTimeQuantumBLL _SysTimeQuantumBLL = new SysTimeQuantumBLL(loggingSessionInfo);
-            var SysTimeQuantumList = _SysTimeQuantumBLL.Query(new IWhereCondition[] { 
-                new EqualsCondition() { FieldName = "Type", Value ="1"},
-                new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID}
-            }, new OrderBy[] { new OrderBy() { FieldName = "DisplayIndex", Direction = OrderByDirections.Asc } });//查询字段
-            if (SysTimeQuantumList == null || SysTimeQuantumList.Length == 0)
-            {
-                throw new APIException("该商户没有设置配送时间段信息") { ErrorCode = 333 };
-            }
-            //根据时间点和配送总天数取时间
-            //当前时间
-            var today = DateTime.Now;
-            var startTime = Convert.ToDateTime(today.ToString("yyyy-MM-dd 17:00"));//
-            try
-            {
-                startTime = Convert.ToDateTime(today.ToString("yyyy-MM-dd " + TimeSplit));
-            }
-            catch
-            {
-                throw new APIException("该商户配置的时间分割点:" + reserveDays + "不是时间类型") { ErrorCode = 333 };
-            }
-            //如果当前小于时间分割点，则由明天的时间
-            List<reserveDays> reserveDaysList = new List<reserveDays>();
-            if (today < startTime)
-            {
-                var firstDay = today.AddDays(1).ToString("yyyy-MM-dd");
-                var first = new reserveDays { reserveDay = firstDay, TimeQuantums = SysTimeQuantumList.ToList() };
-                reserveDaysList.Add(first);
-            }
-            //第二天到总的预约天数
-            for (int i = 2; i <= _reserveDays; i++)
-            {
-                var day = today.AddDays(i).ToString("yyyy-MM-dd");
-                var oneDay = new reserveDays { reserveDay = day, TimeQuantums = SysTimeQuantumList.ToList() };
-                reserveDaysList.Add(oneDay);
-            }
-
-
-
-            var SysTimeQuantumNotServer = _SysTimeQuantumBLL.Query(new IWhereCondition[] { 
-                new EqualsCondition() { FieldName = "Type", Value ="99"},
-                new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID}
-            }, new OrderBy[] { new OrderBy() { FieldName = "DisplayIndex", Direction = OrderByDirections.Asc } });//查询字段
-
-            if (SysTimeQuantumNotServer != null && SysTimeQuantumNotServer.Length == 2)//开始结束
-            {
-          //      List<reserveDays> reserveDaysListTemp = new List<reserveDays>();
-                DateTime notServerStart;//
-                try
-                {
-                    notServerStart = Convert.ToDateTime(SysTimeQuantumNotServer[0].Quantum);
-                }
-                catch
-                {
-                    throw new APIException("该商户配置的不服务开始时间不是时间类型") { ErrorCode = 333 };
-                }
-                DateTime notServerEnd;//
-                try
-                {
-                    notServerEnd = Convert.ToDateTime(SysTimeQuantumNotServer[1].Quantum);
-                }
-                catch
-                {
-                    throw new APIException("该商户配置的不服务结束时间不是时间类型") { ErrorCode = 333 };
-                }
-                //先去到时
-                bool removeFlag = false;
-                for (int i = reserveDaysList.Count - 1; i >= 0;i-- )//从list尾部开始删除
-                {
-                    var item = reserveDaysList[i];
-                    DateTime dtTemp = Convert.ToDateTime(item.reserveDay);
-                    if (dtTemp >= notServerStart && dtTemp <= notServerEnd)
-                    {
-                       // reserveDaysListTemp.Add(item);
-                        reserveDaysList.Remove(item);
-                        removeFlag = true;
-                    }
-                }
-                //如果是五点之前就补齐五天，如果是五点之后就补齐四天
-                int needAdd=_reserveDays - reserveDaysList.Count;//要先加出来，如果在循环里加，列表的数量会变化
-                if (removeFlag)//如果有被删除的时间段
-                {
-                    for (int i = 1; i <= needAdd; i++)//
-                    {
-                        var day = notServerEnd.AddDays(i).ToString("yyyy-MM-dd");
-                        var oneDay = new reserveDays { reserveDay = day, TimeQuantums = SysTimeQuantumList.ToList() };
-                        reserveDaysList.Add(oneDay);
-                    }
-                }
-
-
-            }
-            
-            return reserveDaysList;
-
-
-        }
-        #endregion
     }
 }

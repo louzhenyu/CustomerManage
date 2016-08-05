@@ -80,7 +80,8 @@
                       </div>
                    <div class="commonSelectWrap numberBox-100">
                               <div class="checkBox" data-flag="isextramoney"><em></em> <span>可补差价 </span></div>
-                              <a href="javascript:void(0)" class="tip easyui-tooltip" title="我是一个提示一个提示一个提示" ></a>
+                              <a href="javascript:void(0)" class="tip easyui-tooltip" title="提示文字可补差价，原卡价格100
+                                                                                             元" ></a>
                      </div>
 
 

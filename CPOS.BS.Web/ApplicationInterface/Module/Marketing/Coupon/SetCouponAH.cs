@@ -47,7 +47,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                         couponTypeEntity.CouponTypeDesc = para.CouponTypeDesc;
                         couponTypeEntity.CouponCategory = para.CouponCategory;
                         couponTypeEntity.ParValue = para.ParValue;
-                        couponTypeEntity.IssuedQty = para.IssuedQty;
                         couponTypeEntity.IsVoucher = 0;
                         couponTypeEntity.UsableRange = para.UsableRange;
                         if (para.BeginTime != DateTime.MinValue)
@@ -61,6 +60,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                         couponTypeEntity.ConditionValue = para.ConditionValue;
                         couponTypeEntity.SuitableForStore = para.SuitableForStore;
                         couponTypeEntity.CustomerId = loggingSessionInfo.ClientID;
+
+                        couponTypeEntity.IsNotLimitQty = para.IsNotLimitQty;
+                        if (para.IsNotLimitQty != null && para.IsNotLimitQty==1)
+                            couponTypeEntity.IssuedQty = 10000;
+                        else
+                            couponTypeEntity.IssuedQty = para.IssuedQty;
 
                         couponTypeEntity.IsRepeatable = 0;
                         couponTypeEntity.IsMixable = 0;

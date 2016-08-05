@@ -12,6 +12,7 @@ namespace JIT.CPOS.DTO.Module.Marketing.Activity.Request
         /// 奖品明细ID
         /// </summary>
         public string PrizesDetailID { get; set; }
+        public string ActivityID { get; set; }
         public void Validate() { }
     }
 }

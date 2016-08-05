@@ -30,8 +30,8 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.OrderReward
             {
                 CustomerID = loggingSessionInfo.ClientID,
                 LogSession = loggingSessionInfo.JsonSerialize(),
-                OrderInfo = orderInfo.JsonSerialize()
-
+                OrderInfo = orderInfo.JsonSerialize(),
+                OrderID = orderInfo.order_id
             });
             //如果往缓存redis里写入不成功，还是按照原来的老方法往数据库里写
             if (response.Code != ResponseCode.Success)

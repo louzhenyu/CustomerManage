@@ -61,22 +61,6 @@ namespace JIT.CPOS.BS.BLL
             }
             return PriceList;
         }
-        /// <summary>
-        ///获取订单里商品是否只购买一次后者只能到店自提，已经被几个订单购买了
-        /// </summary>
-        /// <param name="skuIds"></param>
-        /// <returns></returns>
-        public DataSet GetOnlyBuyShopOrder(string skuIds, string userId)
-        {
-            IList<SkuPrice> PriceList = new List<SkuPrice>();
-            DataSet ds = new DataSet();
-            ds = skuPriceService.GetOnlyBuyShopOrder(skuIds, userId);
-            //if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-            //{
-            //    PriceList = DataTableToObject.ConvertToList<SkuPrice>(ds.Tables[0]);
-            //}
-            return ds;
-        }
 
         #region 删除sku相关价格
         /// <summary>

@@ -116,7 +116,8 @@ ELSE
 	b.EndTime
 END AS 'EndData',
  a.ObjectId,
- w.[Author] as Text
+ w.[Author] as Text,
+b.IsNotLimitQty
 FROM
 	SetoffTools AS a
 LEFT JOIN CouponType AS b ON a.objectid = convert(nvarchar(40), b.coupontypeID)  

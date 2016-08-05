@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015/9/9 15:07:16
+ * Create On	:2016/7/13 11:56:02
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -78,7 +78,7 @@ namespace JIT.CPOS.BS.Entity
 		public Int32? SendCouponQty { get; set; }
 
 		/// <summary>
-		/// 0=正常；   1=暂停；   未开始、运行中和结束状态均根据开始时间和结束时间判断
+		/// 0=正常；   1=暂停；   未开始、运行中和结束状态均根据开始时间和结束时间判断   (1=暂停；未开始=2；运行中=3；已结束=4；)
 		/// </summary>
 		public Int32? Status { get; set; }
 
@@ -96,6 +96,16 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public String CustomerID { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? TargetCount { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String Remark { get; set; }
 
 		/// <summary>
 		/// 

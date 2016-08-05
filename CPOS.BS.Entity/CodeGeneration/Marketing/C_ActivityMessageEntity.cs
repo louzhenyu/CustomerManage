@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015/9/9 15:07:16
+ * Create On	:2016/6/28 17:13:19
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -96,6 +96,16 @@ namespace JIT.CPOS.BS.Entity
 		/// 0=Õý³£×´Ì¬£»1=É¾³ý×´Ì¬
 		/// </summary>
 		public Int32? IsDelete { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? AdvanceDays { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? SendAtHour { get; set; }
 
 
         #endregion

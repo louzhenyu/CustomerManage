@@ -107,9 +107,8 @@ namespace JIT.CPOS.BS.DataAccess
             }
             List<string> list = new List<string>();
             targetStr = System.Web.HttpUtility.UrlDecode(targetStr);
-            string sql = "select menu_id from t_menu where status=1 and url_path=@targetStr and customer_id=@customer_id";
+            string sql = "select menu_id from t_menu where status=1 and url_path LIKE '%" + targetStr + "%' and customer_id=@customer_id";
             List<SqlParameter> plist = new List<SqlParameter>() { 
-            new SqlParameter("@targetStr",targetStr),
             new SqlParameter("@customer_id",CurrentUserInfo.ClientID)
             };
             var result = this.SQLHelper.ExecuteDataset(CommandType.Text, sql, plist.ToArray());

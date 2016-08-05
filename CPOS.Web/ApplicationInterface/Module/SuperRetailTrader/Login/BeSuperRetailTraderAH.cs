@@ -54,6 +54,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.SuperRetailTrader.Login
                                 SuperRetailTraderEntity.SuperRetailTraderLogin = VipInfo.Phone;
                                 string strSuperPwd = StringUtil.GetRandomStr(6);//生成6位随机数,为超级分销商密码生成使用
                                 SuperRetailTraderEntity.SuperRetailTraderPass = EncryptManager.Hash(strSuperPwd, HashProviderType.MD5);
+                                SuperRetailTraderEntity.SuperRetailTraderPassData = strSuperPwd;
                                 SuperRetailTraderEntity.SuperRetailTraderMan = VipInfo.VipRealName == null ? VipInfo.VipName : VipInfo.VipRealName;
                                 SuperRetailTraderEntity.SuperRetailTraderPhone = VipInfo.Phone;
                                 SuperRetailTraderEntity.SuperRetailTraderAddress = "";//目前因为没有填写详细地址的地方，给空值
@@ -140,6 +141,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.SuperRetailTrader.Login
                 {
                     rd.IsSuperRetailTrader = 2;//已成为分销商
                     rd.SuperRetailTraderLogin = T_SuperRetailTraderInfo.SuperRetailTraderLogin;
+                    rd.SuperRetailTraderPass = T_SuperRetailTraderInfo.SuperRetailTraderPassData;
                 }
                 
             }

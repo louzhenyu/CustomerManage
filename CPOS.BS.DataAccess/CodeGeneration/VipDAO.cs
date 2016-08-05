@@ -106,7 +106,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@Email",SqlDbType.NVarChar),
 					new SqlParameter("@Status",SqlDbType.Int),
 					new SqlParameter("@VipSourceId",SqlDbType.NVarChar),
-					new SqlParameter("@Integration",SqlDbType.Int),
+					new SqlParameter("@Integration",SqlDbType.Decimal),
 					new SqlParameter("@ClientID",SqlDbType.NVarChar),
 					new SqlParameter("@RecentlySalesTime",SqlDbType.DateTime),
 					new SqlParameter("@RegistrationTime",SqlDbType.DateTime),
@@ -564,9 +564,7 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.IsSotre != null)
                 strSql.Append("[IsSotre]=@IsSotre,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime != null)
-                strSql.Append("[LastUpdateTime]=@LastUpdateTime,");
-            if (pIsUpdateNullField || pEntity.IsDelete != null)
-                strSql.Append("[IsDelete]=@IsDelete ");
+                strSql.Append("[LastUpdateTime]=@LastUpdateTime ");
             strSql.Append(" where VIPID=@VIPID ");
             SqlParameter[] parameters = 
             {
@@ -587,7 +585,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@Email",SqlDbType.NVarChar),
 					new SqlParameter("@Status",SqlDbType.Int),
 					new SqlParameter("@VipSourceId",SqlDbType.NVarChar),
-					new SqlParameter("@Integration",SqlDbType.Int),
+					new SqlParameter("@Integration",SqlDbType.Decimal),
 					new SqlParameter("@ClientID",SqlDbType.NVarChar),
 					new SqlParameter("@RecentlySalesTime",SqlDbType.DateTime),
 					new SqlParameter("@RegistrationTime",SqlDbType.DateTime),
@@ -665,8 +663,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@ShareUserId",SqlDbType.NVarChar),
 					new SqlParameter("@IsSotre",SqlDbType.Int),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
-                    new SqlParameter("@VIPID",SqlDbType.NVarChar),
-                    new SqlParameter("@IsDelete",SqlDbType.Int)
+					new SqlParameter("@VIPID",SqlDbType.NVarChar)
             };
             parameters[0].Value = pEntity.VipName;
             parameters[1].Value = pEntity.VipLevel;
@@ -764,15 +761,13 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[93].Value = pEntity.IsSotre;
             parameters[94].Value = pEntity.LastUpdateTime;
             parameters[95].Value = pEntity.VIPID;
-            parameters[96].Value = pEntity.IsDelete;
 
             //Ö´ÐÐÓï¾ä
             int result = 0;
-            string sql = strSql.ToString().Replace(", where", " where");
             if (pTran != null)
-                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql, parameters);
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
             else
-                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql, parameters);
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters);
         }
 
         /// <summary>
@@ -1342,7 +1337,7 @@ namespace JIT.CPOS.BS.DataAccess
             }
             if (pReader["Integration"] != DBNull.Value)
             {
-                pInstance.Integration = Convert.ToInt32(pReader["Integration"]);
+                pInstance.Integration = Convert.ToDecimal(pReader["Integration"]);
             }
             if (pReader["ClientID"] != DBNull.Value)
             {

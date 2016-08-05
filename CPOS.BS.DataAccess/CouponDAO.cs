@@ -375,7 +375,6 @@ namespace JIT.CPOS.BS.DataAccess
         #region 获取优惠劵列表
         /// <summary>
         /// 获取优惠劵列表
-        /// 有效期精确到 23:59:59 
         /// </summary>
         /// <param name="vipID"></param>
         /// <param name="TypeID"></param>
@@ -386,15 +385,17 @@ namespace JIT.CPOS.BS.DataAccess
             StringBuilder strb = new StringBuilder();
             strb.AppendFormat(@" SELECT a.CouponID,CouponDesc,CouponCode,a.CouponTypeID,b.CouponTypeName,a.Status,convert(date,BeginDate)  BeginDate,convert(date,EndDate) EndDate,b.Discount
              ,b.ParValue,b.IsRepeatable,b.IsMixable,b.ValidPeriod,a.CoupnName as CouponName,
-             (case when BeginDate>getdate() then '-1' when EndDate='9999-12-31 00:00:00.000' then '0'  when EndDate is null then '0'  when  GETDATE() between BeginDate and  EndDate then '0' else '1' end) isexpired,
-             (case when EndDate='9999-12-31 00:00:00.000' then '1'  when EndDate is null then '1' else '0' end) iseffective,u.Comment 
+           (case when BeginDate>getdate() then '-1' when EndDate='9999-12-31 00:00:00.000' then '0'  when EndDate is null then '0'  when  CONVERT(VARCHAR(10), GETDATE(), 120) between convert(date,BeginDate) and  convert(date,EndDate) then '0' else '1' end) isexpired,
+           (case when EndDate='9999-12-31 00:00:00.000' then '1'  when EndDate is null then '1' else '0' end) iseffective,u.Comment 
             FROM Coupon a 
             INNER JOIN CouponType b ON a.CouponTypeID = b.CouponTypeID 
             LEFT JOIN CouponSource c ON b.CouponSourceID = c.CouponSourceID 
             INNER JOIN dbo.VipCouponMapping d ON a.CouponID = d.CouponID 
-            LEFT JOIN couponUse u on  a.CouponID=u.CouponID 
-            WHERE a.IsDelete = 0 AND b.IsDelete = 0 AND d.IsDelete = 0 AND a.Status=0 and a.EndDate >= getdate()  
-            AND NOT EXISTS(SELECT 1 FROM TOrderCouponMapping t WHERE t.IsDelete = 0 AND t.CouponId = a.CouponId) 
+            LEFT JOIN couponUse u on  a.CouponID=u.CouponID  and u.IsDelete=0
+            WHERE a.IsDelete = 0 AND b.IsDelete = 0 AND d.IsDelete = 0 " +
+                //AND a.Status=2 and convert(varchar(10),a.EndDate,120) >= convert(varchar(10),getdate(),120)
+      //     AND NOT EXISTS(SELECT 1 FROM TOrderCouponMapping t WHERE t.IsDelete = 0 AND t.CouponId = a.CouponId
+         @"
             AND d.VIPID = '{0}'
             ", vipID);
             if (!string.IsNullOrEmpty(TypeID))
@@ -443,44 +444,22 @@ namespace JIT.CPOS.BS.DataAccess
             return ds;
 
         }
+        #endregion
 
+
+        #region  根据会员ID获取扫码详情
         /// <summary>
-        /// 获取优惠券详情
+        /// 获取会员扫码详情
         /// </summary>
-        /// <param name="couponCode"></param>
+        /// <param name="userID"></param>
         /// <returns></returns>
-        public DataSet GetCouponDetail(string couponCode)
+        public DataSet GetVipCartDetail(string userID)
         {
             StringBuilder strb = new StringBuilder();
-            strb.AppendFormat(@"SELECT a.CouponID,CouponDesc,CouponCode,a.CouponTypeID,b.CouponTypeName,b.Discount,a.CoupnName as CouponName
-                                 ,b.CouponTypeCode,b.CouponCategory
-                                 ,a.Status,convert(datetime,BeginDate)  BeginDate,convert(datetime,EndDate) EndDate
-                                 ,b.ParValue,b.IsRepeatable,b.IsMixable,b.ValidPeriod,f.VipName,f.WeiXin,
-                                 (case when BeginDate>getdate() then '-1'  when EndDate='9999-12-31 00:00:00.000' then '0' when EndDate is null then '0' when  GETDATE() <= EndDate then '0' else '1' end) isexpired,
-                                 (case when EndDate='9999-12-31 00:00:00.000' then '1' when EndDate is null then '1' else '0' end) iseffective
-                                 ,(case when EndDate='9999-12-31 00:00:00.000' then 0 when EndDate is null then 0 else (select datediff( dd, getdate(), EndDate)) end) diffDay
-                                 --,[SettingValue] LogoUrl,'' FollowUrl 
-                                 FROM Coupon a 
-                                 INNER JOIN CouponType b ON a.CouponTypeID = b.CouponTypeID 
-                                 --LEFT JOIN CouponSource c ON b.CouponSourceID = c.CouponSourceID 
-                                 INNER JOIN dbo.VipCouponMapping d ON a.CouponID = d.CouponID 
-                                 left join  Vip f on d.VIPID=f.VIPID
-                                 --LEFT JOIN [CustomerBasicSetting] CBS ON a.CustomerID=cbs.[CustomerID] and [SettingCode]='WebLogo' and CBS.[IsDelete]=0
-                                 WHERE a.IsDelete = 0 AND b.IsDelete = 0 AND d.IsDelete = 0
-                                 and a.CouponCode='{0}' ", couponCode);
-            //strb.AppendFormat(" and a.CustomerID='{0}'", CurrentUserInfo.CurrentLoggingManager.Customer_Id);//考虑一下，暂时不要？因为洗衣客培训环境里用的是是正式环境的券。
-            //上面加上商户的这个，在洗衣项目里暂时去掉，在连锁云掌柜这个项目里要加上******！！！
-
-
-            //if (!string.IsNullOrEmpty(userID) && userID != "-1")
-            //{
-            //    strb.AppendFormat(" and d.VIPID='{0}'", userID);
-            //}
+            strb.AppendFormat(@"select A.VipCardID,A.VipCardCode,A.CreateTime,A.CreateBy,A.EndDate from VipCard A,VipCardVipMapping B where A.VipCardID = B.VipCardID AND B.VIPID = '{0}' and A.IsDelete =0 ", userID);
             DataSet ds = this.SQLHelper.ExecuteDataset(strb.ToString());
             return ds;
-
         }
-
         #endregion
 
         #region 使用优惠劵
@@ -498,22 +477,6 @@ namespace JIT.CPOS.BS.DataAccess
             return res;
 
         }
-
-        /// <summary>
-        /// 使用优惠劵
-        /// </summary>
-        /// <param name="couponID">优惠劵ID</param>
-        /// <param name="doorID">使用门店ID</param>
-        /// <returns></returns>
-        public int ConsumeCoupon(string couponID, string doorID, string billNo)
-        {
-            StringBuilder strb = new StringBuilder();
-            strb.AppendFormat("update Coupon  set LastUpdateBy='{0}' ,LastUpdateTime=getdate() , DoorID='{1}' , Status='1' where CouponID='{2}' and IsDelete='0' and Status<>'1'  ", this.CurrentUserInfo.UserID, doorID, couponID);
-            int res = this.SQLHelper.ExecuteNonQuery(strb.ToString());
-            return res;
-
-        }
-
         #endregion
 
         /// <summary>
@@ -773,23 +736,32 @@ namespace JIT.CPOS.BS.DataAccess
         public DataSet GetCouponCountByCouponTypeID(string strCouponTypeId)
         {
             //string strSql = string.Format("SELECT  COUNT(1) CouponCount FROM    Coupon a WITH ( NOLOCK )WHERE   a.IsDelete = 0     AND a.[Status] = 0 AND a.CouponTypeID = '{0}'", strCouponTypeId);
-            string strSql = string.Format(@"
-                                            SELECT f.CouponTypeName, F.CouponTypeID,(F.CouponCount-ISNULL(S.CouponCount,0) ) RemainCount
-                                            FROM    ( SELECT    a.CouponTypeID ,a.CouponTypeName,
-                                                                IssuedQty CouponCount
-                                                      FROM      CouponType a WITH ( NOLOCK )
-                                                      WHERE     a.IsDelete = 0
-                                                                AND a.CouponTypeID = '{0}'
-                                                    ) F
-                                                    LEFT JOIN ( SELECT  p.CouponTypeID ,
-                                                                        SUM(CountTotal) CouponCount
-                                                                FROM    dbo.PrizeCouponTypeMapping P WITH ( NOLOCK )
-                                                                        INNER JOIN dbo.LPrizes L WITH ( NOLOCK ) ON P.PrizesID = L.PrizesID
-                                                                                                          AND L.IsDelete = 0
-                                                                WHERE   CouponTypeID = '{0}'
-                                                                        AND P.IsDelete = 0
-                                                                GROUP BY p.CouponTypeID
-                                                              ) S ON F.CouponTypeID = S.CouponTypeID
+            string strSql = string.Format(@"IF EXISTS ( SELECT  *
+                                                    FROM    dbo.CouponType WITH ( NOLOCK )
+                                                    WHERE   CouponTypeID = '{0}'
+                                                            AND [IsNotLimitQty] = 0 )
+                                            BEGIN
+
+                                                SELECT  f.CouponTypeName ,
+                                                        F.CouponTypeID ,
+                                                        ( F.CouponCount - ISNULL(S.CouponCount, 0) ) RemainCount
+                                                FROM    ( SELECT    a.CouponTypeID ,
+                                                                    a.CouponTypeName ,
+                                                                    IssuedQty CouponCount
+                                                          FROM      CouponType a WITH ( NOLOCK )
+                                                          WHERE     a.IsDelete = 0
+                                                                    AND a.CouponTypeID = '{0}'
+                                                        ) F
+                                                        LEFT JOIN ( SELECT  p.CouponTypeID ,
+                                                                            SUM(CountTotal) CouponCount
+                                                                    FROM    dbo.PrizeCouponTypeMapping P WITH ( NOLOCK )
+                                                                            INNER JOIN dbo.LPrizes L WITH ( NOLOCK ) ON P.PrizesID = L.PrizesID
+                                                                                                      AND L.IsDelete = 0
+                                                                    WHERE   CouponTypeID = '{0}'
+                                                                            AND P.IsDelete = 0
+                                                                    GROUP BY p.CouponTypeID
+                                                                  ) S ON F.CouponTypeID = S.CouponTypeID
+                                            END
                                             ", strCouponTypeId);
             return SQLHelper.ExecuteDataset(strSql);
 
@@ -832,18 +804,6 @@ namespace JIT.CPOS.BS.DataAccess
             return Convert.ToInt32(result.Value.ToString());
         }
         /// <summary>
-        /// 批量核销优惠券(用友API使用)
-        /// </summary>
-        /// <param name="dt"></param>
-        /// <returns></returns>
-        public string BatUpdateCouponUse(DataTable dt)
-        {
-            string spName = "Proc_YY_BatUpdateCouponUse";
-            List<SqlParameter> sqlParameter = new List<SqlParameter>();
-            sqlParameter.Add(new SqlParameter("@dt", dt));
-            return this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, spName, sqlParameter.ToArray()).Tables[0].Rows[0]["Result"].ToString();
-        }
-		/// <summary>
         /// 多张优惠券绑定vip
         /// </summary>
         /// <param name="strVipId"></param>

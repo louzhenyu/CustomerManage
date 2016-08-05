@@ -145,7 +145,7 @@
                 var $this = $(this),
 					$tr = $this.parents('tr'),
 					flag = $this.data('flag'),
-					rowIndex=$(this).data("index");
+					rowIndex=$(this).parents('tr').attr("datagrid-row-index");
                 that.elems.tabel.datagrid('selectRow', rowIndex);
 				var row = that.elems.tabel.datagrid('getSelected'),
 					userId = row.User_Id;	
@@ -213,6 +213,7 @@
 							   */
 							   $('#gridTable').datagrid('deleteRow',rowIndex);
 							   var obj = $('#gridTable').datagrid('getData').rows;
+
 							   $('#gridTable').datagrid('loadData',obj);
 						   }
 						});
@@ -419,7 +420,7 @@
 				},
 				success: function(data){
 					if(data.success){
-						window.history.go(-1);
+						$.util.toNewUrlPath("staffList.aspx")
 					}else{
 						$.util.isLoading(true);
 						alert(data.msg);

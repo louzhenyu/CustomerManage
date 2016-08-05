@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015-8-19 17:43:07
+ * Create On	:2016/6/27 14:14:28
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -38,7 +38,7 @@ namespace JIT.CPOS.BS.DataAccess
     /// 2.实现IQueryable接口
     /// 3.实现Load方法
     /// </summary>
-    public partial class RechargeOrderDAO : Base.BaseCPOSDAO, ICRUDable<RechargeOrderEntity>, IQueryable<RechargeOrderEntity>
+    public partial class RechargeOrderDAO : BaseCPOSDAO, ICRUDable<RechargeOrderEntity>, IQueryable<RechargeOrderEntity>
     {
         #region 构造函数
         /// <summary>
@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [RechargeOrder](");
-            strSql.Append("[OrderNo],[OrderDesc],[VipID],[VipCardNo],[UnitCode],[TotalAmount],[ActuallyPaid],[ReturnAmount],[PayPoints],[ReceivePoints],[PayerID],[PayID],[Status],[CustomerID],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[OrderID])");
+            strSql.Append("[OrderNo],[OrderDesc],[VipID],[VipCardNo],[UnitCode],[TotalAmount],[ActuallyPaid],[ReturnAmount],[PayPoints],[ReceivePoints],[PayerID],[PayID],[Status],[CustomerID],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[UnitId],[UserId],[AmountFromPayPoints],[PayDateTime],[VipCardTypeId],[OrderID])");
             strSql.Append(" values (");
-            strSql.Append("@OrderNo,@OrderDesc,@VipID,@VipCardNo,@UnitCode,@TotalAmount,@ActuallyPaid,@ReturnAmount,@PayPoints,@ReceivePoints,@PayerID,@PayID,@Status,@CustomerID,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@OrderID)");            
+            strSql.Append("@OrderNo,@OrderDesc,@VipID,@VipCardNo,@UnitCode,@TotalAmount,@ActuallyPaid,@ReturnAmount,@PayPoints,@ReceivePoints,@PayerID,@PayID,@Status,@CustomerID,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@UnitId,@UserId,@AmountFromPayPoints,@PayDateTime,@VipCardTypeId,@OrderID)");            
 
 			Guid? pkGuid;
 			if (pEntity.OrderID == null)
@@ -112,6 +112,11 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
+					new SqlParameter("@UnitId",SqlDbType.NVarChar),
+					new SqlParameter("@UserId",SqlDbType.NVarChar),
+					new SqlParameter("@AmountFromPayPoints",SqlDbType.Decimal),
+					new SqlParameter("@PayDateTime",SqlDbType.DateTime),
+					new SqlParameter("@VipCardTypeId",SqlDbType.Int),
 					new SqlParameter("@OrderID",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.OrderNo;
@@ -133,7 +138,12 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[16].Value = pEntity.LastUpdateTime;
 			parameters[17].Value = pEntity.LastUpdateBy;
 			parameters[18].Value = pEntity.IsDelete;
-			parameters[19].Value = pkGuid;
+			parameters[19].Value = pEntity.UnitId;
+			parameters[20].Value = pEntity.UserId;
+			parameters[21].Value = pEntity.AmountFromPayPoints;
+			parameters[22].Value = pEntity.PayDateTime;
+			parameters[23].Value = pEntity.VipCardTypeId;
+			parameters[24].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -258,7 +268,19 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
-                strSql.Append( "[LastUpdateBy]=@LastUpdateBy");
+                strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
+            if (pIsUpdateNullField || pEntity.UnitId!=null)
+                strSql.Append( "[UnitId]=@UnitId,");
+            if (pIsUpdateNullField || pEntity.UserId!=null)
+                strSql.Append( "[UserId]=@UserId,");
+            if (pIsUpdateNullField || pEntity.AmountFromPayPoints!=null)
+                strSql.Append( "[AmountFromPayPoints]=@AmountFromPayPoints,");
+            if (pIsUpdateNullField || pEntity.PayDateTime!=null)
+                strSql.Append( "[PayDateTime]=@PayDateTime,");
+            if (pIsUpdateNullField || pEntity.VipCardTypeId!=null)
+                strSql.Append( "[VipCardTypeId]=@VipCardTypeId");
+            if (strSql.ToString().EndsWith(","))
+                strSql.Remove(strSql.Length - 1, 1);
             strSql.Append(" where OrderID=@OrderID ");
             SqlParameter[] parameters = 
             {
@@ -278,6 +300,11 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@CustomerID",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
+					new SqlParameter("@UnitId",SqlDbType.NVarChar),
+					new SqlParameter("@UserId",SqlDbType.NVarChar),
+					new SqlParameter("@AmountFromPayPoints",SqlDbType.Decimal),
+					new SqlParameter("@PayDateTime",SqlDbType.DateTime),
+					new SqlParameter("@VipCardTypeId",SqlDbType.Int),
 					new SqlParameter("@OrderID",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.OrderNo;
@@ -296,7 +323,12 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[13].Value = pEntity.CustomerID;
 			parameters[14].Value = pEntity.LastUpdateTime;
 			parameters[15].Value = pEntity.LastUpdateBy;
-			parameters[16].Value = pEntity.OrderID;
+			parameters[16].Value = pEntity.UnitId;
+			parameters[17].Value = pEntity.UserId;
+			parameters[18].Value = pEntity.AmountFromPayPoints;
+			parameters[19].Value = pEntity.PayDateTime;
+			parameters[20].Value = pEntity.VipCardTypeId;
+			parameters[21].Value = pEntity.OrderID;
 
             //执行语句
             int result = 0;
@@ -622,6 +654,16 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
             if (pQueryEntity.IsDelete!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
+            if (pQueryEntity.UnitId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "UnitId", Value = pQueryEntity.UnitId });
+            if (pQueryEntity.UserId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "UserId", Value = pQueryEntity.UserId });
+            if (pQueryEntity.AmountFromPayPoints!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "AmountFromPayPoints", Value = pQueryEntity.AmountFromPayPoints });
+            if (pQueryEntity.PayDateTime!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "PayDateTime", Value = pQueryEntity.PayDateTime });
+            if (pQueryEntity.VipCardTypeId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipCardTypeId", Value = pQueryEntity.VipCardTypeId });
 
             return lstWhereCondition.ToArray();
         }
@@ -716,6 +758,26 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["IsDelete"] != DBNull.Value)
 			{
 				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
+			}
+			if (pReader["UnitId"] != DBNull.Value)
+			{
+				pInstance.UnitId =  Convert.ToString(pReader["UnitId"]);
+			}
+			if (pReader["UserId"] != DBNull.Value)
+			{
+				pInstance.UserId =  Convert.ToString(pReader["UserId"]);
+			}
+			if (pReader["AmountFromPayPoints"] != DBNull.Value)
+			{
+				pInstance.AmountFromPayPoints =  Convert.ToDecimal(pReader["AmountFromPayPoints"]);
+			}
+			if (pReader["PayDateTime"] != DBNull.Value)
+			{
+				pInstance.PayDateTime =  Convert.ToDateTime(pReader["PayDateTime"]);
+			}
+			if (pReader["VipCardTypeId"] != DBNull.Value)
+			{
+				pInstance.VipCardTypeId =   Convert.ToInt32(pReader["VipCardTypeId"]);
 			}
 
         }

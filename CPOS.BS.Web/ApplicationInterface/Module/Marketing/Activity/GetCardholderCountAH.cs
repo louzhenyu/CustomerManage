@@ -19,9 +19,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var ActivityBLL = new C_ActivityBLL(loggingSessionInfo);
 
-            
-                rd.Count = ActivityBLL.GetholderCardCount(para.VipCardTypeID, null);
-            
+            rd.Count = ActivityBLL.GetTargetCount(para.VipCardTypeIDList, para.ActivityType, para.StartTime,
+                para.EndTime, para.IsLongTime);
 
             return rd;
         }

@@ -46,7 +46,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
                         Gender = para.Gender,
                         Email = para.Email,
                         Col18 = para.IDCard,  //身份证
-                        IDNumber=para.IDCard,
                         Status = 2,         //已注册状态
                         VipSourceId = "20", //来源开卡
                         ClientID = loggingSessionInfo.ClientID
@@ -91,7 +90,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
                         vipCardEntity.IsGift = para.IsGift;
                         //vipCardEntity.SalesUserId = para.SalesUserId;
                         vipCardEntity.SalesUserName = para.SalesUserName;   //用户输入名称，后期需要根据姓名查找用户ID，更新到SalesUserId
-                        vipCardEntity.Operator = loggingSessionInfo.UserID; //开卡人，即入会员工
+                        vipCardEntity.CreateBy = loggingSessionInfo.UserID; //开卡人，即入会员工
                         vipCardBLL.Update(vipCardEntity, pTran);
                     }
                     else
@@ -100,7 +99,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
                     //新增会员卡操作状态信息
                     var vipCardStatusChangeLogEntity = new VipCardStatusChangeLogEntity()
                     {
-                        LogID = Guid.NewGuid().ToString("N"),//.Replace("-", ""),
+                        LogID = Guid.NewGuid().ToString().Replace("-", ""),
                         VipCardStatusID = vipCardEntity.VipCardStatusId,
                         VipCardID = para.VipCardID,
                         Action = "开卡",

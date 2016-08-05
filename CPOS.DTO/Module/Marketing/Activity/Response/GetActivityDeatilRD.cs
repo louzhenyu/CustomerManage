@@ -12,6 +12,10 @@ namespace JIT.CPOS.DTO.Module.Marketing.Response
         /// 活动ID
         /// </summary>
         public string ActivityID { get; set; }
+        /// <summary>
+        /// 活动类型
+        /// </summary>
+        public int ActivityType { get; set; }
 
         /// <summary>
         /// 活动名称
@@ -36,15 +40,19 @@ namespace JIT.CPOS.DTO.Module.Marketing.Response
         /// <summary>
         /// 持卡人数
         /// </summary>
-        public int holderCardCount { get; set; }
+        public int HolderCardCount { get; set; }
         /// <summary>
-        /// 卡类型ID
+        /// 是否全部卡类型
         /// </summary>
-        public string VipCardTypeID { get; set; }
+        public int IsAllCardType { get; set; }
         /// <summary>
-        /// 会员分组ID
+        /// 活动状态
         /// </summary>
-        public string VipGroupingID { get; set; } 
+        public int Status { get; set; }
+        /// <summary>
+        /// 卡类型ID集合
+        /// </summary>
+        public List<string> VipCardTypeID { get; set; }
         /// <summary>
         /// 奖品集合
         /// </summary>
@@ -53,5 +61,9 @@ namespace JIT.CPOS.DTO.Module.Marketing.Response
         /// 消息集合
         /// </summary>
         public List<ActivityMessageInfo> ActivityMessageInfoList { get; set; }
+        /// <summary>
+        /// 充值策略集合
+        /// </summary>
+        public List<RechargeStrategyInfo> RechargeStrategyInfoList { get; set; }
     }
 }

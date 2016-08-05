@@ -43,28 +43,43 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
 
             if (string.IsNullOrEmpty(customerId))
             {
-                throw new APIException("客户代码对应的客户不存在") { ErrorCode = Error_CustomerCode_NotExist };              
+                throw new APIException("客户代码对应的客户不存在") { ErrorCode = Error_CustomerCode_NotExist };
             }
             var currentUserInfo = Default.GetBSLoggingSession(customerId, "1");
 
             VipBLL vipBll = new VipBLL(currentUserInfo);
-          
+
             #region 判断用户是否存在
             if (!vipBll.JudgeUserExist(phone, customerId))
             {
-                throw new APIException("用户名无效") { ErrorCode = Error_UserName_InValid }; 
+                throw new APIException("用户名无效") { ErrorCode = Error_UserName_InValid };
             }
-            
+
             #endregion
 
             #region 判断密码是否正确
-            if (!vipBll.JudgeUserPasswordExist(phone, customerId,password))
+            if (!vipBll.JudgeUserPasswordExist(phone, customerId, password))
             {
                 throw new APIException("登录密码错误") { ErrorCode = Error_Password_InValid };
             }
 
             #endregion
-
+            #region 判断是否有登录连锁掌柜App权限
+            var userRolesDs = vipBll.GetUserRoles(phone, customerId, password);
+            bool flag = false;
+            foreach (DataRow row in userRolesDs.Tables[0].Rows)
+            {
+                if (row["Def_App_Code"].ToString().ToUpper() == "APP")
+                {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag)
+            {
+                throw new APIException("该账号无权登录本系统") { ErrorCode = Error_Password_InValid };
+            }
+            #endregion
             #region 判断该客服人员是否有客服或操作订单的权限
             //if (!vipBll.JudgeUserRoleExist(phone, customerId, password))
             //{
@@ -76,10 +91,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             var ds = vipBll.GetUserIdByUserNameAndPassword(phone, customerId, password);
             rd.UserId = ds.Tables[0].Rows[0]["user_id"].ToString();
             rd.UserName = ds.Tables[0].Rows[0]["user_name"].ToString();
-            rd.Status =int.Parse(ds.Tables[0].Rows[0]["user_status"].ToString());
+            rd.Status = int.Parse(ds.Tables[0].Rows[0]["user_status"].ToString());
             rd.CustomerId = customerId;
             var T_SuperRetailTraderbll = new T_SuperRetailTraderBLL(currentUserInfo);
-            var T_SuperRetailTraderInfo = T_SuperRetailTraderbll.QueryByEntity(new T_SuperRetailTraderEntity() { CustomerId = customerId, SuperRetailTraderFromId = rd.UserId,SuperRetailTraderFrom="User" }, new OrderBy[] { new OrderBy() { FieldName = "CreateTime", Direction = OrderByDirections.Desc } }).FirstOrDefault();
+            var T_SuperRetailTraderInfo = T_SuperRetailTraderbll.QueryByEntity(new T_SuperRetailTraderEntity() { CustomerId = customerId, SuperRetailTraderFromId = rd.UserId, SuperRetailTraderFrom = "User" }, new OrderBy[] { new OrderBy() { FieldName = "CreateTime", Direction = OrderByDirections.Desc } }).FirstOrDefault();
             if (T_SuperRetailTraderInfo != null)
             {
                 rd.SuperRetailTraderID = T_SuperRetailTraderInfo.SuperRetailTraderID.ToString();
@@ -115,10 +130,32 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
 
             //app登陆用户权限 add by henry 2015-3-26
             var roleCodeList = vipBll.GetAppMenuByUserId(rd.UserId);
-            if (roleCodeList != null)
+
+
+            //app登陆用户权限 add by henry 2015-3-26
+            List<string> lst = new List<string>();
+            if (roleCodeDs.Tables[0] != null && roleCodeDs.Tables[0].Rows.Count > 0)
             {
-                rd.MenuCodeList = DataTableToObject.ConvertToList<Menu>(roleCodeList.Tables[0]);
+                foreach (DataRow item in roleCodeDs.Tables[0].Rows)
+                {
+                    var menuList = new JIT.CPOS.BS.DataAccess.AppSysService(currentUserInfo).GetRoleMenus(currentUserInfo.ClientID, item["role_id"] + "");
+                    if (menuList != null)
+                    {
+                        lst.AddRange(menuList.Select(m => m.Menu_Code).Distinct().ToList());
+                    }
+                }
             }
+
+            rd.MenuCodeList = new List<Menu>();
+            foreach (var item in lst.Distinct().ToList())
+            {
+                rd.MenuCodeList.Add(new Menu() { MenuCode = item });
+            }
+
+            //if (roleCodeList != null)
+            //{
+            //    rd.MenuCodeList = DataTableToObject.ConvertToList<Menu>(roleCodeList.Tables[0]);
+            //}
 
             rd.RoleCodeList = tmp.ToArray();
             rd.CustomerName = currentUserInfo.ClientName;
@@ -148,7 +185,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             };
             //执行查询
             List<CustomerBasicSettingEntity> customerBasicSettingEntityList = customerBasicSettingBLL.QueryByEntity(customerBasicSettingEntity, null).ToList();
-            
+
             foreach (var a in customerBasicSettingEntityList)
             {
                 CustomerBasicCodeInfo customerBasicCodeInfo = new CustomerBasicCodeInfo();

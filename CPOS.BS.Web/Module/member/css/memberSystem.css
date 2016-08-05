@@ -1,0 +1,221 @@
+@charset "utf-8";
+
+.contentArea{padding-bottom: 30px;margin-left: 180px;border-color:#e1e7ea;padding-right:40px;min-width: 1210px;}
+.title{ height: 57px; background:#f2f2f2; border-bottom:1px solid #e1e7ea;border-radius:8px 8px 0 0;width: 100%;min-width: 800px; }
+.title li{cursor: pointer;background-color: #fafafa;  width:182px; height: 56px; line-height: 56px;  float:left; text-align:center; font-size: 12px; color:#666666;  border-right:1px solid #e1e7ea; }
+.title li.on{ background:#fff; height: 57px;}
+.navPanel{padding-left: 22px;}
+#nav01 {padding-top: 40px;border-bottom: 1px solid  #f0f0f2;padding-bottom: 35px;border-right: 1px solid #f0f0f2;}
+.lumpList{ padding-top:45px;height: 395px;position: relative;  }
+.lumpList .delete{background: url("../image/delete.png") no-repeat center center;width:23px;height: 23px;position: relative;top: 50%;margin-top: -23px;left: -23px;}.lump{width:270px;height: 350px ; position: relative;  float: left; border: 1px solid #f0f0f2; border-radius: 3px; margin-right: 15px}
+.lump .top{border-radius: 3px  3px 0 0; height: 40px; background-color: #96deff; color: #fff; padding-left: 13px; font-size: 14px;line-height: 40px;}
+.on .lump .top{ background-color: #00a0e8;}
+.lump .top .edit{ width: 25px; float: right; height: 40px; background: url("../image/editICon.png") left center no-repeat; cursor:pointer; display: none;}
+.lump .addBtnPanel{ margin-left: 30px; margin-top:53px; cursor: pointer;  width: 208px; height: 190px;border: 1px solid #f0f0f2; border-radius: 3px;  background-color: #fafafa }
+.lump .addBtnPanel .btnPanel{ width:208px; margin-top:75px ; height: 56px;position: relative; text-align: center; background: url("../image/addIcon.png") center top no-repeat; }
+.lump .addBtnPanel .btnPanel p{ position:absolute; width: 100%; height: 20px; line-height: 20px; font-size: 12px; color: #999; bottom: 0;}
+.lump .text{ font-size: 12px; color: #999; padding: 0 18px; white-space: nowrap;letter-spacing:-1px; width: 100%}
+.lump div.text{font-size: 14px; height: 28px;}
+.lump p.text b{ font-size: 14px; color: #666; font-weight: 400}
+.lump p.text i{ font-size: 14px; color: #1074bd;float: right;margin-right: 15px; }
+.lump .line18{ line-height: 18px}
+.lump .line36{ line-height: 22px;}
+.lump .line36{ line-height: 36px;}
+.lump .tag{width: 245px;cursor: default; height: 77px; background-color: #edfaff; border: 1px solid #96deff; border-radius: 3px;margin: 15px 18px 3px 10px;}
+.lump .tag .icon{width:80px; height: 75px;display: inline-block; background:url("../image/zhekou.png") center center no-repeat;}
+.lump .tag .icon.bili{background-image: url("../image/bili.png");}
+.lump .tag .icon.yhq{background-image: url("../image/youhuiq.png");}
+.lump .tag .icon.xf{background-image: url("../image/xiaofei.png");}
+.lump .tag .icon.cz{background-image: url("../image/congzhi.png");}
+.lump .tag .icon.gk{background-image: url("../image/gouka.png");}
+.lump .tag span{float: right; width: 67%; font-size: 14px; line-height: 75px; color: #1074bd;white-space: nowrap }
+.lump .tag span.line22{ line-height: 22px; padding-top: 13px;}
+.lump .tag span i{ font-size: 22px;}
+.shou {cursor: pointer;}
+.lump  .commonSelectWrap{margin: 10px 6px;}
+.lump  .commonSelectWrap .searchInput {width: 248px;}
+.lump .uploadPanel{width: 248px;height: 142px; position:relative;border: 1px solid #f0f0f2;border-radius: 3px;background: url("../image/uploadImg.png")  center 35px no-repeat #fafafa;float: left;margin-left: 9px;}
+.lump .bgCover{background-size: 100%;background-position: center center;}
+.lump .uploadPanel .upLoadBtn{ position: absolute; width: 248px;height: 142px; top:0;left: 0;right: 0; background:transparent no-repeat;z-index:10;}
+.lump .uploadPanel p{position: absolute;width: 100%;text-align: center;bottom: 35px;}
+.lump  .bgCover p{position: absolute;width: 100%;text-align: center;bottom: 0;color: #999;height: 142px; line-height: 206px; background-color: rgba(51,51,51,0.4);}
+.ke-upload-area{width: 100%;}
+.ke-upload-area .ke-upload-file{height: 142px;  filter:alpha(opacity=0);
+    -moz-opacity:0;
+    -khtml-opacity: 0;
+    opacity: 0;   }
+.lump .content{overflow-y: auto;height: 306px;width: 102%;  }
+
+.lineT{width: 90%; padding-left: 20px;}
+.lineT .rowRline{  padding-top:15px; display:inline-block; width: 100%;color:#666;font-size: 12px;padding-left: 10px;}
+.lineT .rowRline input{ background: transparent;}
+.lineT .rowRline .radio{float:left;cursor: pointer;}
+.linetext{ height: 30px; line-height: 30px;    color: #666;display: inline-block}
+.linetext em.txt{min-width:90px; text-align: right; display: inline-block}
+.linetext em.txt.w75{min-width: 75px;}
+.linetext em.txt.w102{min-width: 102px;}
+.lineT .rowRline .linetext em.txt{min-width: 76px; }
+.linetext input{ width: 100px; height: 30px; padding-left: 3px}
+
+.linetext span{ float: right; margin-left:35px;}
+.linetext span.textbox.numberbox {float: none;margin: 0 10px;}
+.linetext .explain{ color: #999; float: right;}
+.lineT .explain.txt{padding-left:16px;}
+.lineT .rowRline .pl1_8em{ padding-left: 1.8em}
+
+.lineT .rowRline p{line-height: 28px; color: #999;}
+.lineT .rowRline .tit{ color: #666}
+
+.lineT .lineH3{height: 33.3333%;padding-top: 10px;}
+.lineT .lineH2{height: 49.9999%;}
+.submit{
+    margin: 0 auto;
+    border-radius: 32px;
+    width: 100px;
+    height: 36px;
+    line-height: 36px;
+}
+
+.lineT .rowRline .linetext{height:32px;line-height:32px;font-size:12px; display: inline;}
+
+/*#win*/
+.upgrade{width: 460px;height: 460px;padding:20px}
+.upgrade .line{height: 115px; padding-top: 10px;}
+.upgrade .line .col{ display:block;height: 30px; line-height: 30px; font-size: 14px;color: #666;}
+.upgrade .line .col i{font-size: 12px;color: #999;}
+.checkBox input{padding-left:3px; width: 70px; }
+.checkBox .numberbox{margin: 0 3px;display: inline-block;padding-left: 0px;}
+.mainTitle{border-left: 3px #00a0e8 solid; margin: 20px 0 0 0; padding-left: 4px; font-size: 14px;line-height: 14px; color: #666;  height: 14px;}
+.mainTitle .checkBox{position: relative;top:-4px;}
+/*#nav02*/
+.optList{height: 40px;padding-top: 15px;font-size: 12px; color: #666; }
+.optList .optBtn{ width: 133px; float: left;}
+.optList .optBtn p{width: auto; cursor: pointer;line-height: 22px;}
+.optList .optBtn.on p{border-bottom: 1px solid #00a0e8;color: #00a0e8;width: 73px;}
+
+.nav02panel{ padding:0 10px 15px 0;}
+.marL10{ margin-left: 10px;}
+.scheme{display: inline-block;border:1px solid #f0f0f2;max-width: 1081px;margin-top: 16px;width: 100%; padding-bottom:15px; }
+.scheme .title{height: 50px;background-color: #f7f7fa;}
+.scheme .title p{color:#038efe;line-height: 50px;padding-right: 50px;cursor: pointer;}
+.scheme .content{padding-left: 17px;}
+.commonSelectWrap .borderNone{ border: none;}
+.scheme .commonSelectWrap {display: block; float: none; }
+.scheme .l{float: left;}
+.scheme .explain{ color: #999; margin-top: -5px; padding-left: 16px; height: 30px; }
+.scheme .commonSelectWrap .searchInput{ background: transparent;}
+.scheme .commonSelectWrap .searchInput.whauto{ width: auto; height: auto;}
+.scheme .commonSelectWrap .searchInput .line{ height: 46px;}
+.scheme .commonSelectWrap .searchInput .linetext{ height: 28px; line-height: 28px; padding-left:10px;   color: #666; float: left; display: inline;}
+.scheme .commonSelectWrap .searchInput .linetext input{ width: 100px; height: 28px; }
+.scheme .commonSelectWrap .searchInput .linetext span{  margin-left:5px; }
+.scheme .commonSelectWrap .tit .checkBox{float: right}
+.scheme .linetext .tipBox{display:inline-block;margin-left:10px;padding-left:46px;background:url(../images/icon-tips.png) no-repeat left center;color:#fe2222;}
+.scheme .selectGroupBtn,.panlDiv .selectShopBtn{display:inline-block;width:100px;height:32px;line-height:32px;font-size:14px;text-align:center;border-radius:5px;background:#0cc;color:#fff;cursor:pointer;}
+.scheme .selectNum{font-size:14px;}
+.scheme .selectNum span{color:#09f;}
+.scheme .lineList{width: 495px; display: block; float: left;}
+.scheme .linetext{ height: 40px;}
+.searchGrid{ width: 338px; height: 280px; border:#00cccc solid 1px; margin: 0 auto; margin-top: 10px;}
+.scheme .radio { float: left;}
+.checkBox.r{ margin-left: 25px; margin-top: 10px;}
+.radioBtn {margin-left: 15px;color: #038efe;display: none; cursor:pointer;}
+.unitSelectName{color: #038efe;}
+.linetext  .radioBtn,.listBtn{display: block;}
+/*选择门店*/
+.optionPanel{width: 1120px; height: 460px; margin: 0 auto;padding-top: 15px;}
+.optionPanel .contentDiv{ float:left; }
+.optionPanel .explain{ height: 40px; font-size: 12px; line-height: 40px;color: #666}
+.optionPanel .explain em{float: left;}
+.optionPanel .explain span{ float: left;}
+.optionPanel .explain  .optBtn{ float: right; color: #00a0e8;cursor: pointer;}
+.optionPanel .explain .searchBtn{ height: 30px; width: 70px; float: right;}
+.optionPanel .explain .commonSelectWrap{margin:0 10px;}
+.optionPanel .content{border:1px solid #e1e7ea; height: 430px;border-radius: 6px; overflow-y: auto; }
+.optionPanel .center{width: 570px; margin: 0 10px; }
+.optionPanel .center .content{overflow-y: hidden; position: relative}
+.optionPanel .tree-node{ height: 30px;}
+.optionPanel .tree-node-selected{background:#d9f1fc;}
+
+.optionPanel .tree-title {color: #666; line-height: 30px;}
+.tree-expanded {
+    background: url('../image/tree-expanded.png') no-repeat;
+}
+.tree-expanded-hover {
+    background: url('../image/tree-expanded-hover.png') no-repeat;
+}
+.tree-collapsed {
+    background: url('../image/tree-collapsed.png') no-repeat;
+}
+.tree-collapsed-hover {
+    background: url('../image/tree-collapsed-hover.png') no-repeat;
+}
+.tree-node-hover{
+    background:#d9f1fc;
+}
+.tree-expanded,
+.tree-collapsed,.tree-checkbox{
+    display: inline-block;
+    width: 20px;
+    height: 30px;
+    vertical-align: top;
+    overflow: hidden;
+    background-position:center center;
+}
+.tree-checkbox0{ background-image:url("../image/check.png")}
+.tree-checkbox2 { background-image:url("../image/solidChek.png")}
+.tree-checkbox1{ background-image:url("../image/checkon.png")}
+#unitTreeSelect .tree-title{width: 258px;height: 40px;line-height: 40px; text-align: center}
+#unitTreeSelect .tree-title .delete{float: right;height: 40px;}
+#unitTreeSelect .tree-expanded,
+#unitTreeSelect .tree-collapsed,#unitTreeSelect .tree-checkbox{
+    display: inline-block;
+    width: 20px;
+    height: 40px;
+    vertical-align:middle;
+    overflow: hidden;
+    background-position:center center;
+}
+#unitTreeSelect  .tree-node{height: 49px;line-height:49px; border-bottom:1px solid #e1e7ea;}
+#unitTreeSelect .bg{background-color:#f2f2f2;height: 40px;line-height:40px}
+#unitTreeSelect .bg  .tree-title{ text-align: left;}
+
+.datagrid-header-check,
+.datagrid-cell-check {
+    width: 40px;
+    height: 20px;
+    background-position: center center;
+
+}
+
+.bottomSubmit{ height: 60px; margin-top: 15px; text-align: center;display: block}
+.release{width: 110px; height: 36px; margin: 0 auto; border-radius: 18px; line-height: 36px;}
+
+.coupon{ width: 900px; padding:0 20px 20px 20px; height: 500px; border-bottom: 1px solid #d8d8d8;}
+.dataGridPanel{width:400px; float: left;}
+.dataGridPanel .datagrid-header {
+    position: absolute; visibility: hidden;
+}
+.optListPanel{text-align: right;height: 52px;display: inline-block;width: inherit;line-height: 52px;}
+.coupon .optDom{ display:inline-block; margin-right:12px;color: #00a0e8; cursor: pointer;}
+.coupon .commonBtn{width: 70px; display:inline-block;}
+.panelContent{height: 428px;width: 400px; border: 1px solid #e1e7ea; border-radius:8px; position: relative;overflow-y: auto; }
+.couponList{width: 400px; float: right;}
+.couponList .optListPanel{text-align: left;}
+.datagrid {border:none;}
+.dataGridPanel .datagrid-row {
+    height:80px;
+}
+.optBg{background: url("../image/jiantou.png") center center no-repeat;width: 60px;height: 28px;float: left;top: 240px;position: relative;}
+.lineCouponInfo{height: 78px;padding-left: 20px;border-bottom: 1px solid #eee;position: relative;}
+.lineCouponInfo p{font-size: 14px; line-height: 30px; height: 30px;color: #666; position: relative;}
+.lineCouponInfo b{font-size: 12px;color: #999; padding-left: 20px;}
+.lineCouponInfo .del{color: #00a0e8;position: absolute;right: 10px;line-height: 78px;display: block;top: 0;width: 26px; cursor: pointer;}
+.lineCouponInfo .numberbox{margin-right: 5px;}
+.teShu{}
+.releasePanel{ position: absolute; z-index: 10;background: rgba(0,0,0,0.4); padding-top:6px;text-align: center; width:272px; left: -1px; bottom: 0; height: 42px; border-radius: 0 0 3px 3px; }
+.releaseBtn{ width: 70px; height: 30px; color: #fff; border: 1px solid #fff; margin: 0 auto; line-height: 30px; font-size: 12px; font-weight: 500;border-radius:3px;cursor: pointer;  }
+
+.dataGridPanel .datagrid-body tr:last-of-type td { border-bottom: 1px solid #e1e7ea;}
+.content .datagrid-body tr:last-of-type td { border-bottom: 1px solid #e1e7ea;}
+.btnWrap .cancelBtn{margin-right: 20px; display: inline-block;width: 110px;height: 36px;line-height: 36px;color: #00a0e8;background-color: #fff;border: 1px solid #00a0e8;}

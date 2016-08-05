@@ -24,7 +24,6 @@ using JIT.Utility.DataAccess;
 using JIT.Utility.Log;
 using JIT.CPOS.BS.Entity;
 using System.Data.SqlClient;
-using System.Configuration;
 
 namespace JIT.CPOS.BS.DataAccess.Base
 {
@@ -47,11 +46,7 @@ namespace JIT.CPOS.BS.DataAccess.Base
         public BaseCPOSDAO(LoggingSessionInfo userInfo, bool pIsLoggingTSQL)
             : base(userInfo, new DirectConnectionStringManager(userInfo.CurrentLoggingManager.Connection_String))
         {
-            if(ConfigurationManager.AppSettings["IsLoggingTSQL"] == "false")
-            {
-                pIsLoggingTSQL = false;
-            }
-
+            //bool pIsLoggingTSQL = false; // Base.ConfigInfo.IsLoggingTSQL;
             BasicUserInfo pUserInfo = new BasicUserInfo();
             pUserInfo.ClientID = null;
             pUserInfo.UserID = null;
@@ -72,10 +67,6 @@ namespace JIT.CPOS.BS.DataAccess.Base
             : base(userInfo, new DirectConnectionStringManager(null))
         {
             bool pIsLoggingTSQL = true; // Base.ConfigInfo.IsLoggingTSQL;
-            if (ConfigurationManager.AppSettings["IsLoggingTSQL"] == "false")
-            {
-                pIsLoggingTSQL = false;
-            }
             BasicUserInfo pUserInfo = new BasicUserInfo();
             pUserInfo.ClientID = null;
             pUserInfo.UserID = null;

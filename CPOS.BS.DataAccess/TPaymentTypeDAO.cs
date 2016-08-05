@@ -53,7 +53,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pCustomerID">客户号</param>
         /// <param name="pSource"></param>
         /// <returns></returns>
-        public TPaymentTypeEntity[] GetByCustomerBySource(string pCustomerID,string pSource)
+        public TPaymentTypeEntity[] GetByCustomerBySource(string pCustomerID, string pSource)
         {
             List<TPaymentTypeEntity> list = new List<TPaymentTypeEntity> { };
             string sql = string.Format(@"select a.* from T_Payment_Type a
@@ -91,14 +91,14 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pCustomerID">客户ID</param>
         /// <param name="pAPPChannelID">通道ID</param>
         /// <returns>支付方式TPaymentTypeEntity列表</returns>
-        public TPaymentTypeEntity[] GetByCustomer(string pCustomerID,string pAPPChannelID)
+        public TPaymentTypeEntity[] GetByCustomer(string pCustomerID, string pAPPChannelID)
         {
             List<TPaymentTypeEntity> list = new List<TPaymentTypeEntity> { };
             string sql = string.Format(@"select a.* from T_Payment_Type a
                                             join TPaymentTypeCustomerMapping  b on a.Payment_Type_Id=b.paymenttypeid
                                             join SysASCAndPaymentTypeMapping  c on a.Payment_Type_Id=c.PaymentTypeId
                                             where a.IsDelete=0 and b.isdelete=0 and c.IsDelete=0
-                                            and b.customerid='{0}' and c.APPChannelID='{1}'", pCustomerID,pAPPChannelID);
+                                            and b.customerid='{0}' and c.APPChannelID='{1}'", pCustomerID, pAPPChannelID);
             using (var rd = this.SQLHelper.ExecuteReader(sql))
             {
                 while (rd.Read())
@@ -118,34 +118,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="customerId">客户ID</param>
         /// <returns></returns>
-        public DataSet GetPaymentListByCustomerId(string customerId,string pAPPChannelID)
-        {
-            if(string.IsNullOrEmpty(pAPPChannelID))
-            {
-                pAPPChannelID = "5";
-            }
-
-            string sql =string.Format(@"
-            SELECT paymentTypeId = a.Payment_Type_Id 
-            , paymentTypeName  = a.Payment_Type_Name 
-            , displayIndex = ROW_NUMBER() OVER(ORDER BY a.Payment_Type_Name) 
-            ,paymentTypeCode = Payment_Type_Code,LogoURL 
-            FROM dbo.T_Payment_Type a 
-            INNER JOIN dbo.TPaymentTypeCustomerMapping b ON a.Payment_Type_Id = b.PaymentTypeID 
-            join SysASCAndPaymentTypeMapping  c on a.Payment_Type_Id=c.PaymentTypeId
-            WHERE a.IsDelete = 0 AND b.IsDelete = 0 AND c.IsDelete = 0 
-            AND b.CustomerId = '{0}' AND c.APPChannelID={1}
-",customerId,pAPPChannelID);
-
-            return this.SQLHelper.ExecuteDataset(sql);
-        }
-
-        /// <summary>
-        /// 根据客户获取对应的支付方式集合
-        /// </summary>
-        /// <param name="customerId">客户ID</param>
-        /// <returns></returns>
-        public DataSet GetPaymentListByAppId(string customerId, string pAPPChannelID, string wxAppId)
+        public DataSet GetPaymentListByCustomerId(string customerId, string pAPPChannelID)
         {
             if (string.IsNullOrEmpty(pAPPChannelID))
             {
@@ -156,14 +129,13 @@ namespace JIT.CPOS.BS.DataAccess
             SELECT paymentTypeId = a.Payment_Type_Id 
             , paymentTypeName  = a.Payment_Type_Name 
             , displayIndex = ROW_NUMBER() OVER(ORDER BY a.Payment_Type_Name) 
-            ,paymentTypeCode = Payment_Type_Code,LogoURL 
+            ,paymentTypeCode = Payment_Type_Code,LogoURL,b.CHANNELID,b.PayEncryptedPwd
             FROM dbo.T_Payment_Type a 
             INNER JOIN dbo.TPaymentTypeCustomerMapping b ON a.Payment_Type_Id = b.PaymentTypeID 
             join SysASCAndPaymentTypeMapping  c on a.Payment_Type_Id=c.PaymentTypeId
             WHERE a.IsDelete = 0 AND b.IsDelete = 0 AND c.IsDelete = 0 
             AND b.CustomerId = '{0}' AND c.APPChannelID={1}
-            AND b.AccountIdentity = '{2}'
-            ", customerId, pAPPChannelID, wxAppId);
+", customerId, pAPPChannelID);
 
             return this.SQLHelper.ExecuteDataset(sql);
         }
@@ -185,24 +157,6 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " WHERE a.IsDelete = 0 AND b.IsDelete = 0";
             sql += " AND a.PaymentTypeID = '" + paymentTypeId + "' ";
             sql += " AND a.CustomerId = '" + customerId + "' ";
-
-            return this.SQLHelper.ExecuteDataset(sql);
-        }
-
-        /// <summary>
-        /// 根据客户ID和支付类型ID获取对应的支付方式
-        /// </summary>
-        /// <param name="customerId">客户ID</param>
-        /// <param name="paymentTypeId">支付类型ID</param>
-        /// <returns></returns>
-        public DataSet GetPaymentByAppIdAndPaymentID(string customerId, string paymentTypeId, string wxAppId)
-        {
-            string sql = string.Empty;
-            sql += " SELECT a.*,b.Payment_Type_Code FROM T_Payment_Type b join TPaymentTypeCustomerMapping a on b.Payment_Type_Id = a.PaymentTypeID ";
-            sql += " WHERE a.IsDelete = 0 AND b.IsDelete = 0";
-            sql += " AND a.PaymentTypeID = '" + paymentTypeId + "' ";
-            sql += " AND a.CustomerId = '" + customerId + "' ";
-            sql += " AND a.AccountIdentity = '" + wxAppId + "' ";
 
             return this.SQLHelper.ExecuteDataset(sql);
         }

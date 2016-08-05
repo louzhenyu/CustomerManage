@@ -39,10 +39,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
             {
                 throw new APIException(apiEx.ErrorCode, apiEx.Message);
             }
-
-
-
-
             return rd;
         }
     }

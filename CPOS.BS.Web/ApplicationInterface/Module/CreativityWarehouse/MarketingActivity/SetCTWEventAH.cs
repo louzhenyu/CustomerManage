@@ -195,7 +195,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                     OnLineRedirectUrl = strOnlineRedirectUrl
 
                 };
-                bllCustomerEvent.Create(entityCustomerEvent);
+                bllCustomerEvent.Create(entityCustomerEvent);                
             }
             return rd;
 
@@ -271,7 +271,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
 
                 var eventEntity = new LEventsEntity();
                 strStartDate = para.GameEventInfo.BeginTime;
-                strEndDate = para.GameEventInfo.EndTime;
+                strEndDate = para.GameEventInfo.EndTime+" 23:59:59";
                 if (string.IsNullOrEmpty(para.GameEventInfo.LeventId))
                 {
 

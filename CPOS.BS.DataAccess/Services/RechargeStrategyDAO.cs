@@ -52,5 +52,34 @@ namespace JIT.CPOS.BS.DataAccess
             string sql = "select *  from VwInoutOrderItems where OrderId='" + orderId + "'";
             return this.SQLHelper.ExecuteDataset(CommandType.Text, sql);
         }
+        /// <summary>
+        /// 根据当前卡类型ID 获取充值活动列表
+        /// </summary>
+        /// <param name="CustomerID"></param>
+        /// <param name="vipCardTypeID"></param>
+        /// <returns></returns>
+        public DataSet GetRechargeActivityList(string CustomerID, string vipCardTypeID,int ActType)
+        {
+            string strsql = @" SELECT DISTINCT A.ActivityID,ISNULL(B.RechargeAmount,0) as RechargeAmount,ISNULL(B.GiftAmount,0) as GiftAmount,B.RuleType FROM C_TargetGroup A 
+                               INNER JOIN RechargeStrategy B ON A.ActivityID=B.ActivityID
+                               INNER JOIN C_Activity C ON C.ActivityID=A.ActivityID
+                               WHERE A.CustomerID=@CustomerID AND A.GroupType=1 AND (C.[Status]=3 or C.[Status]=0)  AND ((C.StartTime<=GetDate() and C.EndTime>=GETDATE()) or C.IsLongTime=1)  
+                               AND A.IsDelete=0 AND B.IsDelete=0 AND C.IsDelete=0 ";
+            if (!string.IsNullOrEmpty(vipCardTypeID))
+            {
+                strsql += " AND (A.ObjectID=@vipCardTypeID OR C.IsAllVipCardType=1) ";
+            }
+            if (ActType > 0)
+            {
+                strsql += " AND C.ActivityType=@ActType  ";
+            }
+            strsql += " Order by RechargeAmount ASC ";
+            SqlParameter[] parameter = new SqlParameter[]{
+                new SqlParameter("@CustomerID",CustomerID),
+                new SqlParameter("@vipCardTypeID",vipCardTypeID),
+                new SqlParameter("@ActType",ActType)
+            };
+            return this.SQLHelper.ExecuteDataset(CommandType.Text, strsql, parameter);
+        }
     }
 }

@@ -48,7 +48,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.SuperRetailTrader.Login
 
             #region 判断分销商是否存在
             T_SuperRetailTraderBLL bll = new T_SuperRetailTraderBLL(currentUserInfo);
-            List<T_SuperRetailTraderEntity> _model = bll.QueryByEntity(new T_SuperRetailTraderEntity() { SuperRetailTraderLogin = pRequest.Parameters.AccountName, SuperRetailTraderPass=pRequest.Parameters.PassWord }, null).ToList();
+            List<T_SuperRetailTraderEntity> _model = bll.QueryByEntity(new T_SuperRetailTraderEntity() { SuperRetailTraderLogin = pRequest.Parameters.AccountName, SuperRetailTraderPass = pRequest.Parameters.PassWord, CustomerId = currentUserInfo.ClientID }, null).ToList();
 
             if (_model == null || _model.Count == 0)
             {

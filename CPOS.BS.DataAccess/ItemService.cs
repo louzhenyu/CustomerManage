@@ -121,7 +121,7 @@ namespace JIT.CPOS.BS.DataAccess
                 sql += " where tp.prop_code='canredeem' and (tpv.prop_code = '" + _ht["item_can_redeem"].ToString() + "' or (" + _ht["item_can_redeem"].ToString() + "= 0 and (tpv.prop_code is null or tpv.prop_code = '')))";
             }
             else
-                sql += " where 1=1 and a.item_category_id<>'-1'";
+                sql += " where 1=1 and a.item_category_id<>'-1' and  (ifoften = 0 or ifoften is null)"; //ifoften = 0 or ifoften is null 为正常商品
             if (_ht["SalesPromotion_id"]!=null && _ht["SalesPromotion_id"].ToString() != "")
             {
                 sql += " and exists (select * from ItemCategoryMapping cate where cate.ItemId=a.item_id and cate.isdelete=0 and cate.ItemCategoryId='" + _ht["SalesPromotion_id"].ToString() + "')";
@@ -216,6 +216,44 @@ namespace JIT.CPOS.BS.DataAccess
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
         }
+
+        //获取卡关联的虚拟卡 isoffen=1
+        public DataSet GetItemByCardID(string VirtualItemTypeId, string ObjecetTypeId)
+        {
+            DataSet ds = new DataSet();
+            string sql = "select "
+                      + " a.item_id "
+                      + " ,a.item_category_id "
+                      + " ,a.item_code "
+                      + " ,a.item_name "
+                      + " ,a.item_name_en "
+                      + " ,a.item_name_short "
+                      + " ,a.pyzjm "
+                      + " ,a.item_remark "
+                      + " ,a.status "
+                      + " ,a.status_desc "
+                      + " ,a.create_user_id "
+                      + " ,a.create_time "
+                      + " ,a.modify_user_id "
+                      + " ,a.modify_time "
+                      + " ,(select item_category_name from T_Item_Category x where x.item_category_id = a.item_category_id) item_category_name "
+                      + " ,(select item_category_code from T_Item_Category x where x.item_category_id = a.item_category_id) item_category_code "
+                      + " ,(select user_name from t_user x where x.user_id = a.create_user_id) create_user_name "
+                      + " ,(select user_name from t_user x where x.user_id = a.modify_user_id) modify_user_name "
+                      + " ,case when a.status = '1' then '正常' else '删除' end status_desc "
+                      + " ,a.ifgifts "
+                      + " ,a.ifoften "
+                      + " ,a.ifservice "
+                      + " ,a.isGB "
+                      + " ,a.data_from "
+                      + " ,a.display_index "
+                      + " ,a.imageUrl Image_Url "
+                      + " From T_Item a where a.item_id =     (  select top 1 ItemId from T_VirtualItemTypeSetting where isdelete=0 and VirtualItemTypeId=  '" + VirtualItemTypeId +
+                      @"' and   ObjecetTypeId ='" + ObjecetTypeId + "'  )   ";
+            ds = this.SQLHelper.ExecuteDataset(sql);
+            return ds;
+        }
+
 
         #endregion
 
@@ -573,7 +611,6 @@ namespace JIT.CPOS.BS.DataAccess
         public string GetWelfareItemListSql(string userId, string itemName, string itemTypeId, bool isKeep, string isExchange, string storeId)
         {
             string sql = " SELECT itemId = a.item_id ";
-            sql += " ,itemCode = a.item_code ";
             sql += " ,itemName = a.item_name ";
             sql += " ,imageUrl = a.imageUrl ";
             sql += " ,price = a.Price ";
@@ -584,9 +621,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " ,pTypeCode = a.PTypeCode ";
             sql += " ,CouponURL = a.CouponURL ";
             sql += " ,salesPersonCount = a.SalesPersonCount ";
-            sql += " ,itemCategoryId = a.item_category_id ";
             sql += " ,itemCategoryName = a.ItemCategoryName ";
-            sql += " ,itemIntroduce = a.ItemIntroduce ";
             sql += " ,skuId = a.SkuId ";
             sql += " ,isShoppingCart = case when c.vipid is null then 0 else 1 end ";
             sql += ",CONVERT(NVARCHAR(10),a.CreateTime,120) createDate ";
@@ -594,8 +629,6 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " ,itemSortDesc = a.itemSortDesc ";
             sql += " ,salesQty = a.salesQty ";
             sql += " ,remark = a.item_remark ";
-            sql += " ,status = a.status ";
-            sql += " ,endTime = a.EndTime ";
             sql += ",IsExchange=a.IsExchange";
             sql += ",IntegralExchange=a.IntegralExchange";
             sql += " into #tmp ";
@@ -616,7 +649,7 @@ namespace JIT.CPOS.BS.DataAccess
                 sql += " INNER JOIN (SELECT * FROM ItemStoreMapping WHERE UnitId='" + storeId + "') d ON(a.item_id = d.ItemId) ";
             }
 
-            sql += " WHERE 1 = 1 and data_from != '18' and a.customerId = '" + this.CurrentUserInfo.CurrentLoggingManager.Customer_Id + "' ";
+            sql += " WHERE 1 = 1 and a.customerId = '" + this.CurrentUserInfo.CurrentLoggingManager.Customer_Id + "' ";
             sql += " AND (a.BeginTime <= GETDATE() AND a.EndTime >= GETDATE()) ";
 
             if (!string.IsNullOrEmpty(itemName))

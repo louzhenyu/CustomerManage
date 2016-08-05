@@ -112,7 +112,7 @@ namespace JIT.CPOS.BS.Entity
 		/// </summary>
 		public Int32? IsDelete { get; set; }
 
-
+        public int? VipType { get; set; }
         #endregion
 
     }

@@ -469,8 +469,19 @@
                         showAdd: true,  //表示的一个标识
                         itemList: data.Data.MaterialTextList
                     }
-                    var html = bd.template("addImageItemTmpl", obj);
+                    var html = bd.template("addImageItemTmpl",obj);
                     that.elems.imageContentItems.html(html);
+                    console.log(list);
+                    if(list){
+                        for(var i=0;i<list.length;i++){
+                            for(var j =0;j<obj.itemList.length;j++){
+                                if(list[i].TestId ==obj.itemList[j].TestId){
+                                    $('#imageContentItems').children(".item[data-id=addImage_"+list[i].TestId+"]").addClass('on');
+                                    $('#imageContentItems').children(".item[data-id=addImage_"+list[i].TestId+"]").attr('isselected','true');
+                                }
+                            }
+                        }
+                    }
                     //
                     that.events.initPagination(1, data.Data.TotalPages, function (page) {
                         that.loadMoreMaterial(page);
@@ -1116,7 +1127,16 @@
                 this.elems.addImageMessageDiv.delegate(".cancelBtn", "click", function () {
                     //再取消的时候把所有的删除
                     that.elems.imageContentDiv.find("[data-flag='add']").remove();
-                    $("#hasChoosed").html(0);
+                    var list = that.loadData.search.storage;
+                    if(list){
+                        var result = list.filter(function(value){
+                            return (value.DisplayIndex!=0);
+                        })
+                        that.loadData.search.storage = result;
+                    }
+
+                    var hasLength = that.elems.imageContentDiv.find(".item").length;
+                    $("#hasChoosed").html(hasLength);
                     that.showMatrialText(false);
                 });
 
@@ -1173,6 +1193,15 @@
                         }
                         //给克隆后的节点设置id
                         clone.attr("id", $this.attr("data-id"));
+                        var list = that.loadData.search.storage;
+                        var objData = $this.attr('data-obj');
+                        var obj = [eval('(' + objData + ')')];
+                        if(!list){
+                            that.loadData.search.storage =obj;
+                        }else{
+                            list=list.concat(obj);
+                            that.loadData.search.storage =list;
+                        }
                         //将选中的内容添加到图文层
                         that.elems.imageContentDiv.find(".list").append(clone);
                         //表示已经选择的图文数量

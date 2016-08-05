@@ -55,6 +55,11 @@ namespace JIT.CPOS.BS.Entity
         /// 充值送n
         /// </summary>
         public Decimal? ChargeGive { get; set; }
+
+        /// <summary>
+        /// 升级条件（1=购卡升级、0=充值升级）
+        /// </summary>
+        public int RefillCondition { get; set; }
         #endregion
     }
 }

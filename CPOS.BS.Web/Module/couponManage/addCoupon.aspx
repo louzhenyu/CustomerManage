@@ -40,6 +40,7 @@
                         <label class="searchInput bordernone">
                              <input data-text="优惠券数量" class="easyui-numberbox" data-options="min:1,precision:0,max:10000,required:true,width:160,height:32" data-flag="IssuedQty" name="IssuedQty" type="text" value="0">
                         </label>
+                        <div class="checkBox" style="padding-top:6px;"  data-flag="IsNotLimitQty"  data-name="IsNotLimitQty"><em></em><span>不限数量（适用于设置会员开卡礼、会员活动赠券）</span></div>
                 </div>
                  <div class="commonSelectWrap panltext">
                                     <em class="tit w120">面值设置：</em>

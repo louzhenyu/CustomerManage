@@ -4,8 +4,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<link rel="icon" href="/favicon.ico" type="image/x-icon" /><link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
 
     <script type="text/javascript" language="javascript">
         var __button = eval("");
@@ -33,7 +32,7 @@
         var apiurl = '<%=System.Web.Configuration.WebConfigurationManager.AppSettings["interfacehost"] %>';
         window.apiurl = apiurl;
 </script>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
      <%--模板 公共样式strart--%>   
      <link href="<%=StaticUrl+"/module/static/css/easyui.css"%>" rel="stylesheet" type="text/css" />   
        <%--分页--%>
@@ -97,6 +96,8 @@
                         <%-- <a href="###">个人信息</a>
                             <a href="###">系统通知(1)</a>--%>
                         <%--    <a href="#" class="fl mr25 nava3" onclick="fnChangePwd()">修改密码</a>--%>
+                        <span class="commonBtn safetyOutBtn" data-menucode="txgl"><a class="five menusrc" href="#" >提现管理</a>
+                        </span>
                         <span class="commonBtn safetyOutBtn" data-menucode="jysj"><a class="one menusrc" href="#" >经营数据</a>
                         </span>
                         <span class="commonBtn safetyOutBtn" data-menucode="fstz"><a  class="four menusrc" href="#" onclick=""> 发送通知</a>

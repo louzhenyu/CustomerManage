@@ -175,11 +175,6 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public String SalesUserName { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
 		public DateTime? CreateTime { get; set; }
 
 		/// <summary>
@@ -210,7 +205,7 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public String Operator { get; set; }
+		public String SalesUserName { get; set; }
 
 
         #endregion

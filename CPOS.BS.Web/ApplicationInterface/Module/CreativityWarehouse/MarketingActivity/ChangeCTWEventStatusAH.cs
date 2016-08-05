@@ -42,6 +42,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                     rd.Status = para.Status;
 
                     bllCTWEvent.ChangeCTWEventStart(para.CTWEventId);
+                    T_CTW_LEventTemplateBLL bllTemplate = new T_CTW_LEventTemplateBLL(loggingSessionInfo);
+                    try
+                    {
+                        bllTemplate.UpdateTemplateInfo(entityCTWEvent.TemplateId.ToString(), 1);
+                    }
+                    catch { }
                 }
             }
             return rd;

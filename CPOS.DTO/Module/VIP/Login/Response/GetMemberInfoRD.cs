@@ -54,6 +54,7 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Response
     {
         public int InnerGroupNewsCount { get; set; }
         public int SetoffToolsCount { get; set; }
+        public string UpGradeSucess { get; set; }
     }
 
 }

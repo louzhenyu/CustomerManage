@@ -28,6 +28,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
         const int ERROR_LACK_VIP_SOURCE = 315;
         const int ERROR_AUTO_MERGE_MEMBER_FAILED = 313;
         const int ERROR_MEMBER_REGISTERED = 314;
+        const int MEMBER_HAVECARD = 316;//表示有实体卡可绑定
+        const int MEMBER_HAVENOCARD = 317;//表示没有实体卡可绑定
+        const int MEMBER_HAVECARD_Integral = 318;//表示有实体卡可绑定且注册成功送积分
+        const int MEMBER_GETSUCCESS = 319;//领取成功提示 不跳实体卡
+        const int MEMBER_HAVECARDNOTIPS = 320;//领取成功 不提示 但跳到实体卡
         #endregion
 
         protected override AuthCodeLoginRD ProcessRequest(DTO.Base.APIRequest<AuthCodeLoginRP> pRequest)
@@ -92,7 +97,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             var memberBenefit = customerBasicSettingBll.GetMemberBenefits(pRequest.CustomerID);
             var bllPrize = new LPrizesBLL(CurrentUserInfo);
             #endregion
-
+            //自定义没有实体卡，有实体卡时变为1
+            int HaveVipcard = 0;
             switch (pRequest.Parameters.VipSource.Value)
             {
                 case 3: //来源是微信时,做自动合并
@@ -129,6 +135,51 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                         {//如果前端未指定VIP ID则后台指定
                             pRequest.UserID = Guid.NewGuid().ToString("N");
                         }
+                        //判断用户是从点击领取过来的 还是从点击绑定实体卡过来的
+                        int? RegisterType=0;
+                        if(pRequest.Parameters.registerType!=null)
+                        {
+                            RegisterType=pRequest.Parameters.registerType;
+                        }
+
+                        //当手机号不为空时需要查询是否存在实体卡
+                        if (!string.IsNullOrEmpty(pRequest.Parameters.Mobile) && (!string.IsNullOrEmpty(pRequest.UserID) || !string.IsNullOrEmpty(vipByPhone.VIPID)))
+                        {
+                            List<IWhereCondition> wheres = new List<IWhereCondition>();
+                            wheres.Add(new EqualsCondition() { FieldName = "phone", Value = pRequest.Parameters.Mobile });
+                            wheres.Add(new EqualsCondition() { FieldName = "clientid", Value = pRequest.CustomerID });
+                            wheres.Add(new DirectCondition("VipID!='" + pRequest.UserID + "'"));
+                            var vipInfo = bll.Query(wheres.ToArray(), null);
+                            //若是从绑定实体卡进入，进行实体卡的判断，并不注册成功                            
+                            if (RegisterType == 2)
+                            {
+                                if (vipInfo == null || vipInfo.Length == 0)
+                                {                                    
+                                    
+                                    throw new APIException("未检测到实体卡") { ErrorCode = MEMBER_HAVENOCARD };
+                                }
+                                else
+                                {
+                                    vipCardVipMappingBLL.BindVipCard(vipByID.VIPID, vipByID.VipCode, vipByID.CouponInfo);
+                                    HaveVipcard = 1;//需要给绑定实体卡的提示
+                                }
+                            }
+                            else
+                            {
+                                vipCardVipMappingBLL.BindVipCard(vipByID.VIPID, vipByID.VipCode, vipByID.CouponInfo);
+                                //若是从"点击领取"进入则进行判断有没有实体卡   有没有实体卡都进行领卡成功的提示
+                                if (vipInfo != null && vipInfo.Length > 0)
+                                {
+                                    HaveVipcard = 1;//需要给绑定实体卡的提示
+                                }
+                                else
+                                {
+                                    HaveVipcard = 2;//注册成功但没有实体卡
+                                }
+                            }
+
+                        }
+
                         if (vipByID == null && vipByPhone == null)//根据vipid查不出记录，并且根据手机号也查不出记录 新增一条vip
                         {//如果不存在则首先创建一条VIP记录，补充记录
                             vipByID = new VipEntity()
@@ -186,68 +237,68 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
 
                         #endregion
 
-                        #region 根据VIP ID及手机号查询出的结果，尝试自动合并会员
-                        if (vipByPhone == null)
-                        {//如果未有相同手机号的用户，则无须绑定,直接使用VIP ID对应的VIP记录作为当前注册用户的记录
-                            rd.MemberInfo = new MemberInfo()
-                            {
-                                Mobile = vipByID.Phone
-                                ,
-                                VipID = vipByID.VIPID
-                                ,
-                                Name = vipByID.UserName
-                                ,
-                                VipName = vipByID.VipName
-                                ,
-                                VipNo = vipByID.VipCode
-                                ,
-                                MemberBenefits = memberBenefit
-                                ,
-                                IsActivate = vipByID.IsActivate.HasValue && vipByID.IsActivate.Value == 1 ? true : false
-                            };
-                            //处理绑卡业务 add by Henry 2015/10/28
-                            vipCardVipMappingBLL.BindVipCard(vipByID.VIPID, vipByID.VipCode, vipByID.CouponInfo);
-                        }
-                        else
-                        {//否则调用存储过程,做自动会员合并
+                        #region 根据VIP ID及手机号查询出的结果，尝试自动合并会员 (因目前会员注册不自动绑卡，实现用户自行选择绑卡业务故将绑卡业务注释掉)
+                        //if (vipByPhone == null)
+                        //{//如果未有相同手机号的用户，则无须绑定,直接使用VIP ID对应的VIP记录作为当前注册用户的记录
+                        //    rd.MemberInfo = new MemberInfo()
+                        //    {
+                        //        Mobile = vipByID.Phone
+                        //        ,
+                        //        VipID = vipByID.VIPID
+                        //        ,
+                        //        Name = vipByID.UserName
+                        //        ,
+                        //        VipName = vipByID.VipName
+                        //        ,
+                        //        VipNo = vipByID.VipCode
+                        //        ,
+                        //        MemberBenefits = memberBenefit
+                        //        ,
+                        //        IsActivate = vipByID.IsActivate.HasValue && vipByID.IsActivate.Value == 1 ? true : false
+                        //    };
+                        //    //处理绑卡业务 add by Henry 2015/10/28
+                        //    vipCardVipMappingBLL.BindVipCard(vipByID.VIPID, vipByID.VipCode, vipByID.CouponInfo);
+                        //}
+                        //else
+                        //{//否则调用存储过程,做自动会员合并
 
-                            //如果会员已经注册过，并且来源是微信的则表示该帐号已经被注册过不能再次绑定
-                            if (vipByPhone.VipSourceId == "3" && vipByPhone.Status.Value >= 2)
-                            {
-                                throw new APIException("会员已经注册") { ErrorCode = ERROR_MEMBER_REGISTERED };
-                            }
-                            //否则做会员合并 
-                            if (!bll.MergeVipInfo(pRequest.CustomerID, pRequest.UserID, pRequest.Parameters.Mobile))
-                            {
-                                throw new APIException("自动绑定会员信息失败") { ErrorCode = ERROR_AUTO_MERGE_MEMBER_FAILED };
-                            }
+                        //    //如果会员已经注册过，并且来源是微信的则表示该帐号已经被注册过不能再次绑定
+                        //    if (vipByPhone.VipSourceId == "3" && vipByPhone.Status.Value >= 2)
+                        //    {
+                        //        throw new APIException("会员已经注册") { ErrorCode = ERROR_MEMBER_REGISTERED };
+                        //    }
+                        //    //否则做会员合并 
+                        //    if (!bll.MergeVipInfo(pRequest.CustomerID, pRequest.UserID, pRequest.Parameters.Mobile))
+                        //    {
+                        //        throw new APIException("自动绑定会员信息失败") { ErrorCode = ERROR_AUTO_MERGE_MEMBER_FAILED };
+                        //    }
 
-                            //合并成功后重新读取信息
-                            List<IWhereCondition> wheres = new List<IWhereCondition>();
-                            wheres.Add(new MoreThanCondition() { FieldName = "status", Value = 0, IncludeEquals = false });
-                            wheres.Add(new EqualsCondition() { FieldName = "vipid", Value = pRequest.UserID });
-                            wheres.Add(new EqualsCondition() { FieldName = "clientid", Value = pRequest.CustomerID });
-                            var result = bll.Query(wheres.ToArray(), null);
-                            vipByID = result[0];
-                            rd.MemberInfo = new MemberInfo()
-                            {
-                                Mobile = vipByID.Phone
-                                ,
-                                VipID = vipByID.VIPID
-                                ,
-                                Name = vipByID.UserName
-                                ,
-                                VipName = vipByID.VipName
-                                ,
-                                VipNo = vipByID.VipCode
-                                ,
-                                MemberBenefits = memberBenefit
-                                ,
-                                IsActivate = vipByID.IsActivate.HasValue && vipByID.IsActivate.Value == 1 ? true : false
-                            };
-                            //处理绑卡业务 add by Henry 2015/10/28
-                            vipCardVipMappingBLL.BindVipCard(vipByID.VIPID, vipByID.VipCode, vipByID.CouponInfo);
-                        }
+                        //    //合并成功后重新读取信息
+                        //    List<IWhereCondition> wheres = new List<IWhereCondition>();
+                        //    wheres.Add(new MoreThanCondition() { FieldName = "status", Value = 0, IncludeEquals = false });
+                        //    wheres.Add(new EqualsCondition() { FieldName = "vipid", Value = pRequest.UserID });
+                        //    wheres.Add(new EqualsCondition() { FieldName = "clientid", Value = pRequest.CustomerID });
+                        //    var result = bll.Query(wheres.ToArray(), null);
+                        //    vipByID = result[0];
+                        //    rd.MemberInfo = new MemberInfo()
+                        //    {
+                        //        Mobile = vipByID.Phone
+                        //        ,
+                        //        VipID = vipByID.VIPID
+                        //        ,
+                        //        Name = vipByID.UserName
+                        //        ,
+                        //        VipName = vipByID.VipName
+                        //        ,
+                        //        VipNo = vipByID.VipCode
+                        //        ,
+                        //        MemberBenefits = memberBenefit
+                        //        ,
+                        //        IsActivate = vipByID.IsActivate.HasValue && vipByID.IsActivate.Value == 1 ? true : false
+                        //    };
+                        //    //处理绑卡业务 add by Henry 2015/10/28
+                        //    vipCardVipMappingBLL.BindVipCard(vipByID.VIPID, vipByID.VipCode, vipByID.CouponInfo);
+                        //}
                         #endregion
                     }
                     break;
@@ -305,12 +356,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                         decimal EndAmount = 0;
                         VipAmountBLL AmountBLL = new VipAmountBLL(this.CurrentUserInfo);
                         VipAmountEntity amountEntity = AmountBLL.GetByID(vipByPhone.VIPID);
-
-
                         if (amountEntity != null)
                         {
                             EndAmount = amountEntity.EndAmount.HasValue ? amountEntity.EndAmount ?? 0 : 0;
-                        }
+                        }                        
 
                         #endregion
 
@@ -352,8 +401,76 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             {
                 lEventRegVipLogBll.CouponRegOrFocusLog(pRequest.Parameters.couponId, pRequest.UserID, "", CurrentUserInfo, "Reg");
             }
-
-
+            
+            //当手机号不为空时需要查询是否存在实体卡
+            //if (!string.IsNullOrEmpty(pRequest.Parameters.Mobile) && (!string.IsNullOrEmpty(pRequest.UserID) || !string.IsNullOrEmpty(vipByPhone.VIPID)))
+            //{
+            //    List<IWhereCondition> wheres = new List<IWhereCondition>();
+            //    wheres.Add(new EqualsCondition() { FieldName = "phone", Value = pRequest.Parameters.Mobile });
+            //    wheres.Add(new EqualsCondition() { FieldName = "clientid", Value = pRequest.CustomerID });
+            //    wheres.Add(new DirectCondition("VipID!='" + pRequest.UserID + "'"));
+            //    var vipInfo = bll.Query(wheres.ToArray(), null);
+            //    if (vipInfo != null && vipInfo.Length > 0)
+            //    {
+            //        throw new APIException("检测到会员相关实体卡") { ErrorCode = MEMBER_HAVECARD };
+            //    }                    
+            //    else
+            //    {
+            //        //如果会员当前没有实体卡，则默认绑定等级为1的卡
+            //        vipCardVipMappingBLL.BindVipCard(vipByID.VIPID, vipByID.VipCode, vipByID.CouponInfo);
+            //        throw new APIException("未检测到实体卡") { ErrorCode = MEMBER_HAVENOCARD };
+            //    }
+            //}
+            //判定是否有可绑卡的定义  1=有可绑卡
+            if (HaveVipcard == 1 || HaveVipcard==2)
+            {                
+                //有积分的话给相应领取成功的积分提示
+                var contactEventBLL = new ContactEventBLL(CurrentUserInfo);
+                int sendIntegral=0;
+                if (!string.IsNullOrEmpty(pRequest.Parameters.CTWEventId))
+                {
+                    sendIntegral = contactEventBLL.GetContactEventIntegral(CurrentUserInfo.ClientID, "Reg", "Point", 1);
+                }
+                else
+                {
+                    sendIntegral = contactEventBLL.GetContactEventIntegral(CurrentUserInfo.ClientID, "Reg", "Point", 0);
+                }
+                if (sendIntegral > 0)
+                {                    
+                    if (pRequest.Parameters.registerType != 2 && HaveVipcard == 2)
+                    {
+                        throw new APIException("恭喜您领取成功并获得" + sendIntegral + "注册积分") { ErrorCode = MEMBER_GETSUCCESS };//领取成功不跳转跳转到实体卡           
+                    }
+                    else if (pRequest.Parameters.registerType == 2 && HaveVipcard == 1)
+                    {
+                        throw new APIException("恭喜您领取成功并获得" + sendIntegral + "注册积分") { ErrorCode = MEMBER_HAVECARD_Integral };//检测到有相关实体卡前端不提示领取成功 并跳到实体卡列表
+                    }
+                    else
+                    {
+                        throw new APIException("恭喜您领取成功并获得" + sendIntegral + "注册积分") { ErrorCode = MEMBER_HAVECARD };//领取成功，提示领取成功,并跳到相关实体卡
+                    }
+                }
+                else
+                {
+                    if (pRequest.Parameters.registerType !=2 && HaveVipcard==2)
+                    {
+                        throw new APIException("领取成功") { ErrorCode = MEMBER_GETSUCCESS };//领取成功不跳转跳转到实体卡                        
+                    }
+                    else if (pRequest.Parameters.registerType == 2 && HaveVipcard == 1)
+                    {
+                        throw new APIException("检测到有相关实体卡") { ErrorCode = MEMBER_HAVECARD };//检测到有相关实体卡前端不提示领取成功 并跳到实体卡列表
+                    }
+                    else if (pRequest.Parameters.registerType != 2 && HaveVipcard == 1)
+                    {
+                        throw new APIException("领取成功") { ErrorCode = MEMBER_HAVECARD };//领取成功有实体卡，并跳转
+                    }
+                    else
+                    {
+                        throw new APIException("检测到有相关实体卡") { ErrorCode = MEMBER_HAVECARD };//领取成功，提示领取成功,并跳到相关实体卡
+                    }
+                    
+                }                
+            }
 
             #region 将验证码设置为已验证
             //entity.IsValidated = 1;

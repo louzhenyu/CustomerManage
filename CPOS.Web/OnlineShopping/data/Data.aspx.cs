@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -28,11 +30,6 @@ using System.IO;
 using JIT.CPOS.BS.DataAccess.Base;
 using JIT.CPOS.DTO.Base;
 using System.Data.SqlClient;
-using CPOS.Common;
-using JIT.CPOS.BS.BLL.PA;
-using JIT.CPOS.DTO.Module.PA.Response;
-using JIT.CPOS.BS.Entity.Transport;
-using JIT.CPOS.BS.BLL.Transport;
 
 namespace JIT.CPOS.Web.OnlineShopping.data
 {
@@ -570,15 +567,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     case "getDistrictsByDistricID":
                         content = GetDistrictsByDistricID();
                         break;
-                    case "getWxPersonInfoByOpenId":
-                        content = GetWxPersonInfoByOpenId();
-                        break;
-                    case "getTonyRechargeCardInfo":
-                        content = getTonyRechargeCardInfo();
-                        break;
-                    case "createTonyCardChargeOrder":
-                        content = CreateTonyCardChargeOrder();
-                        break;
+
                     default:
                         throw new Exception("未定义的接口:" + dataType);
                 }
@@ -3323,42 +3312,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     new OrderBy(){FieldName="IsDefault",Direction=OrderByDirections.Desc},//原来的设置默认地址
                     new OrderBy(){FieldName="LastUpdateTime",Direction=OrderByDirections.Desc}//最后更新时间
                 };
-
-                VipAddressEntity vipAddress = null;
-                string provinceCode = string.Empty, cityNameCode = string.Empty, districtCode = string.Empty;
-                if (reqObj.special.IsPA)
-                {
-                    // 获取平安用户地址簿
-                    List<AddressRD> listAddress = PAAppApiBLL.GetAddress(reqObj.common.openId);
-                    if (listAddress.Any())
-                    {
-                        AddressRD adress = listAddress.OrderByDescending(ad => ad.defaultFlag).FirstOrDefault();
-                        var vipbll = new VipBLL(loggingSessionInfo);
-                        //VipEntity vip = vipbll.QueryByEntity(new VipEntity()
-                        //{
-                        //    VIPID = reqObj.common.openId
-                        //}, new OrderBy[] { })[0];
-                        vipAddress = new VipAddressEntity()
-                        {
-                            VipAddressID = string.Empty,
-                            VIPID = reqObj.common.openId,
-                            LinkMan = adress.userName,
-                            LinkTel = AESHelper.Decrypt(adress.phoneNum, "l1S6eaPUyLz1yjgY"),
-                            Province = adress.province,
-                            CityName = adress.city,
-                            DistrictName = adress.area,
-                            IsDefault = 1,
-                            Address = adress.address
-                        };
-                        provinceCode = adress.provinceCode;
-                        cityNameCode = adress.cityCode;
-                        districtCode = adress.areaCode;
-                    }
-                }
-                else
-                {
-                    vipAddress = vipAddressBLL.QueryByEntity(new VipAddressEntity() { VIPID = userId }, orderbys).FirstOrDefault();
-                }
+                var vipAddress = vipAddressBLL.QueryByEntity(new VipAddressEntity() { VIPID = userId }, orderbys).FirstOrDefault();
                 var vipAddressInfo = new VipAddressInfo() { };
                 if (vipAddress != null)
                 {
@@ -3370,9 +3324,6 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     vipAddressInfo.province = vipAddress.Province;
                     vipAddressInfo.cityName = vipAddress.CityName;
                     vipAddressInfo.districtName = vipAddress.DistrictName;
-                    vipAddressInfo.provinceCode = string.IsNullOrEmpty(provinceCode) ? vipAddress.Province : provinceCode;
-                    vipAddressInfo.cityNameCode = string.IsNullOrEmpty(cityNameCode) ? vipAddress.CityName : cityNameCode;
-                    vipAddressInfo.districtCode = string.IsNullOrEmpty(districtCode) ? vipAddress.DistrictName : districtCode;
                     vipAddressInfo.address = vipAddress.Address;
                     vipAddressInfo.isDefault = vipAddress.IsDefault.ToString();
                     respData.content.vipAddressInfo = vipAddressInfo;
@@ -3449,9 +3400,6 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public string isDefault { get; set; }
             public string province { get; set; }//省
             public string cityName { get; set; }//市
-            public string districtCode { get; set; }
-            public string provinceCode { get; set; }//省
-            public string cityNameCode { get; set; }//市
         }
         public class VipUnitInfo
         {
@@ -3470,10 +3418,6 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
         public class getDeliveryListReqSpecialData
         {
-            /// <summary>
-            /// 是否是平安用户
-            /// </summary>
-            public bool IsPA { get; set; }
         }
 
         #endregion
@@ -14718,15 +14662,6 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public string qrImageUrl;
         }
 
-        public class TonyCardInfoRespData : Default.RespData
-        {
-            public string CardNo { get; set; }
-            public decimal? TotalAmount { get; set; }
-            /// <summary>
-            /// 卡类型，0-储值卡，1-套餐卡
-            /// </summary>
-            public int CardType { get; set; }
-        }
         #endregion
 
         #region 复星获取移动采招集合
@@ -15842,29 +15777,6 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public int pageSize { get; set; }
         }
 
-        public class createRechargeOrderReqData : ReqData
-        {
-            public createRechargeOrderReqSpecialData special;
-        }
-
-        public class createRechargeOrderReqSpecialData
-        {
-            public string orderId { get; set; }
-
-            public string status { get; set; }
-        }
-
-        public class getWxOpenInfoReqData : ReqData
-        {
-            public getWxOpenInfoReqSpecialData special;
-        }
-
-        public class getWxOpenInfoReqSpecialData
-        {
-            public string orderId { get; set; }
-        }
-
-
         #endregion
 
         #region 客户定制APP接口、请求、响应
@@ -16457,174 +16369,9 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             return resData.ToJSON();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        private string getTonyRechargeCardInfo()
-        {
-            TonyCardInfoRespData resData = new TonyCardInfoRespData();
-            try
-            {
-                string reqContent = Request["ReqContent"];
-                Loggers.Debug(new DebugLogInfo()
-                {
-                    Message = string.Format("getIntegralRuleList: {0}", reqContent)
-                });
-
-                //解析请求字符串
-                var reqObj = reqContent.DeserializeJSONTo<getWxOpenInfoReqData>();
-                reqObj = reqObj == null ? new getWxOpenInfoReqData() : reqObj;
-
-                //判断客户ID是否传递
-                if (!string.IsNullOrEmpty(reqObj.common.customerId))
-                {
-                    customerId = reqObj.common.customerId;
-                }
-                var loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
-                var bll = new ObjectEvaluationBLL(loggingSessionInfo);
-                //TODO:获取列表信息
-                var service = new VipCardBLL(loggingSessionInfo);
-                VipCardEntity vipCard = service.QueryByEntity(new VipCardEntity()
-                {
-                    VipCardISN = reqObj.special.orderId
-                }, null).FirstOrDefault();
-
-                SysVipCardTypeBLL typeSetting = new SysVipCardTypeBLL(loggingSessionInfo);
-
-                SysVipCardTypeEntity entity = typeSetting.QueryByEntity(new SysVipCardTypeEntity() { VipCardTypeID = vipCard.VipCardTypeID }, null).FirstOrDefault();
-
-                if (vipCard != null)
-                {
-                    resData.CardNo = vipCard.VipCardCode;
-                    resData.TotalAmount = vipCard.TotalAmount;
-                    resData.CardType = entity == null ? 1 : (entity.VipCardTypeName == "储值卡" ? 0 : 1);
-                }
-
-                if (resData.CardType == 1)
-                {
-                    // 调用发卡接口
-                    DistributeCardNo(vipCard.VipCardCode, vipCard.VipCardName, reqObj.special.orderId, loggingSessionInfo);
-                }
-            }
-            catch (Exception ex)
-            {
-                resData.Code = "100";
-                resData.Description = "操作失败:" + ex.Message;
-            }
-            return resData.ToJSON();
-        }
 
 
-        /// <summary>
-        /// 调用多利发卡接口
-        /// </summary>
-        /// <param name="p1"></param>
-        /// <param name="p2"></param>
-        /// <param name="p3"></param>
-        /// <param name="loggingSessionInfo"></param>
-        private void DistributeCardNo(string cardCode, string cardName, string orderId, LoggingSessionInfo loggingSessionInfo)
-        {
-            T_InoutBLL bll = new T_InoutBLL(loggingSessionInfo);
-            T_InoutEntity inout = bll.QueryByEntity(new T_InoutEntity() { order_id = orderId }, null).FirstOrDefault();
-            if (inout == null)
-            {
-                return;
-            }
 
-            string remark = string.Format("订单{0},经销商{1}销售{2}卡号{4}", inout.order_no, inout.Field20, cardName, cardCode);
-
-            string url = string.Format("http://192.168.2.166:8080/shopcard/opencard.htm?shopcardNO={1}&cardexplanation={1}", cardCode, remark);
-            var rsp = CommonBLL.GetHttpResponse(url);
-            Loggers.Debug(new DebugLogInfo()
-            {
-                Message = string.Format("请求：{0},响应:{1}", url, rsp),
-            });
-        }
-
-        #region 创建多利充值订单
-        /// <summary>
-        /// 创建多利充值订单
-        /// </summary>
-        /// <returns></returns>
-        private string CreateTonyCardChargeOrder()
-        {
-            try
-            {
-                string reqContent = Request["ReqContent"];
-                Loggers.Debug(new DebugLogInfo()
-                {
-                    Message = string.Format("CreateTonyCardChargeOrder: {0}", reqContent)
-                });
-
-                //解析请求字符串
-                var reqObj = reqContent.DeserializeJSONTo<createRechargeOrderReqData>();
-                reqObj = reqObj == null ? new createRechargeOrderReqData() : reqObj;
-
-                //判断客户ID是否传递
-                if (!string.IsNullOrEmpty(reqObj.common.customerId))
-                {
-                    customerId = reqObj.common.customerId;
-                }
-                var loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
-                //TODO:获取列表信息
-                var service = new VipCardBLL(loggingSessionInfo);
-                VipCardEntity vipCard = service.QueryByEntity(new VipCardEntity()
-                {
-                    VipCardISN = reqObj.special.orderId
-                }, null).FirstOrDefault();
-
-                T_InoutBLL inoutBll = new T_InoutBLL(loggingSessionInfo);
-                T_InoutEntity inoutEntity = inoutBll.QueryByEntity(new T_InoutEntity()
-                {
-                    order_id = reqObj.special.orderId
-                }, null).FirstOrDefault();
-
-                RechargeOrderBLL bll = new RechargeOrderBLL(loggingSessionInfo);
-                var rechargeOrder = bll.QueryByEntity(new RechargeOrderEntity()
-                {
-                    OrderNo = vipCard.VipCardISN,
-                    VipCardNo = vipCard.VipCardCode
-                }, null).FirstOrDefault();
-                bool isExists = true;
-                if (rechargeOrder == null)
-                {
-                    isExists = false;
-                    rechargeOrder = new RechargeOrderEntity();
-                    rechargeOrder.ActuallyPaid = vipCard.TotalAmount;
-                    rechargeOrder.CreateBy = "sys";
-                    rechargeOrder.CreateTime = DateTime.Now;
-                    rechargeOrder.CustomerID = inoutEntity.customer_id;
-                    rechargeOrder.IsDelete = 0;
-                    rechargeOrder.OrderDesc = "多利充值";
-                    rechargeOrder.OrderID = Guid.NewGuid();
-                    rechargeOrder.OrderNo = inoutEntity.order_no;
-                    rechargeOrder.VipID = inoutEntity.vip_no;
-                    rechargeOrder.TotalAmount = vipCard.TotalAmount;
-                }
-
-                rechargeOrder.LastUpdateBy = "sys";
-                rechargeOrder.LastUpdateTime = DateTime.Now;
-                rechargeOrder.Status = TypeParse.ToInt(reqObj.special.status);
-
-                if (!isExists)
-                {
-                    bll.Create(rechargeOrder);
-                }
-                else
-                {
-                    bll.Update(rechargeOrder);
-                }
-
-                return "SUCCESS";
-
-            }
-            catch (Exception ex)
-            {
-            }
-            return "FAIL";
-        }
-        #endregion
 
 
         private string GetDistrictsByDistricID()
@@ -16663,194 +16410,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             }
             return resData.ToJSON();
         }
+
         #endregion
-
-        #region 通过OPENID获取微信个人信息
-        /// <summary>
-        /// 通过OPENID获取微信个人信息
-        /// </summary>
-        /// <returns></returns>
-        private string GetWxPersonInfoByOpenId()
-        {
-            string reqContent = Request["ReqContent"];
-
-            Loggers.Debug(new DebugLogInfo()
-            {
-                Message = " getWxPersonInfoByOpenId：" + reqContent
-            });
-
-            var reqObj = reqContent.DeserializeJSONTo<getWxOpenInfoReqData>();
-            reqObj = reqObj == null ? new getWxOpenInfoReqData() : reqObj;
-
-            //判断客户ID是否传递
-            if (!string.IsNullOrEmpty(reqObj.common.customerId))
-            {
-                customerId = reqObj.common.customerId;
-            }
-
-            var loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
-
-            T_InoutBLL inoutBll = new T_InoutBLL(loggingSessionInfo);
-            T_InoutEntity inout = inoutBll.QueryByEntity(new T_InoutEntity()
-            {
-                order_id = reqObj.special.orderId
-            }, null).FirstOrDefault();
-            VipBLL vipServiceUnion = new VipBLL(loggingSessionInfo);
-            var vipinfo = vipServiceUnion.QueryByEntity(new VipEntity()
-            {
-                WeiXinUserId = reqObj.common.openId
-            }, null).FirstOrDefault();
-
-            string wxToken = GetTonysWxToken(); // 微信Token
-            string wxrsp = GetWxOpenInfoByOpenId(wxToken, reqObj.common.openId);    // 微信方用户信息
-
-            if (vipinfo != null && wxrsp.Contains("errcode"))
-            {
-                inout.vip_no = vipinfo.VIPID;
-                if (string.IsNullOrEmpty(vipinfo.Col20))
-                {
-                    vipinfo.Col20 = inout.Field20;
-                }
-                inoutBll.Update(inout);
-                vipServiceUnion.Update(vipinfo);
-                return "SUCCESS-1";
-            }
-
-            if (vipinfo != null && !wxrsp.Contains("errcode"))
-            {
-                var wxReturnDic = wxrsp.DeserializeJSONTo<Dictionary<string, string>>();  //
-                vipinfo = GetVipInfoByWxOpenInfo(vipinfo, wxReturnDic);
-                inout.vip_no = vipinfo.VIPID;
-                if (string.IsNullOrEmpty(vipinfo.Col20))
-                {
-                    vipinfo.Col20 = inout.Field20;
-                }
-                inoutBll.Update(inout);
-                vipServiceUnion.Update(vipinfo);
-                return "SUCCESS-2";
-            }
-
-
-            if (!wxrsp.Contains("errcode"))
-            {
-                var wxReturnDic = wxrsp.DeserializeJSONTo<Dictionary<string, string>>();  //
-                vipinfo = GetVipInfoByWxOpenInfo(wxReturnDic, loggingSessionInfo);
-            }
-            else
-            {
-                vipinfo = GetVipInfoOpenId(reqObj.common.openId, loggingSessionInfo);
-            }
-
-            vipinfo.VipCode = vipServiceUnion.GetVipCode();
-            if (string.IsNullOrEmpty(vipinfo.Col20))
-            {
-                vipinfo.Col20 = inout.Field20;
-            }
-            inout.vip_no = vipinfo.VIPID;
-            inoutBll.Update(inout);
-            vipServiceUnion.Create(vipinfo);
-            return "SUCCESS-3";
-        }
-
-        #region 获取微信方用户信息
-        /// <summary>
-        /// 获取微信方用户信息
-        /// </summary>
-        /// <param name="wxToken">wxToken</param>
-        /// <param name="openId">微信OpenId</param>
-        /// <returns></returns>
-        private string GetWxOpenInfoByOpenId(string wxToken, string openId)
-        {
-            string wxurl = "https://api.weixin.qq.com/cgi-bin/user/info?access_token={0}&openid={1}&lang=zh_CN";
-            wxurl = string.Format(wxurl, wxToken, openId);
-            var wxrsp = CommonBLL.GetRemoteData(wxurl, "GET", string.Empty);
-            return wxrsp;
-        }
-        #endregion
-
-        #region 获取多利的微信Token
-        /// <summary>
-        /// 获取多利的微信Token
-        /// </summary>
-        /// <returns></returns>
-        private string GetTonysWxToken()
-        {
-            string url = "http://m.tonysfarm.com/weixin/getWeixinAccessToken";
-            var rsp = CommonBLL.GetHttpResponse(url);
-            var rest = rsp.DeserializeJSONTo<Dictionary<string, string>>();  //将Json字符串反序列化成对象
-            return rest["weixinToken"].ToString();
-        }
-        #endregion
-
-        private VipEntity GetVipInfoByWxOpenInfo(VipEntity vipInfo, Dictionary<string, string> wxReturnDic)
-        {
-            vipInfo.WeiXinUserId = wxReturnDic["openid"];  //openId微信提供
-            vipInfo.City = wxReturnDic["city"];  //城市，微信提供
-            vipInfo.Gender = Convert.ToInt32(wxReturnDic["sex"]);  //性别，微信提供
-            vipInfo.VipName = wxReturnDic["nickname"];  //微信昵称，微信提供
-            vipInfo.VipSourceId = "3";		//写死
-            vipInfo.Status = TypeParse.ToInt(wxReturnDic["subscribe"]);	//客户关注:1-已经关注，0-未关注
-            return vipInfo;
-        }
-        #endregion
-
-        private VipEntity GetVipInfoByWxOpenInfo(Dictionary<string, string> wxReturnDic, LoggingSessionInfo loggingSessionInfo)
-        {
-            var vipInfo = new VipEntity();
-            var vipId = BaseService.NewGuidPub();
-            vipInfo.VIPID = vipId;
-            vipInfo.WeiXinUserId = wxReturnDic["openid"];  //openId微信提供
-            vipInfo.City = wxReturnDic["city"];  //城市，微信提供
-            vipInfo.Gender = Convert.ToInt32(wxReturnDic["sex"]);  //性别，微信提供
-            vipInfo.VipName = wxReturnDic["nickname"];  //微信昵称，微信提供
-            // vipInfo.VipCode = vipServiceUnion.GetVipCode();
-            // vipInfo.UnionID = openInfo.unionid;
-            vipInfo.VipSourceId = "3";		//写死
-            // vipInfo.HeadImgUrl = headimgurl;   //注意，需要先传到我们本地服务器，可以参考（需要download下来）
-            vipInfo.ClientID = loggingSessionInfo.ClientID;		//客户标识
-            vipInfo.Status = TypeParse.ToInt(wxReturnDic["subscribe"]);	//客户关注:1-已经关注，0-未关注
-            vipInfo.VipPasswrod = "e10adc3949ba59abbe56e057f20f883e";  //初始密码123456
-
-            var wappBll = new WApplicationInterfaceBLL(loggingSessionInfo);
-            string weixinId = "";
-            var wappEntity = wappBll.QueryByEntity(new WApplicationInterfaceEntity()
-            {
-
-                CustomerId = loggingSessionInfo.ClientID
-            }, null);
-            if (wappEntity != null && wappEntity.Length > 0)
-            {
-                weixinId = wappEntity[0].WeiXinID;
-            }
-            vipInfo.WeiXin = weixinId;		//微信号码，通过数据库可以查出
-            return vipInfo;
-        }
-
-        private VipEntity GetVipInfoOpenId(string openId, LoggingSessionInfo loggingSessionInfo)
-        {
-            var vipInfo = new VipEntity();
-            var vipId = BaseService.NewGuidPub();
-            vipInfo.VIPID = vipId;
-            vipInfo.WeiXinUserId = openId;  //openId微信提供
-            // vipInfo.VipName = openId;  //微信昵称，微信提供
-            vipInfo.VipSourceId = "3";		//写死
-            vipInfo.ClientID = loggingSessionInfo.ClientID;		//客户标识
-            vipInfo.VipPasswrod = "e10adc3949ba59abbe56e057f20f883e";  //初始密码123456
-
-            var wappBll = new WApplicationInterfaceBLL(loggingSessionInfo);
-            string weixinId = "";
-            var wappEntity = wappBll.QueryByEntity(new WApplicationInterfaceEntity()
-            {
-
-                CustomerId = loggingSessionInfo.ClientID
-            }, null);
-            if (wappEntity != null && wappEntity.Length > 0)
-            {
-                weixinId = wappEntity[0].WeiXinID;
-            }
-            vipInfo.WeiXin = weixinId;		//微信号码，通过数据库可以查出
-            return vipInfo;
-        }
 
         #region 请求和响应
 
@@ -17253,85 +16814,6 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 //频道
                 buryingPoint.ChannelID = commonRequest.common.channelId;
             }
-        }
-        #endregion
-
-        #region 查询物流信息
-        public string GetTransportInfo()
-        {
-            string content = string.Empty;
-            var respData = new GetTransportInfoRespData();
-            try
-            {
-                string reqContent = Request["ReqContent"];
-
-                Loggers.Debug(new DebugLogInfo()
-                {
-                    Message = string.Format("GetTransportInfo: {0}", reqContent)
-                });
-
-                //解析请求字符串
-                var reqObj = reqContent.DeserializeJSONTo<GetTransportInfoReqData>();
-                List<TransportEntity> result = new List<TransportEntity>();
-                ITransportHandler handler = null;
-                switch (reqObj.special.TransportType)
-                {
-                    case "A":// 黑猫
-                        handler = new HeiMaoBll(reqObj.special.WaybillNo);
-                        break;
-                    case "B":// 韵达
-                        handler = new YunDaBll(reqObj.special.WaybillNo);
-                        break;
-                    case "C":// 顺丰
-                        handler = new ShunFengBll(reqObj.special.WaybillNo);
-                        break;
-                    default://
-                        throw new Exception("未找到对应物流商");
-                }
-                result = handler.SearchTransport();
-                respData.code = "200";
-                respData.description = "success";
-                respData.ListTransport = result;
-
-            }
-            catch (Exception ex)
-            {
-                respData.code = "103";
-                respData.description = "出现异常！";
-                respData.exception = ex.ToString();
-            }
-            content = respData.ToJSON();
-
-            Loggers.Debug(new DebugLogInfo()
-            {
-                Message = string.Format("setTransportInfo content: {0}", content)
-            });
-            return content;
-
-        }
-        public class GetTransportInfoRespData : Default.LowerRespData
-        {
-            /// <summary>
-            /// 物流详情
-            /// </summary>
-            public List<TransportEntity> ListTransport { get; set; }
-        }
-
-        public class GetTransportInfoReqData : ReqData
-        {
-            public GetTransportInfoSpecialData special;
-        }
-
-        public class GetTransportInfoSpecialData
-        {
-            /// <summary>
-            /// 物流商类型   A(黑猫)    B(韵达)    C(顺丰)   Z(自主)
-            /// </summary>
-            public string TransportType { get; set; }
-            /// <summary>
-            /// 物流单号
-            /// </summary>
-            public string WaybillNo { get; set; }
         }
         #endregion
     }

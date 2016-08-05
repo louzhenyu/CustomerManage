@@ -27,7 +27,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Report.StoresReport
 
                 //判断区间小于等于7天，开始日期和结束日期都算一天
                 DateTime d1 = Convert.ToDateTime(para.StareDate).Date;
-                DateTime d2 = Convert.ToDateTime(para.EndDate).Date;
+                DateTime d2 = Convert.ToDateTime(para.StareDate).Date;
                 Days=(d2-d1).Days;//天数差
                 Days++;
                 if(Days>7)
@@ -40,7 +40,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Report.StoresReport
             
             DateTime m_StareDate = Convert.ToDateTime(para.StareDate).Date;
             DateTime m_EndDate = Convert.ToDateTime(para.EndDate).Date;
-            rd = VipCardBLL.GetDayReconciliation(m_StareDate, m_EndDate,Days,loggingSessionInfo.CurrentUserRole.UnitId, loggingSessionInfo.ClientID);
+            rd = VipCardBLL.GetDayReconciliation(m_StareDate, m_EndDate, para.UnitID, loggingSessionInfo.ClientID);
             if (rd == null)
             {
                 rd = new DayReconciliationRD();

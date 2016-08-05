@@ -43,16 +43,6 @@ namespace JIT.CPOS.BS.BLL
     public partial class T_InoutBLL
     {
         /// <summary>
-        /// 获取指定订单佣金信息
-        /// </summary>
-        /// <param name="pOrderId">订单id</param>
-        /// <returns></returns>
-        public DataTable GetCommissionList(string pOrderId)
-        {
-            return _currentDAO.GetCommissionList(pOrderId);
-        }
-
-        /// <summary>
         /// 取消订单(Api和后台通用)
         /// </summary>
         /// <param name="orderId"></param>
@@ -195,10 +185,12 @@ namespace JIT.CPOS.BS.BLL
             {
                 panicbuyingEventBLL.SetEventStock(orderId, inoutDetailList.ToList());
             }
+            //砍价订单库存处理
             if (inoutInfo.order_reason_id == "096419BFDF394F7FABFE0DFCA909537F")
             {
                 panicbuyingEventBLL.SetKJEventStock(orderId, inoutDetailList.ToList());
             }
+            //超级分销商库存处理
             if (inoutInfo.data_from_id == "35" || inoutInfo.data_from_id == "36")
             {
                 superRetailTraderItemMappingBll.DeleteSuperRetailTraderItemStock(inoutDetailList.ToList());
@@ -388,7 +380,7 @@ namespace JIT.CPOS.BS.BLL
                                         {
                                             if (singlProfitConfig.ProfitType == "Percent")
                                             {
-                                                amount = Convert.ToDecimal(orderInfo.actual_amount) * DistributionProfit * Convert.ToDecimal(singlProfitConfig.Profit) * Convert.ToDecimal(0.01);
+                                                amount = Convert.ToDecimal(orderInfo.actual_amount) * Convert.ToDecimal(singlProfitConfig.Profit) * Convert.ToDecimal(0.01);
                                             }
                                         }
                                     }
@@ -487,6 +479,190 @@ namespace JIT.CPOS.BS.BLL
                         }
                 }
             }
+        }
+        /// <summary>
+        /// 计算销售会员卡分润
+        /// </summary>
+        /// <param name="loggingSessionInfo"></param>
+        /// <param name="orderInfo"></param>
+        public void CalculateSalesVipCardOrder(LoggingSessionInfo loggingSessionInfo, T_InoutEntity orderInfo)
+        {
+            if (orderInfo != null)
+            {
+
+                if (orderInfo.Field17 != null && orderInfo.Field18 != null && orderInfo.Field17.Length > 0 && orderInfo.Field18.Length > 0)
+                {
+
+
+                    VipBLL bllVip = new VipBLL(loggingSessionInfo);
+
+                    T_Inout_DetailBLL bllInoutDetail = new T_Inout_DetailBLL(loggingSessionInfo);
+                    T_VirtualItemTypeSettingBLL bllVirtualItemTypeSetting = new T_VirtualItemTypeSettingBLL(loggingSessionInfo);
+
+                    var entityInoutDetail = bllInoutDetail.QueryByEntity(new T_Inout_DetailEntity() { order_id = orderInfo.order_id }, null).FirstOrDefault();
+                    var vipCardType = bllVirtualItemTypeSetting.QueryByEntity(new T_VirtualItemTypeSettingEntity() { SkuId = entityInoutDetail.sku_id, IsDelete = 0 }, null).FirstOrDefault();
+                    if (vipCardType != null)
+                    {
+                        VipCardUpgradeRuleBLL bllVipCardUpgradeRule = new VipCardUpgradeRuleBLL(loggingSessionInfo);
+
+                        int intVipCardTypeID = Convert.ToInt32(vipCardType.ObjecetTypeId);
+                        var entityVipCardUpgradeRule = bllVipCardUpgradeRule.QueryByEntity(new VipCardUpgradeRuleEntity() { VipCardTypeID = intVipCardTypeID, IsPurchaseUpgrade = 1, IsDelete = 0 }, null).SingleOrDefault();
+                        #region
+                        //if (entityVipCardUpgradeRule != null)
+                        //{
+                        //    VipCardGradeChangeLogEntity entityVipCardGradeChangeLog = new VipCardGradeChangeLogEntity();
+                        //    VipCardStatusChangeLogEntity entityVipCardStatusChangeLog = new VipCardStatusChangeLogEntity();
+
+                        //    VipCardGradeChangeLogBLL bllVipCardGradeChangeLog = new VipCardGradeChangeLogBLL(loggingSessionInfo);
+                        //    VipCardStatusChangeLogBLL bllVipCardStatusChangeLog = new VipCardStatusChangeLogBLL(loggingSessionInfo);
+                        //    VipCardVipMappingBLL vipCardVipMappingBLL = new VipCardVipMappingBLL(loggingSessionInfo);
+
+                        //    //会员等级改变以及如日志
+                        //    DataSet dsVipInfo = bllVip.GetVipCardLevel(orderInfo.vip_no, loggingSessionInfo.ClientID);
+                        //    if(dsVipInfo.Tables.Count>0 && dsVipInfo.Tables[0].Rows.Count>0)
+                        //    {
+                        //        //会员升级
+                        //        vipCardVipMappingBLL.BindVirtualItem(orderInfo.vip_no, orderInfo.VipCardCode, "", intVipCardTypeID);
+                        //        //日志
+                        //        entityVipCardGradeChangeLog = new VipCardGradeChangeLogEntity()
+                        //        {
+                        //            ChangeLogID=Guid.NewGuid().ToString(),
+                        //            VipCardUpgradeRuleId=entityVipCardUpgradeRule.VipCardUpgradeRuleId,
+                        //            OrderType = "SalesCard",
+                        //            OrderId=orderInfo.order_id,
+                        //            VipCardID = dsVipInfo.Tables[0].Rows[0]["VipCardID"].ToString(),
+                        //            ChangeBeforeVipCardID = dsVipInfo.Tables[0].Rows[0]["VipCardID"].ToString(),
+                        //            ChangeBeforeGradeID = Convert.ToInt32(dsVipInfo.Tables[0].Rows[0]["VipCardTypeID"].ToString()),
+                        //            NowGradeID = intVipCardTypeID,
+                        //            ChangeReason="Upgrade",
+                        //            OperationType = 2,
+                        //            ChangeTime=DateTime.Now,
+                        //            UnitID=orderInfo.sales_unit_id,
+                        //            OperationUserID=orderInfo.sales_user
+                        //        };
+                        //        bllVipCardGradeChangeLog.Create(entityVipCardGradeChangeLog);
+                        //    }
+                        //}
+                        #endregion
+                        //计算分润
+                        VipCardProfitRuleBLL bllVipCardProfitRule = new VipCardProfitRuleBLL(loggingSessionInfo);
+                        var entityVipCardProfitRule = bllVipCardProfitRule.QueryByEntity(new VipCardProfitRuleEntity() { VipCardTypeID = intVipCardTypeID, IsDelete = 0 }, null);
+                        if (entityVipCardProfitRule != null)
+                        {
+                            VipAmountBLL bllVipAmount = new VipAmountBLL(loggingSessionInfo);
+                            VipAmountDetailBLL bllVipAmountDetail = new VipAmountDetailBLL(loggingSessionInfo);
+                            VipAmountEntity entityVipAmount = new VipAmountEntity();
+
+                            foreach (var ProfitRule in entityVipCardProfitRule)
+                            {
+                                decimal amount = 0;
+                                string strAmountSourceId = string.Empty;
+                                string strVipId = string.Empty;
+                                
+                                if (ProfitRule.ProfitOwner == "Employee")
+                                 {
+                                     strAmountSourceId = "37";
+                                     strVipId = orderInfo.sales_user;
+                                 }
+                                 if (ProfitRule.ProfitOwner == "Unit")
+                                 {
+                                     strAmountSourceId = "40";
+                                     strVipId = orderInfo.sales_unit_id;
+                                 }
+                                 if (ProfitRule.IsApplyAllUnits == 0)
+                                 {
+                                     VipCardProfitRuleUnitMappingBLL bllVipCardProfitRuleUnitMapping = new VipCardProfitRuleUnitMappingBLL(loggingSessionInfo);
+                                     var vipCardProfitRuleUnitMapping = bllVipCardProfitRuleUnitMapping.QueryByEntity(new VipCardProfitRuleUnitMappingEntity() { CardBuyToProfitRuleId = ProfitRule.CardBuyToProfitRuleId, UnitID = orderInfo.sales_unit_id, IsDelete = 0, CustomerID = loggingSessionInfo.ClientID }, null).SingleOrDefault();
+                                     if (vipCardProfitRuleUnitMapping != null)
+                                     {
+                                         amount = (decimal)ProfitRule.FirstCardSalesProfitPct * (decimal)orderInfo.actual_amount * (decimal)0.01;
+                                     }
+                                     else
+                                     {
+                                         continue;
+                                     }
+                                 }
+                                 
+                                 amount = (decimal)ProfitRule.FirstCardSalesProfitPct * (decimal)orderInfo.actual_amount * (decimal)0.01;
+                                 if (amount > 0)
+                                 {
+                                     IDbTransaction tran = new JIT.CPOS.BS.DataAccess.Base.TransactionHelper(loggingSessionInfo).CreateTransaction();
+
+                                     VipAmountDetailEntity entityVipAmountDetail = new VipAmountDetailEntity
+                                     {
+                                         VipAmountDetailId = Guid.NewGuid(),
+                                         VipId = strVipId,
+                                         Amount = amount,
+                                         UsedReturnAmount = 0,
+                                         EffectiveDate = DateTime.Now,
+                                         DeadlineDate = Convert.ToDateTime("9999-12-31 23:59:59"),
+                                         AmountSourceId = strAmountSourceId,
+                                         ObjectId = orderInfo.order_id,
+                                         CustomerID = loggingSessionInfo.ClientID,
+                                         Reason = "超级分销商"
+                                     };
+                                     bllVipAmountDetail.Create(entityVipAmountDetail, (SqlTransaction)tran);
+
+                                     entityVipAmount = new VipAmountEntity
+                                       {
+                                           VipId = strVipId,
+                                           BeginAmount = 0,
+                                           InAmount = amount,
+                                           OutAmount = 0,
+                                           EndAmount = amount,
+                                           TotalAmount = amount,
+                                           BeginReturnAmount = 0,
+                                           InReturnAmount = 0,
+                                           OutReturnAmount = 0,
+                                           ReturnAmount = 0,
+                                           ImminentInvalidRAmount = 0,
+                                           InvalidReturnAmount = 0,
+                                           ValidReturnAmount = 0,
+                                           TotalReturnAmount = 0,
+                                           IsLocking = 0,
+                                           CustomerID = loggingSessionInfo.ClientID,
+                                           VipCardCode = ""
+
+                                       };
+                                     bllVipAmount.Create(entityVipAmount, tran);
+                                 }
+                                 else
+                                 {
+
+                                     entityVipAmount.InReturnAmount = (entityVipAmount.InReturnAmount == null ? 0 : entityVipAmount.InReturnAmount.Value) + amount;
+                                     entityVipAmount.TotalReturnAmount = (entityVipAmount.TotalReturnAmount == null ? 0 : entityVipAmount.TotalReturnAmount.Value) + amount;
+
+                                     entityVipAmount.ValidReturnAmount = (entityVipAmount.ValidReturnAmount == null ? 0 : entityVipAmount.ValidReturnAmount.Value) + amount;
+                                     entityVipAmount.ReturnAmount = (entityVipAmount.ReturnAmount == null ? 0 : entityVipAmount.ReturnAmount.Value) + amount;
+                                     bllVipAmount.Update(entityVipAmount);
+                                 }
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 根据会员获取消费金额信息
+        /// </summary>
+        /// <param name="VipID"></param>
+        /// <returns></returns>
+        public decimal GetVipSumAmount(string VipID)
+        {
+            return _currentDAO.GetVipSumAmount(VipID);
+        }
+        /// <summary>
+        /// 获取当前卡是否已购买
+        /// </summary>
+        /// <param name="CustomerID"></param>
+        /// <param name="VipID"></param>
+        /// <param name="SkuID"></param>
+        /// <returns></returns>
+        public int GetVirtualItemStatus(string CustomerID, string VipID, string SkuID)
+        {
+            return _currentDAO.GetVirtualItemStatus(CustomerID, VipID,SkuID);
         }
     }
 }

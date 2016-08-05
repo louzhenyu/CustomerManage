@@ -120,6 +120,18 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetVipInnerGroupNewsUnReadCount(userId, customerId, null, GroupNewsId,null) > 0;
         }
         #endregion
-
+        /// <summary>
+        /// 获取上一条信息/下一条信息 或者当前 消息
+        /// </summary>
+        /// <param name="CustomerId">商户编号</param>
+        /// <param name="model">operationtype（0=当前消息 1=下一条消息 2=上一条消息）</param>
+        /// <param name="NoticePlatformType">平台编号（1=微信用户 2=APP员工）</param>
+        /// <param name="CreateTime">会员注册时间</param>
+        /// <returns>
+        /// </returns>
+        public DataSet GetVipInnerNewsInfo(string CustomerID, int? SentType, int? NoticePlatformType, int? BusType, int? IsRead)
+        {
+            return this._currentDAO.GetVipInnerNewsInfo(CustomerID, SentType, NoticePlatformType, BusType, IsRead);
+        }
     }
 }

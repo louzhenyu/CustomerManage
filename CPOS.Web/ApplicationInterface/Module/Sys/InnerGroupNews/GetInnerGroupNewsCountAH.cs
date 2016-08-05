@@ -3,7 +3,6 @@ using JIT.CPOS.BS.Entity;
 using JIT.CPOS.DTO.Base;
 using JIT.CPOS.DTO.Module.Sys.GetInnerGroupNewsList.Request;
 using JIT.CPOS.DTO.Module.Sys.GetInnerGroupNewsList.Response;
-using JIT.CPOS.DTO.Module.Sys.InnerGroupNews.Response;
 using JIT.CPOS.Web.ApplicationInterface.Base;
 using System;
 using System.Collections.Generic;
@@ -12,6 +11,9 @@ using System.Web;
 
 namespace JIT.CPOS.Web.ApplicationInterface.Module.Sys.InnerGroupNews
 {
+    /// <summary>
+    /// 消息个数 接口
+    /// </summary>
     public class GetInnerGroupNewsCountAH : BaseActionHandler<GetInnerGroupNewsCountRP, GetInnerGroupNewsCountRD>
     {
         protected override GetInnerGroupNewsCountRD ProcessRequest(DTO.Base.APIRequest<GetInnerGroupNewsCountRP> pRequest)

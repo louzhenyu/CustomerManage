@@ -36,7 +36,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                 complexCondition.Add(new EqualsCondition() { FieldName = "t.paymentcenterId", Value = para.paymentcenterId });
             if (!string.IsNullOrEmpty(para.payId))
                 complexCondition.Add(new EqualsCondition() { FieldName = "t.pay_Id", Value = para.payId });
-            //门店过滤处理
 
             //排序参数
             List<OrderBy> lstOrder = new List<OrderBy> { };

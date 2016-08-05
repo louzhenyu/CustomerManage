@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015/9/9 17:12:31
+ * Create On	:2016/7/5 16:49:40
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [C_MessageSend](");
-            strSql.Append("[ActivityID],[MessageID],[MessageType],[Content],[VipID],[OpenID],[Phone],[Email],[SendTime],[ActualSendTime],[Priority],[SendNumber],[CustomerID],[IsSend],[CreateBy],[CreateTime],[LastUpdateBy],[LastUpdateTime],[IsDelete],[SendID])");
+            strSql.Append("[ActivityID],[MessageID],[VipID],[MessageType],[Content],[OpenID],[Phone],[Email],[SendTime],[ActualSendTime],[Priority],[SendNumber],[CustomerID],[IsSend],[CreateBy],[CreateTime],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CouponCode],[CouponTypeName],[DateDiffDesc],[CouponCategory],[SendID])");
             strSql.Append(" values (");
-            strSql.Append("@ActivityID,@MessageID,@MessageType,@Content,@VipID,@OpenID,@Phone,@Email,@SendTime,@ActualSendTime,@Priority,@SendNumber,@CustomerID,@IsSend,@CreateBy,@CreateTime,@LastUpdateBy,@LastUpdateTime,@IsDelete,@SendID)");            
+            strSql.Append("@ActivityID,@MessageID,@VipID,@MessageType,@Content,@OpenID,@Phone,@Email,@SendTime,@ActualSendTime,@Priority,@SendNumber,@CustomerID,@IsSend,@CreateBy,@CreateTime,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CouponCode,@CouponTypeName,@DateDiffDesc,@CouponCategory,@SendID)");            
 
 			Guid? pkGuid;
 			if (pEntity.SendID == null)
@@ -95,9 +95,9 @@ namespace JIT.CPOS.BS.DataAccess
             {
 					new SqlParameter("@ActivityID",SqlDbType.UniqueIdentifier),
 					new SqlParameter("@MessageID",SqlDbType.UniqueIdentifier),
+					new SqlParameter("@VipID",SqlDbType.VarChar),
 					new SqlParameter("@MessageType",SqlDbType.Char),
 					new SqlParameter("@Content",SqlDbType.NVarChar),
-					new SqlParameter("@VipID",SqlDbType.VarChar),
 					new SqlParameter("@OpenID",SqlDbType.VarChar),
 					new SqlParameter("@Phone",SqlDbType.VarChar),
 					new SqlParameter("@Email",SqlDbType.VarChar),
@@ -112,13 +112,17 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
+					new SqlParameter("@CouponCode",SqlDbType.VarChar),
+					new SqlParameter("@CouponTypeName",SqlDbType.NVarChar),
+					new SqlParameter("@DateDiffDesc",SqlDbType.VarChar),
+					new SqlParameter("@CouponCategory",SqlDbType.VarChar),
 					new SqlParameter("@SendID",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.ActivityID;
 			parameters[1].Value = pEntity.MessageID;
-			parameters[2].Value = pEntity.MessageType;
-			parameters[3].Value = pEntity.Content;
-			parameters[4].Value = pEntity.VipID;
+			parameters[2].Value = pEntity.VipID;
+			parameters[3].Value = pEntity.MessageType;
+			parameters[4].Value = pEntity.Content;
 			parameters[5].Value = pEntity.OpenID;
 			parameters[6].Value = pEntity.Phone;
 			parameters[7].Value = pEntity.Email;
@@ -133,7 +137,11 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[16].Value = pEntity.LastUpdateBy;
 			parameters[17].Value = pEntity.LastUpdateTime;
 			parameters[18].Value = pEntity.IsDelete;
-			parameters[19].Value = pkGuid;
+			parameters[19].Value = pEntity.CouponCode;
+			parameters[20].Value = pEntity.CouponTypeName;
+			parameters[21].Value = pEntity.DateDiffDesc;
+			parameters[22].Value = pEntity.CouponCategory;
+			parameters[23].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -231,12 +239,12 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[ActivityID]=@ActivityID,");
             if (pIsUpdateNullField || pEntity.MessageID!=null)
                 strSql.Append( "[MessageID]=@MessageID,");
+            if (pIsUpdateNullField || pEntity.VipID!=null)
+                strSql.Append( "[VipID]=@VipID,");
             if (pIsUpdateNullField || pEntity.MessageType!=null)
                 strSql.Append( "[MessageType]=@MessageType,");
             if (pIsUpdateNullField || pEntity.Content!=null)
                 strSql.Append( "[Content]=@Content,");
-            if (pIsUpdateNullField || pEntity.VipID!=null)
-                strSql.Append( "[VipID]=@VipID,");
             if (pIsUpdateNullField || pEntity.OpenID!=null)
                 strSql.Append( "[OpenID]=@OpenID,");
             if (pIsUpdateNullField || pEntity.Phone!=null)
@@ -258,15 +266,25 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
-                strSql.Append( "[LastUpdateTime]=@LastUpdateTime");
+                strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
+            if (pIsUpdateNullField || pEntity.CouponCode!=null)
+                strSql.Append( "[CouponCode]=@CouponCode,");
+            if (pIsUpdateNullField || pEntity.CouponTypeName!=null)
+                strSql.Append( "[CouponTypeName]=@CouponTypeName,");
+            if (pIsUpdateNullField || pEntity.DateDiffDesc!=null)
+                strSql.Append( "[DateDiffDesc]=@DateDiffDesc,");
+            if (pIsUpdateNullField || pEntity.CouponCategory!=null)
+                strSql.Append( "[CouponCategory]=@CouponCategory");
+            if (strSql.ToString().EndsWith(","))
+                strSql.Remove(strSql.Length - 1, 1);
             strSql.Append(" where SendID=@SendID ");
             SqlParameter[] parameters = 
             {
 					new SqlParameter("@ActivityID",SqlDbType.UniqueIdentifier),
 					new SqlParameter("@MessageID",SqlDbType.UniqueIdentifier),
+					new SqlParameter("@VipID",SqlDbType.VarChar),
 					new SqlParameter("@MessageType",SqlDbType.Char),
 					new SqlParameter("@Content",SqlDbType.NVarChar),
-					new SqlParameter("@VipID",SqlDbType.VarChar),
 					new SqlParameter("@OpenID",SqlDbType.VarChar),
 					new SqlParameter("@Phone",SqlDbType.VarChar),
 					new SqlParameter("@Email",SqlDbType.VarChar),
@@ -278,13 +296,17 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@IsSend",SqlDbType.Int),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
+					new SqlParameter("@CouponCode",SqlDbType.VarChar),
+					new SqlParameter("@CouponTypeName",SqlDbType.NVarChar),
+					new SqlParameter("@DateDiffDesc",SqlDbType.VarChar),
+					new SqlParameter("@CouponCategory",SqlDbType.VarChar),
 					new SqlParameter("@SendID",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.ActivityID;
 			parameters[1].Value = pEntity.MessageID;
-			parameters[2].Value = pEntity.MessageType;
-			parameters[3].Value = pEntity.Content;
-			parameters[4].Value = pEntity.VipID;
+			parameters[2].Value = pEntity.VipID;
+			parameters[3].Value = pEntity.MessageType;
+			parameters[4].Value = pEntity.Content;
 			parameters[5].Value = pEntity.OpenID;
 			parameters[6].Value = pEntity.Phone;
 			parameters[7].Value = pEntity.Email;
@@ -296,7 +318,11 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[13].Value = pEntity.IsSend;
 			parameters[14].Value = pEntity.LastUpdateBy;
 			parameters[15].Value = pEntity.LastUpdateTime;
-			parameters[16].Value = pEntity.SendID;
+			parameters[16].Value = pEntity.CouponCode;
+			parameters[17].Value = pEntity.CouponTypeName;
+			parameters[18].Value = pEntity.DateDiffDesc;
+			parameters[19].Value = pEntity.CouponCategory;
+			parameters[20].Value = pEntity.SendID;
 
             //执行语句
             int result = 0;
@@ -588,12 +614,12 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ActivityID", Value = pQueryEntity.ActivityID });
             if (pQueryEntity.MessageID!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "MessageID", Value = pQueryEntity.MessageID });
+            if (pQueryEntity.VipID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipID", Value = pQueryEntity.VipID });
             if (pQueryEntity.MessageType!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "MessageType", Value = pQueryEntity.MessageType });
             if (pQueryEntity.Content!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Content", Value = pQueryEntity.Content });
-            if (pQueryEntity.VipID!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipID", Value = pQueryEntity.VipID });
             if (pQueryEntity.OpenID!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "OpenID", Value = pQueryEntity.OpenID });
             if (pQueryEntity.Phone!=null)
@@ -622,6 +648,14 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
             if (pQueryEntity.IsDelete!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
+            if (pQueryEntity.CouponCode!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CouponCode", Value = pQueryEntity.CouponCode });
+            if (pQueryEntity.CouponTypeName!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CouponTypeName", Value = pQueryEntity.CouponTypeName });
+            if (pQueryEntity.DateDiffDesc!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "DateDiffDesc", Value = pQueryEntity.DateDiffDesc });
+            if (pQueryEntity.CouponCategory!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CouponCategory", Value = pQueryEntity.CouponCategory });
 
             return lstWhereCondition.ToArray();
         }
@@ -649,6 +683,10 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.MessageID =  (Guid)pReader["MessageID"];
 			}
+			if (pReader["VipID"] != DBNull.Value)
+			{
+				pInstance.VipID =  Convert.ToString(pReader["VipID"]);
+			}
 			if (pReader["MessageType"] != DBNull.Value)
 			{
 				pInstance.MessageType =Convert.ToString(pReader["MessageType"]);
@@ -656,10 +694,6 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["Content"] != DBNull.Value)
 			{
 				pInstance.Content =  Convert.ToString(pReader["Content"]);
-			}
-			if (pReader["VipID"] != DBNull.Value)
-			{
-				pInstance.VipID =  Convert.ToString(pReader["VipID"]);
 			}
 			if (pReader["OpenID"] != DBNull.Value)
 			{
@@ -716,6 +750,22 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["IsDelete"] != DBNull.Value)
 			{
 				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
+			}
+			if (pReader["CouponCode"] != DBNull.Value)
+			{
+				pInstance.CouponCode =  Convert.ToString(pReader["CouponCode"]);
+			}
+			if (pReader["CouponTypeName"] != DBNull.Value)
+			{
+				pInstance.CouponTypeName =  Convert.ToString(pReader["CouponTypeName"]);
+			}
+			if (pReader["DateDiffDesc"] != DBNull.Value)
+			{
+				pInstance.DateDiffDesc =  Convert.ToString(pReader["DateDiffDesc"]);
+			}
+			if (pReader["CouponCategory"] != DBNull.Value)
+			{
+				pInstance.CouponCategory =  Convert.ToString(pReader["CouponCategory"]);
 			}
 
         }

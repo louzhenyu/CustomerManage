@@ -59,7 +59,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Market.CreateQRCode
                     var marketEventBll = new MarketEventBLL(CurrentUserInfo);
 
                     var marketEventEntity = marketEventBll.QueryByEntity(new MarketEventEntity() { EventCode = "CA00002433",CustomerId = CurrentUserInfo.ClientID }, null).FirstOrDefault();
-                    var userQRCode = userQRCodeBll.QueryByEntity(new WQRCodeManagerEntity() { ObjectId = marketEventEntity.MarketEventID }, null);  //
+                    var userQRCode = userQRCodeBll.QueryByEntity(new WQRCodeManagerEntity() { ObjectId = marketEventEntity.MarketEventID, CustomerId = CurrentUserInfo.ClientID }, null);  //
 
                     if (userQRCode != null && userQRCode.Length > 0)
                     {
@@ -124,7 +124,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Market.CreateQRCode
                     {
                         #region 创建店员永久二维码匹配表
                         var userQrTypeBll = new WQRCodeTypeBLL(CurrentUserInfo);
-                        var userQrType = userQrTypeBll.QueryByEntity(new WQRCodeTypeEntity() { QRCodeTypeId =  new Guid("E034EB41-E72F-42A4-B907-048C40FCA41B") }, null);//"UserQrCode"
+                        var userQrType = userQrTypeBll.QueryByEntity(new WQRCodeTypeEntity() { TypeName = "签到" }, null);//"UserQrCode"
                         if (userQrType != null && userQrType.Length > 0)
                         {
                             var userQrCodeBll = new WQRCodeManagerBLL(CurrentUserInfo);

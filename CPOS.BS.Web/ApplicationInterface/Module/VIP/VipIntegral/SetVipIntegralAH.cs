@@ -29,7 +29,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipIntegral
             var vipInfo = vipBLL.GetByID(para.VipID);
             var unitInfo = unitBLL.GetByID(loggingSessionInfo.CurrentUserRole.UnitId);
             var pTran = vipIntegralDetail.GetTran();   //事务  
-
+            var vipIntegral = vipIntegralBLL.GetByID(para.VipID);
             using (pTran.Connection)
             {
                 try
@@ -42,29 +42,40 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipIntegral
                         Reason = para.Reason,
                         Remark = para.Remark
                     };
-                    //变动前积分
-                    string OldIntegral = (vipInfo.Integration ?? 0).ToString();
-                    //变动积分
-                    string ChangeIntegral = (IntegralDetail.Integral ?? 0).ToString();
-                    string vipIntegralDetailId = vipIntegralBLL.AddIntegral(ref vipInfo, unitInfo,  IntegralDetail, pTran, loggingSessionInfo);
-                    //发送微信积分变动通知模板消息
-                    if (!string.IsNullOrWhiteSpace(vipIntegralDetailId))
+                    if (IntegralDetail.Integral != 0)
                     {
-                        var CommonBLL = new CommonBLL();
-                        CommonBLL.PointsChangeMessage(OldIntegral, vipInfo, ChangeIntegral, vipInfo.WeiXinUserId, loggingSessionInfo);
-                    }
-
-                    //增加图片上传
-                    if (!string.IsNullOrEmpty(para.ImageUrl))
-                    {
-                        var objectImagesEntity = new ObjectImagesEntity()
+                        //变动前积分
+                        string OldIntegral = string.Empty;
+                        if (vipIntegral != null)
                         {
-                            ImageId = Guid.NewGuid().ToString(),
-                            ObjectId = vipIntegralDetailId,
-                            ImageURL = para.ImageUrl
-                        };
-                        objectImagesBLL.Create(objectImagesEntity);
-                    }
+                            OldIntegral = (vipIntegral.ValidIntegral ?? 0).ToString();
+                        }
+                        else
+                        {
+                            OldIntegral = "0";
+                        }
+                        
+                        //变动积分
+                        string ChangeIntegral = (IntegralDetail.Integral ?? 0).ToString();
+                        string vipIntegralDetailId = vipIntegralBLL.AddIntegral(ref vipInfo, unitInfo, IntegralDetail, pTran, loggingSessionInfo);
+                        //发送微信积分变动通知模板消息
+                        if (!string.IsNullOrWhiteSpace(vipIntegralDetailId))
+                        {
+                            var CommonBLL = new CommonBLL();
+                            CommonBLL.PointsChangeMessage(OldIntegral, vipInfo, ChangeIntegral, vipInfo.WeiXinUserId, loggingSessionInfo);
+                        }
+                        //增加图片上传
+                        if (!string.IsNullOrEmpty(para.ImageUrl))
+                        {
+                            var objectImagesEntity = new ObjectImagesEntity()
+                            {
+                                ImageId = Guid.NewGuid().ToString(),
+                                ObjectId = vipIntegralDetailId,
+                                ImageURL = para.ImageUrl
+                            };
+                            objectImagesBLL.Create(objectImagesEntity);
+                        }
+                    }    
                     pTran.Commit();  //提交事物
                 }
                 catch (APIException apiEx)

@@ -347,37 +347,9 @@ namespace JIT.CPOS.BS.BLL
         /// 获取默认登录信息
         /// </summary>
         /// <returns></returns>
-        public static LoggingSessionInfo GetLoggingSession2()
-        {
-            var userId = "";// ConfigurationManager.AppSettings["user_id"].Trim();
-            var customerId = "7e144bf108b94505a890ec3a7820db8d";// ConfigurationManager.AppSettings["customer_id"].Trim();
-            LoggingSessionInfo loggingSessionInfo = new LoggingSessionInfo();
-
-            loggingSessionInfo.CurrentUser = new BS.Entity.User.UserInfo();
-            loggingSessionInfo.CurrentUser.User_Id = userId;
-            loggingSessionInfo.CurrentUser.customer_id = customerId;
-
-            loggingSessionInfo.UserID = loggingSessionInfo.CurrentUser.User_Id;
-            loggingSessionInfo.ClientID = customerId;
-            loggingSessionInfo.Conn = "user id=admin;password=JtLaxT7668;data source=182.254.151.86,7433;database=cpos_bs_farm;"; //ConfigurationManager.AppSettings["Conn"].Trim();//这里没有什么作用
-
-
-            loggingSessionInfo.CurrentLoggingManager = new LoggingManager();
-            loggingSessionInfo.CurrentLoggingManager.Connection_String = loggingSessionInfo.Conn;
-            loggingSessionInfo.CurrentLoggingManager.User_Id = userId;
-            loggingSessionInfo.CurrentLoggingManager.Customer_Id = customerId;
-            loggingSessionInfo.CurrentLoggingManager.Customer_Name = "";
-            loggingSessionInfo.CurrentLoggingManager.User_Name = "";
-            return loggingSessionInfo;
-        }
-
-        /// <summary>
-        /// 获取默认登录信息
-        /// </summary>
-        /// <returns></returns>
         public static LoggingSessionInfo GetLoggingSession()
         {
-            var userId = ConfigurationManager.AppSettings["user_id"] == null ? "" : ConfigurationManager.AppSettings["user_id"].Trim();
+            var userId = ConfigurationManager.AppSettings["user_id"].Trim();
             var customerId = ConfigurationManager.AppSettings["customer_id"].Trim();
             LoggingSessionInfo loggingSessionInfo = new LoggingSessionInfo();
 
@@ -450,9 +422,9 @@ namespace JIT.CPOS.BS.BLL
             var platform = "weixin";
 
             string date = DateTime.Now.Year.ToString() + "_" + DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString();
-            // string dirPath = HttpContext.Current.Server.MapPath("WEBHOME/logs/" + platform + "/");//当前项目的目录路径
+          // string dirPath = HttpContext.Current.Server.MapPath("WEBHOME/logs/" + platform + "/");//当前项目的目录路径
             string dirPath = System.AppDomain.CurrentDomain.BaseDirectory + "WEBHOME/logs/" + platform + "/";
-            string filename = dirPath + date + ".txt";
+            string filename =  dirPath+ date + ".txt";
 
             if (!System.IO.Directory.Exists(dirPath))
                 System.IO.Directory.CreateDirectory(dirPath);

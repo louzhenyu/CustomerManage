@@ -1,20 +1,6 @@
 define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','kindeditor'],function($){
     //上传图片
     KE = KindEditor;
-    var _id = "";
-    //添加自定义验证--手机号码
-    $.extend($.fn.validatebox.defaults.rules, {
-        //移动手机号码验证  
-        telephone: {//value值为文本框中的值  
-            validator: function (value) {
-                //var reg = /^1[3|4|5|8|9]\d{9}$/;
-                var reg = /^-?\d{7,11}$/
-                return reg.test(value);
-            },
-            message: '电话格式不正确'
-        }
-    })
-
     var page = {
         elems: {
             optPanel:$("#optPanel"), //页面的顶部li
@@ -38,21 +24,20 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
         },
         init: function(){
             this.loadDataPage();
-            //绑定事件
-            page.initEvent();
+            this.initEvent();
         },
-		loadDataPage: function(){ //页面初始化
+		loadDataPage: function(){
 			var that = this,
 				$centreArea = $('.centreArea'),
 				$contentArea = $('#contentArea'),
 				h = $centreArea.height();
 			that.elems.unitId = $.util.getUrlParam('Item_Id') || '';
 			$contentArea.css({'minHeight':h+'px'});
+			$('#nav01').fadeIn("slow");
+			//$('#nav02').fadeIn("slow");
 			
-		    //第一步
+			//第一步
 			that.getClassify();//获取上级组织层级
-			that.getCityInfo();//获取省，市，区
-			
 			
 			//遍历图文素材下拉框
 			$('#ReplyType').combobox({
@@ -84,13 +69,10 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 			$('#ReplyType').combobox('setText',"请选择");
 			
 			
-			that.getStoreInfo(that.elems.unitId);//获取门店信息
-		    
-			
-		    //显示面板内容 -jw
-			$('#nav01').fadeIn("slow");
-			//$('#nav02').fadeIn("slow");
-			
+			//获取省，市，区  待开发
+			that.getCityInfo('',function(){
+				that.getStoreInfo(that.elems.unitId);//获取门店信息
+			});
 			
 		},
 		
@@ -419,6 +401,14 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 			})
 			
 			
+			
+			
+			
+			
+			
+			
+			
+	
 			$('.jui-dialog-close').bind('click',function(){
 				$('.jui-mask').hide();
 				$('.jui-dialog').hide();
@@ -435,7 +425,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				url: "/module/basic/unit/Handler/UnitHandler.ashx",
 				data: {
 					action: 'get_unit_by_id',
-					unit_id: unitId?unitId:""
+					unit_id: unitId
 				},
 				success: function (data) {
 				    if (data) {
@@ -456,16 +446,12 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 								}
 				                $('.storePicBox').prepend(htmlStr);
 
-
 				                //覆盖经纬度
 				                var longitudeAndLatitude = result.longitude + "," + result.dimension;
 				                $('#longitude').val(longitudeAndLatitude);
 
 				                $('#provinceId').combobox('select', 65);
-
 				                setTimeout(function () {
-				                    //定位树节点
-				                     $('#Parent_Unit_Id').combotree('setValue', result.Parent_Unit_Id);
 				                    $('#provinceId').combobox('select', result.provinceId);
 				                    setTimeout(function () {
 				                        $('#townId').combobox('select', result.townId);
@@ -474,6 +460,11 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				                        }, 500);
 				                    }, 500);
 				                }, 500);
+
+				                //定位树节点
+				                $('#Parent_Unit_Id').combotree('setValue', result.Parent_Unit_Id);
+
+
 
 
 				                //二维码模块遍历
@@ -503,8 +494,6 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				                }
 
 				            }
-				        } else {
-				            console.log(data.msg);
 				        }
 					}else{
 						alert(data.msg);
@@ -523,14 +512,15 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					if(data){
 						data.push({id:0,text:"请选择"});
 						$('#Parent_Unit_Id').combotree({
-							width: 200,//that.elems.width,
-							height: that.elems.height,
+							width: 200,
+							height: 30,
 							panelHeight: 210,
 							lines:true,
 							valueField: 'id',
                     		textField: 'text',
 							data:data,
-							onSelect: function (param) {
+							onSelect: function(param){
+								
 							}
 						});
 						//$('#Parent_Unit_Id').combobox('setText',"请选择");
@@ -569,11 +559,11 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				url: "/Framework/Javascript/Biz/Handler/CitySelectTreeHandler.ashx",
 				data:{
 					action:'',
-					node: _id
+					node:id
 				},
 				success: function(data){
 					if(data){
-					    if (_id== '') {
+						if(id==''){
 							$('#provinceId').combobox({
 								width: 70,
 								height: that.elems.height,
@@ -589,7 +579,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 							$('#provinceId').combobox('setText',"请选择");
 							$('#townId').combobox('setText',"请选择");
 							$('#CityId').combobox('setText',"请选择");
-					    } else if (_id.length == 2) {
+						}else if(id.length==2){
 							$('#townId').combobox({
 								width: 70,
 								height: that.elems.height,
@@ -603,7 +593,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 								}
 							});
 							//$('#townId').combobox('setText',"请选择");
-					    } else if (_id.length == 4) {
+						}else if(id.length==4){
 							$('#CityId').combobox({
 								width: 70,
 								height: that.elems.height,
@@ -616,7 +606,9 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 							});
 							//$('#CityId').combobox('setText',"请选择");
 						}
-						
+						if(callback){
+							callback();
+						}
 						
 					}else{
 						alert(data.msg);
@@ -735,7 +727,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				url: "/Module/Basic/Unit/Handler/UnitHandler.ashx",
 				data: {
 					action:'CretaeWxCode',
-					unit_id:unitId
+					unit_id:that.elems.unitId
 				},
 				success: function(data) {
 					if(data.success) {
@@ -753,7 +745,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 		
 		
 		//显示图文搜索的  进行获取
-		showMatrialText: function (flag, type) {
+		showMatrialText: function (flag,type) {
 			var that = this;
 			if (!!!flag) {
 				this.elems.uiMask.hide();

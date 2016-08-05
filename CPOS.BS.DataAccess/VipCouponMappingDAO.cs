@@ -102,7 +102,7 @@ namespace JIT.CPOS.BS.DataAccess
 
 			   where    dateadd(day,@min,getdate()) <b.EndDate and  dateadd(day,@max,getdate()) >b.EndDate and d.clientid=@CustomerID 
                              and WeiXinUserId is not null
-			    and WeiXinUserId!=''
+			    and WeiXinUserId!='' and b.status!=1
                             ");
 
             return this.SQLHelper.ExecuteDataset(CommandType.Text, strSql, ls.ToArray());

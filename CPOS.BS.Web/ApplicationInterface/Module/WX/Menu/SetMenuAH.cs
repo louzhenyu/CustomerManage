@@ -278,11 +278,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.Menu
             }
             if (level == 2)
             {
-                var wMenuEntityArraybyIndex = bll.QueryByEntity(new WMenuEntity() { DisplayColumn = displayIndex, WeiXinID = weixinId, Level = "2" }, null);
-                if (wMenuEntityArraybyIndex.Length != 0 && wMenuEntityArraybyIndex[0].ID != menuId)
-                {
-                    throw new APIException("一级菜单序号不可重复") { ErrorCode = 143 };
-                }
                 wMenuEntityArrayByName = bll.QueryByEntity(new WMenuEntity() { Name = name, WeiXinID = weixinId, Level = "2" }, null);
                 if (string.IsNullOrEmpty(menuId) || menuId == "")
                 {

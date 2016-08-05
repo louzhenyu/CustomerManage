@@ -351,7 +351,13 @@
                 <#if(item.ToolType=="Coupon"){#>
                     <li data-id="<#=item.ObjectId#>" data-time="<#=item.ValidityPeriod#>" data-new="true" data-type="2" data-toolid="<#=item.SetoffToolID#>">
                         <label>
-                            <p><b><#=i+1#>.</b><span class="name"><#=item.Name#></span><span class="till">剩余<#=item.SurplusCount#>张</span> </p>
+                            <p><b><#=i+1#>.</b><span class="name"><#=item.Name#></span>
+                            <#if(item.IsNotLimitQty=="1"){#>
+                                <span class="till">不限数量</span>
+                            <#}else{#>
+                                <span class="till">剩余<#=item.SurplusCount#>张</span>
+                             <#}#>
+                            </p>
                             <#if(item.BeginData==null){#>
                                 <p class="Time">领取后<#=item.ServiceLife#>天有效</p>
                             <#}else{#>
@@ -364,7 +370,13 @@
                 <#}else{#>
                     <li data-id="<#=item.CouponTypeID#>" data-time="<#=item.ValidityPeriod#>" data-type="2">
                     <label>
-                        <p><b><#=i+1#>.</b><span class="name"><#=item.CouponTypeName#></span><span class="till">剩余<#=item.SurplusQty#>张</span> </p>
+                        <p><b><#=i+1#>.</b><span class="name"><#=item.CouponTypeName#></span>
+                        <#if(item.IsNotLimitQty=="1"){#>
+                            <span class="till">不限数量</span>
+                        <#}else{#>
+                            <span class="till">剩余<#=item.SurplusQty#>张</span>
+                         <#}#>
+                        </p>
                         <#if(item.BeginTimeDate==""){#>
                             <p class="Time">领取后<#=item.ServiceLife#>天有效</p>
                         <#}else{#>

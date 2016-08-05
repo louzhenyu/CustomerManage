@@ -375,6 +375,44 @@ namespace JIT.CPOS.BS.DataAccess
             return list;
         }
 
+        /// <summary>
+        /// 获取超级分销商Sku价格
+        /// </summary>
+        /// <param name="skuId"></param>
+        /// <returns></returns>
+        public List<SkuPrice> GetSuperRetailTraderSkuPrice(string skuId,string customerId)
+        {
+            List<SkuPrice> list = new List<SkuPrice>();
+            StringBuilder sql = new StringBuilder();
+            sql.AppendFormat(@" declare @cost decimal(18,2)
+            select @cost = Cost from T_SuperRetailTraderConfig where CustomerId = @CustomerId and isdelete = 0
+            if (@cost = 0 or @cost is null) 
+            begin select @cost = 100 end
+            select a.SkuId,CONVERT(decimal(18,2),a.DistributerCostPrice / (@cost/100)) as DistributerPrice from T_SuperRetailTraderSkuMapping a where IsDelete = 0 and Skuid in ({0})", skuId);
+
+            SqlParameter[] pars = new SqlParameter[]
+            {
+                new SqlParameter("@CustomerId",customerId)
+            };
+
+            using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(CommandType.Text,sql.ToString(),pars))
+            {
+                while (rdr.Read())
+                {
+                    SkuPrice m = new SkuPrice();
+                    if (rdr["SkuId"] != DBNull.Value)
+                    {
+                        m.sku_id = rdr["SkuId"].ToString();
+                    }
+                    if (rdr["DistributerPrice"] != DBNull.Value)
+                    {
+                        m.price = Convert.ToDecimal(rdr["DistributerPrice"]);
+                    }
+                    list.Add(m);
+                }
+            }
+            return list;
+        }
     
     }
 }

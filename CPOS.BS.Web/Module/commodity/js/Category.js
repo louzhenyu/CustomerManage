@@ -115,7 +115,7 @@
                    case "exit" :
                        that.elems.optionType="exit";
                        that.update(row);
-                       $('#addFrom').form('load', { Item_Category_Name: row.text, Item_Category_Id: row.id, Parent_Id: row.ParentID, CommissionRate: row.CommissionRate });
+                       $('#addFrom').form('load',{Item_Category_Name:row.text,Item_Category_Id:row.id,Parent_Id:row.ParentID});
                        break;
                    case "addChildren" :
                        that.elems.optionType="addChildren";
@@ -328,6 +328,7 @@
                 columns : [[
                     {field : 'text',title : '分类名称',width:120,align:'left',resizable:false,
                         formatter:function(value ,row,index){
+                            debugger;
                             var long=12;
                             var html='';
                             if(value&&value.length>long){
@@ -350,11 +351,6 @@
                             return html;
                         }
 
-                    },
-                    {field: 'CommissionRate', title: '商品佣金', width: 81, align: 'center', resizable: false,
-                        formatter: function (value, row, index) {
-                            return value+"%";
-                        }
                     },
                     {field : 'create_time',title : '子类添加',width:81,align:'left',resizable:false,
                         formatter:function(value ,row,index){

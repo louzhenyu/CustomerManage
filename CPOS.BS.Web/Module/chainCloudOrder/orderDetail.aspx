@@ -15,12 +15,12 @@
                 <!--个别信息查询-->
                 <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;  padding: 0px;  min-height: 60px;  border-bottom: 1px solid #e1e7ea;">
                      <div class="optionBtn " style="display: none">
-                     <div class="commonBtn DeliveryName1" data-status="500"  data-showstaus="100,900" >审核通过</div>
+                    <!-- <div class="commonBtn DeliveryName1" data-status="500"  data-showstaus="100,900" >审核通过</div>
                      <div class="commonBtn DeliveryName2"  data-status="510"  data-showstaus="100,900" data-flag="到店自提" >审核通过</div>
                      <div class="commonBtn" data-status="900" data-showstaus="100" >审核不通过</div>
 
                    <div class="DeliveryName2" data-flag="到店自提">
-                     <!--<div class="commonBtn" data-status="510" data-showstaus="410" >备货完成</div>-->
+                     &lt;!&ndash;<div class="commonBtn" data-status="510" data-showstaus="410" >备货完成</div>&ndash;&gt;
                      <div class="commonBtn" data-status="610"  data-showstaus="'510'">提货</div>
                     </div>
                     <div class="DeliveryName1" data-flag="送货上门">
@@ -31,7 +31,7 @@
 
                      <div class="commonBtn" data-status="700" data-showstaus="600,610">完成</div>
 
-
+-->
                      <div class="commonBtn" data-status="10000" data-optType="payment">收款</div>
 
                      <div class="commonBtn printBtn" data-optType="print1" >打印拣货单</div>
@@ -235,7 +235,7 @@
                                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="pay_pointsAmount"/>
                                          </div>
                                       </div>
-                                      <div class="commonSelectWrap">
+                                      <div class="commonSelectWrap" style="display:none">
                                          <em class="tit">返现抵扣：</em>
                                          <div class="searchInput wh80">
                                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="ReturnAmount" value=""/>

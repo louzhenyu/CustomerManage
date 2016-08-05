@@ -25,7 +25,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.SysVipCardType
             SysVipCardTypeEntity sysVipCardTypeEntity = null;   //卡类型实体
             VipCardRuleEntity vipCardRuleEntity = null;         //卡类型规则实体
             SysVipCardTypeEntity[] vipcardList = null;          //获取同种类的所有卡类型集合
-            SysVipCardTypeEntity typeCodeEntity =   null;         //相同vipCardTypeCode对象
+            SysVipCardTypeEntity typeCodeEntity = null;         //相同vipCardTypeCode对象
             SysVipCardTypeEntity typeNameEntity = null;         //相同vipCardTypeName对象
             SysVipCardTypeEntity levelEntity = null;            //相同Level对象
 

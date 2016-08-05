@@ -47,7 +47,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipGold
                     //
                     rd.SetoffPosterID = Data.SetoffPosterID.ToString();
                     rd.Name = Data.Name;
-
+                    rd.ImageUrl = ObjectImageData.ImageURL;
                 }
                 catch (Exception ex)
                 {

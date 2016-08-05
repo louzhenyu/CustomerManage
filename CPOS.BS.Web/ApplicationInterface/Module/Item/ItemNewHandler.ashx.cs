@@ -138,6 +138,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
             }
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;//获取session数据           
             var itemService = new ItemService(loggingSessionInfo);
+
+
             var item = new ItemInfo();
             if (string.IsNullOrEmpty(rp.Parameters.Item_Id))
             {
@@ -176,17 +178,23 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
             item.T_ItemSkuProp = rp.Parameters.T_ItemSkuProp;
             item.SkuList = rp.Parameters.SkuList;//
             item.SalesPromotionList = rp.Parameters.SalesPromotionList;//促销分组
-            item.OperationType = rp.Parameters.OperationType;//促销分组
+            item.OperationType = rp.Parameters.OperationType;
             item.ifservice = rp.Parameters.ifservice;
             item.isGB = rp.Parameters.IsGB; // 0-非标商品，1-标准商品
 
+            //对应的虚拟商品
+            item.ObjecetTypeId = rp.Parameters.ObjecetTypeId;
+            item.VirtualItemTypeId = rp.Parameters.VirtualItemTypeId;  
+            
 
+/**
             //sku值
             if (item.SkuList != null && item.SkuList.Count > 0)//在单个的时候都已经添加过了
             {
                 foreach (var tmpSku in item.SkuList)
                 {
                     tmpSku.item_id = item.Item_Id;
+                    //SkuId为空，新生成SkuId
                     if (tmpSku.sku_id == null || tmpSku.sku_id.Length == 0)
                     {
                         tmpSku.sku_id = Utils.NewGuid();
@@ -195,6 +203,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
                     foreach (var skuprice in tmpSku.sku_price_list)
                     {
                         skuprice.sku_id = tmpSku.sku_id;
+                        //SkuPriceId为空，新生成SkuPriceId
                         if (skuprice.sku_price_id == null || skuprice.sku_price_id.Length == 0)
                         {
                             skuprice.sku_price_id = Utils.NewGuid();
@@ -223,6 +232,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
                 item.SkuList.Add(skuInfo);
             }
 
+            //虚拟商品处理
             if (rp.Parameters.ifservice == 1)
             {
                 T_VirtualItemTypeSettingBLL bllVirtualItem = new T_VirtualItemTypeSettingBLL(loggingSessionInfo);
@@ -249,6 +259,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
                     bllVirtualItem.Create(entityVirtualItem);
                 }
             }
+ 
+ ***/
             //保存sku属性名****
 
             string error = "";

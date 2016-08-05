@@ -298,7 +298,7 @@ namespace JIT.CPOS.Web.WXOAuth
                 //Response.End();
                 //loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
 
-                GetKeyByApp(); //strRedirectUri设置为 WApplicationInterface.AuthUrl + "WXOAuth/AuthCodeReques.aspx"*****
+                GetKeyByApp();
                 string code = Request["code"];
 
                 string scope = Request["scope"];
@@ -310,18 +310,18 @@ namespace JIT.CPOS.Web.WXOAuth
                     //strState = Convert.ToBase64String(buff);
                     if (scope == null || scope.Equals(""))
                     {
-                        strState = goUrl + "," + customerId + "," + applicationId + "," + "0" + "," + this.pageName; //普通的像会员中心都是这样的
+                        strState = goUrl + "," + customerId + "," + applicationId + "," + "0" + "," + this.pageName; //
 
                     }
                     else
                     {
-                        if (scope.Equals("snsapi_userinfo"))//重要的地方
+                        if (scope.Equals("snsapi_userinfo"))
                         {
-                            strState = goUrl + "," + customerId + "," + applicationId + "," + "1" + "," + this.pageName; // 1代表snsapi_userinfo认证
+                            strState = goUrl + "," + customerId + "," + applicationId + "," + "1" + "," + this.pageName; // 
                         }
                         else
                         {
-                            strState = goUrl + "," + customerId + "," + applicationId + "," + "0" + "," + this.pageName; //0代表snsapi_base认证
+                            strState = goUrl + "," + customerId + "," + applicationId + "," + "0" + "," + this.pageName; //
                         }
                     }
                     strState = HttpUtility.UrlEncode(strState, Encoding.UTF8);
@@ -357,7 +357,7 @@ namespace JIT.CPOS.Web.WXOAuth
                         openId = authBll.GetAccessToken(code, strAppId, strAppSecret, loggingSessionInfo, iRad, out token);
                     Response.Write("<br>");
                     Response.Write("OpenID:" + openId);
-                    PageRedict(openId);//如果code不为空，就获取到根据openid用户信息跳转到gourl
+                    PageRedict(openId);
                 }
             }
         }
@@ -383,7 +383,7 @@ namespace JIT.CPOS.Web.WXOAuth
                     if (!info.AuthUrl.EndsWith("/"))
                         info.AuthUrl = info.AuthUrl.Insert(info.AuthUrl.Length, "/");
 
-                    strRedirectUri = info.AuthUrl + "WXOAuth/AuthCodeReques.aspx";//跳转到这个页面继续验证
+                    strRedirectUri = info.AuthUrl + "WXOAuth/AuthCodeReques.aspx";
                 }
             }
         }

@@ -122,7 +122,7 @@ namespace JIT.CPOS.BS.BLL
         }
 
         /// <summary>
-        /// 获取auth认证会员中心链接地址
+        /// 获取奥斯认证会员中心链接地址
         /// </summary>
         /// <param name="OpenID"></param>
         /// <returns></returns>

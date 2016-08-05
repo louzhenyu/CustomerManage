@@ -23,8 +23,18 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.Customer
             ResponseData res = new ResponseData();
             List<CustomerBasicSettingEntity> list = new List<CustomerBasicSettingEntity>();
 
-            if(!string.IsNullOrEmpty(para.RewardsType.ToString()))
-            { 
+
+            if (para.IntegralAmountPer == 0 || para.IntegralAmountPer == null)  //控制积分是否能被使用
+            {
+                para.EnableIntegral = 0;
+            }
+            else
+            {
+                para.EnableIntegral = 1;
+            }
+
+            if (!string.IsNullOrEmpty(para.RewardsType.ToString()))
+            {
                 list.Add(new CustomerBasicSettingEntity()
                 {
                     SettingCode = "RewardsType",
@@ -32,7 +42,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.Customer
                 });
             }
             if (!string.IsNullOrEmpty(para.EnableIntegral.ToString()))
-            { 
+            {
                 list.Add(new CustomerBasicSettingEntity()
                 {
                     SettingCode = "EnableIntegral",
@@ -40,7 +50,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.Customer
                 });
             }
             if (!string.IsNullOrEmpty(para.EnableRewardCash.ToString()))
-            { 
+            {
                 list.Add(new CustomerBasicSettingEntity()
                 {
                     SettingCode = "EnableRewardCash",
@@ -48,7 +58,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.Customer
                 });
             }
             if (!string.IsNullOrEmpty(para.RewardPointsPer.ToString()))
-            { 
+            {
                 list.Add(new CustomerBasicSettingEntity()
                 {
                     SettingCode = "RewardPointsPer",
@@ -56,16 +66,16 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.Customer
                 });
             }
             if (!string.IsNullOrEmpty(para.IntegralAmountPer.ToString()))
-            { 
+            {
                 list.Add(new CustomerBasicSettingEntity()
                 {
                     SettingCode = "IntegralAmountPer",
                     SettingValue = para.IntegralAmountPer.ToString()
                 });
             }
-            
+
             if (!string.IsNullOrEmpty(para.RewardCashPer.ToString()))
-            { 
+            {
                 list.Add(new CustomerBasicSettingEntity()
                 {
                     SettingCode = "RewardCashPer",
@@ -136,7 +146,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.Customer
                     SettingValue = para.CashValidPeriod.ToString()
                 });
             }
-            int i = customerBasicSettingBLL.SaveCustomerBasicInfo(loggingSessionInfo.ClientID,list);
+            int i = customerBasicSettingBLL.SaveCustomerBasicInfo(loggingSessionInfo.ClientID, list);
 
             return rd;
         }

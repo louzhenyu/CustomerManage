@@ -29,7 +29,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.KeyWord
            
             if (ds.Tables[0].Rows.Count > 0)
             {
-                var replyId = ds.Tables[0].Rows[0]["ReplyId"].ToString();//只去取第一行？
+                var replyId = ds.Tables[0].Rows[0]["ReplyId"].ToString();//只去取第一行，就一条数据
 
                 var textDs = bll.GetWMaterialTextByReplyId(replyId);
 

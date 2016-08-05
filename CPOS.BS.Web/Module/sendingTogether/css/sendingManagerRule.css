@@ -1,0 +1,24 @@
+
+/*icon*/
+.radio{  height: 28px;width: 28px; background: url("../images/radio.png") center 1px no-repeat; float: left; }
+.radio.on { background-image: url("../images/radioOn.png")}
+.checkBox{float:left;width: 28px;height:28px;margin-right:13px;background:url(../images/checkBox01.png) no-repeat center center;}
+.checkBox.on{background:url(../images/checkBox02.png) no-repeat center center;}
+
+/*module*/
+input{width:100px;}
+.module{padding-left:30px;}
+.module:nth-of-type(1){border-bottom: 1px solid #e1e7ea;height:84px;}
+.module:nth-of-type(2) .panelDiv{padding:0;margin-bottom:10px;}
+.module .panelDiv{margin-bottom:15px;padding:5px 0;height:34px;}
+.module .panelDiv p:nth-of-type(2){margin-left:10px;color:#999;line-height: 30px;}
+
+/*editMessage*/
+.editMessage{margin-left:5px;}
+.editMessage:nth-of-type(3){margin-top:15px;margin-bottom:30px;}
+.editMessage p{margin-left:45px;color:#999;line-height: 30px;}
+.editMessage p:nth-of-type(1){margin-left:0px;color:#555;line-height:16px;}
+.editMessage p:nth-of-type(1) input{margin:0 8px}
+.editMessage p input[disabled=disabled]{background:#ddd;opacity: 0.7;}
+
+.btnWrap{border-top:1px solid #e1e7ea;padding:20px 0 0;}

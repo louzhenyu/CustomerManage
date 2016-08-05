@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [RechargeStrategy](");
-            strSql.Append("[RechargeStrategyName],[RechargeStrategyDesc],[RechargeAmount],[GiftAmount],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[CustomerId],[RechargeStrategyId])");
+            strSql.Append("[ActivityID],[RechargeStrategyName],[RechargeStrategyDesc],[RuleType],[RechargeAmount],[GiftAmount],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[CustomerId],[RechargeStrategyId])");
             strSql.Append(" values (");
-            strSql.Append("@RechargeStrategyName,@RechargeStrategyDesc,@RechargeAmount,@GiftAmount,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@CustomerId,@RechargeStrategyId)");            
+            strSql.Append("@ActivityID,@RechargeStrategyName,@RechargeStrategyDesc,@RuleType,@RechargeAmount,@GiftAmount,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@CustomerId,@RechargeStrategyId)");            
 
 			Guid? pkGuid;
 			if (pEntity.RechargeStrategyId == null)
@@ -93,8 +93,10 @@ namespace JIT.CPOS.BS.DataAccess
 
             SqlParameter[] parameters = 
             {
+					new SqlParameter("@ActivityID",SqlDbType.UniqueIdentifier),
 					new SqlParameter("@RechargeStrategyName",SqlDbType.NVarChar),
 					new SqlParameter("@RechargeStrategyDesc",SqlDbType.NVarChar),
+					new SqlParameter("@RuleType",SqlDbType.VarChar),
 					new SqlParameter("@RechargeAmount",SqlDbType.Decimal),
 					new SqlParameter("@GiftAmount",SqlDbType.Decimal),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
@@ -105,17 +107,19 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
 					new SqlParameter("@RechargeStrategyId",SqlDbType.UniqueIdentifier)
             };
-			parameters[0].Value = pEntity.RechargeStrategyName;
-			parameters[1].Value = pEntity.RechargeStrategyDesc;
-			parameters[2].Value = pEntity.RechargeAmount;
-			parameters[3].Value = pEntity.GiftAmount;
-			parameters[4].Value = pEntity.CreateTime;
-			parameters[5].Value = pEntity.CreateBy;
-			parameters[6].Value = pEntity.LastUpdateTime;
-			parameters[7].Value = pEntity.LastUpdateBy;
-			parameters[8].Value = pEntity.IsDelete;
-			parameters[9].Value = pEntity.CustomerId;
-			parameters[10].Value = pkGuid;
+			parameters[0].Value = pEntity.ActivityID;
+			parameters[1].Value = pEntity.RechargeStrategyName;
+			parameters[2].Value = pEntity.RechargeStrategyDesc;
+			parameters[3].Value = pEntity.RuleType;
+			parameters[4].Value = pEntity.RechargeAmount;
+			parameters[5].Value = pEntity.GiftAmount;
+			parameters[6].Value = pEntity.CreateTime;
+			parameters[7].Value = pEntity.CreateBy;
+			parameters[8].Value = pEntity.LastUpdateTime;
+			parameters[9].Value = pEntity.LastUpdateBy;
+			parameters[10].Value = pEntity.IsDelete;
+			parameters[11].Value = pEntity.CustomerId;
+			parameters[12].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -209,10 +213,14 @@ namespace JIT.CPOS.BS.DataAccess
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [RechargeStrategy] set ");
-                        if (pIsUpdateNullField || pEntity.RechargeStrategyName!=null)
+                        if (pIsUpdateNullField || pEntity.ActivityID!=null)
+                strSql.Append( "[ActivityID]=@ActivityID,");
+            if (pIsUpdateNullField || pEntity.RechargeStrategyName!=null)
                 strSql.Append( "[RechargeStrategyName]=@RechargeStrategyName,");
             if (pIsUpdateNullField || pEntity.RechargeStrategyDesc!=null)
                 strSql.Append( "[RechargeStrategyDesc]=@RechargeStrategyDesc,");
+            if (pIsUpdateNullField || pEntity.RuleType!=null)
+                strSql.Append( "[RuleType]=@RuleType,");
             if (pIsUpdateNullField || pEntity.RechargeAmount!=null)
                 strSql.Append( "[RechargeAmount]=@RechargeAmount,");
             if (pIsUpdateNullField || pEntity.GiftAmount!=null)
@@ -223,11 +231,15 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.CustomerId!=null)
                 strSql.Append( "[CustomerId]=@CustomerId");
+            if (strSql.ToString().EndsWith(","))
+                strSql.Remove(strSql.Length - 1, 1);
             strSql.Append(" where RechargeStrategyId=@RechargeStrategyId ");
             SqlParameter[] parameters = 
             {
+					new SqlParameter("@ActivityID",SqlDbType.UniqueIdentifier),
 					new SqlParameter("@RechargeStrategyName",SqlDbType.NVarChar),
 					new SqlParameter("@RechargeStrategyDesc",SqlDbType.NVarChar),
+					new SqlParameter("@RuleType",SqlDbType.VarChar),
 					new SqlParameter("@RechargeAmount",SqlDbType.Decimal),
 					new SqlParameter("@GiftAmount",SqlDbType.Decimal),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
@@ -235,14 +247,16 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
 					new SqlParameter("@RechargeStrategyId",SqlDbType.UniqueIdentifier)
             };
-			parameters[0].Value = pEntity.RechargeStrategyName;
-			parameters[1].Value = pEntity.RechargeStrategyDesc;
-			parameters[2].Value = pEntity.RechargeAmount;
-			parameters[3].Value = pEntity.GiftAmount;
-			parameters[4].Value = pEntity.LastUpdateTime;
-			parameters[5].Value = pEntity.LastUpdateBy;
-			parameters[6].Value = pEntity.CustomerId;
-			parameters[7].Value = pEntity.RechargeStrategyId;
+			parameters[0].Value = pEntity.ActivityID;
+			parameters[1].Value = pEntity.RechargeStrategyName;
+			parameters[2].Value = pEntity.RechargeStrategyDesc;
+			parameters[3].Value = pEntity.RuleType;
+			parameters[4].Value = pEntity.RechargeAmount;
+			parameters[5].Value = pEntity.GiftAmount;
+			parameters[6].Value = pEntity.LastUpdateTime;
+			parameters[7].Value = pEntity.LastUpdateBy;
+			parameters[8].Value = pEntity.CustomerId;
+			parameters[9].Value = pEntity.RechargeStrategyId;
 
             //执行语句
             int result = 0;
@@ -530,6 +544,8 @@ namespace JIT.CPOS.BS.DataAccess
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
             if (pQueryEntity.RechargeStrategyId!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "RechargeStrategyId", Value = pQueryEntity.RechargeStrategyId });
+            if (pQueryEntity.ActivityID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ActivityID", Value = pQueryEntity.ActivityID });
             if (pQueryEntity.RechargeStrategyName!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "RechargeStrategyName", Value = pQueryEntity.RechargeStrategyName });
             if (pQueryEntity.RechargeStrategyDesc!=null)
@@ -569,6 +585,10 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.RechargeStrategyId =  (Guid)pReader["RechargeStrategyId"];
 			}
+			if (pReader["ActivityID"] != DBNull.Value)
+			{
+				pInstance.ActivityID =  (Guid)pReader["ActivityID"];
+			}
 			if (pReader["RechargeStrategyName"] != DBNull.Value)
 			{
 				pInstance.RechargeStrategyName =  Convert.ToString(pReader["RechargeStrategyName"]);
@@ -576,6 +596,10 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["RechargeStrategyDesc"] != DBNull.Value)
 			{
 				pInstance.RechargeStrategyDesc =  Convert.ToString(pReader["RechargeStrategyDesc"]);
+			}
+			if (pReader["RuleType"] != DBNull.Value)
+			{
+				pInstance.RuleType =  Convert.ToString(pReader["RuleType"]);
 			}
 			if (pReader["RechargeAmount"] != DBNull.Value)
 			{

@@ -88,10 +88,12 @@ namespace JIT.CPOS.BS.DataAccess
                         , SUM(c.[IssuedQty]) IssuedQty
                         ,SUM(CountTotal) CountTotal
                         ,c.CreateTime
+                        ,C.IsNotLimitQty
                          FROM  CouponType c
                         LEFT JOIN PrizeCouponTypeMapping p ON CAST(c.CouponTypeID AS NVARCHAR(200)) = p.CouponTypeID 
                         LEFT JOIN dbo.LPrizes l ON l.PrizesID = p.PrizesID AND [PrizeTypeId] ='Coupon'  
-                        where  C.IsDelete='0' and c.IssuedQty>0 and   C.CustomerId='" + this.CurrentUserInfo.ClientID + "' AND ((EndTime IS NULL AND ServiceLife IS NOT NULL) OR (EndTime IS NOT NULL AND EndTime >getdate())) GROUP BY c.CouponTypeID,c.CouponTypeName,c.CreateTime ORDER BY c.CreateTime DESC";
+                        where  C.IsDelete='0' and c.IssuedQty>0 
+                                and   C.CustomerId='" + this.CurrentUserInfo.ClientID + "' AND ((EndTime IS NULL AND ServiceLife IS NOT NULL) OR (EndTime IS NOT NULL AND EndTime >getdate())) GROUP BY c.CouponTypeID,c.CouponTypeName,c.CreateTime,C.IsNotLimitQty ORDER BY c.CreateTime DESC";
             return this.SQLHelper.ExecuteDataset(sql);
 
         }
@@ -118,9 +120,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [CouponType](");
-            strSql.Append("[CouponTypeName],[CouponTypeCode],[CouponCategory],[ParValue],[Discount],[ConditionValue],[IsRepeatable],[IsMixable],[CouponSourceID],[ValidPeriod],[LastUpdateTime],[LastUpdateBy],[CreateTime],[CreateBy],[IsDelete],[CustomerId],[IssuedQty],[IsVoucher],[UsableRange],[ServiceLife],[SuitableForStore],[BeginTime],[EndTime],[CouponTypeDesc],[CouponTypeID])");
+            strSql.Append("[CouponTypeName],[CouponTypeCode],[CouponCategory],[ParValue],[Discount],[ConditionValue],[IsRepeatable],[IsMixable],[CouponSourceID],[ValidPeriod],[LastUpdateTime],[LastUpdateBy],[CreateTime],[CreateBy],[IsDelete],[CustomerId],[IssuedQty],[IsVoucher],[UsableRange],[ServiceLife],[SuitableForStore],[BeginTime],[EndTime],[CouponTypeDesc],[IsNotLimitQty],[CouponTypeID])");
             strSql.Append(" values (");
-            strSql.Append("@CouponTypeName,@CouponTypeCode,@CouponCategory,@ParValue,@Discount,@ConditionValue,@IsRepeatable,@IsMixable,@CouponSourceID,@ValidPeriod,@LastUpdateTime,@LastUpdateBy,@CreateTime,@CreateBy,@IsDelete,@CustomerId,@IssuedQty,@IsVoucher,@UsableRange,@ServiceLife,@SuitableForStore,@BeginTime,@EndTime,@CouponTypeDesc,@CouponTypeID)");
+            strSql.Append("@CouponTypeName,@CouponTypeCode,@CouponCategory,@ParValue,@Discount,@ConditionValue,@IsRepeatable,@IsMixable,@CouponSourceID,@ValidPeriod,@LastUpdateTime,@LastUpdateBy,@CreateTime,@CreateBy,@IsDelete,@CustomerId,@IssuedQty,@IsVoucher,@UsableRange,@ServiceLife,@SuitableForStore,@BeginTime,@EndTime,@CouponTypeDesc,@IsNotLimitQty,@CouponTypeID)");
 
             Guid? pkGuid;
             if (pEntity.CouponTypeID == null)
@@ -154,7 +156,8 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@CouponTypeDesc",SqlDbType.NVarChar),
 					new SqlParameter("@CouponTypeID",SqlDbType.UniqueIdentifier),
                     new SqlParameter("@CouponTypeCode",SqlDbType.VarChar),
-					new SqlParameter("@CouponCategory",SqlDbType.VarChar)
+					new SqlParameter("@CouponCategory",SqlDbType.VarChar),
+					new SqlParameter("@IsNotLimitQty",SqlDbType.Int)
             };
             parameters[0].Value = pEntity.CouponTypeName;
             parameters[1].Value = pEntity.ParValue;
@@ -181,6 +184,7 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[22].Value = pkGuid;
             parameters[23].Value = pEntity.CouponTypeCode;
             parameters[24].Value = pEntity.CouponCategory;
+            parameters[25].Value = pEntity.IsNotLimitQty;
 
             //执行并将结果回写
             int result;

@@ -129,7 +129,7 @@
                         <p>我们提供丰富的权益方案，请根据您所属的行业、产品、目标客户特点，选择合适的权益方案。您也可以发挥想象，自定义更有趣的会员权益。</p>
                     </div>
                     <div class="btnBox" style="padding-top:60px">
-                    	<a href="/module/activateCard/querylist.aspx" class="">设置会员权益</a>
+                    	<a href="/module/member/memberSystem.aspx" class="">设置会员权益</a>
                     </div>
                 </div>
                 
@@ -142,7 +142,7 @@
                     	<p>利用丰富的会员标签＋会员大数据帮您预知会员需求，实施精准的会员营销，提升会员忠诚度。</p>
                     </div>
                     <div class="btnBox" style="padding-top:115px">
-                    	<a href="/module/newVipManage/querylist.aspx" class="">发动会员营销</a>
+                    	<a href="/module/vipActivityList/querylist.aspx" class="">发动会员营销</a>
                     </div>
                 </div>
                 

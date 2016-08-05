@@ -14,10 +14,6 @@ namespace JIT.CPOS.DTO.Module.Marketing.Activity.Request
         /// </summary>
         public string ActivityID { get; set; }
         /// <summary>
-        /// 操作类型
-        /// </summary>
-        public int OperationType { get; set; }
-        /// <summary>
         /// 消息集合
         /// </summary>
         public List<ActivityMessageInfo> ActivityMessageList { get; set; }

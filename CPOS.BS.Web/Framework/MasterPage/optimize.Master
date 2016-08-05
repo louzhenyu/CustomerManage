@@ -94,6 +94,8 @@
                         <%-- <a href="###">个人信息</a>
                             <a href="###">系统通知(1)</a>--%>
                         <%--    <a href="#" class="fl mr25 nava3" onclick="fnChangePwd()">修改密码</a>--%>
+                        <span class="commonBtn safetyOutBtn" data-menucode="txgl"><a class="five menusrc" href="#" >提现管理</a>
+                        </span>
                         <span class="commonBtn safetyOutBtn" data-menucode="jysj"><a class="one menusrc" href="#" >经营数据</a>
                         </span>
                         <span class="commonBtn safetyOutBtn" data-menucode="fstz"><a  class="four menusrc" href="#" onclick=""> 发送通知</a>

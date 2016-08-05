@@ -15,7 +15,7 @@ namespace JIT.CPOS.BS.DataAccess
 {
     public class StockBalanceService : Base.BaseCPOSDAO
     {
-        #region 构造函数
+         #region 构造函数
         /// <summary>
         /// 构造函数 
         /// </summary>
@@ -107,8 +107,8 @@ namespace JIT.CPOS.BS.DataAccess
                       + " on(a.sku_id = b.sku_id) "
                       + " where 1=1 "
                       + " and a.status = '1' "
-                //+ " and a.unit_id = '" + _ht["UnitId"].ToString() + "' "
-                //+ " and a.warehouse_id = '" + _ht["WarehouseId"].ToString() + "' "
+                      //+ " and a.unit_id = '" + _ht["UnitId"].ToString() + "' "
+                      //+ " and a.warehouse_id = '" + _ht["WarehouseId"].ToString() + "' "
                       + " and (b.item_code like '%' + '" + _ht["ItemName"].ToString() + "' + '%' "
                       + " or b.item_name like '%' + '" + _ht["ItemName"].ToString() + "' + '%') ";
 
@@ -137,22 +137,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns></returns>
         public bool SetStockBalance(string order_id)
         {
-            string sql = "exec proc_Set_StockBalance '" + order_id + "','" + this.loggingSessionInfo.CurrentUser.User_Id + "'";
-            this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql);
-
-            return true;
-        }
-        #endregion
-
-
-        #region 保存库存
-        /// <summary>
-        /// 保存库存
-        /// </summary>
-        /// <param name="order_id"></param>
-        /// <returns></returns>
-        public bool InsertStockBalance(string sql)
-        {
+            string sql = "exec proc_Set_StockBalance '"+order_id+"','"+this.loggingSessionInfo.CurrentUser.User_Id+"'";
             this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql);
 
             return true;

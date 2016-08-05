@@ -57,7 +57,7 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Contact
             {
 
 
-                var numCount = 50;
+                var numCount = 30;
                 var customerIDs = CustomerBLL.Instance.GetCustomerList();
                 CC_Connection connection = new CC_Connection();
                 LoggingSessionInfo _loggingSessionInfo = new LoggingSessionInfo();

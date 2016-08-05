@@ -418,6 +418,7 @@
 								
 								//摘要内容
 								that.elems.contentDigestText.val(obj.Abstract || '');
+
                                 //表示的是链接
                                 switch (config.UnionTypeId - 0) {
                                     case 1:
@@ -482,11 +483,11 @@
                                                         //门店
                                                     }
                                                 var svalue = obj[pageCode] || 0;
-
                                                 switch (svalue) {
                                                     case 0:
                                                         //默认请选择的时候
                                                         that.hideElems(that.elems.moduleName);
+                                                        that.toSave.domObj =that.elems.moduleSelect;
                                                         break;
                                                     case 1:
                                                         //表示的是微商城
@@ -516,6 +517,7 @@
                                                             //活动列表
                                                             //模板
                                                             that.toSave.urlTemplate = pageModule.URLTemplate;
+
                                                             that.toSave.domObj = that.elems.eventSelect;
                                                         });
                                                         that.elems.events.removeClass("hide").addClass("show");
@@ -1093,9 +1095,8 @@
                         this.pageParamJson.push(obj);
                     }
                 }
-
-
                 switch (svalue) {
+
                     case 0:
                         //默认请选择的时候
                         that.hideElems(that.elems.moduleName);
@@ -1297,10 +1298,13 @@
                 pageId = value.PageID;
                 moduleName = value.ModuleName;
                 //根据模块进行获得下面联动的内容
+                debugger;
                 switch (this.toSave.moduleType) {
                     case 0:  //系统默认的普通模块
                         //活动列表的模块
+                        // return false;
                         var domVal = this.toSave.domObj.val();
+
                         if (domVal != "") {
                             //活动分类
                             var pageTypeJson = JSON.parse(domVal);
@@ -1455,11 +1459,11 @@
                         if (that.MaterialTextId == "") {
                             alert("图文素材保存成功");
                             that.MaterialTextId = data.Data.MaterialTextId;
-                            window.history.go(-1);
+                            //window.history.go(-1);
                         }
                         else {
                             alert("图文素材修改成功!");
-                            window.history.go(-1);
+                            //window.history.go(-1);
                         }
                     } else {
                         alert(data.Message);

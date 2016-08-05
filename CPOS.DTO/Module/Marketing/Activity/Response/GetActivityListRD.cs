@@ -28,6 +28,10 @@ namespace JIT.CPOS.DTO.Module.Marketing.Response
         /// 活动ID
         /// </summary>
         public string ActivityID { get; set; }
+        /// <summary>
+        /// 活动类型
+        /// </summary>
+        public int ActivityType { get; set; }
 
         /// <summary>
         /// 活动名称
@@ -61,5 +65,13 @@ namespace JIT.CPOS.DTO.Module.Marketing.Response
         /// 结束时间
         /// </summary>
         public string EndTime { get; set; }
+        /// <summary>
+        /// 是否适用所有目标群体
+        /// </summary>
+        public int IsAllCardType { get; set; }
+        /// <summary>
+        /// 参与人数
+        /// </summary>
+        public int TargetCount { get; set; }
     }
 }

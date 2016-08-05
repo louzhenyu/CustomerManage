@@ -22,6 +22,8 @@ using System.Globalization;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Data.SqlClient;
+using ZXing;
+using ZXing.Common;
 
 namespace JIT.CPOS.Common
 {
@@ -796,31 +798,33 @@ PixelFormat.Format8bppIndexed
             {
                 return false;
             }
-        }  
+        }
         #endregion
-		#region 生成二维码
+
+
+        #region 生成二维码
         public static string GenerateQRCodeWx(string info, string domain, string sourcePath, string targetPath)
         {
             #region 处理图片
+            System.Drawing.Image imgSrc = System.Drawing.Image.FromFile(sourcePath);
             QRCodeEncoder qrCodeEncoder = new QRCodeEncoder();
             qrCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
             qrCodeEncoder.QRCodeScale = 5;
             qrCodeEncoder.QRCodeVersion = 0;
             qrCodeEncoder.QRCodeErrorCorrect = QRCodeEncoder.ERROR_CORRECTION.L;
             System.Drawing.Image qrImage = qrCodeEncoder.Encode(info, Encoding.UTF8);
-            System.Drawing.Image bitmap = new System.Drawing.Bitmap(210, 210);
+            Image bitmap = new System.Drawing.Bitmap(imgSrc.Height - 2, imgSrc.Width - 2);
             System.Drawing.Graphics g2 = System.Drawing.Graphics.FromImage(bitmap);
             g2.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
             g2.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             g2.Clear(System.Drawing.Color.Transparent);
-            g2.DrawImage(qrImage, new System.Drawing.Rectangle(0, 0, 210, 210), new System.Drawing.Rectangle(0, 0, qrImage.Width, qrImage.Height), System.Drawing.GraphicsUnit.Pixel);
+            g2.DrawImage(qrImage, new System.Drawing.Rectangle(1, 1, imgSrc.Height - 1, imgSrc.Width - 1), new System.Drawing.Rectangle(0, 0, qrImage.Width, qrImage.Height), System.Drawing.GraphicsUnit.Pixel);
             string fileName = System.Guid.NewGuid().ToString().Replace("-", "") + ".jpg";
             string host = domain;
             if (!host.EndsWith("/")) host += "/";
-            string fileUrl = host + "file/images/qrcode/" + fileName;
+            string fileUrl = host + "file/images/" + fileName;
             string newFilePath = string.Empty;
             string newFilename = string.Empty;
-            System.Drawing.Image imgSrc = System.Drawing.Image.FromFile(sourcePath);
             System.Drawing.Image imgWarter = bitmap;
             using (Graphics g = Graphics.FromImage(imgSrc))
             {
@@ -837,6 +841,27 @@ PixelFormat.Format8bppIndexed
             return fileUrl;
             #endregion
         }
+        #endregion
+
+        #region 获取条形码
+        public static string GeneratedBar(string couponCode, int width, int height)
+        {
+            MultiFormatWriter mutiWriter = new MultiFormatWriter();
+            BitMatrix bm = mutiWriter.encode(couponCode, BarcodeFormat.CODE_128, width, height);
+            Bitmap img = new BarcodeWriter().Write(bm);
+
+            string fileName = "Bar" + couponCode.ToLower() + ".jpg";
+            string host = ConfigurationManager.AppSettings["website_WWW"].ToString();
+
+            if (!host.EndsWith("/")) host += "/";
+            string fileUrl = host + "File/images/" + fileName;
+
+            string newFilePath = string.Format("/File/images/{0}", fileName);
+            string newFilename = HttpContext.Current.Server.MapPath(newFilePath);
+            img.Save(newFilename, System.Drawing.Imaging.ImageFormat.Jpeg);
+            return fileUrl;
+        }
+
         #endregion
 
         #region SendSMSCode,发送验证码
@@ -1114,6 +1139,30 @@ PixelFormat.Format8bppIndexed
             }
         }
         #endregion
+
+        #region 获取微信时间戳
+        /// <summary>
+        /// 获取微信时间戳
+        /// </summary>
+        /// <returns></returns>
+        public static string GetWxTimeStamp()
+        {
+            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return Convert.ToInt64(ts.TotalSeconds).ToString();
+        }
+        #endregion
+
+        #region 获取随机字符串
+        /// <summary>
+        /// 获取随机字符串
+        /// </summary>
+        /// <returns></returns>
+        public static string GenerateNonceStr()
+        {
+            return Guid.NewGuid().ToString().Replace("-", "");
+        }
+        #endregion
+
         /// <summary>
         /// 获取随机list
         /// </summary>
@@ -1146,6 +1195,39 @@ PixelFormat.Format8bppIndexed
             }
             return outputList;
         }
+
+
+        #region 获取客户端IP地
+        /// <summary>
+        /// 获取客户端IP地址（无视代理）
+        /// </summary>
+        /// <returns>若失败则返回回送地址</returns>
+        public static string GetHostAddress()
+        {
+            string userHostAddress = HttpContext.Current.Request.UserHostAddress;
+
+            if (string.IsNullOrEmpty(userHostAddress))
+            {
+                userHostAddress = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+            }
+
+            //最后判断获取是否成功，并检查IP地址的格式（检查其格式非常重要）
+            if (!string.IsNullOrEmpty(userHostAddress) && IsIP(userHostAddress))
+            {
+                return userHostAddress;
+            }
+            return "127.0.0.1";
+        }
+        /// <summary>
+        /// 检查IP地址格式
+        /// </summary>
+        /// <param name="ip"></param>
+        /// <returns></returns>
+        public static bool IsIP(string ip)
+        {
+            return System.Text.RegularExpressions.Regex.IsMatch(ip, @"^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$");
+        }
+        #endregion
 
         /// <summary>
         /// 批量插入数据库
@@ -1181,49 +1263,7 @@ PixelFormat.Format8bppIndexed
                 }
             }
         }
-        #region 获取微信时间戳
-        /// <summary>
-        /// 获取微信时间戳
-        /// </summary>
-        /// <returns></returns>
-        public static string GetWxTimeStamp()
-        {
-            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            return Convert.ToInt64(ts.TotalSeconds).ToString();
-        }
-        #endregion
 
-        #region 获取随机字符串
-        /// <summary>
-        /// 获取随机字符串
-        /// </summary>
-        /// <returns></returns>
-        public static string GenerateNonceStr()
-        {
-            return Guid.NewGuid().ToString().Replace("-", "");
-        }
-        #endregion
-
-        #region 获取请求ip地址
-        /// <summary>
-        /// 获取请求ip地址
-        /// </summary>
-        /// <returns></returns>
-        public static string GetLocalIp()
-        {
-            try
-            {
-                IPAddress ipAddr =
-                    Dns.GetHostByName(Dns.GetHostName()).AddressList[0];//获得当前IP地址
-                string ip = ipAddr.ToString();
-                return ip;
-            }
-            catch (Exception)
-            {
-                return "192.168.1.1";
-            }
-        }
-        #endregion
     }
 
     public class Response

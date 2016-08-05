@@ -427,7 +427,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                         },
                         {field : 'AddRTCount',title : '下线人数（人）',width:250,height:60,align:'center',resizable:false
                             ,formatter:function(value ,row,index) {
-                            var Str = '<span data-id="'+row.SuperRetailTraderID+'" class="insertePerson" style="color:#038efe">'+value+'</span>';
+                            var Str = '<span data-id="'+row.SuperRetailTraderID+'" class="insertePerson" style="color:#038efe; cursor:pointer;">'+value+'</span>';
                             return Str;
                         }
                         },

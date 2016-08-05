@@ -89,3 +89,52 @@ p.fontC{ width: 100%; text-align: center;}
 #batch .commonBtn{width: 35px;margin:0 auto;margin-left: 8px; height: 35px;float: left;font-size: 15px; background: none; color: #00acee;}
 #batch .borderNone{ border: 1px solid  transparent; width:auto; background: none}
 #batch .fontC{margin-right: 15px;cursor: pointer;}
+
+
+
+.queryTermArea{border-bottom:1px solid #dcdcdc;background:#fff;}
+.queryTermArea .item{display:inline-block;}
+.queryTermArea .commonSelectWrap{margin-right:0px;}
+.commonSelectWrap .selectBox{width:232px;}
+#opt{padding-top:17px;border-top:none;background:#fff;}
+.optionBtn .commonBtn{width:100px;}
+.commonSelectWrap .tit{width:145px;}
+.moreQueryWrap{float:left;margin-left:25px;}
+.moreQueryWrap .queryBtn{width:73px;}
+.textbox-addon-right{right:9px !important;}
+#addRoleBtn{width:115px; text-indent:20px;background:#0cc url(images/icon-add.png) no-repeat 20px center;}
+
+.datagrid-body .datagrid-row{height:45px;}
+#tableWrap .handle{margin:6px 16px 0 0;}
+/*.deleteBtn{background:url(images/delete.png) no-repeat center center;}
+.editBtn{background:url(images/edit.png) no-repeat center center;}*/
+.resetBtn{background:url(images/icon-reset.png) no-repeat center center;}
+.pauseBtn{background:url(images/pause.png) no-repeat center center;}
+.runningBtn{background:url(images/running.png) no-repeat center center;}
+.setUnitBtn{display:inline-block;width:30px;height:45px;background:url(../images/icon-tree01.png) no-repeat center center;}
+.setUnitBtn.on{background:url(../images/icon-tree02.png) no-repeat center center;}
+
+#addProm{margin-top:35px;}
+#win .commonSelectWrap{margin:12px 10px 10px 70px;}
+#win .searchInput{width:232px;}
+.tooltip-right{display:none;}
+.textbox-invalid{border:none;background:none;}
+.limitsTreeBox{height:200px;width:460px;margin-left:110px;border:1px solid #d0d5d8;border-radius:3px;overflow-x:auto;}
+#btnWrap{height:60px !important;}
+.importBtn,.exportBtn{float:left;width:82px;height:32px;margin-left:20px;cursor:pointer;}
+.importBtn{background:url(images/icon-import.png) no-repeat center center;}
+.exportBtn{background:url(images/icon-export.png) no-repeat center center;}
+
+.bigTitle{height:65px;line-height:65px;padding:0 25px;font-size:18px;font-family:"黑体";border-bottom:1px dashed #dcdcdc;background:#fff;color:#333;}
+.smallTitle{height:55px;font-size:15px;border-bottom:1px solid #dcdcdc;background:#fafafa;color:#333;}
+.smallTitle span{display:inline-block;line-height:16px;margin:20px 0 0 50px;padding-left:10px;border-left:3px solid #00a0e8;}
+.addStaffBtn{float:right;margin:12px 50px 0 0;}
+.addStaffBtn:hover{color:#fff;}
+.tableWrap{margin:20px 50px 0;border-radius:5px;}
+.panel.datagrid{min-height:300px;width:100%;border-radius:5px;border-left:1px solid #e1e7ea;}
+.datagrid-btable{width:100%;}
+.datagrid-btable tr:nth-last-of-type(1) td{border:none;}
+.staffBtn .cancelBtn{background:#07c8cf;}
+.tipBox{display:inline-block;width:400px;padding-left:45px;margin:20px 0 10px 125px;line-height:20px;font-size:14px;background:url(images/icon-tips.png) no-repeat left center;color:#f00;}
+.panel.layout-panel.layout-panel-south{top:280px !important;}
+.btnWrap.staffBtn{padding:10px 0 20px 0;}

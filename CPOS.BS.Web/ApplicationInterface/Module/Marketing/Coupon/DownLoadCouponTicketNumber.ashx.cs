@@ -46,8 +46,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                 string filename = FormatParamValue(Request("filename"));//导出的文件名
                 int intDownLoadNum = Request("downLoadNum") == null ? 0 : Convert.ToInt32(Request("downLoadNum"));
 
-                
 
+				var bllCouponType = new CouponTypeBLL(CurrentUserInfo);
+
+				var couponType = bllCouponType.QueryByEntity(new CouponTypeEntity() { CustomerId = CurrentUserInfo.ClientID, CouponTypeID = new Guid(couponTypeID), IsDelete = 0 }, null).SingleOrDefault();
                 var couponBLL = new CouponBLL(CurrentUserInfo);
 
                 var count = RedisOpenAPI.Instance.CCCoupon().GetCouponListLength(new CC_Coupon()
@@ -56,7 +58,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                     CouponTypeId = couponTypeID,
 
                 });
-                if (intDownLoadNum > count.Result)
+				if (couponType.IsNotLimitQty==0 && intDownLoadNum > count.Result)
                 {
                     throw new APIException("下载数量大于优惠券剩余量") { ErrorCode=333};
                 }
@@ -68,7 +70,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                             CustomerId = CurrentUserInfo.ClientID,
                             CouponTypeId = couponTypeID,
 
-                        }, CurrentUserInfo.ClientID, intDownLoadNum);
+						}, CurrentUserInfo.ClientID, intDownLoadNum, couponType.IsNotLimitQty);
                 //xu的redis
                 //System.Data.DataTable list_CouponEntity = redisCouponBLL.DownloadCouponNew(CurrentUserInfo.ClientID, couponTypeID, intDownLoadNum);
                 #endregion

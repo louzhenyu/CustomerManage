@@ -36,7 +36,7 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.OrderReward
                 //
                 var count = RedisOpenAPI.Instance.CCOrderReward().GetOrderRewardLength(new CC_OrderReward
                 {
-                    CustomerID = customer.Key
+                    CustomerID = customer.Key,
                 });
                 if (count.Code != ResponseCode.Success)
                 {
@@ -56,15 +56,16 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.OrderReward
                 //
                 for (var i = 0; i < numCount; i++)
                 {
-
                     var response = RedisOpenAPI.Instance.CCOrderReward().GetOrderReward(new CC_OrderReward
                     {
-                        CustomerID = customer.Key
+                        CustomerID = customer.Key,
                     });
                     if (response.Code == ResponseCode.Success)
                     {
-                        var loggingSessionInfo = response.Result.LogSession.JsonDeserialize<LoggingSessionInfo>();
-                        var orderInfo = response.Result.OrderInfo.JsonDeserialize<T_InoutEntity>();
+                        var loggingSessionInfo = CustomerBLL.Instance.GetBSLoggingSession(customer.Key, "1");// response.Result.LogSession.JsonDeserialize<LoggingSessionInfo>();
+                        T_InoutBLL _TInoutbll = new T_InoutBLL(loggingSessionInfo);
+
+                        var orderInfo = _TInoutbll.GetInoutInfo(response.Result.OrderID,loggingSessionInfo);//response.Result.OrderInfo.JsonDeserialize<T_InoutEntity>(); 
 
                         IDbTransaction tran = new TransactionHelper(loggingSessionInfo).CreateTransaction();
                         using (tran.Connection)
@@ -82,8 +83,6 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.OrderReward
                     }
                 }
             }
-
         }
-
     }
 }

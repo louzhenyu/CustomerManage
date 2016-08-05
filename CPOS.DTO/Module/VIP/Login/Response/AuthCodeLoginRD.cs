@@ -58,8 +58,40 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Response
         /// </summary>
         public int IsDealer { get; set; }
         /// <summary>
+        /// 是否可以成为超级分销商 0=不可以成为超级分销商，1=可以成为
+        /// </summary>
+        public int CanBeSuperRetailTrader { get; set; }
+        /// <summary>
         /// 是否是超级分销商  有值表示为超级分销商/无值表示不是超级分销商
         /// </summary>
         public string SuperRetailTraderID { get; set; }
+        /// <summary>
+        /// 卡折扣
+        /// </summary>
+        public decimal CardDiscount { get; set; }
+        /// <summary>
+        /// 是否需要领卡 (0=需要领卡，1=不需要领卡)
+        /// </summary>
+        public int IsNeedCard { get; set; }
+        /// <summary>
+        /// 红利金额
+        /// </summary>
+        public decimal ProfitAmount { get; set; }
+        /// <summary>
+        /// 还需多少金额升级(消费升级：目前用的累积升级)
+        /// </summary>
+        public decimal UpGradeNeedMoney { get; set; }
+        /// <summary>
+        /// 升级提示 UpGradeNeedMoney>0时有提示
+        /// </summary>
+        public string UpgradePrompt { get; set; }
+        /// <summary>
+        /// 购物车数量
+        /// </summary>
+        public int ShopCartCount { get; set; }
+        /// <summary>
+        /// 当前会员所持卡是否可储值(0=不可储值,1=可储值)
+        /// </summary>
+        public int? IsPrepaid { get; set; }
     }
 }

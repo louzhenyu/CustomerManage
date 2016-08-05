@@ -345,10 +345,25 @@ namespace JIT.CPOS.BS.BLL
                         var vipBLL = new VipBLL(this.CurrentUserInfo);
 
                         var vipInfo = vipBLL.GetByID(strVipId);
-                        var IntegralDetail = new VipIntegralDetailEntity()
+						string strIntegralSourceID = string.Empty;
+						switch (contactEvent.ContactTypeCode) {
+							case "Reg":
+								strIntegralSourceID = "2";
+								break;
+							case "Focus":
+								strIntegralSourceID = "3";
+								break;
+							case "Share":
+								strIntegralSourceID = "28";
+								break;
+							default:
+								strIntegralSourceID = "22";
+								break;
+						}
+						var IntegralDetail = new VipIntegralDetailEntity()
                         {
                             Integral = entityPrize.Point,
-                            IntegralSourceID = "22",
+                            IntegralSourceID = strIntegralSourceID,
                             ObjectId = contactEvent.ContactEventId.ToString()
                         };
                         //变动前积分
@@ -577,11 +592,26 @@ namespace JIT.CPOS.BS.BLL
                         VipIntegralBLL bllVipIntegral = new VipIntegralBLL(loggingSessionInfo);
                         var vipBLL = new VipBLL(this.CurrentUserInfo);
 
-                        var vipInfo = vipBLL.GetByID(strVipId);
+						var vipInfo = vipBLL.GetByID(strVipId);
+						string strIntegralSourceID = string.Empty;
+						switch (contactEvent.ContactTypeCode.ToString().TrimEnd()) {
+							case "Reg":
+								strIntegralSourceID = "2";
+								break;
+							case "Focus":
+								strIntegralSourceID = "3";
+								break;
+							case "Share":
+								strIntegralSourceID = "28";
+								break;
+							default:
+								strIntegralSourceID = "22";
+								break;
+						}
                         var IntegralDetail = new VipIntegralDetailEntity()
                         {
                             Integral = entityPrize.Point,
-                            IntegralSourceID = "22",
+							IntegralSourceID = strIntegralSourceID,
                             ObjectId = contactEvent.ContactEventId.ToString()
                         };
                         //变动前积分
@@ -1501,7 +1531,7 @@ namespace JIT.CPOS.BS.BLL
             prizePool.EventId = strEventId;
 
             var resultPrizePool = redisPrizePoolsBLL.GetPrizePoolsFromRedis(prizePool);
-            if (resultPrizePool.Code == ResponseCode.Success && resultPrizePool.Result.PrizePoolsID == null)
+            if (resultPrizePool.Code == ResponseCode.Fail || resultPrizePool.Result.PrizePoolsID == null)
             {
                 DataSet dsPrizePools = bllPrizePools.GetRandomPrizeByEventId(strEventId);
                 if (dsPrizePools != null && dsPrizePools.Tables[0].Rows.Count > 0)

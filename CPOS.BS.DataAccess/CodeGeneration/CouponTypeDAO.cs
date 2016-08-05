@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [CouponType](");
-            strSql.Append("[CouponTypeName],[CouponTypeCode],[CouponCategory],[ParValue],[Discount],[ConditionValue],[IsRepeatable],[IsMixable],[CouponSourceID],[ValidPeriod],[LastUpdateTime],[LastUpdateBy],[CreateTime],[CreateBy],[IsDelete],[CustomerId],[IssuedQty],[IsVoucher],[UsableRange],[ServiceLife],[SuitableForStore],[BeginTime],[EndTime],[CouponTypeDesc],[CouponTypeID])");
+            strSql.Append("[CouponTypeName],[CouponTypeCode],[CouponCategory],[ParValue],[Discount],[ConditionValue],[IsRepeatable],[IsMixable],[CouponSourceID],[ValidPeriod],[LastUpdateTime],[LastUpdateBy],[CreateTime],[CreateBy],[IsDelete],[CustomerId],[IssuedQty],[IsVoucher],[UsableRange],[ServiceLife],[SuitableForStore],[BeginTime],[EndTime],[CouponTypeDesc],[IsNotLimitQty],[CouponTypeID])");
             strSql.Append(" values (");
-            strSql.Append("@CouponTypeName,@CouponTypeCode,@CouponCategory,@ParValue,@Discount,@ConditionValue,@IsRepeatable,@IsMixable,@CouponSourceID,@ValidPeriod,@LastUpdateTime,@LastUpdateBy,@CreateTime,@CreateBy,@IsDelete,@CustomerId,@IssuedQty,@IsVoucher,@UsableRange,@ServiceLife,@SuitableForStore,@BeginTime,@EndTime,@CouponTypeDesc,@CouponTypeID)");
+            strSql.Append("@CouponTypeName,@CouponTypeCode,@CouponCategory,@ParValue,@Discount,@ConditionValue,@IsRepeatable,@IsMixable,@CouponSourceID,@ValidPeriod,@LastUpdateTime,@LastUpdateBy,@CreateTime,@CreateBy,@IsDelete,@CustomerId,@IssuedQty,@IsVoucher,@UsableRange,@ServiceLife,@SuitableForStore,@BeginTime,@EndTime,@CouponTypeDesc,@IsNotLimitQty,@CouponTypeID)");
 
             Guid? pkGuid;
             if (pEntity.CouponTypeID == null)
@@ -117,6 +117,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@BeginTime",SqlDbType.DateTime),
 					new SqlParameter("@EndTime",SqlDbType.DateTime),
 					new SqlParameter("@CouponTypeDesc",SqlDbType.NVarChar),
+					new SqlParameter("@IsNotLimitQty",SqlDbType.Int),
 					new SqlParameter("@CouponTypeID",SqlDbType.UniqueIdentifier)
             };
             parameters[0].Value = pEntity.CouponTypeName;
@@ -143,7 +144,8 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[21].Value = pEntity.BeginTime;
             parameters[22].Value = pEntity.EndTime;
             parameters[23].Value = pEntity.CouponTypeDesc;
-            parameters[24].Value = pkGuid;
+            parameters[24].Value = pEntity.IsNotLimitQty;
+            parameters[25].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -278,7 +280,9 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.EndTime != null)
                 strSql.Append("[EndTime]=@EndTime,");
             if (pIsUpdateNullField || pEntity.CouponTypeDesc != null)
-                strSql.Append("[CouponTypeDesc]=@CouponTypeDesc");
+                strSql.Append("[CouponTypeDesc]=@CouponTypeDesc,");
+            if (pIsUpdateNullField || pEntity.IsNotLimitQty != null)
+                strSql.Append("[IsNotLimitQty]=@IsNotLimitQty");
             strSql.Append(" where CouponTypeID=@CouponTypeID ");
             SqlParameter[] parameters = 
             {
@@ -303,6 +307,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@BeginTime",SqlDbType.DateTime),
 					new SqlParameter("@EndTime",SqlDbType.DateTime),
 					new SqlParameter("@CouponTypeDesc",SqlDbType.NVarChar),
+					new SqlParameter("@IsNotLimitQty",SqlDbType.Int),
 					new SqlParameter("@CouponTypeID",SqlDbType.UniqueIdentifier)
             };
             parameters[0].Value = pEntity.CouponTypeName;
@@ -326,7 +331,8 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[18].Value = pEntity.BeginTime;
             parameters[19].Value = pEntity.EndTime;
             parameters[20].Value = pEntity.CouponTypeDesc;
-            parameters[21].Value = pEntity.CouponTypeID;
+            parameters[21].Value = pEntity.IsNotLimitQty;
+            parameters[22].Value = pEntity.CouponTypeID;
 
             //执行语句
             int result = 0;
@@ -662,6 +668,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "EndTime", Value = pQueryEntity.EndTime });
             if (pQueryEntity.CouponTypeDesc != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CouponTypeDesc", Value = pQueryEntity.CouponTypeDesc });
+            if (pQueryEntity.IsNotLimitQty != 0)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsNotLimitQty", Value = pQueryEntity.IsNotLimitQty });
 
             return lstWhereCondition.ToArray();
         }
@@ -776,6 +784,10 @@ namespace JIT.CPOS.BS.DataAccess
             if (pReader["CouponTypeDesc"] != DBNull.Value)
             {
                 pInstance.CouponTypeDesc = Convert.ToString(pReader["CouponTypeDesc"]);
+            }
+            if (pReader["IsNotLimitQty"] != DBNull.Value)
+            {
+                pInstance.IsNotLimitQty = Convert.ToInt32(pReader["IsNotLimitQty"]);
             }
 
         }

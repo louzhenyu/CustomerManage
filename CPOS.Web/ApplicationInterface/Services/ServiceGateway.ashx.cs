@@ -53,7 +53,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Services
                     rst = UpdateCoupon(pRequest);
                     break;
                 case "GetMyIntegral"://我的积分
-                    rst = GetMyIntegral(pRequest);
+                    rst = "";
+                  //  rst = GetMyIntegral(pRequest);
                     break;
                 case "GetMyAccount"://账户余额
                     rst = GetMyAccount(pRequest);
@@ -408,6 +409,19 @@ namespace JIT.CPOS.Web.ApplicationInterface.Services
             {
                 rd.Rule = "q/";
                 rd.CouponList = DataTableToObject.ConvertToList<CouponInfo>(dsCoupon.Tables[0]);
+
+                #region 排序处理,快到期排前
+                foreach (var item in rd.CouponList)
+                {
+                    if (Convert.ToDateTime(item.EndDate) > DateTime.Now)
+                        item.Sort = Convert.ToDateTime(item.EndDate).Subtract(DateTime.Now).Seconds;
+                    else
+                        item.Sort = 9999999;
+                }
+                //根据Sort排序
+                rd.CouponList = rd.CouponList.OrderByDescending(m => m.CreateTime).ThenBy(m => m.Sort).ToList(); //首先按照时间 然后按照快到期的排
+                #endregion
+
                 rd.Total = int.Parse(dsCoupon.Tables[0].Rows[0]["Total"].ToString());
                 rd.TotalPageCount = int.Parse(dsCoupon.Tables[0].Rows[0]["PageCount"].ToString());
             }
@@ -465,37 +479,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Services
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();
         }
-        /// <summary>
-        /// 我的积分
-        /// </summary>
-        /// <param name="pRequest"></param>
-        /// <returns></returns>
-        protected string GetMyIntegral(string pRequest)
-        {
-            var rp = pRequest.DeserializeJSONTo<APIRequest<GetMyInfoRP>>();
-            rp.Parameters.Validate();//验证传值
-            var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID, rp.IsAToC);
-            var rd = new MyIntegralRD();
 
-            var unitBll = new UnitBLL(loggingSessionInfo);
-            Hashtable htPara = new Hashtable();
-            htPara["MemberID"] = loggingSessionInfo.UserID;
-            htPara["VipCardCode"] =rp.Parameters.VipCardCode;
-            htPara["CustomerID"] = rp.CustomerID;
-            htPara["PageIndex"] = rp.Parameters.PageIndex + 1;
-            htPara["PageSize"] = rp.Parameters.PageSize;
-            DataSet dsMyIntegral = unitBll.GetMyIntegral(htPara);
-
-            if (dsMyIntegral.Tables[0].Rows.Count > 0)
-            {
-                rd.IntegralList = DataTableToObject.ConvertToList<MyIntegralInfo>(dsMyIntegral.Tables[0]);
-                rd.Total = int.Parse(dsMyIntegral.Tables[0].Rows[0]["Total"].ToString());
-                rd.TotalPageCount = int.Parse(dsMyIntegral.Tables[0].Rows[0]["PageCount"].ToString());
-            }
-            var rsp = new SuccessResponse<IAPIResponseData>(rd);
-            return rsp.ToJSON();
-            //return "{\"ResultCode\":200,\"Message\":null,\"Data\":{\"IntegralList\":[{\"UpdateReason\":\"\u63A8\u8350\u6709\u793C\",\"UpdateCount\":200,\"UpdateTime\":\"2014-2-6\"},{\"UpdateReason\":\"\u5151\u6362\u793C\u54C1\",\"UpdateCount\":-1000,\"UpdateTime\":\"2014-2-6\"},{\"UpdateReason\":\"\u63A8\u8350\u6709\u793C\",\"UpdateCount\":200,\"UpdateTime\":\"2014-2-6\"},{\"UpdateReason\":\"\u5151\u6362\u793C\u54C1\",\"UpdateCount\":-1000,\"UpdateTime\":\"2014-2-6\"},{\"UpdateReason\":\"\u63A8\u8350\u6709\u793C\",\"UpdateCount\":200,\"UpdateTime\":\"2014-2-6\"},{\"UpdateReason\":\"\u5151\u6362\u793C\u54C1\",\"UpdateCount\":-1000,\"UpdateTime\":\"2014-2-6\"}],\"TotalPageCount\":1}}";
-        }
+        #region 我的余额
         /// <summary>
         /// 账户余额
         /// </summary>
@@ -526,6 +511,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Services
             return rsp.ToJSON();
             //return "{\"ResultCode\":200,\"Message\":null,\"Data\":{\"AccountList\":[{\"UpdateReason\":\"\u8F6C\u8D26\",\"UpdateCount\":200,\"UpdateTime\":\"2014-2-6\"},{\"UpdateReason\":\"\u8F6C\u8D26\",\"UpdateCount\":-1000,\"UpdateTime\":\"2014-2-6\"},{\"UpdateReason\":\"\u8F6C\u8D26\",\"UpdateCount\":50,\"UpdateTime\":\"2014-2-6\"},{\"UpdateReason\":\"\u8F6C\u8D26\",\"UpdateCount\":-50,\"UpdateTime\":\"2014-2-6\"},{\"UpdateReason\":\"\u8F6C\u8D26\",\"UpdateCount\":200,\"UpdateTime\":\"2014-2-6\"},{\"UpdateReason\":\"\u8F6C\u8D26\",\"UpdateCount\":-50,\"UpdateTime\":\"2014-2-6\"}],\"TotalPageCount\":1}}";
         }
+
+        #endregion
+
         /// <summary>
         /// 根据公司标识获取充值策略
         /// </summary>
@@ -898,8 +886,18 @@ namespace JIT.CPOS.Web.ApplicationInterface.Services
         /// </summary>
         public int Status { get; set; }
 
-        public int UsableRange{get;set;}//适用范围：1=购物券2=服务券
+        public int UsableRange { get; set; }//适用范围：1=购物券2=服务券
         public string ObjectID { get; set; }//使用的门店
+
+        /// <summary>
+        /// 0=查看全部{积分}、1=收入{积分}、2=支出{积分}
+        /// </summary>
+        public int IntegralType { get; set; }
+
+        /// <summary>
+        /// 是否红利（1=红利）
+        /// </summary>
+        public int Isdividend { get; set; }
         public void Validate()
         {
             //if (string.IsNullOrEmpty(MemberID))
@@ -915,7 +913,18 @@ namespace JIT.CPOS.Web.ApplicationInterface.Services
     {
         public List<MyIntegralInfo> IntegralList { get; set; }
         public int Total { get; set; }
+
+        public int TotalCount { get; set; }
         public int TotalPageCount { get; set; }
+        /// <summary>
+        /// 收入积分
+        /// </summary>
+        public decimal? IncomeAmount { get; set; }
+
+        /// <summary>
+        /// 支出积分
+        /// </summary>
+        public decimal? ExpenditureAmount { get; set; }
     }
     /// <summary>
     /// 我的积分
@@ -925,6 +934,16 @@ namespace JIT.CPOS.Web.ApplicationInterface.Services
         public string UpdateReason { get; set; }
         public int UpdateCount { get; set; }
         public string UpdateTime { get; set; }
+
+        /// <summary>
+        /// 收入积分
+        /// </summary>
+        public decimal? IncomeAmount { get; set; }
+
+        /// <summary>
+        /// 支出积分
+        /// </summary>
+        public decimal? ExpenditureAmount { get; set; }
     }
 
     /// <summary>
@@ -935,6 +954,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Services
         public List<AccountInfo> AccountList { get; set; }
         public decimal Total { get; set; }
         public int TotalPageCount { get; set; }
+
+        public decimal? ExpenditureAmount { get; set; }
+
+        public decimal? IncomeAmount { get; set; }
     }
     /// <summary>
     /// 获取优惠券详情参数
@@ -985,6 +1008,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Services
         public string CouponTypeName { get; set; }
         public decimal ParValue { get; set; }
         public int Status { get; set; }
+
+        public int Sort { get; set; }
+
+        public DateTime CreateTime { get; set; }
     }
     /// <summary>
     /// 充值策略返回对象

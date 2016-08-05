@@ -13,5 +13,12 @@
 		</DBCount>
     <LastDBTime>（最后从DB读取的时间）2016-5-28 12:13:34</LastDBTime>
   </RedisOperation>
- 
+  <RedisOperation>
+    <modulename>角色权限相关</modulename>
+    <modulekey>RoleID</modulekey>
+    <RedisCount>53</RedisCount>
+    <LastRedisTime>2016/7/15 20:10:27</LastRedisTime>
+    <DBCount>0</DBCount>
+    <LastDBTime>2016/7/15 19:52:24</LastDBTime>
+  </RedisOperation>
 </Root>

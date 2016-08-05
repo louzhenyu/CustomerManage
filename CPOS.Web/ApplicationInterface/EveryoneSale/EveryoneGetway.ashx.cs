@@ -314,6 +314,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
                     amountmonth.RetailAmount = decimal.Parse(dt.Tables[0].Rows[i]["RetailAmount"].ToString());
                     amountmonth.RegAmount = decimal.Parse(dt.Tables[0].Rows[i]["RegAmount"].ToString());
                     amountmonth.TotalAmount = decimal.Parse(dt.Tables[0].Rows[i]["TotalAmount"].ToString());
+                    amountmonth.FirstRechargeAmount = decimal.Parse(dt.Tables[0].Rows[i]["FirstRechargeAmount"].ToString());
+                    amountmonth.FirstSaleCardAmount = decimal.Parse(dt.Tables[0].Rows[i]["FirstSaleCardAmount"].ToString());
+                    amountmonth.ContinuedRechargeAmount = decimal.Parse(dt.Tables[0].Rows[i]["ContinuedRechargeAmount"].ToString());
                     AmountMonthList.Add(amountmonth);
 
                     if (TotalPage == 0)
@@ -351,21 +354,62 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
                 rst.Message = "UserID不能传空值";
                 return rst.ToJSON();
             }
-            //今天提现次数统计
-            var wdApplyToday = wdApplyBll.GetVipWDApplyByToday(rp.UserID);
+            //查询提现规则
+            VipWithDrawRuleBLL bll = new VipWithDrawRuleBLL(loggingSessionInfo);
+            var _VipWithDrawRuleEntity = bll.GetVipWithDrawRule();//根据customerid获取该商户的规则
 
+            if (_VipWithDrawRuleEntity == null)
+            {
+           
+                _VipWithDrawRuleEntity = new VipWithDrawRuleEntity();
+                wdBasicInfo.Status = -1;
+                _VipWithDrawRuleEntity.WithDrawNumType = 0;
+            }
+            //  return TransModel(dbEntity);
+            var wdApplyCount = 0;//总共已经提现次数
+
+            //if (_VipWithDrawRuleEntity.WithDrawNumType != 0 && _VipWithDrawRuleEntity.WithDrawNum != 0)
+            //{
+            //获取该会员每个单位已经提现的次数
+            VipWithdrawDepositApplyEntity[] wdApplyEntitys = wdApplyBll.GetVipWDApplyByNumType(rp.UserID, (int)_VipWithDrawRuleEntity.WithDrawNumType);//传入当前的人的标识和提现次数限制类型
+            wdApplyCount = wdApplyEntitys.Length;//总共已经提现次数
+            //当前单位还可提现的次数
+            //}
+            if (_VipWithDrawRuleEntity != null)
+            {           
+
+            }
+            else {
+                _VipWithDrawRuleEntity = new VipWithDrawRuleEntity();
+                _VipWithDrawRuleEntity.BeforeWithDrawDays=0;//可提现天数  （0表示没有退货期）  
+                _VipWithDrawRuleEntity.MinAmountCondition = 0;// 最低提现条件 （0表示没有最低条件）  
+                _VipWithDrawRuleEntity.WithDrawMaxAmount = 0;// 每次最多提现额度 
+                _VipWithDrawRuleEntity.WithDrawNumType = 0;// 提现次数限制类型 (0：不限制   1：日   2：周   3：月)
+               // _VipWithDrawRuleEntity.WithDrawNumTypeName = "不限制";// 每次最多提现额度 
+                    _VipWithDrawRuleEntity.WithDrawNum = 0;// 提现次数限制数量
+
+            }  
+
+            //原来的提现次数查询
+            /**
+            //今天提现次数统计
+        var wdApplyToday = wdApplyBll.GetVipWDApplyByToday(rp.UserID);
             //每天可提现次数
             string wdTime = basicSettingBll.GetSettingValueByCode("WithdrawDepositTime");
             //今天可提现的次数
             wdBasicInfo.WDTime = string.IsNullOrEmpty(wdTime) == true ? 1 - wdApplyToday.Length : int.Parse(wdTime) - wdApplyToday.Length;
+            ***/
+
 
             //日累计提现金额（每个商户都不一样）
-            var wdAmountInfo = basicSettingBll.QueryByEntity(new CustomerBasicSettingEntity() { SettingCode = "WithdrawDepositAmount", CustomerID = loggingSessionInfo.ClientID }, null).FirstOrDefault();
-            if (wdAmountInfo != null)
-            {
-                wdBasicInfo.WDAmountDay = decimal.Parse(wdAmountInfo.SettingValue);
-                wdBasicInfo.WDAmountDayDesc = wdAmountInfo.SettingDesc;
-            }
+            //var wdAmountInfo = basicSettingBll.QueryByEntity(new CustomerBasicSettingEntity() { SettingCode = "WithdrawDepositAmount", CustomerID = loggingSessionInfo.ClientID }, null).FirstOrDefault();
+            //if (wdAmountInfo != null)
+            //{
+            //    wdBasicInfo.WDAmountDay = decimal.Parse(wdAmountInfo.SettingValue);
+            //    wdBasicInfo.WDAmountDayDesc = wdAmountInfo.SettingDesc;
+            //}
+
+
             //获取会员银行卡信息
             var vipBankInfo = vipBankBll.QueryByEntity(new VipBankEntity() { VipID = rp.UserID }, null).FirstOrDefault();
             if (vipBankInfo != null)
@@ -386,9 +430,15 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
             {
                 wdBasicInfo.WDCurrentAmount = vipWD.EndAmount;
             }
+            wdBasicInfo.wdApplyCount = wdApplyCount;
+            wdBasicInfo.VipWithDrawRule = _VipWithDrawRuleEntity;
             var rsp = new SuccessResponse<IAPIResponseData>(wdBasicInfo);
             return rsp.ToJSON();
         }
+
+        
+
+
         /// <summary>
         /// 获取支持提现的银行
         /// </summary>
@@ -487,46 +537,89 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
             var unitExpandBll = new TUnitExpandBLL(loggingSessionInfo);             //获取提现申请单号BLL实例化
             var basicSettingBll = new CustomerBasicSettingBLL(loggingSessionInfo);  //客户基本信息BLL实例化
 
-            int wdTimeSettings = 1;             //每天可提现次数
-            decimal wdAmountSettings = 1000;    //日累计提现金额
+            //int wdTimeSettings = 1;             //每天可提现次数
+            //decimal wdAmountSettings = 1000;    //日累计提现金额
 
-            string wdTimeTemp = basicSettingBll.GetSettingValueByCode("WithdrawDepositTime");       //配置的日提现次数
-            string wdAmountTemp = basicSettingBll.GetSettingValueByCode("WithdrawDepositAmount");   //配置的日累计提现金额
+            //string wdTimeTemp = basicSettingBll.GetSettingValueByCode("WithdrawDepositTime");       //配置的日提现次数
+            //string wdAmountTemp = basicSettingBll.GetSettingValueByCode("WithdrawDepositAmount");   //配置的日累计提现金额
 
-            if (!string.IsNullOrEmpty(wdTimeTemp))
-                wdTimeSettings = int.Parse(wdTimeTemp);
-            if (!string.IsNullOrEmpty(wdAmountTemp))
-                wdAmountSettings = decimal.Parse(wdAmountTemp);
+            //if (!string.IsNullOrEmpty(wdTimeTemp))
+            //    wdTimeSettings = int.Parse(wdTimeTemp);
+            //if (!string.IsNullOrEmpty(wdAmountTemp))
+            //    wdAmountSettings = decimal.Parse(wdAmountTemp);
+
+            //查询提现规则
+            VipWithDrawRuleBLL bll = new VipWithDrawRuleBLL(loggingSessionInfo);
+            var _VipWithDrawRuleEntity = bll.GetVipWithDrawRule();//根据customerid获取该商户的规则
+            //  return TransModel(dbEntity);
+            var wdApplyCount = 0;//总共已经提现次数
+
+            //if (_VipWithDrawRuleEntity.WithDrawNumType != 0 && _VipWithDrawRuleEntity.WithDrawNum != 0)
+            //{
+                //获取该会员每个单位已经提现的次数
+                VipWithdrawDepositApplyEntity[] wdApplyEntitys = wdApplyBll.GetVipWDApplyByNumType(rp.UserID, (int)_VipWithDrawRuleEntity.WithDrawNumType);//传入当前的人的标识和提现次数限制类型
+                wdApplyCount = wdApplyEntitys.Length;//总共已经提现次数
+                //当前单位还可提现的次数
+            //}
+
+            if (_VipWithDrawRuleEntity != null)
+            {            
+
+            }
+            else
+            {
+                _VipWithDrawRuleEntity = new VipWithDrawRuleEntity();
+                _VipWithDrawRuleEntity.BeforeWithDrawDays = 0;//可提现天数  （0表示没有退货期）  
+                _VipWithDrawRuleEntity.MinAmountCondition = 0;// 最低提现条件 （0表示没有最低条件）  
+                _VipWithDrawRuleEntity.WithDrawMaxAmount = 0;// 每次最多提现额度 
+                _VipWithDrawRuleEntity.WithDrawNumType = 0;// 提现次数限制类型 (0：不限制   1：日   2：周   3：月)
+                //_VipWithDrawRuleEntity.WithDrawNumTypeName = "不限制";// 每次最多提现额度 
+                _VipWithDrawRuleEntity.WithDrawNum = 0;// 提现次数限制数量
+
+            }  
+
+
+
 
             //判断日累计提现总额是否超过限制
-            if (wdAmountSettings < rp.Parameters.Amount)
+            if (_VipWithDrawRuleEntity.WithDrawMaxAmount != 0 && _VipWithDrawRuleEntity.WithDrawMaxAmount < rp.Parameters.Amount)
             {
                 rsp.ResultCode = ERROR_WDAMOUNT_TOOBIG;
-                rsp.Message = "日累计提现金额等能大于" + wdAmountSettings;
+                rsp.Message = "提现金额不能大于每次最多提现额度" + _VipWithDrawRuleEntity.WithDrawMaxAmount;
                 return rsp.ToJSON();
             }
             //判断日提现次数和日累计提现总额是否超过限制
-            var wdApplyToday = wdApplyBll.GetVipWDApplyByToday(rp.UserID);
-            if (wdApplyToday.Length > 0)
+            //var wdApplyToday = wdApplyBll.GetVipWDApplyByToday(rp.UserID);
+            //if (wdApplyToday.Length > 0)
+            //{
+            //    if (wdTimeSettings <= wdApplyToday.Length)
+            //    {
+            //        rsp.ResultCode = ERROR_WDAMOUNT_NOTWDTIME;
+            //        rsp.Message = "今天已不能提现";
+            //        return rsp.ToJSON();
+            //    }
+            //    decimal? totalAmount = 0; //今日提现累计金额
+            //    foreach (var item in wdApplyToday)
+            //    {
+            //        totalAmount += item.Amount;
+            //    }
+            //    if (totalAmount > wdAmountSettings)
+            //    {
+            //        rsp.ResultCode = ERROR_WDAMOUNT_TOOBIG;
+            //        rsp.Message = "日累计提现金额不能大于" + wdAmountSettings;
+            //        return rsp.ToJSON();
+            //    }
+            //}
+          if( _VipWithDrawRuleEntity.WithDrawNumType!=0  && _VipWithDrawRuleEntity.WithDrawNum!=0)
             {
-                if (wdTimeSettings <= wdApplyToday.Length)
+                if (_VipWithDrawRuleEntity.WithDrawNum <= wdApplyCount)
                 {
                     rsp.ResultCode = ERROR_WDAMOUNT_NOTWDTIME;
-                    rsp.Message = "今天已不能提现";
-                    return rsp.ToJSON();
-                }
-                decimal? totalAmount = 0; //今日提现累计金额
-                foreach (var item in wdApplyToday)
-                {
-                    totalAmount += item.Amount;
-                }
-                if (totalAmount > wdAmountSettings)
-                {
-                    rsp.ResultCode = ERROR_WDAMOUNT_TOOBIG;
-                    rsp.Message = "日累计提现金额不能大于" + wdAmountSettings;
+                    rsp.Message = "您本月已经提现" + wdApplyCount + "次,不能再提现了"; ;
                     return rsp.ToJSON();
                 }
             }
+
             var pTran = wdApplyBll.GetTran();    //事务
             using (pTran.Connection)
             {
@@ -536,6 +629,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
                     var vipWDInfo = vipWDBll.QueryByEntity(new VipWithdrawDepositEntity() { VIPID = rp.UserID }, null).FirstOrDefault();
                     if (vipWDInfo != null)
                     {
+                        if (_VipWithDrawRuleEntity.MinAmountCondition != 0 && vipWDInfo.EndAmount < _VipWithDrawRuleEntity.MinAmountCondition)//有最低提现额度
+                        {
+                            rsp.ResultCode = ERROR_WDAMOUNT_TOOBIG;
+                            rsp.Message = "每次提现不能少于"+_VipWithDrawRuleEntity.MinAmountCondition+"元";
+                            return rsp.ToJSON();
+                        }
+
                         if (vipWDInfo.EndAmount < rp.Parameters.Amount)
                         {
                             rsp.ResultCode = ERROR_WDAMOUNT_TOOBIG;
@@ -547,16 +647,38 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
                         vipWDBll.Update(vipWDInfo, pTran);//修改
 
                         //提现申请保存
+
+                        // 1=Vip{会员} ;2=User{员工} 4=超级分销商{t_super}
+                        int VipType = 0;
+
+                        if (rp.Parameters.Type == 0)
+                        {
+                            var vipService = new VipBLL(loggingSessionInfo);
+                            var userService = new T_UserBLL(loggingSessionInfo);
+                            var userentity = userService.GetByID(rp.UserID);
+                            var vipentity = vipService.GetByID(rp.UserID);
+                            if (vipentity != null) { VipType = 1; }
+                            if (userentity != null) { VipType = 2; }
+                        }
+                        else if (rp.Parameters.Type == 1)
+                        {
+                            var superService = new T_SuperRetailTraderBLL(loggingSessionInfo);
+                            var superentity = superService.GetByID(rp.UserID);
+                            if (superentity != null) { VipType = 4; }
+                        }
+
                         string withdrawNo = unitExpandBll.GetUnitOrderNo();
+
                         VipWithdrawDepositApplyEntity entity = new VipWithdrawDepositApplyEntity
                         {
                             VipID = rp.UserID,
                             WithdrawNo = DateTime.Now.ToString("yyyyMMddhhmmss") + withdrawNo,
                             Amount = rp.Parameters.Amount,
-                            Status = 0,
+                            Status = 1, //1:待审核
                             ApplyDate = DateTime.Now,
                             VipBankID = rp.Parameters.VipBankID,
-                            CustomerID = rp.CustomerID
+                            CustomerID = rp.CustomerID,
+                            VipType = VipType
                         };
                         wdApplyBll.Create(entity, pTran);
                     }
@@ -699,7 +821,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
                 SetOffTime = t.Col21 == null ? null : t.Col21.ToString(),
                 CreateTime = t.CreateTime.ToString(),
                 Status = t.Status,
-                RegistrationTime=t.RegistrationTime.ToString()
+                RegistrationTime = t.RegistrationTime.ToString()
             }).ToArray();
             #endregion
             return rsp.ToJSON();
@@ -1046,6 +1168,18 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
         public decimal RetailAmount { get; set; }
         public decimal RegAmount { get; set; }
         public decimal TotalAmount { get; set; }
+        /// <summary>
+        /// 首次卖卡员工分润
+        /// </summary>
+        public decimal FirstSaleCardAmount { get; set; }
+        /// <summary>
+        /// 首次充值员工分润
+        /// </summary>
+        public decimal FirstRechargeAmount { get; set; }
+        /// <summary>
+        /// 续充值员工分润
+        /// </summary>
+        public decimal ContinuedRechargeAmount { get; set; }
     }
     /// <summary>
     /// 提现基本信息
@@ -1088,6 +1222,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
         /// 每天提现次数
         /// </summary>
         public int WDTime { get; set; }
+        public VipWithDrawRuleEntity VipWithDrawRule { get; set; }
+        public int wdApplyCount { get; set; }
+
+        public int Status { get; set; }
+
+
     }
     /// <summary>
     /// 支持提现的银行信息返回对象
@@ -1147,6 +1287,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
     {
         public Guid? VipBankID { get; set; }
         public decimal Amount { get; set; }
+
+        /// <summary>
+        /// App类型 0=掌柜App 1=超级分销App
+        /// </summary>
+        public int Type { get; set; }
         public void Validate()
         {
         }

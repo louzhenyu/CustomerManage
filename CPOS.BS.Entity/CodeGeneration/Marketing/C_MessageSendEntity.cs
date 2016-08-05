@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015/9/9 15:07:16
+ * Create On	:2016/7/5 16:49:40
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -53,6 +53,11 @@ namespace JIT.CPOS.BS.Entity
 		public Guid? MessageID { get; set; }
 
 		/// <summary>
+		/// 
+		/// </summary>
+		public String VipID { get; set; }
+
+		/// <summary>
 		/// SMS=¶ÌÐÅ   WeChat=Î¢ÐÅ   Email=ÓÊ¼þ
 		/// </summary>
 		public String MessageType { get; set; }
@@ -61,11 +66,6 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public String Content { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String VipID { get; set; }
 
 		/// <summary>
 		/// 
@@ -136,6 +136,26 @@ namespace JIT.CPOS.BS.Entity
 		/// 0=Õý³£×´Ì¬£»1=É¾³ý×´Ì¬
 		/// </summary>
 		public Int32? IsDelete { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String CouponCode { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String CouponTypeName { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String DateDiffDesc { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String CouponCategory { get; set; }
 
 
         #endregion

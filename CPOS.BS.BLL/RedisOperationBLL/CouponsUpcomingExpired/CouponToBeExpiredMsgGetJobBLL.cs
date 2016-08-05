@@ -64,7 +64,7 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.CouponsUpcomingExpired
                         var templateID = response.Result.ConfigData.TemplateID;
                         var openID = response.Result.ConfigData.OpenID;
                         var vipID = response.Result.ConfigData.VipID;
-                        var loggingSessionInfo = response.Result.ConfigData.LogSession.JsonDeserialize<LoggingSessionInfo>();
+                        var loggingSessionInfo = CustomerBLL.Instance.GetBSLoggingSession(customer.Key, "1"); //response.Result.ConfigData.LogSession.JsonDeserialize<LoggingSessionInfo>();
                         var Data = new JIT.CPOS.BS.Entity.WX.CouponsUpcomingExpired
                         {
                             first = new DataInfo { value = response.Result.CouponToBeExpiredData.first.value, color = response.Result.CouponToBeExpiredData.first.color },

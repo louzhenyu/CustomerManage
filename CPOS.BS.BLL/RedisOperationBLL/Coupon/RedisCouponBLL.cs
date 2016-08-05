@@ -148,10 +148,11 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
         /// <param name="coupon"></param>
         /// <param name="strCon"></param>
         /// <returns></returns>
-        public DataTable DownloadCoupon(CC_Coupon coupon, string strCustomerid, int downLoadNum)
+		public DataTable DownloadCoupon(CC_Coupon coupon, string strCustomerid, int downLoadNum, int intIsNotLimitQty)
         {
             var count = RedisOpenAPI.Instance.CCCoupon().GetCouponListLength(coupon);
             DataTable dtCoupon = new DataTable();
+			LoggingSessionInfo loggingSessionInfo = CustomerBLL.Instance.GetBSLoggingSession(strCustomerid, "RedisSystem");
             
 
             dtCoupon.Columns.Add("CouponID", typeof(string));
@@ -192,10 +193,20 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
                         strCon = connection.ConnectionStr;
 
                     long num = 0;
-                    if (downLoadNum > count.Result)
-                        num = count.Result;
-                    else
-                        num = downLoadNum;
+					if (downLoadNum > count.Result) {
+						if (intIsNotLimitQty == 1) {
+							var bllCouponType = new CouponTypeBLL(loggingSessionInfo);
+							bllCouponType.UpdateCouponTypeIssuedQty(coupon.CouponTypeId, downLoadNum);
+							coupon.CouponLenth = downLoadNum;
+							RedisOpenAPI.Instance.CCCoupon().SetCouponList(coupon);
+							num = downLoadNum;
+						}
+						else {
+							num = count.Result;
+						}
+					}
+					else
+						num = downLoadNum;
 
                     for (int i = 0; i < num; i++)
                         {
@@ -246,14 +257,7 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
                     if (dtCoupon != null && dtCoupon.Rows.Count > 0)
                     {
                         SqlBulkCopy(strCon, dtCoupon, "Coupon");
-
-                        LoggingSessionInfo _loggingSessionInfo = new LoggingSessionInfo();
-                        LoggingManager CurrentLoggingManager = new LoggingManager();
-
-                        _loggingSessionInfo.ClientID = strCustomerid;
-                        CurrentLoggingManager.Connection_String = strCon;
-                        _loggingSessionInfo.CurrentLoggingManager = CurrentLoggingManager;
-                        var bllCouponType = new CouponTypeBLL(_loggingSessionInfo);
+                        var bllCouponType = new CouponTypeBLL(loggingSessionInfo);
                         bllCouponType.UpdateCouponTypeIsVoucher(strCustomerid);
                     }
                 }

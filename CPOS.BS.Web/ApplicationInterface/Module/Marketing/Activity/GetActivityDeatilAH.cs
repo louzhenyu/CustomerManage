@@ -19,42 +19,32 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
             var rd = new GetActivityDeatilRD();
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
-            var ActivityBLL = new C_ActivityBLL(loggingSessionInfo);
-            var PrizesBLL = new C_PrizesBLL(loggingSessionInfo);
-            var PrizesDetailBLL = new C_PrizesDetailBLL(loggingSessionInfo);
-            var ActivityMessageBLL = new C_ActivityMessageBLL(loggingSessionInfo);
-            var TargetGroupBLL = new C_TargetGroupBLL(loggingSessionInfo);
+            var activityBll = new C_ActivityBLL(loggingSessionInfo);
+            var prizesBll = new C_PrizesBLL(loggingSessionInfo);
+            var prizesDetailBll = new C_PrizesDetailBLL(loggingSessionInfo);
+            var activityMessageBll = new C_ActivityMessageBLL(loggingSessionInfo);
+            var targetGroupBll = new C_TargetGroupBLL(loggingSessionInfo);
+            var rechargeStrategyBll = new RechargeStrategyBLL(loggingSessionInfo);
             if (!string.IsNullOrWhiteSpace(para.ActivityID))
             {
                 #region 基础信息
-                C_ActivityEntity ActivityData = ActivityBLL.GetByID(para.ActivityID);
-                if (ActivityData != null)
+                C_ActivityEntity activityData = activityBll.GetByID(para.ActivityID);
+                if (activityData != null)
                 {
-                    rd.ActivityID = ActivityData.ActivityID.ToString();
-                    rd.ActivityName = ActivityData.ActivityName;
-                    rd.StartTime = ActivityData.StartTime == null ? "" : ActivityData.StartTime.Value.ToString("yyyy-MM-dd");
-                    rd.EndTime = ActivityData.EndTime == null ? "" : ActivityData.EndTime.Value.ToString("yyyy-MM-dd");
-                    rd.IsLongTime = ActivityData.IsLongTime == null ? "0" : ActivityData.IsLongTime.Value.ToString();
-                    rd.PointsMultiple = ActivityData.PointsMultiple == null ? 0 : ActivityData.PointsMultiple.Value;
-
-                    int m_IsAllVipCardType = ActivityData.IsAllVipCardType == null ? 0 : ActivityData.IsAllVipCardType.Value;
-                    if (m_IsAllVipCardType == 1)
-                    {
-                        C_TargetGroupEntity VipCardTargetGroupData = TargetGroupBLL.QueryByEntity(new C_TargetGroupEntity() { ActivityID = ActivityData.ActivityID, GroupType = 1 }, null).FirstOrDefault();
-                        rd.VipCardTypeID = VipCardTargetGroupData == null ? "" : VipCardTargetGroupData.ObjectID;
-                    }
-                    int m_IsVipGrouping = ActivityData.IsVipGrouping == null ? 0 : ActivityData.IsVipGrouping.Value;
-                    if (m_IsAllVipCardType == 1)
-                    {
-                        C_TargetGroupEntity VipCardTargetGroupData = TargetGroupBLL.QueryByEntity(new C_TargetGroupEntity() { ActivityID = ActivityData.ActivityID, GroupType = 2 }, null).FirstOrDefault();
-                        rd.VipGroupingID = VipCardTargetGroupData == null ? "" : VipCardTargetGroupData.ObjectID;
-                    }
-                    //持卡人数
-                    //rd.holderCardCount = ActivityBLL.GetholderCardCount(null,para.ActivityID);
+                    rd.ActivityID = activityData.ActivityID.ToString();
+                    rd.ActivityType = activityData.ActivityType ?? 2;
+                    rd.ActivityName = activityData.ActivityName;
+                    rd.StartTime = activityData.StartTime == null ? "" : activityData.StartTime.Value.ToString("yyyy-MM-dd");
+                    rd.EndTime = activityData.EndTime == null ? "" : activityData.EndTime.Value.ToString("yyyy-MM-dd");
+                    rd.IsLongTime = activityData.IsLongTime == null ? "0" : activityData.IsLongTime.Value.ToString();
+                    rd.IsAllCardType = activityData.IsAllVipCardType ?? 0;
+                    rd.VipCardTypeID = activityBll.GetTargetGroupId(rd.IsAllCardType, rd.ActivityID);
+                    rd.HolderCardCount = activityBll.GetTargetCount(rd.VipCardTypeID, rd.ActivityType, rd.StartTime, rd.EndTime, activityData.IsLongTime.Value);
+                    rd.Status = activityData.Status.Value;
                 }
                 #endregion
                 #region 奖品
-                var PrizesList = PrizesBLL.Query(new IWhereCondition[] { new EqualsCondition() { FieldName = "ActivityID", Value = para.ActivityID }, new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID } }, null).ToList();
+                var PrizesList = prizesBll.Query(new IWhereCondition[] { new EqualsCondition() { FieldName = "ActivityID", Value = para.ActivityID }, new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID } }, null).ToList();
                 if (PrizesList.Count > 0)
                 {
                     //奖品集合赋值
@@ -62,16 +52,14 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                                          select new PrizesInfo()
                                          {
                                              PrizesID = Convert.ToString(u.PrizesID),
-                                             PrizesType = u.PrizesType.Value,
-                                             AmountLimit = u.AmountLimit.Value,
-                                             IsCirculation = u.IsCirculation == null ? 0 : u.IsCirculation.Value
+                                             PrizesType = u.PrizesType.Value
                                          }).ToList();
 
                     foreach (var item in rd.PrizesInfoList)
                     {
                         item.PrizesDetailList = new List<PrizesDetailInfo>();
                         //奖品明细
-                        var PrizesDetailList = PrizesDetailBLL.GetPrizesDetailList(item.PrizesID);
+                        var PrizesDetailList = prizesDetailBll.GetPrizesDetailList(item.PrizesID);
                         if (PrizesDetailList.Count > 0)
                         {
                             CouponTypeBLL ctbll = new CouponTypeBLL(CurrentUserInfo);
@@ -81,10 +69,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                                 m.PrizesDetailID = Convert.ToString(itemes.PrizesDetailID);
                                 m.CouponTypeID = Convert.ToString(itemes.CouponTypeID);
                                 m.CouponTypeName = itemes.CouponTypeName;
-                                m.EndTime = itemes.EndTime == null ? "" : itemes.EndTime.Value.ToString("yyyy-MM-dd");
-                                m.AvailableQty = (itemes.IssuedQty == null ? 0 : itemes.IssuedQty.Value) - (itemes.IsVoucher == null ? 0 : itemes.IsVoucher.Value);
-                                m.CouponTypeDesc = itemes.CouponTypeDesc == null ? "" : itemes.CouponTypeDesc;
-
+                                m.NumLimit = itemes.NumLimit.Value;
+                                m.CouponTypeDesc = itemes.CouponTypeDesc;
                                 //ValidityPeriod = t.BeginTime == null ? ("领取后" + (t.ServiceLife == 0 ? "1天内有效" : t.ServiceLife.ToString() + "天内有效")) : (t.BeginTime.Value.ToString("yyyy-MM-dd") + "至" + t.EndTime.Value.ToString("yyyy-MM-dd")),
                                 var t = ctbll.GetByID(m.CouponTypeID);
                                 m.ValidityPeriod = t.BeginTime == null ? ("领取后" + (t.ServiceLife == 0 ? "1天内有效" : t.ServiceLife.ToString() + "天内有效")) : (t.BeginTime.Value.ToString("yyyy-MM-dd") + "至" + t.EndTime.Value.ToString("yyyy-MM-dd"));
@@ -96,7 +82,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                 }
                 #endregion
                 #region 消息
-                var ActivityMessageList = ActivityMessageBLL.Query(new IWhereCondition[] { new EqualsCondition() { FieldName = "ActivityID", Value = para.ActivityID }, new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID } }, null).ToList();
+                var ActivityMessageList = activityMessageBll.Query(new IWhereCondition[] { new EqualsCondition() { FieldName = "ActivityID", Value = para.ActivityID }, new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID } }, null).ToList();
                 if (ActivityMessageList.Count > 0)
                 {
                     //消息赋值
@@ -105,9 +91,28 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                                                   {
                                                       MessageID = u.MessageID.Value.ToString(),
                                                       MessageType = u.MessageType.Trim(),
-                                                      TemplateID = u.TemplateID.Value.ToString(),
                                                       Content = u.Content,
-                                                      SendTime = u.SendTime == null ? "" : u.SendTime.Value.ToString()
+                                                      SendTime = u.SendTime == null ? "" : u.SendTime.Value.ToString(),
+                                                      AdvanceDays = u.AdvanceDays,
+                                                      SendAtHour = u.SendAtHour
+                                                  }).ToList();
+                }
+                #endregion
+                #region 充值策略
+
+                var rechargeStrategyInfoList = rechargeStrategyBll.Query(new IWhereCondition[] { new EqualsCondition() { FieldName = "ActivityID", Value = para.ActivityID }, new EqualsCondition() { FieldName = "CustomerId", Value = loggingSessionInfo.ClientID } }, new[]{
+                             new OrderBy(){ FieldName="RechargeAmount", Direction= OrderByDirections.Asc}
+                            }).ToList();
+                if (rechargeStrategyInfoList.Count > 0)
+                {
+                    //消息赋值
+                    rd.RechargeStrategyInfoList = (from u in rechargeStrategyInfoList
+                                                  select new RechargeStrategyInfo()
+                                                  {
+                                                      RechargeStrategyId = u.RechargeStrategyId.ToString(),
+                                                      RuleType= u.RuleType,
+                                                      RechargeAmount = u.RechargeAmount,
+                                                      GiftAmount = u.GiftAmount.Value
                                                   }).ToList();
                 }
                 #endregion

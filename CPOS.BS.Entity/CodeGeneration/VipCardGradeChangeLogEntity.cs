@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015-8-14 20:18:27
+ * Create On	:2016/6/27 14:28:44
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -25,7 +25,7 @@ namespace JIT.CPOS.BS.Entity
     /// <summary>
     /// 实体：  
     /// </summary>
-    public partial class VipCardGradeChangeLogEntity : BaseEntity 
+    public partial class VipCardGradeChangeLogEntity : BaseEntity
     {
         #region 构造函数
         /// <summary>
@@ -34,83 +34,103 @@ namespace JIT.CPOS.BS.Entity
         public VipCardGradeChangeLogEntity()
         {
         }
-        #endregion     
+        #endregion
 
         #region 属性集
-		/// <summary>
-		/// 
-		/// </summary>
-		public String ChangeLogID { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String ChangeLogID { get; set; }
 
-		/// <summary>
-		/// 会员卡标识
-		/// </summary>
-		public String VipCardID { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public Guid? VipCardUpgradeRuleId { get; set; }
 
-		/// <summary>
-		/// 变动前等级
-		/// </summary>
-		public Int32? ChangeBeforeGradeID { get; set; }
+        /// <summary>
+        /// SalesCard 销售   Recharge 充值
+        /// </summary>
+        public String OrderType { get; set; }
 
-		/// <summary>
-		/// 现等级
-		/// </summary>
-		public Int32? NowGradeID { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String OrderId { get; set; }
 
-		/// <summary>
-		/// 变动原因
-		/// </summary>
-		public String ChangeReason { get; set; }
+        /// <summary>
+        /// 会员卡标识
+        /// </summary>
+        public String VipCardID { get; set; }
 
-		/// <summary>
-		/// 操作类型(1=自动,2=手动）
-		/// </summary>
-		public Int32? OperationType { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String ChangeBeforeVipCardID { get; set; }
 
-		/// <summary>
-		/// 变动时间
-		/// </summary>
-		public DateTime? ChangeTime { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int32? ChangeBeforeGradeID { get; set; }
 
-		/// <summary>
-		/// 操作门店
-		/// </summary>
-		public String UnitID { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int32? NowGradeID { get; set; }
 
-		/// <summary>
-		/// 操作员工
-		/// </summary>
-		public String OperationUserID { get; set; }
+        /// <summary>
+        /// Upgrade
+        /// </summary>
+        public String ChangeReason { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public DateTime? CreateTime { get; set; }
+        /// <summary>
+        /// 操作类型(1=自动,2=手动）
+        /// </summary>
+        public Int32? OperationType { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public String CreateBy { get; set; }
+        /// <summary>
+        /// 变动时间
+        /// </summary>
+        public DateTime? ChangeTime { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public DateTime? LastUpdateTime { get; set; }
+        /// <summary>
+        /// 操作门店
+        /// </summary>
+        public String UnitID { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public String LastUpdateBy { get; set; }
+        /// <summary>
+        /// 操作员工
+        /// </summary>
+        public String OperationUserID { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? IsDelete { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? CreateTime { get; set; }
 
-		/// <summary>
-		/// 客户标识
-		/// </summary>
-		public String CustomerID { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String CreateBy { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? LastUpdateTime { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String LastUpdateBy { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int32? IsDelete { get; set; }
+
+        /// <summary>
+        /// 客户标识
+        /// </summary>
+        public String CustomerID { get; set; }
 
 
         #endregion

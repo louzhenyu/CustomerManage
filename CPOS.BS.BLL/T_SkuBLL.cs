@@ -32,6 +32,9 @@ namespace JIT.CPOS.BS.BLL
     /// 业务处理：  
     /// </summary>
     public partial class T_SkuBLL
-    {  
+    {
+        //public DataSet GetSkuInfo() { 
+            
+        //}
     }
 }

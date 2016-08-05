@@ -30,9 +30,15 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipAmount
             complexCondition.Add(new EqualsCondition() { FieldName = "a.VipCardCode", Value = para.VipCardCode });
 
             if (para.Type == 1) //余额
-                complexCondition.Add(new DirectCondition(" a.AmountSourceId in (1,4,10,17,20,21,23) "));
-            else //返现
+            {
+                complexCondition.Add(new DirectCondition(" a.AmountSourceId in (1,4,6,10,17,20,21,23) "));
+            }
+            else if (para.Type == 2) //返现
+            {
                 complexCondition.Add(new DirectCondition(" a.AmountSourceId in (2,3,13,16,22,24)"));
+            }
+           
+
 
             //排序参数
             List<OrderBy> lstOrder = new List<OrderBy> { };
@@ -43,14 +49,14 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipAmount
             rd.TotalPageCount = tempList.PageCount;
             rd.VipAmountDetailList = tempList.Entities.Select(t => new VipAmountDetailInfo()
             {
-                UnitName=t.UnitName,
+                UnitName = t.UnitName,
                 AmountSourceName = t.AmountSourceName,
                 Amount = t.Amount.Value,
                 CreateTime = t.CreateTime.Value.ToString("yyyy-MM-dd HH:mm"),
-                Reason=t.Reason,
-                Remark=t.Remark,
-                ImageUrl=t.ImageUrl,
-                CreateByName=t.CreateByName,
+                Reason = t.Reason == null ? "" : t.Reason,
+                Remark = t.Remark == null ? "" : t.Remark,
+                ImageUrl = t.ImageUrl,
+                CreateByName = t.CreateByName,
             }).ToArray();
 
             //查询当前余额/返现

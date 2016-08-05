@@ -54,6 +54,10 @@
       <HintPath>..\ReferenceDll\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.SqlServer.Types, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferenceDll\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
     <Reference Include="NetDimension.Weibo">
       <HintPath>..\ReferenceDll\NetDimension.Weibo.dll</HintPath>
     </Reference>
@@ -254,6 +258,7 @@
     <Content Include="HtmlApp\Demo\css\style.css" />
     <Content Include="HtmlApp\Demo\html\index.html" />
     <Content Include="HeadImage\qrcodeBack.png" />
+    <Content Include="Images\CouponImage.jpg" />
     <Content Include="Images\mingLong\question2\a1.png" />
     <Content Include="Images\mingLong\question2\a2.png" />
     <Content Include="Images\mingLong\question2\b1.png" />
@@ -560,6 +565,7 @@
     <Content Include="Images\mingLong\question1\topicBanner02.jpg" />
     <Content Include="Images\msg_vip.jpg" />
     <Content Include="Images\qrcode2.jpg" />
+    <Content Include="Images\SetOffPosterImg.jpg" />
     <Content Include="Interface\Data\BaseData.aspx" />
     <Content Include="Interface\Data\CustomerData.aspx" />
     <Content Include="Interface\Data\ItemData.aspx" />
@@ -953,6 +959,46 @@
     <Content Include="OnlineAppFood\vipSureCart.html" />
     <Content Include="OnlineAppFood\vipWaitSend.html" />
     <Content Include="OnlineAppFood\vipxiu.html" />
+    <Content Include="OnlineClothing\0114guagua.html" />
+    <Content Include="OnlineClothing\1214guagua.html" />
+    <Content Include="OnlineClothing\albums.html" />
+    <Content Include="OnlineClothing\boot\css\bootstrap-responsive.min.css" />
+    <Content Include="OnlineClothing\boot\css\bootstrap.min.css" />
+    <Content Include="OnlineClothing\boot\css\style.css" />
+    <Content Include="OnlineClothing\boot\images\baner_02.jpg" />
+    <Content Include="OnlineClothing\boot\images\pic01_09.png" />
+    <Content Include="OnlineClothing\boot\images\waring_icon.png" />
+    <Content Include="OnlineClothing\boot\index.html" />
+    <Content Include="OnlineClothing\ChooseCoupon.html" />
+    <Content Include="OnlineClothing\css\jquery.mobile-1.0.min.css" />
+    <Content Include="OnlineClothing\go.htm" />
+    <Content Include="OnlineClothing\guaguaOrder.html" />
+    <Content Include="OnlineClothing\guaguaOrderLj1.html" />
+    <Content Include="OnlineClothing\images\addFav.png" />
+    <Content Include="OnlineClothing\images\bj.png" />
+    <Content Include="OnlineClothing\images\close.png" />
+    <Content Include="OnlineClothing\images\del.png" />
+    <Content Include="OnlineClothing\images\delFav.png" />
+    <Content Include="OnlineClothing\images\fav.png" />
+    <Content Include="OnlineClothing\images\gg.png" />
+    <Content Include="OnlineClothing\images\ggcardmkf.png" />
+    <Content Include="OnlineClothing\images\goumai.png" />
+    <Content Include="OnlineClothing\images\hasfav.png" />
+    <Content Include="OnlineClothing\images\prize_01.jpg" />
+    <Content Include="OnlineClothing\images\prize_02.jpg" />
+    <Content Include="OnlineClothing\images\prize_03.jpg" />
+    <Content Include="OnlineClothing\images\prize_04.jpg" />
+    <Content Include="OnlineClothing\images\s8.png" />
+    <Content Include="OnlineClothing\images\sureAdd.png" />
+    <Content Include="OnlineClothing\js\coupon.js" />
+    <Content Include="OnlineClothing\js\jquery.mobile-1.0.min.js" />
+    <Content Include="OnlineClothing\js\lottery.js" />
+    <Content Include="OnlineClothing\tmpGoUrl.html" />
+    <Content Include="OnlineClothing\tmpUrl.html" />
+    <Content Include="OnlineClothing\vipFav.html" />
+    <Content Include="OnlineClothing\vipNoPayment.html" />
+    <Content Include="OnlineClothing\vipSureCart.html" />
+    <Content Include="OnlineClothing\guaguaOrderLj.html" />
     <Content Include="OnlineFood\forget.html" />
     <Content Include="OnlineFood\forgetpwd.html" />
     <Content Include="OnlineFood\guagua.html" />
@@ -1047,20 +1093,24 @@
     <Content Include="ApplicationInterface\Pay\WeiXinPay\ComplaintNotification.ashx" />
     <Content Include="ApplicationInterface\DemoGateway.ashx" />
     <Content Include="ApplicationInterface\Module\Coupon\CouponHandler.ashx" />
+    <Content Include="ApplicationInterface\Product\Eclub\Module\VipGateway.ashx" />
     <Content Include="ApplicationInterface\Project\HuaAn\HuaAnHandler.ashx" />
     <Content Include="ApplicationInterface\Vip\VipGateway.ashx" />
+    <Content Include="ApplicationInterface\Product\Eclub\Module\CommonGateway.ashx" />
     <Content Include="ApplicationInterface\Customer\CustomerGateway.ashx" />
     <Content Include="ApplicationInterface\Event\EventGateway.ashx" />
     <Content Include="ApplicationInterface\Module\UnitAndItem\Item\Item.ashx" />
     <Content Include="ApplicationInterface\LEventsAlbum\LEventsAlbumGateway.ashx" />
     <Content Include="ApplicationInterface\Project\HuaAn\HuaAnCallbackHandler.ashx" />
     <Content Include="ApplicationInterface\Order\OrderGateway.ashx" />
+    <Content Include="ApplicationInterface\Product\Eclub\Module\MobileBusinessDefinedGateway.ashx" />
     <Content Include="ApplicationInterface\Project\PG\PGHandler.ashx" />
     <Content Include="ApplicationInterface\Project\Gree\GreeHandler.ashx" />
     <Content Include="ApplicationInterface\Pay\WeiXinPay\WxPayNotify.ashx" />
     <Content Include="ApplicationInterface\Pay\WeiXinPay\Warning.ashx" />
     <Content Include="ApplicationInterface\Stores\StoresGateway.ashx" />
     <Content Include="ApplicationInterface\Hotle\HotleGateway.ashx" />
+    <Content Include="ApplicationInterface\Product\Eclub\Module\MicroIssueHandler.ashx" />
     <Content Include="ApplicationInterface\Product\MobileLibrary\MobileLibraryHandler.ashx" />
     <Content Include="ApplicationInterface\Product\MobileSurveyTest\MobileSurveyTestHandler.ashx" />
     <Content Include="ApplicationInterface\AppVersion\AppVersionGateway.ashx" />
@@ -1164,12 +1214,12 @@
     <Content Include="wap\welfare\cusrseOnline2013.html" />
     <Content Include="wap\welfare\example\2014.jpg" />
     <Content Include="wap\welfare\example\CMO.jpg" />
+    <Content Include="OnlineClothing\1.html" />
     <Content Include="wap\zjmd\images\win_title_bg.png" />
     <Content Include="wap\zjmd\js\jquery.js" />
     <Content Include="wap\zjmd\zjmd.html" />
     <Content Include="Service References\SaturnService\platformsystem.wsdl" />
     <None Include="Web References\SendSMSService\ReceiveService.disco" />
-    <Content Include="WeiXin\ResultNotifyPage.aspx" />
     <Content Include="WeiXin\TextImageWapMobile.aspx" />
     <Content Include="WEvent\albums.html" />
     <Content Include="WifiInterface\data\Data.aspx" />
@@ -1177,6 +1227,7 @@
     <Content Include="WXOAuth\AuthGoHtml.aspx" />
     <Content Include="WXOAuth\AuthUniversal.aspx" />
     <Content Include="WXOAuth\NoAuthGoto.aspx" />
+    <Content Include="WXOAuth\PadOAuth.aspx" />
     <Content Include="OnlineAppClothing\about.html" />
     <Content Include="OnlineAppClothing\case.html" />
     <Content Include="OnlineAppClothing\css\V1.css" />
@@ -1287,6 +1338,122 @@
     <Content Include="OnlineAppClothing\vipSureCart.html" />
     <Content Include="OnlineAppClothing\vipWaitSend.html" />
     <Content Include="OnlineAppClothing\vipxiu.html" />
+    <Content Include="OnlineClothing\1109guagua.html" />
+    <Content Include="OnlineClothing\about.html" />
+    <Content Include="OnlineClothing\case.html" />
+    <Content Include="OnlineClothing\css\V1.css" />
+    <Content Include="OnlineClothing\detail.html" />
+    <Content Include="OnlineClothing\event.html" />
+    <Content Include="OnlineClothing\exam\about.jpg" />
+    <Content Include="OnlineClothing\exam\case.jpg" />
+    <Content Include="OnlineClothing\exam\event.jpg" />
+    <Content Include="OnlineClothing\exam\shoplist.jpg" />
+    <Content Include="OnlineClothing\forget.html" />
+    <Content Include="OnlineClothing\forgetpwd.html" />
+    <Content Include="OnlineClothing\googlemap.html" />
+    <Content Include="OnlineClothing\guagua - 副本.html" />
+    <Content Include="OnlineClothing\guagua.html" />
+    <Content Include="OnlineClothing\guagua2.html" />
+    <Content Include="OnlineClothing\images\382.gif" />
+    <Content Include="OnlineClothing\images\apd.jpg" />
+    <Content Include="OnlineClothing\images\back.png" />
+    <Content Include="OnlineClothing\images\bg.gif" />
+    <Content Include="OnlineClothing\images\cartboxbg.png" />
+    <Content Include="OnlineClothing\images\cartboxbgdown.png" />
+    <Content Include="OnlineClothing\images\CentertextLine.png" />
+    <Content Include="OnlineClothing\images\default.png" />
+    <Content Include="OnlineClothing\images\detail.png" />
+    <Content Include="OnlineClothing\images\die.png" />
+    <Content Include="OnlineClothing\images\downloadapp.png" />
+    <Content Include="OnlineClothing\images\duIcn.png" />
+    <Content Include="OnlineClothing\images\eventjtup.png" />
+    <Content Include="OnlineClothing\images\fenx.png" />
+    <Content Include="OnlineClothing\images\followtips.png" />
+    <Content Include="OnlineClothing\images\forget.jpg" />
+    <Content Include="OnlineClothing\images\ggcard.png" />
+    <Content Include="OnlineClothing\images\gjx.png" />
+    <Content Include="OnlineClothing\images\gouwuche.png" />
+    <Content Include="OnlineClothing\images\gr.png" />
+    <Content Include="OnlineClothing\images\icnSet.png" />
+    <Content Include="OnlineClothing\images\icnskin1.png" />
+    <Content Include="OnlineClothing\images\icon.png" />
+    <Content Include="OnlineClothing\images\imageshua.jpg" />
+    <Content Include="OnlineClothing\images\indexbg.jpg" />
+    <Content Include="OnlineClothing\images\indexicn1.png" />
+    <Content Include="OnlineClothing\images\indexicn2.png" />
+    <Content Include="OnlineClothing\images\indexicn3.png" />
+    <Content Include="OnlineClothing\images\indexicn4.png" />
+    <Content Include="OnlineClothing\images\indexicn5.png" />
+    <Content Include="OnlineClothing\images\indexicn6.png" />
+    <Content Include="OnlineClothing\images\js.jpg" />
+    <Content Include="OnlineClothing\images\loginbg.jpg" />
+    <Content Include="OnlineClothing\images\me.png" />
+    <Content Include="OnlineClothing\images\nt1.png" />
+    <Content Include="OnlineClothing\images\nt2.png" />
+    <Content Include="OnlineClothing\images\nt3.png" />
+    <Content Include="OnlineClothing\images\nt4.png" />
+    <Content Include="OnlineClothing\images\nt5.png" />
+    <Content Include="OnlineClothing\images\nt7.png" />
+    <Content Include="OnlineClothing\images\orderbg.gif" />
+    <Content Include="OnlineClothing\images\pngtuj.png" />
+    <Content Include="OnlineClothing\images\right1.png" />
+    <Content Include="OnlineClothing\images\right2.png" />
+    <Content Include="OnlineClothing\images\s1.png" />
+    <Content Include="OnlineClothing\images\s2.png" />
+    <Content Include="OnlineClothing\images\s3.png" />
+    <Content Include="OnlineClothing\images\s4.png" />
+    <Content Include="OnlineClothing\images\s5.png" />
+    <Content Include="OnlineClothing\images\s6.png" />
+    <Content Include="OnlineClothing\images\s7.png" />
+    <Content Include="OnlineClothing\images\sicon.png" />
+    <Content Include="OnlineClothing\images\tran1.png" />
+    <Content Include="OnlineClothing\images\vip.png" />
+    <Content Include="OnlineClothing\images\vipbg.png" />
+    <Content Include="OnlineClothing\images\vipcenterjjs.png" />
+    <Content Include="OnlineClothing\images\vipSkin.png" />
+    <Content Include="OnlineClothing\images\xx1.jpg" />
+    <Content Include="OnlineClothing\images\xx2.jpg" />
+    <Content Include="OnlineClothing\images\xx3.jpg" />
+    <Content Include="OnlineClothing\images\zan.png" />
+    <Content Include="OnlineClothing\images\zangray.png" />
+    <Content Include="OnlineClothing\index.html" />
+    <Content Include="OnlineClothing\js\base.js" />
+    <Content Include="OnlineClothing\js\CommonBase.js" />
+    <Content Include="OnlineClothing\js\CommonV1.js" />
+    <Content Include="OnlineClothing\js\cvas-min.js" />
+    <Content Include="OnlineClothing\js\cvas.js" />
+    <Content Include="OnlineClothing\js\data.js" />
+    <Content Include="OnlineClothing\js\example.html" />
+    <Content Include="OnlineClothing\js\iscroll.js" />
+    <Content Include="OnlineClothing\js\jquery1.6.js" />
+    <Content Include="OnlineClothing\js\lib\app.js" />
+    <Content Include="OnlineClothing\js\msie.js" />
+    <Content Include="OnlineClothing\js\require.js" />
+    <Content Include="OnlineClothing\js\ShopVipCommon.js" />
+    <Content Include="OnlineClothing\js\smart.js" />
+    <Content Include="OnlineClothing\js\version.js" />
+    <Content Include="OnlineClothing\list.html" />
+    <Content Include="OnlineClothing\login.html" />
+    <Content Include="OnlineClothing\myShow.html" />
+    <Content Include="OnlineClothing\newsDetail.html" />
+    <Content Include="OnlineClothing\newslist.html" />
+    <Content Include="OnlineClothing\orderDetail.html" />
+    <Content Include="OnlineClothing\share.html" />
+    <Content Include="OnlineClothing\shoplist.html" />
+    <Content Include="OnlineClothing\submitOrder.html" />
+    <Content Include="OnlineClothing\sureOrder.html" />
+    <Content Include="OnlineClothing\vipCart.html" />
+    <Content Include="OnlineClothing\vipCenter.html" />
+    <Content Include="OnlineClothing\vipComplete.html" />
+    <Content Include="OnlineClothing\vipHasPayment.html" />
+    <Content Include="OnlineClothing\vipHistory.html" />
+    <Content Include="OnlineClothing\vipIntegral.html" />
+    <Content Include="OnlineClothing\vipIntegralDetail.html" />
+    <Content Include="OnlineClothing\vipNoPayment_bak.html" />
+    <Content Include="OnlineClothing\vipShowdetail.html" />
+    <Content Include="OnlineClothing\vipSureCart_bak201312.html" />
+    <Content Include="OnlineClothing\vipWaitSend.html" />
+    <Content Include="OnlineClothing\vipxiu.html" />
     <Content Include="OnlineFood\about.html" />
     <Content Include="OnlineFood\case.html" />
     <Content Include="OnlineFood\css\V1.css" />
@@ -1906,6 +2073,7 @@
     <Content Include="WXiaoQu\index.html" />
     <Content Include="WXiaoQu\saq.html" />
     <Content Include="WXiaoQu\tj.html" />
+    <Content Include="WXOAuth\AuthUniversalV2.aspx" />
     <Content Include="WX\ReceiveMsg.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -2081,10 +2249,12 @@
     <Compile Include="ApplicationInterface\Module\Order\Delivery\GetPickingQuantumAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\Delivery\GetVipAddressInfoAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\Logistics\GetLogisticsCompanyAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Order\Order\ConsumptionUpgradeAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Order\Order\OrderRewardAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Order\Order\ScanWxPayAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\SalesReturn\GetSalesReturnDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\SalesReturn\GetSalesReturnListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\SalesReturn\SetSalesReturnAH.cs" />
-    <Compile Include="ApplicationInterface\Module\PA\Order\SaveOrderAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\ShoppingCart\RemoveShoppingCartAH.cs" />
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionnaireAH.cs" />
@@ -2168,13 +2338,25 @@
     <Compile Include="ApplicationInterface\Module\VIP\Reward\GetConfigAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\Reward\GetTopRewardListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\Reward\SetRewardOrderAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipAmount\GetBonusAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipAmount\GetVipAmountDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipCard\GetVipCardAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGolden\GetReceiveAmountOrderAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGolden\GetReceiveAmountOrderListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGolden\GetRechargeActivityListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipGolden\GetSetoffIncentiveInfoAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipGolden\GetSetOffIsPushAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipGolden\GetSetoffToolDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipGolden\GetSetoffToolListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGolden\GetVipCardTypeAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGolden\GetVipCardTypeVirtualItemAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGolden\SetReceiveAmountOrderAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGolden\SetRechargeOrderAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGolden\GetSysVipCardTypeByLevelAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGolden\GetVipIntegralInfoListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipGolden\SetSharePersonLogAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipGolden\UpdateVipCardTypeAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipIntegral\GetVipIntegralListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipListNum\GetVipListNumAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipList\GetVipListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\WifiSign\WifiSignAH.cs" />
@@ -2191,6 +2373,7 @@
     <Compile Include="ApplicationInterface\Module\WX\MaterialText\GetMaterialTextDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\MaterialText\GetMaterialTextListAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\MaterialText\GetMaterialTextTypeListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WX\ShortUrl\GetShortUrlAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\SysPage\CreateCustomerConfigAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\SysPage\GetCustomerModuleMappingAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\SysPage\GetSysPageDetailAH.cs" />
@@ -2216,6 +2399,18 @@
     </Compile>
     <Compile Include="ApplicationInterface\Pay\WeiXinPay\WxPayNotify.ashx.cs">
       <DependentUpon>WxPayNotify.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationInterface\Product\Eclub\Module\CommonGateway.ashx.cs">
+      <DependentUpon>CommonGateway.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationInterface\Product\Eclub\Module\MicroIssueHandler.ashx.cs">
+      <DependentUpon>MicroIssueHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationInterface\Product\Eclub\Module\MobileBusinessDefinedGateway.ashx.cs">
+      <DependentUpon>MobileBusinessDefinedGateway.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationInterface\Product\Eclub\Module\VipGateway.ashx.cs">
+      <DependentUpon>VipGateway.ashx</DependentUpon>
     </Compile>
     <Compile Include="ApplicationInterface\Base\RequestHandlerManager.cs" />
     <Compile Include="ApplicationInterface\Base\RequestHandlerBase.cs" />
@@ -2726,13 +2921,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
-    <Compile Include="WeiXin\ResultNotifyPage.aspx.cs">
-      <DependentUpon>ResultNotifyPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WeiXin\ResultNotifyPage.aspx.designer.cs">
-      <DependentUpon>ResultNotifyPage.aspx</DependentUpon>
-    </Compile>
     <Compile Include="WeiXin\TextImageWapMobile.aspx.cs">
       <DependentUpon>TextImageWapMobile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2774,6 +2962,13 @@
     </Compile>
     <Compile Include="WXOAuth\NoAuthGoto.aspx.designer.cs">
       <DependentUpon>NoAuthGoto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WXOAuth\PadOAuth.aspx.cs">
+      <DependentUpon>PadOAuth.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WXOAuth\PadOAuth.aspx.designer.cs">
+      <DependentUpon>PadOAuth.aspx</DependentUpon>
     </Compile>
     <Compile Include="OnlineShopping\data\Data.aspx.cs">
       <DependentUpon>Data.aspx</DependentUpon>
@@ -2954,6 +3149,13 @@
     <Compile Include="WeiXin\TextImageWap.aspx.designer.cs">
       <DependentUpon>TextImageWap.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WXOAuth\AuthUniversalV2.aspx.cs">
+      <DependentUpon>AuthUniversalV2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WXOAuth\AuthUniversalV2.aspx.designer.cs">
+      <DependentUpon>AuthUniversalV2.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WX\ReceiveMsg.aspx.cs">
       <DependentUpon>ReceiveMsg.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2971,11 +3173,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CPOS.BS.BLL\CPOS.BS.BLL.csproj">
-      <Project>{9ADF4825-9B7C-4BB1-A05C-9C137B33D81B}</Project>
+      <Project>{9adf4825-9b7c-4bb1-a05c-9c137b33d81b}</Project>
       <Name>CPOS.BS.BLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.DataAccess\CPOS.BS.DataAccess.csproj">
-      <Project>{928C0A63-F799-49B5-A566-65BE4ABC9F56}</Project>
+      <Project>{928c0a63-f799-49b5-a566-65be4abc9f56}</Project>
       <Name>CPOS.BS.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.Entity\CPOS.BS.Entity.csproj">
@@ -3004,6 +3206,7 @@
     <Folder Include="Css\" />
     <Folder Include="EMBA\" />
     <Folder Include="Lj\qrcode_images\" />
+    <Folder Include="OnlineClothing\boot\js\" />
     <Folder Include="QRCodeImage\" />
   </ItemGroup>
   <ItemGroup>
@@ -3072,7 +3275,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1950</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1953/</IISUrl>
+          <IISUrl>http://localhost:1953</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

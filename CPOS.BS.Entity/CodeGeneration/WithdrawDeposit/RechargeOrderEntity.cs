@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015-8-19 17:43:07
+ * Create On	:2016/6/27 14:14:28
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -136,6 +136,31 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public Int32? IsDelete { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String UnitId { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String UserId { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? AmountFromPayPoints { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public DateTime? PayDateTime { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? VipCardTypeId { get; set; }
 
 
         #endregion

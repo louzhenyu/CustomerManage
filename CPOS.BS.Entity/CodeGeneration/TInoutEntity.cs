@@ -410,12 +410,5 @@ namespace JIT.CPOS.BS.Entity
 
         #endregion
 
-        //配送日期
-        public string reserveDay { get; set; }
-        //配送时间段
-        public string reserveQuantum { get; set; }
-        //配送时间段标识
-        public string reserveQuantumID { get; set; }
-
     }
 }

@@ -92,7 +92,7 @@
                     <div style="padding-left:10px;margin-bottom:10px;position:relative;">
                           <span>下载数量:</span>
                           <input placeholder="请输入不超过xxx的数量"  type="text" style="margin-left:15px; width:200px" id="num" />
-                           <span style="color:red;visibility:hidden;  position: absolute;width: 120px;line-height: 27px;padding-left: 5px;" id="checknum">请输入1-1000数字</span>
+                          <span style="color:red;visibility:hidden;  position: absolute;width: 120px;line-height: 27px;padding-left: 5px;" id="checknum">请输入1-1000数字</span>
                     </div>
                     <div style="margin:50px 0px 10px 5px;">下载说明</div>
                     <div style="margin-bottom:10px; color:#999999"><span>1.每次下载不超过1000张；</span></div>

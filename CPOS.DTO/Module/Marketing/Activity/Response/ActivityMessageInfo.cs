@@ -16,10 +16,6 @@ namespace JIT.CPOS.DTO.Module.Marketing.Response
         /// </summary>
         public string MessageType { get; set; }
         /// <summary>
-        /// 模板ID
-        /// </summary>
-        public string TemplateID { get; set; }
-        /// <summary>
         /// 内容
         /// </summary>
         public string Content { get; set; }
@@ -30,6 +26,14 @@ namespace JIT.CPOS.DTO.Module.Marketing.Response
         /// <summary>
         /// 是否启用
         /// </summary>
-        public bool? IsEnable { get; set; }
+        public int IsEnable { get; set; }
+        /// <summary>
+        /// 提前发送天数
+        /// </summary>
+        public int? AdvanceDays { get; set; }
+        /// <summary>
+        /// 发送小时点
+        /// </summary>
+        public int? SendAtHour { get; set; }
     }
 }

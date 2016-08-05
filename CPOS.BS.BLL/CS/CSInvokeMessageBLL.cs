@@ -87,7 +87,7 @@ namespace JIT.CPOS.BS.BLL
                     PersonID = VipIDInit,
                     IsCS = 0//查询非客服的信息
                 }, new[] { new OrderBy { FieldName = "CreateTime", Direction = OrderByDirections.Desc } }, 1, 1);//1，1代表只取第一条，按照创建时间倒叙排列
-                if (conversationsInit!=null && conversationsInit.Entities!=null &&  conversationsInit.Entities.Length > 0)
+                if (conversationsInit != null && conversationsInit.Entities != null && conversationsInit.Entities.Length > 0)
                 {
                     TimeSpan ts = DateTime.Now - conversationsInit.Entities[0].CreateTime.Value;
                     //if (ts.Days == 0 && ts.Hours == 0 && ts.Minutes < 60)//根据时间间隔获取时分秒
@@ -99,7 +99,7 @@ namespace JIT.CPOS.BS.BLL
                 CSMessageEntity messageEntityInit = null;
                 if (!string.IsNullOrEmpty(messageId))
                 {
-                   messageEntityInit= messageBll.GetByID(messageId);//获取关联的message主信息标识
+                    messageEntityInit = messageBll.GetByID(messageId);//获取关联的message主信息标识
                 }
                 if (messageEntityInit == null)
                 {
@@ -118,7 +118,8 @@ namespace JIT.CPOS.BS.BLL
                     messageEntityInit.CreateTime = DateTime.Now;
                     messageBll.Create(messageEntityInit);
                 }
-                else {
+                else
+                {
                     if (isCS == 1 && !string.IsNullOrEmpty(messageEntityInit.CurrentCSID) && messageEntityInit.ConnectionTime != null && messageEntityInit.CurrentCSID.ToLower() != userId.ToLower())//换成userid
                     {
                         TimeSpan ts = DateTime.Now - messageEntityInit.ConnectionTime.Value;//取的是messageEntity的连接时间
@@ -217,9 +218,9 @@ namespace JIT.CPOS.BS.BLL
                 //移除队列
                 CSQueueBLL queueBll = new CSQueueBLL(loggingSessionInfo);//把已经有人回复的消息从队伍里移除（虚拟删除）
                 CSQueueEntity[] queueEntities = queueBll.QueryByEntity(new CSQueueEntity
-                    {
-                        CSMessageID = messageEntity.CSMessageID
-                    }, null);
+                {
+                    CSMessageID = messageEntity.CSMessageID
+                }, null);
                 foreach (var csQueueEntity in queueEntities)
                 {
                     queueBll.Delete(csQueueEntity);
@@ -305,9 +306,9 @@ namespace JIT.CPOS.BS.BLL
                         {
                             PushNotificationMessage(userInfo.User_Id, csPipelineID,
                                                     new CSConversationEntity
-                                                        {
-                                                            Content = "该客户【" + currentUserName + "】已经由【" + currentCSName + "】提供客户服务"
-                                                        });
+                                                    {
+                                                        Content = "该客户【" + currentUserName + "】已经由【" + currentCSName + "】提供客户服务"
+                                                    });
                         }
                     }
                 }
@@ -371,7 +372,7 @@ namespace JIT.CPOS.BS.BLL
             var person = new VipBLL(loggingSessionInfo).GetByID(userId);//取会员的信息，如果是员工发的，就取到是空
             var user = new cUserService(loggingSessionInfo).GetUserById(loggingSessionInfo, userId);//如果是会员这里获取到的就是空
             //开始推送之前  更新次员工的已读信息 商品的除外
-            if(!string.IsNullOrEmpty(objectType)&& objectType.ToLower()!="product")
+            if (!string.IsNullOrEmpty(objectType) && objectType.ToLower() != "product")
             {
                 var setoffToolUserViewBLL = new SetoffToolUserViewBLL(loggingSessionInfo);
                 var setOffToolInfo = new SetoffToolsBLL(loggingSessionInfo).QueryByEntity(new SetoffToolsEntity() { SetoffToolID = new Guid(objectId) }, null).FirstOrDefault();
@@ -381,12 +382,12 @@ namespace JIT.CPOS.BS.BLL
                     UserViewData = setoffToolUserViewBLL.QueryByEntity(new SetoffToolUserViewEntity() { ObjectId = objectId, UserID = userId, SetoffToolID = new Guid(objectId) }, null);
                 }
                 //如果不存在已读数据则在推送之前 进行已读数据入库
-                if (UserViewData.Length == 0 && !string.IsNullOrEmpty(objectId) && setOffToolInfo!=null)
+                if (UserViewData.Length == 0 && !string.IsNullOrEmpty(objectId) && setOffToolInfo != null)
                 {
                     var SetoffToolUserView = new SetoffToolUserViewEntity();
                     SetoffToolUserView.SetoffToolUserViewID = Guid.NewGuid();
                     SetoffToolUserView.SetoffEventID = setOffToolInfo.SetoffEventID;
-                    SetoffToolUserView.ObjectId = setOffToolInfo.ObjectId;                    
+                    SetoffToolUserView.ObjectId = setOffToolInfo.ObjectId;
                     SetoffToolUserView.SetoffToolID = new Guid(objectId);
                     SetoffToolUserView.ToolType = objectType;
                     SetoffToolUserView.NoticePlatformType = 2;
@@ -407,7 +408,7 @@ namespace JIT.CPOS.BS.BLL
                     objectId = setOffToolInfo.ObjectId;
                 }
             }
-            
+
             CSConversationBLL conversationBll = new CSConversationBLL(loggingSessionInfo);
             CSMessageBLL messageBll = new CSMessageBLL(loggingSessionInfo);
             //员工主动发起聊天，在isCS=1的情况下，新加一个字段VipID，用于查找           
@@ -416,7 +417,7 @@ namespace JIT.CPOS.BS.BLL
             //2、（1）有csMessage，&connationtime没超过1小时并且&currentcsid等于传过来的userid，（2）*** 有csMessage， 超过1小时直接就用这个csMessage的id作为csmessageid继续下面的会话。
             //3 、没有csMessage，都需要创建新的csmessage（需要根据vipid去查会员信息，作为csMessage的memberid等信息），保存到数据库，把这个csmesage的csmessageid作为标识继续下面的操作。
 
-            if ((isCS == 1||isCS==3) && !string.IsNullOrEmpty(VipIDInit))//员工主动发起聊天
+            if ((isCS == 1 || isCS == 3) && !string.IsNullOrEmpty(VipIDInit))//员工主动发起聊天
             {
                 messageId = "";//设为空
                 var conversationsInit = conversationBll.PagedQueryByEntity(new CSConversationEntity//从会话里查，而不是从message表里查，这主要从客户作为主动权查看来作为会话的主导者
@@ -440,7 +441,7 @@ namespace JIT.CPOS.BS.BLL
                 }
                 var personInit = new VipBLL(loggingSessionInfo).GetByID(VipIDInit);//取会员的信息，如果是员工发的，就取到是空
                 if (messageEntityInit == null)
-                {                  
+                {
 
                     messageId = Guid.NewGuid().ToString();//新建的guid,以便传递给下面
                     messageEntityInit = new CSMessageEntity();
@@ -457,7 +458,7 @@ namespace JIT.CPOS.BS.BLL
                 }
                 else
                 {
-                    if ((isCS == 1||isCS==3) && !string.IsNullOrEmpty(messageEntityInit.CurrentCSID) && messageEntityInit.ConnectionTime != null && messageEntityInit.CurrentCSID.ToLower() != userId.ToLower())//换成userid
+                    if ((isCS == 1 || isCS == 3) && !string.IsNullOrEmpty(messageEntityInit.CurrentCSID) && messageEntityInit.ConnectionTime != null && messageEntityInit.CurrentCSID.ToLower() != userId.ToLower())//换成userid
                     {
                         TimeSpan ts = DateTime.Now - messageEntityInit.ConnectionTime.Value;//取的是messageEntity的连接时间
                         if (ts.Days == 0 && ts.Hours == 0 && ts.Minutes < 60)
@@ -498,7 +499,7 @@ namespace JIT.CPOS.BS.BLL
             conversationEntity.CreateTime = DateTime.Now;
             conversationEntity.IsDelete = 0;
             SendMessageEntity sendMessageEntity = new SendMessageEntity();//初始化微信内容发送实体
-            if (contentTypeId!=null)
+            if (contentTypeId != null)
             {
                 switch (contentTypeId)
                 {
@@ -508,85 +509,85 @@ namespace JIT.CPOS.BS.BLL
                     case 2:
                         sendMessageEntity.msgtype = "image";
                         //如果是图片，首先要生成临时二维码
-                         #region 获取微信帐号
-                            var imageUrl = string.Empty;
-                            var backImageUrl = string.Empty;//定义一张背景图片
-                            Random ro = new Random();
-                            var iUp = 100000000;
-                            var iDown = 50000000;
-                            var rpVipDCode = 0;                 //临时二维码
-                            var iResult = ro.Next(iDown, iUp);  //随机数
-                            var commonServer = new CommonBLL();
-                            var server = new WApplicationInterfaceBLL(loggingSessionInfo);
-                            var imgBll = new ObjectImagesBLL(loggingSessionInfo);
-                            var setOffPosterBLL = new SetoffPosterBLL(loggingSessionInfo);
-                            var SetOffPosterInfo = setOffPosterBLL.QueryByEntity(new SetoffPosterEntity() { SetoffPosterID = new Guid(objectId) }, null);
-                            if (SetOffPosterInfo != null)
+                        #region 获取微信帐号
+                        var imageUrl = string.Empty;
+                        var backImageUrl = string.Empty;//定义一张背景图片
+                        Random ro = new Random();
+                        var iUp = 100000000;
+                        var iDown = 50000000;
+                        var rpVipDCode = 0;                 //临时二维码
+                        var iResult = ro.Next(iDown, iUp);  //随机数
+                        var commonServer = new CommonBLL();
+                        var server = new WApplicationInterfaceBLL(loggingSessionInfo);
+                        var imgBll = new ObjectImagesBLL(loggingSessionInfo);
+                        var setOffPosterBLL = new SetoffPosterBLL(loggingSessionInfo);
+                        var SetOffPosterInfo = setOffPosterBLL.QueryByEntity(new SetoffPosterEntity() { SetoffPosterID = new Guid(objectId) }, null);
+                        if (SetOffPosterInfo != null)
+                        {
+                            //如果不为空就获取海报的图片信息
+                            var backImgInfo = imgBll.QueryByEntity(new ObjectImagesEntity() { ObjectId = SetOffPosterInfo[0].ImageId }, null);
+                            backImageUrl = backImgInfo[0].ImageURL;
+                        }
+                        var wxObj = new WApplicationInterfaceEntity();
+                        wxObj = server.QueryByEntity(new WApplicationInterfaceEntity { CustomerId = loggingSessionInfo.CurrentUser.customer_id }, null).FirstOrDefault();
+                        if (wxObj == null)
+                        {
+                            throw new Exception("不存在对应的微信帐号");
+                        }
+                        else
+                        {
+                            imageUrl = commonServer.GetQrcodeUrl(wxObj.AppID
+                                , wxObj.AppSecret
+                                , rpVipDCode.ToString("")//二维码类型  0： 临时二维码  1：永久二维码
+                                , iResult, loggingSessionInfo);//iResult作为场景值ID，临时二维码时为32位整型，永久二维码时只支持1--100000     
+                            //供本地测试时使用  "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQGN7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL1dreENCS1htX0xxQk94SEJ6MktIAAIEUk88VwMECAcAAA==";
+
+                            if (imageUrl != null && !imageUrl.Equals(""))
                             {
-                                //如果不为空就获取海报的图片信息
-                                var backImgInfo = imgBll.QueryByEntity(new ObjectImagesEntity() { ObjectId = SetOffPosterInfo[0].ImageId }, null);
-                                backImageUrl = backImgInfo[0].ImageURL;
+                                CPOS.Common.DownloadImage downloadServer = new DownloadImage();
+                                string downloadImageUrl = ConfigurationManager.AppSettings["website_WWW"];
+                                imageUrl = downloadServer.DownloadFile(imageUrl, downloadImageUrl);
+                                //把临时二维码图片放在一定的背景图下面                                   
+                                //string apiDomain = ConfigurationManager.AppSettings["website_url"];
+                                //CombinImage(backImageUrl, imageUrl, RP.Parameters.RetailTraderName + "合作二维码");
+                                imageUrl = CombinImage(backImageUrl, imageUrl, "");
                             }
-                            var wxObj = new WApplicationInterfaceEntity();
-                            wxObj = server.QueryByEntity(new WApplicationInterfaceEntity { CustomerId = loggingSessionInfo.CurrentUser.customer_id }, null).FirstOrDefault();
-                            if (wxObj == null)
+                            //生成二维码图片后需要存入VipDcode里面
+                            #region 创建临时匹配表
+                            VipDCodeBLL vipDCodeServer = new VipDCodeBLL(loggingSessionInfo);
+                            VipDCodeEntity info = new VipDCodeEntity();
+                            info.DCodeId = iResult.ToString();//记录传过去的二维码场景值****（保存到数据库时没加空格）
+                            info.CustomerId = loggingSessionInfo.CurrentUser.customer_id;
+                            VipBLL vipBll = new VipBLL(loggingSessionInfo);
+                            info.UnitId = "";
+                            info.Status = "0";
+                            info.IsReturn = 0;
+                            info.DCodeType = 6;//因为是海报临时二维码  DCodeType=6
+                            info.CreateBy = loggingSessionInfo.UserID;
+                            info.ImageUrl = imageUrl;
+                            info.VipId = "";
+                            info.ObjectId = objectId;//工具对象ID（优惠券或集客海报对象ID）
+                            info.OwnerUserId = loggingSessionInfo.UserID;//当前发送人ID
+                            vipDCodeServer.Create(info);
+                            #endregion
+                            //增加VipDcode记录之后，再返回MediaId参数
+                            //首先要获取口令
+                            var accessToken = commonServer.GetAccessTokenByCache(wxObj.AppID, wxObj.AppSecret, loggingSessionInfo);
+                            MediaType mediaType = MediaType.Image;
+                            if (accessToken != null)
                             {
-                                throw new Exception("不存在对应的微信帐号");
+                                var UploadMediaInfo = commonServer.UploadMediaFile(accessToken.access_token, imageUrl, mediaType);
+                                if (UploadMediaInfo != null)
+                                {
+                                    sendMessageEntity.media_id = UploadMediaInfo.media_id;
+                                }
                             }
                             else
-                            {                                
-                                imageUrl =commonServer.GetQrcodeUrl(wxObj.AppID
-                                    , wxObj.AppSecret
-                                    , rpVipDCode.ToString("")//二维码类型  0： 临时二维码  1：永久二维码
-                                    , iResult, loggingSessionInfo);//iResult作为场景值ID，临时二维码时为32位整型，永久二维码时只支持1--100000     
-                                //供本地测试时使用  "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQGN7zoAAAAAAAAAASxodHRwOi8vd2VpeGluLnFxLmNvbS9xL1dreENCS1htX0xxQk94SEJ6MktIAAIEUk88VwMECAcAAA==";
-
-                                if (imageUrl != null && !imageUrl.Equals(""))
-                                {
-                                    CPOS.Common.DownloadImage downloadServer = new DownloadImage();
-                                    string downloadImageUrl = ConfigurationManager.AppSettings["website_WWW"];
-                                    imageUrl = downloadServer.DownloadFile(imageUrl, downloadImageUrl);
-                                    //把临时二维码图片放在一定的背景图下面                                   
-                                    //string apiDomain = ConfigurationManager.AppSettings["website_url"];
-                                    //CombinImage(backImageUrl, imageUrl, RP.Parameters.RetailTraderName + "合作二维码");
-                                    imageUrl = CombinImage(backImageUrl, imageUrl, "");   
-                                }
-                                //生成二维码图片后需要存入VipDcode里面
-                                #region 创建临时匹配表
-                                VipDCodeBLL vipDCodeServer = new VipDCodeBLL(loggingSessionInfo);
-                                VipDCodeEntity info = new VipDCodeEntity();
-                                info.DCodeId = iResult.ToString();//记录传过去的二维码场景值****（保存到数据库时没加空格）
-                                info.CustomerId = loggingSessionInfo.CurrentUser.customer_id;
-                                VipBLL vipBll = new VipBLL(loggingSessionInfo);
-                                info.UnitId = "";
-                                info.Status = "0";
-                                info.IsReturn = 0;
-                                info.DCodeType = 6;//因为是海报临时二维码  DCodeType=6
-                                info.CreateBy = loggingSessionInfo.UserID;
-                                info.ImageUrl = imageUrl;
-                                info.VipId = "";
-                                info.ObjectId = objectId;//工具对象ID（优惠券或集客海报对象ID）
-                                info.OwnerUserId = loggingSessionInfo.UserID;//当前发送人ID
-                                vipDCodeServer.Create(info);
-                                #endregion
-                                //增加VipDcode记录之后，再返回MediaId参数
-                                //首先要获取口令
-                                var accessToken=commonServer.GetAccessTokenByCache(wxObj.AppID, wxObj.AppSecret, loggingSessionInfo);
-                                MediaType mediaType=MediaType.Image;
-                                if(accessToken!=null)
-                                {
-                                    var UploadMediaInfo = commonServer.UploadMediaFile(accessToken.access_token, imageUrl, mediaType);
-                                    if (UploadMediaInfo!=null)
-                                    {
-                                        sendMessageEntity.media_id = UploadMediaInfo.media_id;
-                                    }
-                                }
-                                else
-                                {
-                                     throw new Exception("获取口令失败");
-                                }
-                                
+                            {
+                                throw new Exception("获取口令失败");
                             }
+
+                        }
                         #endregion
                         break;
                     case 3:
@@ -597,7 +598,7 @@ namespace JIT.CPOS.BS.BLL
                         break;
                     case 5:
                         sendMessageEntity.msgtype = "news";
-                        NewsEntity newsItem=new NewsEntity();
+                        NewsEntity newsItem = new NewsEntity();
                         newsItem.title = Title;
                         newsItem.description = Description;
                         newsItem.picurl = PicUrl;
@@ -613,20 +614,20 @@ namespace JIT.CPOS.BS.BLL
                                 SourceID = "1";//1表示员工
                                 break;
                         }
-                        string OAuthUrl = strHost + "/WXOAuth/AuthUniversal.aspx?scope=snsapi_userinfo&SourceId="+SourceID+"&customerId=";//微信授权页面
+                        string OAuthUrl = strHost + "/WXOAuth/AuthUniversal.aspx?scope=snsapi_userinfo&SourceId=" + SourceID + "&customerId=";//微信授权页面
                         string goItemUrl = strHost + "/HtmlApps/html/public/shop/goods_detail.html?customerId=";//商品详细页跳转页
                         string goCouponUrl = strHost + "/HtmlApps/html/common/GatheringClient/Coupon.html?customerId=";//优惠券详细页跳转
                         string goPosterUrl = strHost + "/HtmlApps/html/common/GatheringClient/poster.html?customerId=";//海报详细页跳转
                         var t_LEventsSharePersonLogBLL = new T_LEventsSharePersonLogBLL(loggingSessionInfo);
                         var bllSpreadSetting = new T_CTW_SpreadSettingBLL(loggingSessionInfo);//供查找创意仓库活动描述使用
-                        int flag=0;//处理是否需要插入 通用分享记录(T_LEventsSharePersonLog)表中
+                        int flag = 0;//处理是否需要插入 通用分享记录(T_LEventsSharePersonLog)表中
                         var personInfo = new VipBLL(loggingSessionInfo).GetByID(VipIDInit);//取会员的信息，如果是员工发的，就取到是空
                         string giverID = string.Empty;
                         if (personInfo.Status <= 1)
                         {
                             giverID = VipIDInit;//没注册给giverID
                         }
-                        else 
+                        else
                         {
                             giverID = "";//注册了不给giverID
                         }
@@ -643,8 +644,8 @@ namespace JIT.CPOS.BS.BLL
                         }
                         if (objectType != null && objectType.ToLower() == "ctw")
                         {
-                            
-                            string CTWUrl=string.Empty;
+
+                            string CTWUrl = string.Empty;
                             var T_CTW_LEventBLL = new T_CTW_LEventBLL(loggingSessionInfo);
                             var T_CTW_LEventInfo = T_CTW_LEventBLL.QueryByEntity(new T_CTW_LEventEntity() { CustomerId = loggingSessionInfo.CurrentUser.customer_id, CTWEventId = new Guid(objectId) }, null);
                             if (T_CTW_LEventInfo != null)
@@ -673,7 +674,7 @@ namespace JIT.CPOS.BS.BLL
                             newsItem.picurl = strHost + "/Images/CouponImage.jpg";
                             //查找优惠券种相关信息
                             var CouponTypeBLL = new CouponTypeBLL(loggingSessionInfo);
-                            var CouponTypeInfo = CouponTypeBLL.QueryByEntity(new CouponTypeEntity() { CouponTypeID=new Guid(objectId)},null).FirstOrDefault();
+                            var CouponTypeInfo = CouponTypeBLL.QueryByEntity(new CouponTypeEntity() { CouponTypeID = new Guid(objectId) }, null).FirstOrDefault();
                             if (CouponTypeInfo != null)
                             {
                                 newsItem.description = CouponTypeInfo.CouponTypeDesc;//给出券摘要信息
@@ -698,8 +699,8 @@ namespace JIT.CPOS.BS.BLL
                                 flag = 1;//如果flag为1则需执行插入操作；
                             }
                         }
-                        newsItem.url =Url; //System.Web.HttpUtility.UrlDecode(Url, System.Text.Encoding.GetEncoding("GB2312")); ;
-                        List<NewsEntity> listnews=new List<NewsEntity>();
+                        newsItem.url = Url; //System.Web.HttpUtility.UrlDecode(Url, System.Text.Encoding.GetEncoding("GB2312")); ;
+                        List<NewsEntity> listnews = new List<NewsEntity>();
                         listnews.Add(newsItem);
                         sendMessageEntity.articles = listnews;
                         string newmessageContent = string.Empty;
@@ -708,8 +709,8 @@ namespace JIT.CPOS.BS.BLL
                         conversationEntity.Content = newmessageContent + (!string.IsNullOrEmpty(sign) ? "[|" + sign : "") + (!string.IsNullOrEmpty(mobileNo) ? "," + mobileNo : "");
                         if (flag == 1)//若为1则需要插入分享记录
                         {
-                            
-                        #region 处理发送时的分享记录
+
+                            #region 处理发送时的分享记录
                             // var t_LEventsSharePersonLog = new T_LEventsSharePersonLogEntity();
                             //t_LEventsSharePersonLog.SharePersonLogId = Guid.NewGuid();
                             //switch(objectType.ToLower())
@@ -755,15 +756,15 @@ namespace JIT.CPOS.BS.BLL
                             //t_LEventsSharePersonLog.CustomerId = loggingSessionInfo.CurrentUser.customer_id;
                             //t_LEventsSharePersonLog.IsDelete = 0;
                             //t_LEventsSharePersonLogBLL.Create(t_LEventsSharePersonLog);
-                        #endregion
+                            #endregion
                         }
                         break;
-                }              
-               
+                }
+
 
             }
 
-            
+
             //如果是用户客服请求，并且是通过微信发送来的
             //TODO:取出最后回话的MessageID，如果最后回话超过60分钟则认为是新的会话
             if (isCS == 0 && csPipelineId == 1)
@@ -1035,9 +1036,23 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="messageEntity"></param>
         private void AddToMessageQueue(CSMessageEntity messageEntity)
         {
-         //   IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
-            IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByMenuCode("CustomerService");
-            foreach (var userInfo in userInfos)
+            cUserService cuserservice = new cUserService(loggingSessionInfo);
+            T_UserBLL UserService = new T_UserBLL(loggingSessionInfo);
+            VipBLL VipService = new VipBLL(loggingSessionInfo);
+            var vipentity = VipService.GetByID(messageEntity.MemberID);
+            String SetoffUserId = string.Empty;
+            if (vipentity != null)
+            {
+                //对应集客员工
+                if (!String.IsNullOrEmpty(vipentity.SetoffUserId))
+                {
+                    SetoffUserId = vipentity.SetoffUserId;
+                }
+            }
+
+            IList<UserInfo> SetoffUserList = cuserservice.GetUserInfoByMenuCode("CustomerService", SetoffUserId);
+            //SetoffUserList 给员工和店长发送消息
+            foreach (var userInfo in SetoffUserList)
             {
                 var csPipelineIDs = GetCurrentCSPipeline(userInfo.User_Id);
                 foreach (var csPipelineID in csPipelineIDs)
@@ -1046,17 +1061,51 @@ namespace JIT.CPOS.BS.BLL
                 }
             }
 
+            if (SetoffUserList.Count() == 0) //给总部发送客服消息
+            {
+                //待定 给总部有客服权限的员工推送消息
+
+                IList<UserInfo> list = cuserservice.GetUserListByMenuNameAndTypeName("CustomerService");
+
+                foreach (var userInfo in list)
+                {
+                    var csPipelineIDs = GetCurrentCSPipeline(userInfo.User_Id);
+                    foreach (var csPipelineID in csPipelineIDs)
+                    {
+                        PushNotificationMessage(userInfo.User_Id, csPipelineID, new CSConversationEntity { Content = "您有新的客服请求" });
+                    }
+                }
+            }
+
+            if (!String.IsNullOrEmpty(vipentity.CouponInfo))
+            {
+                //给 会籍店 发送客服消息
+                IList<UserInfo> CouponInfoList = cuserservice.GetUserListByMenuCode("CustomerService", vipentity.CouponInfo);
+                //发送消息
+                foreach (var userInfo in CouponInfoList)
+                {
+                    if (userInfo.User_Id != SetoffUserId)  //避免重复发送消息
+                    {
+                        var csPipelineIDs = GetCurrentCSPipeline(userInfo.User_Id);
+                        foreach (var csPipelineID in csPipelineIDs)
+                        {
+                            PushNotificationMessage(userInfo.User_Id, csPipelineID, new CSConversationEntity { Content = "您有新的客服请求" });
+                        }
+                    }
+                }
+            }
+
             CSQueueBLL queueBll = new CSQueueBLL(loggingSessionInfo);
             CSQueueEntity queueEntity = new CSQueueEntity
-                {
-                    ClientID = loggingSessionInfo.ClientID,
-                    CreateBy = messageEntity.CreateBy,
-                    CreateTime = messageEntity.CreateTime,
-                    CSPipelineID = messageEntity.CSPipelineID,
-                    CSServiceTypeID = messageEntity.CSServiceTypeID,
-                    CSMessageID = messageEntity.CSMessageID,
-                    CSQueueID = Guid.NewGuid()
-                };
+            {
+                ClientID = loggingSessionInfo.ClientID,
+                CreateBy = messageEntity.CreateBy,
+                CreateTime = messageEntity.CreateTime,
+                CSPipelineID = messageEntity.CSPipelineID,
+                CSServiceTypeID = messageEntity.CSServiceTypeID,
+                CSMessageID = messageEntity.CSMessageID,
+                CSQueueID = Guid.NewGuid()
+            };
             queueBll.Create(queueEntity);
         }
 
@@ -1367,9 +1416,9 @@ namespace JIT.CPOS.BS.BLL
             //从队列里取得微信发送的客服信息
             CSQueueBLL queueBll = new CSQueueBLL(loggingSessionInfo);
             CSQueueEntity[] queueEntities = queueBll.QueryByEntity(new CSQueueEntity
-                {
-                    CSPipelineID = 1
-                }, new[]
+            {
+                CSPipelineID = 1
+            }, new[]
                         {
                             new OrderBy { FieldName = "CSPipelineID", Direction = OrderByDirections.Asc }
                         });
@@ -1379,9 +1428,9 @@ namespace JIT.CPOS.BS.BLL
 
                 CSMessageEntity messageEntity = messageBll.GetByID(queueEntity.CSMessageID);
                 conversationEntities = conversationBll.QueryByEntity(new CSConversationEntity
-                                                                {
-                                                                    CSMessageID = queueEntity.CSMessageID
-                                                                }, new[]
+                {
+                    CSMessageID = queueEntity.CSMessageID
+                }, new[]
                                                                         {
                                                                             new OrderBy
                                                                                 {

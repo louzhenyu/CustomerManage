@@ -27,7 +27,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.EventPrizes
             string vipName = string.Empty;
             string reCommandId = pRequest.Parameters.RecommandId;
             string eventId = pRequest.Parameters.EventId;
-            string prizeId = pRequest.Parameters.PrizeId;
             float longitude = pRequest.Parameters.Longitude;
             float latitude = pRequest.Parameters.Latitude;
             string customerId = this.CurrentUserInfo.ClientID;
@@ -53,24 +52,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.EventPrizes
             var enableFlag = leventsBll.GetEnableFlagByEventId(eventId);
 
             var vipService = new VipBLL(loggingSessionInfo);
-            var vipEntity = new VipEntity();
             rd.SignFlag = 1;
-            //vipID为空/null通过OpenID来获取会员信息
-            if (string.IsNullOrEmpty(vipID) && !string.IsNullOrEmpty(pRequest.OpenID))
-            {
-                var vipEntitys = vipService.QueryByEntity(new VipEntity { WeiXinUserId = pRequest.OpenID , ClientID = customerId }, null);
-                if (vipEntitys != null && vipEntitys.Length > 0)
-                {
-                    vipEntity = vipEntitys[0];
-                    vipID = vipEntity.VIPID;
-                    vipName = vipEntity.VipName;
-                }
-            }
             //如果需要注册，则判断该会员有没有注册，没有返回
             if (enableFlag.Substring(0, 1) == "1")
             {
                
-                vipEntity = vipService.GetByID(vipID);
+                var vipEntity = vipService.GetByID(vipID);
                 if (vipEntity == null)
                 {
                     rd.SignFlag = 0;
@@ -107,7 +94,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.EventPrizes
                 + ",reCommandId" + reCommandId
             });
             LPrizePoolsBLL poolsServer = new LPrizePoolsBLL(loggingSessionInfo);
-            var ds = poolsServer.GetEventWinningInfo(vipName, vipID, eventId, prizeId, longitude, latitude, customerId, reCommandId, pointsLotteryFlag);
+            var ds = poolsServer.GetEventWinningInfo(vipName, vipID, eventId, longitude, latitude, customerId, reCommandId, pointsLotteryFlag);
 
             int isLottery = Convert.ToInt32(ds.Tables[0].Rows[0]["IsLottery"]);
             int winnerFlag = Convert.ToInt32(ds.Tables[0].Rows[0]["WinnerFlag"]);//是否中奖
@@ -153,7 +140,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.EventPrizes
                 {
                     if (reCommandId != vipID)
                     {
-                        vipEntity = vipService.GetByID(vipID);
+                        var vipEntity = vipService.GetByID(vipID);
                         vipEntity.HigherVipID = reCommandId;
                         vipService.Update(vipEntity);
 

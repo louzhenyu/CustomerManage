@@ -29,8 +29,6 @@ using JIT.CPOS.BS.Entity;
 using JIT.CPOS.DTO.Base;
 using JIT.Utility.Log;
 using System.Data.SqlClient;
-using JIT.CPOS.BS.BLL.WX;
-using JIT.CPOS.DTO.Module.VIP.VIPCardManage.Request;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -120,7 +118,7 @@ namespace JIT.CPOS.BS.BLL
 
         }
 
-        public decimal GetVipValidReturnAmountByID(string vipId ,System.Data.SqlClient.SqlTransaction tran)
+        public decimal GetVipValidReturnAmountByID(string vipId, System.Data.SqlClient.SqlTransaction tran)
         {
             return _currentDAO.GetVipValidReturnAmountByID(vipId, tran);
         }
@@ -135,61 +133,6 @@ namespace JIT.CPOS.BS.BLL
         }
 
         /// <summary>
-        /// 丰收日余额和返现调整
-        /// </summary>
-        /// <param name="para"></param>
-        /// <param name="loggingSessionInfo"></param>
-        /// <returns></returns>
-        public EmptyResponseData VipAmountProcess(SetVipCardRP para, LoggingSessionInfo pLoggingSessionInfo, SqlTransaction pTran, string pImageUrl, VipCardEntity pVipCardEntity = null)
-        {
-            var rd = new EmptyResponseData();
-            var vipAmountBLL = new VipAmountBLL(pLoggingSessionInfo);
-            //var vipAmountDetailBLL = new VipAmountDetailBLL(loggingSessionInfo);
-            //var objectImagesBLL = new ObjectImagesBLL(loggingSessionInfo);       //图片表业务对象实例化
-            var unitBLL = new t_unitBLL(pLoggingSessionInfo);
-
-            var vipBLL = new VipBLL(pLoggingSessionInfo);
-
-            var vipInfo = vipBLL.GetByID(para.VipID);
-            var unitInfo = unitBLL.GetByID(pLoggingSessionInfo.CurrentUserRole.UnitId);
-            //var pTran = vipAmountBLL.GetTran();   //事务  
-
-            var vipAmountEntity = vipAmountBLL.QueryByEntity(new VipAmountEntity() { VipId = vipInfo.VIPID, VipCardCode = vipInfo.VipCode }, null).FirstOrDefault();
-
-            var amountDetail = new VipAmountDetailEntity()
-            {
-                Amount = para.BalanceMoney,
-                AmountSourceId = para.AmountSourceID,
-                ObjectId = "",
-                Reason = para.ChangeReason,
-                Remark = para.Remark
-            };
-            string vipAmountDetailId = string.Empty;
-            if (para.AmountSourceID == "23")
-            {
-                //人工调整余额
-                vipAmountDetailId = vipAmountBLL.AddVipAmount(vipInfo, unitInfo, ref vipAmountEntity, amountDetail, pTran, pLoggingSessionInfo, pVipCardEntity, pImageUrl);
-
-                if (!string.IsNullOrWhiteSpace(vipAmountDetailId))
-                {//发送微信账户余额变动模板消息
-                    var CommonBLL = new CommonBLL();
-                    CommonBLL.BalanceChangedMessage("人工调整", vipAmountEntity, amountDetail, vipInfo.WeiXinUserId, vipInfo.VIPID, pLoggingSessionInfo);
-                }
-            }
-            else if (para.AmountSourceID == "24")
-            {
-                //人工调整返现
-                vipAmountDetailId = vipAmountBLL.AddReturnAmount(vipInfo, unitInfo, vipAmountEntity, ref amountDetail, pTran, pLoggingSessionInfo, pVipCardEntity, pImageUrl);
-                if (!string.IsNullOrWhiteSpace(vipAmountDetailId))
-                {//发送返现到账通知微信模板消息
-                    var CommonBLL = new CommonBLL();
-                    CommonBLL.CashBackMessage("人工调整", amountDetail.Amount, vipInfo.WeiXinUserId, vipInfo.VIPID, pLoggingSessionInfo);
-                }
-            }
-            return rd;
-        }
-
-        /// <summary>
         /// 余额变更
         /// </summary>
         /// <param name="vipInfo">会员信息</param>
@@ -198,15 +141,13 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="tran">事务</param>
         /// <param name="loggingSessionInfo">登录信息</param>
         /// <returns></returns>
-        public string AddVipAmount(VipEntity vipInfo, t_unitEntity unitInfo, ref VipAmountEntity vipAmountEntity, VipAmountDetailEntity detailInfo, SqlTransaction tran, LoggingSessionInfo loggingSessionInfo, VipCardEntity pVipCardEntity = null, string pImageUrl = "")
+        public string AddVipAmount(VipEntity vipInfo, t_unitEntity unitInfo, ref VipAmountEntity vipAmountEntity, VipAmountDetailEntity detailInfo, SqlTransaction tran, LoggingSessionInfo loggingSessionInfo)
         {
             string vipAmountDetailId = string.Empty;//变更明细ID
             //更新个人账户的可使用余额 
             try
             {
                 var vipAmountBll = new VipAmountBLL(loggingSessionInfo);
-                //会员卡
-                var VipCardBLL = new VipCardBLL(loggingSessionInfo);
                 //var vipAmountEntity = vipAmountBll.GetByID(vipInfo);
                 if (vipAmountEntity == null)
                 {
@@ -265,8 +206,6 @@ namespace JIT.CPOS.BS.BLL
                     Remark = detailInfo.Remark,
                     CustomerID = loggingSessionInfo.ClientID
                 };
-                // 更新会员卡余额
-                VipCardBLL.AddBalance(vipInfo.VipCode, (detailInfo.Amount ?? 0m), unitInfo, tran, pImageUrl, pVipCardEntity);
                 vipamountDetailBll.Create(vipAmountDetailEntity, tran);
 
                 vipAmountDetailId = vipAmountDetailEntity.VipAmountDetailId.ToString();
@@ -288,14 +227,12 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="tran">事务</param>
         /// <param name="loggingSessionInfo">登录信息</param>
         /// <param name="amountSourceId"></param>
-        public string AddReturnAmount(VipEntity vipInfo, t_unitEntity unitInfo, VipAmountEntity vipAmountInfo, ref VipAmountDetailEntity detailInfo, SqlTransaction tran, LoggingSessionInfo loggingSessionInfo, VipCardEntity pVipCardEntity = null, string pImageUrl = "")
+        public string AddReturnAmount(VipEntity vipInfo, t_unitEntity unitInfo, VipAmountEntity vipAmountInfo, ref VipAmountDetailEntity detailInfo, SqlTransaction tran, LoggingSessionInfo loggingSessionInfo)
         {
             string vipAmountDetailId = string.Empty;//变更明细ID
             var vipAmountDao = new VipAmountBLL(loggingSessionInfo);
             var vipAmountDetailDao = new VipAmountDetailBLL(loggingSessionInfo);
             var customerBasicSettingBLL = new CustomerBasicSettingBLL(loggingSessionInfo);
-            //会员卡
-            var VipCardBLL = new VipCardBLL(loggingSessionInfo);
 
             //获取返现有效期
             int cashValidPeriod = 2;  //默认为1，业务处理时会减去1
@@ -342,12 +279,8 @@ namespace JIT.CPOS.BS.BLL
                     vipAmountInfo.ValidReturnAmount = (vipAmountInfo.ValidReturnAmount == null ? 0 : vipAmountInfo.ValidReturnAmount.Value) + detailInfo.Amount;
                     vipAmountInfo.ReturnAmount = (vipAmountInfo.ReturnAmount == null ? 0 : vipAmountInfo.ReturnAmount.Value) + detailInfo.Amount;
 
-                    vipAmountDao.Update(vipAmountInfo, tran);
+                    vipAmountDao.Update(vipAmountInfo);
                 }
-
-                // 更新会员卡返现
-                VipCardBLL.AddReturnCash(vipAmountInfo.VipCardCode, detailInfo.Amount ?? 0m, unitInfo, tran, pImageUrl, pVipCardEntity);
-
                 //创建变更记录
                 var vipamountDetailBll = new VipAmountDetailBLL(loggingSessionInfo);
                 var vipAmountDetailEntity = new VipAmountDetailEntity
@@ -378,6 +311,113 @@ namespace JIT.CPOS.BS.BLL
             }
             return vipAmountDetailId;
         }
+
+        /// <summary>
+        /// 余额变更(不带事务)
+        /// </summary>
+        /// <param name="vipInfo">会员信息</param>
+        /// <param name="unitInfo">门店信息</param>
+        /// <param name="detailInfo">余额变更明细</param>
+        /// <param name="loggingSessionInfo">登录信息</param>
+        /// <returns></returns>
+        public string AddVipAmount(VipEntity vipInfo, t_unitEntity unitInfo, ref VipAmountEntity vipAmountEntity, VipAmountDetailEntity detailInfo, LoggingSessionInfo loggingSessionInfo)
+        {
+            string vipAmountDetailId = string.Empty;//变更明细ID
+            //更新个人账户的可使用余额 
+            try
+            {
+                var vipAmountBll = new VipAmountBLL(loggingSessionInfo);
+                //var vipAmountEntity = vipAmountBll.GetByID(vipInfo);
+                if (vipAmountEntity == null)
+                {
+                    vipAmountEntity = new VipAmountEntity
+                    {
+                        VipId = vipInfo.VIPID,
+                        VipCardCode = vipInfo.VipCode,
+                        BeginAmount = 0,
+                        InAmount = detailInfo.Amount,
+                        OutAmount = 0,
+                        EndAmount = detailInfo.Amount,
+                        TotalAmount = detailInfo.Amount,
+                        BeginReturnAmount = 0,
+                        InReturnAmount = 0,
+                        OutReturnAmount = 0,
+                        ReturnAmount = 0,
+                        ImminentInvalidRAmount = 0,
+                        InvalidReturnAmount = 0,
+                        ValidReturnAmount = 0,
+                        TotalReturnAmount = 0,
+                        IsLocking = 0,
+                        CustomerID = loggingSessionInfo.ClientID
+                    };
+                    vipAmountBll.Create(vipAmountEntity);
+                    // throw new APIException("您尚未开通付款账户") { ErrorCode = 121 };
+                }
+                else
+                {
+                    //账户已有余额 + 变更金额 > 0
+                    if ((vipAmountEntity.EndAmount == null ? 0 : vipAmountEntity.EndAmount.Value) + detailInfo.Amount >= 0)
+                    {
+                        if (detailInfo.Amount > 0)
+                        {
+                            vipAmountEntity.InAmount = (vipAmountEntity.InAmount == null ? 0 : vipAmountEntity.InAmount.Value) + detailInfo.Amount;
+                            vipAmountEntity.TotalAmount = (vipAmountEntity.TotalAmount == null ? 0 : vipAmountEntity.TotalAmount.Value) + detailInfo.Amount;
+                        }
+                        else
+                            vipAmountEntity.OutAmount = (vipAmountEntity.OutAmount == null ? 0 : vipAmountEntity.OutAmount.Value) + System.Math.Abs(detailInfo.Amount.Value);
+                        vipAmountEntity.EndAmount = (vipAmountEntity.EndAmount == null ? 0 : vipAmountEntity.EndAmount.Value) + detailInfo.Amount;
+
+                        vipAmountBll.Update(vipAmountEntity);
+                    }
+                }
+                //Insert VipAmountDetail
+                var vipamountDetailBll = new VipAmountDetailBLL(loggingSessionInfo);
+                var vipAmountDetailEntity = new VipAmountDetailEntity
+                {
+                    VipAmountDetailId = Guid.NewGuid(),
+                    VipId = vipInfo.VIPID,
+                    VipCardCode = vipInfo.VipCode,
+                    UnitID = unitInfo != null ? unitInfo.unit_id : "",
+                    UnitName = unitInfo != null ? unitInfo.unit_name : "",
+                    Amount = detailInfo.Amount,
+                    UsedReturnAmount = 0,
+                    EffectiveDate = DateTime.Now,
+                    DeadlineDate = Convert.ToDateTime("9999-12-31 23:59:59"),
+                    AmountSourceId = detailInfo.AmountSourceId,
+                    ObjectId = detailInfo.ObjectId,
+                    Reason = detailInfo.Reason,
+                    Remark = detailInfo.Remark,
+                    CustomerID = loggingSessionInfo.ClientID
+                };
+                vipamountDetailBll.Create(vipAmountDetailEntity);
+
+                vipAmountDetailId = vipAmountDetailEntity.VipAmountDetailId.ToString();
+
+            }
+            catch (Exception ex)
+            {
+                throw new APIException(ex.ToString()) { ErrorCode = 121 };
+            }
+            return vipAmountDetailId;
+        }
+
+        #region 统计 提现总金额 当前余额 总收入
+        /// <summary>
+        /// 统计 提现总金额 当前余额 总收入
+        /// </summary>
+        /// <param name="VipId">会员标志</param>
+        /// <param name="CustomerId">商户编号</param>
+        /// <param name="IsCheckAmountSources">是否限制来源</param>
+        /// <returns>
+        /// decimal[0]=总收入
+        /// decimal[1]=总提现金额
+         ///decimal[2]=支出余额
+        /// </returns>
+        public decimal[] GetVipSumAmountByCondition(string VipId, string CustomerId, bool IsCheckAmountSources)
+        {
+            return _currentDAO.GetVipSumAmountByCondition(VipId, CustomerId, IsCheckAmountSources);
+        }
+        #endregion
 
     }
 }

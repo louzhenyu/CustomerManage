@@ -137,10 +137,6 @@ namespace JIT.CPOS.BS.Entity
         ///// 阿拉丁平台对应的ID
         ///// </summary>
         public string ALDCategoryID { get; set; }
-        ///// <summary>
-        ///// 佣金比例
-        ///// </summary>
-        public int CommissionRate { get; set; }
 
     }
 }

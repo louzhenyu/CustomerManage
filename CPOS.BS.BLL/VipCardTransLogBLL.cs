@@ -46,9 +46,9 @@ namespace JIT.CPOS.BS.BLL
             var dsTrans = this._currentDAO.GetVipCardTransLogList(VipCardCode);
             return DataTableToObject.ConvertToList<VipCardTransLogInfo>(dsTrans.Tables[0]);
         }
-        public void UpdateVipCardTransLog(string p_StrSql, IDbTransaction pTran)
+        public void UpdateVipCardTransLog(string p_StrSql)
         {
-            this._currentDAO.UpdateVipCardTransLog(p_StrSql, pTran);
+            this._currentDAO.UpdateVipCardTransLog(p_StrSql);
         }
     }
 }

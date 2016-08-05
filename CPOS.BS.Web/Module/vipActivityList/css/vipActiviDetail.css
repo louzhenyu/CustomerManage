@@ -1,0 +1,124 @@
+﻿@charset "utf-8";
+.queryTermArea{ background:none;width:100%;padding: 0; }
+.queryTermArea  .panelList{width:100%;text-align: center;}
+.commonSelectWrap {display: block; float: none; }
+.l{float: left;}
+.explain{ color: #999; margin-top: -5px; padding-left: 16px; height: 30px; }
+.commonSelectWrap .searchInput{ background: transparent;}
+.commonSelectWrap .searchInput.whauto{ width: auto; height: auto;}
+.commonSelectWrap .searchInput.whauto .radio{ float: left; margin-right: 50px;}
+.commonSelectWrap .searchInput .line{ height: 46px;}
+.commonSelectWrap .searchInput .linetext{ height: 28px; line-height: 28px; padding-left:10px;   color: #666; float: left; display: inline;}
+.commonSelectWrap .searchInput .linetext input{ width: 100px; height: 28px; }
+.commonSelectWrap .searchInput .linetext span{  margin-left:5px; }
+.commonSelectWrap  .checkBox{float: left;margin-top: 6px;margin-left: 30px;}
+
+.commonSelectWrap .textExt{ width: 100%;float: left; text-align: left;text-indent: 58px; line-height: 33px;}
+
+.title{height: 51px;border-bottom: 1px solid #e1e7ea; background: url(../images/bg01.png) no-repeat left center #f2f2f2;}
+.title.bg02{background-image: url(../images/bg02.png)}
+.title.bg03{background-image: url(../images/bg03.png)}
+.title li{cursor: pointer;width:300px;height: 50px;line-height: 50px;float:left;text-align:center;font-size: 14px;color:#666;}
+.title li span{ position:relative}
+.title li span em{width: 28px;height: 28px;left: -40px;position: absolute;top: -5px;color:#fff;line-height: 28px;background:url(../images/yuan.png) no-repeat left center;background-size: 28px 28px;}
+.title li.on span em{background:url(../images/yuanHover.png) no-repeat left center;background-size: 28px 28px;}
+.title li.one{ border-radius: 8px 0 0 0;}
+.title li.borderNone{ border:none}
+.panelDiv{display: none;text-align: center; }
+.line{ margin:0 auto; width:95%; display:inline-block; margin-top: 20px; padding-bottom: 20px;}
+
+#nav01 .commonSelectWrap{ margin:10px 10px 10px 0}
+#nav01 .commonSelectWrap .tit{ width:auto;}
+.hint{ color: #666; line-height: 35px; }
+.tagPanel{display: inline-block;position: relative;width: 100%;text-align: left;padding-bottom: 30px;padding-top: 30px;}
+.tagPanel .checkBoxPanel{ line-height: 35px; height: 35px; margin-bottom: 20px;}
+.tagPanel .checkBoxPanel .inputDiv{width: 100%;float: left;padding: 0 120px 0 40px;}
+.tagPanel .checkBoxPanel .inputDiv .checkBox{ float: left; margin-top: 8px; }
+.tagPanel .checkBoxPanel .inputDiv .textbox {margin: 0 12px;}
+.tagPanel .commonBtn{ display: block; background: #00a0e8; width: 90px; height: 32px; float: right;line-height: 32px;}
+.templatePanel{display: inline-block; width: 100%;  margin-bottom: 20px;}
+.tagPanel .templatePanel .commonSelectWrap .tit {width: 58px;margin-right: 10px;}
+.tagPanel .templatePanel .commonSelectWrap .selectBox{ width:auto;}
+.tagPanel .templatePanel .commonSelectWrap .combo{ margin-right: 20px;}
+.tagPanel .templatePanel .commonBtn{ margin-top: 10px;}
+.tagPanel .templatePanel .panelSel{width: 630px;}
+.tagPanel .templatePanel .text{width: 576px;min-height:80px; border: 1px solid #d0d5d8;float: left;margin-top: 15px;margin-left: 25px;padding-bottom: 15px;}
+.tagPanel .templatePanel .text p{ height: 40px;line-height: 40px; padding-left: 20px;}
+.tagPanel .templatePanel .text p .easyui-validatebox {width:120px;height: 30px;}
+.tagPanel .templatePanel .text p .mar-l5 {margin-left: 5px;}
+.tagPanel .templatePanel .text textarea { width:100%; height: 100%;}
+.tagPanel .tablePanel{width: 100%; display:block;}
+.tagPanel .tablePanel .gridTable{width: 100%;display: block;}
+
+
+.coupon{ width: 900px; padding:0 20px 20px 20px; height: 500px; border-bottom: 1px solid #d8d8d8;}
+.dataGridPanel{width:400px; float: left;}
+.dataGridPanel .datagrid-header {
+    position: absolute; visibility: hidden;
+}
+.optListPanel{text-align: right;height: 52px;display: inline-block;width: inherit;line-height: 52px;}
+.coupon .optDom{ display:inline-block; margin-right:12px;color: #00a0e8; cursor: pointer;}
+.coupon .commonBtn{width: 70px; display:inline-block;}
+.panelContent{height: 428px;width: 400px; border: 1px solid #e1e7ea; border-radius:8px; position: relative;overflow-y: auto; }
+.couponList{width: 400px; float: right;}
+.couponList .optListPanel{text-align: left;}
+.datagrid {border:none;}
+.dataGridPanel .datagrid-row {
+    height:80px;
+}
+.optBg{background: url("../images/jiantou.png") center center no-repeat;width: 60px;height: 28px;float: left;top: 240px;position: relative;}
+.lineCouponInfo{height: 78px;padding-left: 20px;border-bottom: 1px solid #eee;position: relative;}
+.lineCouponInfo p{font-size: 14px; line-height: 30px; height: 30px;color: #666; position: relative;}
+.lineCouponInfo b{font-size: 12px;color: #999; padding-left: 20px;}
+.lineCouponInfo .del{color: #00a0e8;position: absolute;right: 10px;line-height: 78px;display: block;top: 0;width: 26px; cursor: pointer;}
+.lineCouponInfo .numberbox{margin-right: 5px;}
+
+
+.shou{cursor: pointer}
+
+.lineTitle{text-align: left;width:100%;padding-left: 20px;color: #333;font-size: 12px;border: 1px solid #e0e0e0;background: #eaeff2;height: 40px;line-height: 40px;}
+.lineTitle .checkBox span{padding-left:0;}
+.textAddBtn{color: #00a0e8; width: 50px;cursor: pointer; font-size: 14px; height: 18px; text-align: left; position: absolute; left:53px; bottom:20px;}
+
+.ticketList{ width:600px; padding-left: 20px; display: inline-block; }
+.ticketList .ticket{ width:100%; height: 65px; padding-top: 21px; display: inline-block;border-bottom: 1px solid #ececec; }
+.radioBtn {margin-left: 15px;color: #038efe;display: none; cursor:pointer; margin-top:4px;}
+.lineList{  display:inline-block; float: left;margin-top:15px; margin-left: 100px;}
+.linetext{ height: 40px;}
+.linetext  .radioBtn,.listBtn{display: block;}
+.ext{color:#666; line-height: 30px;}
+.optPanel{ float: right;}
+.optPanel .hint{ float: right; margin-right: 10px;}
+
+.openPanelDiv{ height: 80px;border-top: 1px solid #d0d5d8; padding-top: 20px;}
+.btnopt{margin: 0 auto; width:380px; display: block;}
+
+.btnopt .commonBtn.cancel{ background-color: #cccccc}
+.btnopt .commonBtn.bgWhite{display:none;}
+
+.tablePanel .datagrid{ border:1px solid #e1e7ea;}
+
+.checkBoxList{padding-left:8px; width: 278px; height: 100px; float: left; }
+.commonSelectWrap  .borderNone{ border: 1px solid  transparent;border-bottom:none; background: none}
+.bgColor{ background-color: #efefef}
+.bgColor input{ background-color: #efefef}
+.bgCcc{background-color: #ccc}
+.mgr22{margin-left: 22px;}
+.deletebtn {
+    display: block;
+    background: #00a0e8;
+    width: 70px;
+    float: right;
+    border-radius: 4px;
+    font-size: 12px;
+    height: 30px;
+    cursor: pointer;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+}
+.dataGridPanel .datagrid-body tr:last-of-type td { border-bottom: 1px solid #e1e7ea;}
+.cursorDiv{cursor: default;width: 120px;height: 30px;display: inline-block;margin-left: -50px;text-align: center;}
+.btnWrap .cancelBtn{margin-right: 20px; display: inline-block;width: 110px;height: 36px;line-height: 36px;color: #00a0e8;background-color: #fff;border: 1px solid #00a0e8;}
+
+

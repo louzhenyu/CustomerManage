@@ -53,10 +53,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Register
             #endregion
 
             JIT.Utility.Log.Loggers.Debug(new Utility.Log.DebugLogInfo() { Message = string.Format("action={0},request={1}", "MergeVipInfo", pRequest.ToJSON()) });
-            if (!bll.MergeVipInfo(pRequest.CustomerID, pRequest.UserID, pRequest.Parameters.Mobile))
-            {
-                throw new APIException("合并会员信息失败") { ErrorCode = ERROR_AUTO_MERGE_MEMBER_FAILED };
-            }
+            //if (!bll.MergeVipInfo(pRequest.CustomerID, pRequest.UserID, pRequest.Parameters.Mobile))//目前有
+            //{
+            //    throw new APIException("合并会员信息失败") { ErrorCode = ERROR_AUTO_MERGE_MEMBER_FAILED };
+            //}
             return rd;
         }
     }

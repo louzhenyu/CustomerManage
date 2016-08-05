@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015/9/9 15:07:16
+ * Create On	:2016/6/30 16:27:29
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -92,7 +92,10 @@ namespace JIT.CPOS.BS.Entity
 		/// </summary>
 		public Int32? IsDelete { get; set; }
 
-
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? NumLimit { get; set; }
         #endregion
 
     }

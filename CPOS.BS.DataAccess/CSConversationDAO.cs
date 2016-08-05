@@ -50,9 +50,11 @@ namespace JIT.CPOS.BS.DataAccess
             ls.Add( new SqlParameter( "@personID",personID));
             ls.Add(new SqlParameter("@customerId", customerId));
 
+   //              ,(select top 1 HeadImageUrl from CSConversation x where IsCS=0 and CSMessageID=tt.CSMessageID order by x.CreateTime desc ) as VipHeadImage
+   //,(select top 1 person from CSConversation x where IsCS=0 and CSMessageID=tt.CSMessageID order by x.CreateTime desc ) as VipName
             string sql = @"select *
-	            ,(select top 1 HeadImageUrl from CSConversation x where IsCS=0 and CSMessageID=tt.CSMessageID order by x.CreateTime desc ) as VipHeadImage
-   ,(select top 1 person from CSConversation x where IsCS=0 and CSMessageID=tt.CSMessageID order by x.CreateTime desc ) as VipName
+	          ,(select top 1 HeadImgUrl from vip where vipid=tt.VipID ) as VipHeadImage
+      ,(select top 1 VipName from vip where vipid=tt.VipID ) as VipName
 
               from (select Row_Number() OVER (partition by MemberID ORDER BY a.createtime desc) rn,a.* ,b.MemberID as VipID
 	                from CSConversation a

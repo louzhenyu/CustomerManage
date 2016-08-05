@@ -195,12 +195,6 @@
                 if ($('#payOrder').form('validate')) {
 
                     var fields = $('#payOrder').serializeArray(); //自动序列化表单元素为JSON对象
-                    //去掉VipCardISN 空格 ---修改：jw
-                    if (fields[0].value.replace(/\s+/g, "")=="") {
-                      return  $.messager.alert("查询提示", "请输入卡号", "", function () {
-                            $("#VipCardISN").focus();
-                        });
-                    }
 
                     that.loadData.operation(fields,"select",function(data){
 
