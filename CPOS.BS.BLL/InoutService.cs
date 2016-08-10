@@ -2467,9 +2467,9 @@ namespace JIT.CPOS.BS.BLL
 
                 bool bReturn = Update(inoutInfo, out strError);
 
-                //支付成功，发送邮件与短信
-                cUserService userServer = new cUserService(loggingSessionInfo);
-                userServer.SendOrderMessage(inoutInfo.order_id);
+                //支付成功，发送邮件与短信  （这里只是修改配送信息的）
+                //cUserService userServer = new cUserService(loggingSessionInfo);
+                //userServer.SendOrderMessage(inoutInfo.order_id);
 
                 //strError = "提交订单成功.";
                 return bReturn;
