@@ -77,6 +77,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     if(i==0){
                         if($tt.length=='0'){
                             that.loadData.args.BeforeWithDrawDays =0;
+                            isTrue = true;
                         }else{
                             if(inpnts.val()==""){
                                 alert('可提现金额设置不能为空');
@@ -96,6 +97,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     if(i==1){
                         if(inpnts.length=='0'){
                             that.loadData.args.MinAmountCondition =0;
+                            isTrue = true;
                         }else{
                             if(inpnts.val()==""){
                                 alert('提现条件不能为空');
@@ -115,6 +117,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     if(i==2){
                         if(inpnts.length=='0'){
                             that.loadData.args.WithDrawMaxAmount =0;
+                            isTrue = true;
                         }else{
                             if(inpnts.val()==""){
                                 alert('提现额度不能为空');
@@ -133,6 +136,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     if(i==3){
                         if(inpnts.length=='0'){
                             that.loadData.args.WithDrawNum =0;
+                            isTrue = true;
                         }else{
                             if(inpnts.val()==""){
                                 alert('提现次数不能为空');

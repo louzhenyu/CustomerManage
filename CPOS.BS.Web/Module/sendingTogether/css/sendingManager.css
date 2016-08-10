@@ -47,12 +47,9 @@
 .tplWindow .edits textarea{width:255px;margin-top:10px;border:1px solid #e1e7ea;height:60px;text-indent:10px;padding-top:5px;}
 .tplWindow .edits textarea[disabled=disabled]{background:#ddd;}
 /*totalStatistic*/
-.totalStatistic{width:1140px;margin:20px auto;}
+.totalStatistic{width:1140px;padding:20px 0;}
 .totalContent{height:220px;padding:0 20px;}
 .totalStatistic .itemTotle{width:260px;height:222px;border:1px solid #f0f0f0;border-radius:5px;background-color:#fafafa;float:left;margin-left:20px;}
-.totalStatistic{width:1140px;margin:20px auto;}
-.totalContent{height:220px;padding:0 20px;}
-.totalStatistic .itemTotle{width:260px;height:222px;border:1px solid #f0f0f0;border-radius:5px;background-color:#f7f6f6;float:left;margin-left:20px;}
 .totalStatistic .itemTotle:nth-of-type(1){margin-left:0;}
 .totalStatistic .itemTotle .head{background-color:#ff4d4d;padding:9px 0;border-radius: 3px 3px 0 0;border-bottom: 1px solid #ddd;}
 .totalStatistic .item{width:260px;height:222px;background:#fafafa;border:1px solid #f0f0f0;border-radius:5px;float:left;margin-bottom:20px;margin-left:20px;}

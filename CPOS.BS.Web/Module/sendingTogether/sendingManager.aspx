@@ -5,7 +5,7 @@
 <meta charset="UTF-8" />
     <title>提现管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link type="text/css" rel="stylesheet" href="css/sendingManager.css?ver=0.6"/>
+    <link type="text/css" rel="stylesheet" href="css/sendingManager.css?ver=0.7"/>
 
 </asp:Content>
 <asp:Content ID="Content2"  ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
