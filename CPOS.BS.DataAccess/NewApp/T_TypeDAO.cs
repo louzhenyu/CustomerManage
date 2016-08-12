@@ -96,10 +96,10 @@ namespace JIT.CPOS.BS.DataAccess
                 inner join #UnitSET  g on(a.unit_id = g.unitid) 
                 where 1=1
                 and  a.customer_id=@customer_id
-                and a.unit_code!=e.customer_code -----去掉默认的门店
+               
                 and a.status =1
-                and b.type_code !='OnlineShopping'  
-";//或者unit_code!='ONLINE'
+                and b.type_code !='OnlineShopping'      
+";//或者unit_code!='ONLINE'   // and a.unit_code!=e.customer_code -----去掉默认的门店
 
 
             if (hasShop!= 1)
