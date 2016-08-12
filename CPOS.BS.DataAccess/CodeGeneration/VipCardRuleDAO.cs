@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [VipCardRule](");
-            strSql.Append("[VipCardTypeID],[BrandID],[CardDiscount],[PaidGivePoints],[PointsMultiple],[ChargeFull],[ChargeGive],[ReturnAmountPer],[CustomerID],[CreateBy],[CreateTime],[LastUpdateTime],[LastUpdateBy],[IsDelete])");
+            strSql.Append("[VipCardTypeID],[BrandID],[CardDiscount],[PaidGivePoints],[PointsMultiple],[ChargeFull],[ChargeGive],[ReturnAmountPer],[CustomerID],[CreateBy],[CreateTime],[LastUpdateTime],[LastUpdateBy],[IsDelete],[PaidGivePercetPoints])");
             strSql.Append(" values (");
-            strSql.Append("@VipCardTypeID,@BrandID,@CardDiscount,@PaidGivePoints,@PointsMultiple,@ChargeFull,@ChargeGive,@ReturnAmountPer,@CustomerID,@CreateBy,@CreateTime,@LastUpdateTime,@LastUpdateBy,@IsDelete)");            
+            strSql.Append("@VipCardTypeID,@BrandID,@CardDiscount,@PaidGivePoints,@PointsMultiple,@ChargeFull,@ChargeGive,@ReturnAmountPer,@CustomerID,@CreateBy,@CreateTime,@LastUpdateTime,@LastUpdateBy,@IsDelete,@PaidGivePercetPoints)");            
 			strSql.AppendFormat("{0}select SCOPE_IDENTITY();", Environment.NewLine);
 
 
@@ -102,7 +102,8 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
-					new SqlParameter("@IsDelete",SqlDbType.Int)
+					new SqlParameter("@IsDelete",SqlDbType.Int),
+					new SqlParameter("@PaidGivePercetPoints",SqlDbType.Decimal)
             };
 			parameters[0].Value = pEntity.VipCardTypeID;
 			parameters[1].Value = pEntity.BrandID;
@@ -118,6 +119,7 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[11].Value = pEntity.LastUpdateTime;
 			parameters[12].Value = pEntity.LastUpdateBy;
 			parameters[13].Value = pEntity.IsDelete;
+			parameters[14].Value = pEntity.PaidGivePercetPoints;
 
             //执行并将结果回写
             object result;
@@ -232,7 +234,11 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
-                strSql.Append( "[LastUpdateBy]=@LastUpdateBy");
+                strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
+            if (pIsUpdateNullField || pEntity.PaidGivePercetPoints!=null)
+                strSql.Append( "[PaidGivePercetPoints]=@PaidGivePercetPoints");
+            if (strSql.ToString().EndsWith(","))
+                strSql.Remove(strSql.Length - 1, 1);
             strSql.Append(" where RuleID=@RuleID ");
             SqlParameter[] parameters = 
             {
@@ -247,6 +253,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@CustomerID",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
+					new SqlParameter("@PaidGivePercetPoints",SqlDbType.Decimal),
 					new SqlParameter("@RuleID",SqlDbType.Int)
             };
 			parameters[0].Value = pEntity.VipCardTypeID;
@@ -260,7 +267,8 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[8].Value = pEntity.CustomerID;
 			parameters[9].Value = pEntity.LastUpdateTime;
 			parameters[10].Value = pEntity.LastUpdateBy;
-			parameters[11].Value = pEntity.RuleID;
+			parameters[11].Value = pEntity.PaidGivePercetPoints;
+			parameters[12].Value = pEntity.RuleID;
 
             //执行语句
             int result = 0;
@@ -576,6 +584,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
             if (pQueryEntity.IsDelete!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
+            if (pQueryEntity.PaidGivePercetPoints!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "PaidGivePercetPoints", Value = pQueryEntity.PaidGivePercetPoints });
 
             return lstWhereCondition.ToArray();
         }
@@ -650,6 +660,10 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["IsDelete"] != DBNull.Value)
 			{
 				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
+			}
+			if (pReader["PaidGivePercetPoints"] != DBNull.Value)
+			{
+				pInstance.PaidGivePercetPoints =  Convert.ToDecimal(pReader["PaidGivePercetPoints"]);
 			}
 
         }

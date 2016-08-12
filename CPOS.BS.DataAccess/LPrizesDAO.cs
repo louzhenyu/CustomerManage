@@ -72,13 +72,9 @@ namespace JIT.CPOS.BS.DataAccess
             BasicUserInfo pUserInfo = new BasicUserInfo();
 
             string sql = "";
-            sql += "SELECT a.PrizesID, PrizeName, PrizeShortDesc, PrizeDesc, LogoURL, ImageUrl, "
-                + "ContentText, ContentUrl, ct.ParValue as Price, DisplayIndex, CountTotal, CountLeft, EventId, "
-                +"a.CreateTime, a.CreateBy, a.LastUpdateBy, a.LastUpdateTime, a.IsDelete, PrizeTypeId, Point, "
-                +"IsAutoPrizes, PrizeLevel, Probability, DisplayIndexLast = row_number() over(order by a.DisplayIndex ) "
+            sql += "SELECT a.* "
+                + " ,DisplayIndexLast = row_number() over(order by a.DisplayIndex ) "
                 + " into #tmp FROM LPrizes a "
-                + "left join PrizeCouponTypeMapping pctm on pctm.PrizesID = a.PrizesID "
-                + "left join CouponType ct on ct.CouponTypeID = pctm.CouponTypeID "
                 + " where a.IsDelete='0' and a.EventID = '" + EventID + "' ";
             //sql += " order by a.DisplayIndex ";
             return sql;
@@ -277,7 +273,7 @@ namespace JIT.CPOS.BS.DataAccess
 
         public DataSet GetPirzeList(string strEventId)
         {
-            string sql = "select l.PrizesID ,l.EventId ,l.PrizeName,l.PrizeLevel,o.OptionText PrizeLevelName,l.CountTotal,l.CountTotal PrizeCount ,l.Probability ,c.CouponTypeName,c.CouponTypeID ,c.IssuedQty,l.ImageUrl,pool.RemainCount,l.PrizeTypeId ,l.Point "
+			string sql = "select l.PrizesID ,l.EventId ,l.PrizeName,l.PrizeLevel,o.OptionText PrizeLevelName,l.CountTotal,l.CountTotal PrizeCount ,l.Probability ,c.CouponTypeName,c.CouponTypeID ,c.IssuedQty,l.ImageUrl,pool.RemainCount,l.PrizeTypeId ,l.Point,c.IsNotLimitQty "
                         +" From dbo.LPrizes l "
                         +"LEFT JOIN PrizeCouponTypeMapping p ON l.PrizesID = p.PrizesID "
                         +"LEFT JOIN CouponType c ON p.CouponTypeID = CAST(c.CouponTypeID AS NVARCHAR(200)) "
@@ -290,7 +286,7 @@ namespace JIT.CPOS.BS.DataAccess
         }
         public DataSet GetPirzeListForCTW(string strEventId)
         {
-            string sql = "select l.PrizesID ,l.EventId ,l.PrizeName,l.PrizeLevel,o.OptionText PrizeLevelName,l.CountTotal,l.CountTotal PrizeCount ,l.Probability ,c.CouponTypeName,c.CouponTypeID ,c.IssuedQty,l.ImageUrl,pool.RemainCount,l.PrizeTypeId ,l.Point "
+			string sql = "select l.PrizesID ,l.EventId ,l.PrizeName,l.PrizeLevel,o.OptionText PrizeLevelName,l.CountTotal,l.CountTotal PrizeCount ,l.Probability ,c.CouponTypeName,c.CouponTypeID ,c.IssuedQty,l.ImageUrl,pool.RemainCount,l.PrizeTypeId ,l.Point,c.IsNotLimitQty "
                         + "From dbo.LPrizes l "
                         + "LEFT JOIN PrizeCouponTypeMapping p ON l.PrizesID = p.PrizesID "
                         + "LEFT JOIN CouponType c ON p.CouponTypeID = CAST(c.CouponTypeID AS NVARCHAR(200)) "

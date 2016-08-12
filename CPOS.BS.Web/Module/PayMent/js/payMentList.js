@@ -121,6 +121,8 @@
                         $this.parents('.payMentContent').find('input').attr('disabled', 'disabled').parent().css({ 'border': 'none' });
                         $this.parents('.payMentContent').find('.uploadFileBox').hide();
 						
+						$('.jui-dialog-payMent .checkBox').addClass('disable');
+						
                     } else {
                         $this.parents('.payMentContent').find('input').attr('disabled', false).parent().css({ 'border': '1px solid #dedede' });
                         $this.parents('.payMentContent').find('.uploadFileBox').show();
@@ -128,18 +130,41 @@
 							that.elems.dataObj.action = "SetPayChannel" //启用商户支付
 						}
 						$('#WXJS_parnterkey').attr('disabled', 'disabled');
+						
+						$('.jui-dialog-payMent .checkBox').removeClass('disable');
+						if($('#scanCodePay').hasClass('on')){
+							$('#AlipayWap_appid').attr('disabled', false);
+						}else{
+							$('#AlipayWap_appid').attr('disabled', true);
+						}
+						$('#pagePay').addClass('on');
                     }
                     
                     //$("#text").disable = ture;
                 });
                 //复选框选择
-                $('.payMentListArea').delegate('.checkBox', 'click', function () {
-                    var $this = $(this);
-                    if ($this.hasClass('on')) {
-                        $this.removeClass('on');
-                    } else {
-                        $this.addClass('on');
-                    }
+                $('.jui-dialog-payMent').delegate('.checkBox', 'click', function () {
+                    var $this = $(this),
+						isDisable = $this.hasClass('disable'),
+						isOn = $this.hasClass('on'),
+						payWay = $this.data('value');
+					if(isDisable){
+						return false;
+					}else{
+						 if(isOn){
+							$this.removeClass('on');
+							if(payWay=='scanCodePay'){
+								$('#AlipayWap_appid').attr('disabled',true);
+							}
+						}else{
+							$this.addClass('on');
+							if(payWay=='scanCodePay'){
+								$('#AlipayWap_appid').attr('disabled',false);
+							}
+						}
+					}
+					
+					
                 });
 
                 //编辑操作
@@ -159,6 +184,7 @@
                     if (userType.IsOpen) {
 						index = 0
                         //if(userType.IsCustom){}
+						$('#pagePay').addClass('on');
                     } else {
                         index = 1;
                     }
@@ -175,6 +201,10 @@
 							$("#AlipayWap_tbid").val(params.SalesTBAccess);//支付宝账号
 							$("#AlipayWap_publicKey").val(params.PayAccounPublic);//支付宝公钥
 							$("#AlipayWap_privateKey").val(params.PayPrivate);//私钥
+							if(params.EncryptionCertificate){
+								$("#AlipayWap_appid").val(params.EncryptionCertificate);//服务商应用APPID
+								$('#scanCodePay').addClass('on');
+							}
                         }
 					});
 					
@@ -253,6 +283,10 @@
                                     that.alert('账号不能为空！');
                                     return;
                                 }
+								if ($("#scanCodePay").hasClass('on') && $("#AlipayWap_appid").val() == '') {
+                                    that.alert('服务商应用APPID不能为空！');
+                                    return;
+                                }
                                 if ($("#AlipayWap_tbid").val() == '') {
                                     that.alert('卖家淘宝账号不能为空！');
                                     return;
@@ -269,6 +303,7 @@
                                 pay.NotifyUrl = that.notifyUrl;
                                 WapData = {
                                     "Partner": $("#AlipayWap_id").val(),
+									"SCAN_AppID": $("#AlipayWap_appid").val(),
                                     "SellerAccountName": $("#AlipayWap_tbid").val(),
                                     "RSA_PublicKey": $("#AlipayWap_publicKey").val(),
                                     "RSA_PrivateKey": $("#AlipayWap_privateKey").val(),
@@ -432,7 +467,7 @@
                         obj = JSON.stringify(obj);
                         that.startPayment(obj, function () {
                             //location.reload();
-                            alert('启用账号成功');
+                            alert('启用成功');
                             $('input', $this.parents('.jui-dialog')).val('');
                             $tr.text('已启用').removeClass('blue');
                             that.elems.uiMask.slideUp();

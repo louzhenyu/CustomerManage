@@ -32,7 +32,7 @@ using JIT.CPOS.BS.DataAccess.Base;
 
 namespace JIT.CPOS.BS.DataAccess
 {
-    
+
     /// <summary>
     /// 数据访问：  
     /// 表VipAmount的数据访问类 
@@ -53,7 +53,7 @@ namespace JIT.CPOS.BS.DataAccess
                                    , SqlTransaction tran
                                    , string InOut
                                    , out string strError
-                                   ) 
+                                   )
         {
             try
             {
@@ -76,7 +76,8 @@ namespace JIT.CPOS.BS.DataAccess
 
                 return bReturn;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 strError = ex.ToString();
                 return "1";
             }
@@ -87,8 +88,8 @@ namespace JIT.CPOS.BS.DataAccess
         {
             decimal endamount = 0;
             var sql = string.Format("select EndAmount from VipAmount where VipID='{0}' and isdelete=0 ", vipId);
-            var res = SQLHelper.ExecuteScalar(tran,CommandType.Text, sql);
-            if (res==null || string.IsNullOrWhiteSpace(res.ToString()))
+            var res = SQLHelper.ExecuteScalar(tran, CommandType.Text, sql);
+            if (res == null || string.IsNullOrWhiteSpace(res.ToString()))
             {
                 return endamount;
             }
@@ -104,6 +105,62 @@ namespace JIT.CPOS.BS.DataAccess
                 return validReturnAmount;
             }
             return Convert.ToDecimal(result);
+        }
+
+        /// <summary>
+        /// 统计 提现总金额 当前余额 总收入
+        /// </summary>
+        /// <param name="VipId">会员标志</param>
+        /// <param name="CustomerId">商户编号</param>
+        /// <param name="IsCheckAmountSources">是否限制来源</param>
+        /// <returns>
+        /// decimal[0]=总收入
+        /// decimal[1]=总提现金额
+        /// decimal[2]=支出余额
+        /// </returns>
+        public decimal[] GetVipSumAmountByCondition(string VipId, string CustomerId, bool IsCheckAmountSources)
+        {
+            string TotalAmountSql = "SELECT ISNULL(SUM(Amount),0) AS Amount FROM VipAmountDetail WHERE VipId=@VipId AND CustomerId=@CustomerId ";  //获取总收入
+
+            if (IsCheckAmountSources)
+            {
+                TotalAmountSql += "    AND Amount>0 AND AmountSourceId IN (20,36,35)";   //红利 {集客分润+集客奖励}
+            }
+
+            string WithdrawAmountSql = " UNION ALL SELECT ISNULL(SUM(Amount),0) AS Amount FROM VipWithdrawDepositApply WHERE VipID=@VipId AND CustomerId=@CustomerId AND Status=3 and IsDelete=0 ";  //已提现金额
+
+            string OutAmountSql = " UNION ALL SELECT ISNULL(SUM(Amount),0) AS Amount FROM VipAmountDetail WHERE VipId=@VipId AND CustomerId=@CustomerId ";  //支出余额
+
+            if (IsCheckAmountSources)
+            {
+                OutAmountSql += "    AND Amount > 0  AND AmountSourceId IN (20,36,35) ";   //红利 {总收入}
+            }
+            else
+            {
+                OutAmountSql += "    AND Amount < 0 ";   //支出余额
+            }
+
+
+            SqlParameter[] parameter = new SqlParameter[]{
+                new SqlParameter("@VipId",VipId),
+                new SqlParameter("@CustomerId",CustomerId),
+            };
+            List<decimal> lst = new List<decimal>();
+            using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(CommandType.Text, TotalAmountSql + " " + WithdrawAmountSql + " " + OutAmountSql, parameter))
+            {
+                while (rdr.Read())
+                {
+                    if (rdr["Amount"] != DBNull.Value)
+                    {
+                        lst.Add(Convert.ToDecimal(rdr["Amount"]));
+                    }
+                    else
+                    {
+                        lst.Add(0);
+                    }
+                }
+            }
+            return lst.ToArray();
         }
     }
 }

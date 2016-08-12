@@ -1,13 +1,9 @@
-﻿using CPOS.BS.BLL;
-using CPOS.BS.Entity;
-using JIT.CPOS.BS.BLL;
-using JIT.CPOS.BS.BLL.PA;
+﻿using JIT.CPOS.BS.BLL;
 using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.Web.ApplicationInterface.Base;
 using JIT.CPOS.BS.Web.Session;
 using JIT.CPOS.DTO.Base;
 using JIT.CPOS.DTO.Module.Order.SalesReturn.Request;
-using JIT.Utility.Log;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +23,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
             var refundOrderBLL = new T_RefundOrderBLL(loggingSessionInfo);
             var vipAmountBLL = new VipAmountBLL(loggingSessionInfo);  //余额返现BLL实例化
             var vipAmountDetailBLL = new VipAmountDetailBLL(loggingSessionInfo);  //余额返现BLL实例化
-            var paPrepay = new PA_PrepayNoBLL(loggingSessionInfo);
+
 
             var pTran = salesReturnBLL.GetTran();//事务
             T_SalesReturnEntity salesReturnEntity = null;
@@ -52,6 +48,19 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
 
                         //获取会员信息
                         var vipInfo = vipBll.GetByID(refundEntity.VipID);
+                        //获取会员的会员上线
+                        VipEntity userInfo = vipBll.GetByID(vipInfo.HigherVipID);
+                        if (userInfo == null)
+                        {
+                            //获取会员的员工上线
+                            var tempUser = userBll.GetByID(vipInfo.SetoffUserId);
+                            if (tempUser != null)
+                            {
+                                userInfo= new VipEntity();
+                                userInfo.VIPID = tempUser.user_id;
+                            }
+                        }
+
                         //获取门店信息
                         t_unitEntity unitInfo = null;
                         if (!string.IsNullOrEmpty(refundEntity.UnitID))
@@ -79,35 +88,25 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                         }
 
                         #region 退回集客订单分润
-                        var vipAmountEntity = vipAmountBLL.QueryByEntity(new VipAmountEntity() { VipId = vipInfo.VIPID, VipCardCode = vipInfo.VipCode }, null).FirstOrDefault();
-                        var vipAmountDetail = vipAmountDetailBLL.QueryByEntity(new VipAmountDetailEntity() { ObjectId = refundEntity.OrderID, AmountSourceId = "20" }, null).FirstOrDefault();
-                        if (vipAmountDetail != null)
+                        //上线员工和线上会员不为空
+                        if (userInfo != null)
                         {
-                            var detailInfo = new VipAmountDetailEntity()
+                            var vipAmountEntity = vipAmountBLL.QueryByEntity(new VipAmountEntity() { VipId = userInfo.VIPID, VipCardCode = userInfo.VipCode }, null).FirstOrDefault();
+                            var vipAmountDetail = vipAmountDetailBLL.QueryByEntity(new VipAmountDetailEntity() { ObjectId = refundEntity.OrderID, AmountSourceId = "20" }, null).FirstOrDefault();
+                            if (vipAmountDetail != null)
                             {
-                                Amount = vipAmountDetail.Amount.Value,
-                                ObjectId = refundEntity.RefundID.ToString(),
-                                AmountSourceId = "25"
-                            };
-                            var vipAmountDetailId = vipAmountBLL.AddVipAmount(vipInfo, unitInfo, ref vipAmountEntity, detailInfo, pTran, loggingSessionInfo);
-                        }
-                        #endregion
-
-                        // 获取平安预付单号
-                        PA_PrepayNoEntity paPrepayNo = paPrepay.GetByID(refundEntity.OrderID);
-                        if (paPrepayNo != null)// 不等于空表示是旺财支付
-                        {
-                            // 旺财支付直接自动退款
-                            if (!PAAppApiBLL.RefundAmount(paPrepayNo.PrepayNo, refundEntity.ActualRefundAmount.ToString()))
-                            {
-                                Loggers.Debug(new DebugLogInfo
+                                var detailInfo = new VipAmountDetailEntity()
                                 {
-                                    Message = "调用旺财支付接口失败"
-                                });
-                                throw new Exception("调用旺财支付接口失败");
+                                    Amount = -vipAmountDetail.Amount.Value,
+                                    ObjectId = refundEntity.RefundID.ToString(),
+                                    AmountSourceId = "25"
+                                };
+                                var vipAmountDetailId = vipAmountBLL.AddVipAmount(userInfo, unitInfo, ref vipAmountEntity, detailInfo, pTran, loggingSessionInfo);
                             }
                         }
+                        #endregion
                     }
+                 
                     pTran.Commit();  //提交事物
                 }
                 catch (Exception ex)
@@ -118,6 +117,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
             }
             return rd;
         }
-
+    
     }
 }

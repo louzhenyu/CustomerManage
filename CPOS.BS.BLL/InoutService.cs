@@ -17,8 +17,8 @@ using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.Common;
 using System.Configuration;
-using CPOS.BS.Entity;
 using JIT.CPOS.BS.BLL.RedisOperationBLL.OrderReward;
+using JIT.CPOS.BS.BLL.RedisOperationBLL.OrderPushMessage;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -230,7 +230,16 @@ namespace JIT.CPOS.BS.BLL
                     strError = "存在相同的表单:" + strCount + ":-- " + loggingSessionInfo.CurrentLoggingManager.Connection_String + "--";
                 }
             }
-
+            //积分购卡
+            if (inoutInfo.pay_points != 0 || inoutInfo.total_amount == 0)
+            {
+                inoutInfo.actual_amount = 0; //实付金额为0
+                inoutInfo.Field1 = "1"; //已支付
+                inoutInfo.Field7 = "700"; //已完成 
+                inoutInfo.status = "700"; //已完成
+                inoutInfo.status_desc = "已完成";
+                inoutInfo.Field10 = "已完成";
+            }
 
             bool bReturn = inoutService.SetInoutInfo(inoutInfo, IsTrans, out strError);
 
@@ -1260,7 +1269,11 @@ namespace JIT.CPOS.BS.BLL
                 //{
                 inoutInfo.actual_amount = Convert.ToDecimal(SetOrderInfo.TotalAmount);
                 inoutInfo.total_retail = Convert.ToDecimal(SetOrderInfo.TotalAmount);
-                inoutInfo.discount_rate = Convert.ToDecimal("100");
+                inoutInfo.discount_rate = Convert.ToDecimal(SetOrderInfo.DiscountRate);
+                inoutInfo.receive_points = SetOrderInfo.Integral;
+                inoutInfo.pay_points = SetOrderInfo.Integral;
+                inoutInfo.points_to_amount = SetOrderInfo.IntegralAmount;
+                inoutInfo.pay_id = SetOrderInfo.PaymentTypeId; //支付Id
                 //}
                 //else
                 //{
@@ -1294,28 +1307,13 @@ namespace JIT.CPOS.BS.BLL
                 inoutInfo.Field20 = SetOrderInfo.tableNumber; //桌号
                 inoutInfo.Field16 = SetOrderInfo.CouponsPrompt;//Jermyn20131213
                 inoutInfo.print_times = SetOrderInfo.JoinNo;
-                inoutInfo.Field1 = "0";     //Jermyn20140314 配置是否支付
+                inoutInfo.Field1 = "0";  
                 inoutInfo.Field15 = SetOrderInfo.IsGroupBuy;
                 inoutInfo.sales_user = SetOrderInfo.SalesUser; //销售ID add by donal 2014-9-26 14:39:45
                 inoutInfo.ChannelId = SetOrderInfo.ChannelId; // 渠道ID add by donal 2014-9-28 14:39:45
                 inoutInfo.ReturnCash = SetOrderInfo.ReturnCash;//佣金 add by donal 2014-12-9 10:46:33
-                inoutInfo.InoutExpandEntity = new T_Inout_ExpandEntity()
-                {
-                    OrderId = SetOrderInfo.OrderId,
-                    OrderExpandID = SetOrderInfo.OrderId,
-                    DeliveryMode = string.Empty,
-                    LogisticRemark = string.Empty,
-                    TransType = "PA",
-                    CreateTime = DateTime.Now,
-                    CreateBy = SetOrderInfo.CreateBy,
-                    LastUpdateTime = DateTime.Now,
-                    LastUpdateBy = SetOrderInfo.CreateBy,
-                    IsDelete = 0,
-                    CustomerID = SetOrderInfo.CustomerId,
-                    DiscRemarks = string.Empty,
-                    IsCallBeDeli = "N",
-                    GoodsAndInvoice = "Y"
-                };
+                inoutInfo.Field17 = SetOrderInfo.Field17; //卡号
+                inoutInfo.Field18 = SetOrderInfo.Field18; //卡类型
 
                 if (SetOrderInfo.PurchaseUnitId != null)
                 {
@@ -1780,11 +1778,12 @@ namespace JIT.CPOS.BS.BLL
                     var orderInfo = inoutBLL.GetInoutInfo(orderId, this.loggingSessionInfo);
                     if (orderInfo != null && orderInfo.status != "700")//完成订单时处理积分、返现、佣金[和确认收货一致]
                     {
-                        // VIP余额返现等处理
-                        new VipIntegralBLL(this.loggingSessionInfo).OrderReward(orderInfo, tran);
-                        // VIPCard虚拟账户返现等处理
-
+                        //new VipIntegralBLL(this.loggingSessionInfo).OrderReward(orderInfo, tran);
+                        new SendOrderRewardMsgBLL().OrderReward(orderInfo, this.loggingSessionInfo, tran);////存入到缓存
+                        orderInfo.accpect_time = DateTime.Now.ToString();  //完成时间用于提现规则判断条件
+                        inoutBLL.Update(orderInfo);
                     }
+
                 }
                 inoutService.UpdateOrderDeliveryStatus(orderId, status, statusDesc, null, null, tableNo);
                 if (status == "600")
@@ -1800,7 +1799,11 @@ namespace JIT.CPOS.BS.BLL
                 }
 
                 //订单消息推送 update by Henry 2015-4-15 洗e客-商城不用推送商品订单
-                OrderPushMessage(orderId, status);
+                if (status == "500" || status == "700" || status == "100")  //下订单后推送信息   
+                {
+                    //OrderPushMessage(orderId, status);//目前发货有模板消息没用到推送
+                    new SendOrderPushMessageBLL().OrderPushMessage(orderId, status, loggingSessionInfo, tran);  //加入缓存
+                }
 
                 return true;
             }
@@ -1815,14 +1818,13 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="orderId">订单ID</param>
         /// <param name="pOrderStatus">状态</param>
-        public void OrderPushMessage(string orderId, string pOrderStatus)
+        public void OrderPushMessage(string orderId, string pOrderStatus, string CustomerName = null)
         {
             StringBuilder StringBuilderLog = new StringBuilder();
             Loggers.Debug(new DebugLogInfo() { Message = "推送开始......" });
             IList<TOrderPushStrategyEntity> _TOrderPushStrategyEntityList = new TOrderPushStrategyBLL(loggingSessionInfo).GetTOrderPushStrategyEntityList(loggingSessionInfo.CurrentLoggingManager.Customer_Id, pOrderStatus);
 
             var inoutEntity = this.GetInoutInfoById(orderId);
-            string CustomerName = inoutService.GetCustomerName(inoutEntity.customer_id);
 
             #region 生成消息
 
@@ -1866,7 +1868,15 @@ namespace JIT.CPOS.BS.BLL
 
                     if (_TOrderPushStrategyEntity.PushObject == 2)//客服
                     {
-                        PushToUserList(pushIOSMessage, msg);
+                        if (!string.IsNullOrEmpty(inoutEntity.unit_id))
+                        {
+                            PushToUserList(pushIOSMessage, msg, inoutEntity.unit_id); //推送给相关门店的客服人员
+                        }
+                        else
+                        {
+                            PushToUserList(pushIOSMessage, msg);
+                        }
+                     
                     }
 
                     #region 记录日志
@@ -1918,7 +1928,15 @@ namespace JIT.CPOS.BS.BLL
 
                     if (_TOrderPushStrategyEntity.PushObject == 2)//客服
                     {
-                        PushToUserList(pushAndroidMessage, msg);
+                        //PushToUserList(pushAndroidMessage, msg);
+                        if (!string.IsNullOrEmpty(inoutEntity.unit_id))
+                        {
+                            PushToUserList(pushAndroidMessage, msg, inoutEntity.unit_id); //推送给相关门店的客服人员
+                        }
+                        else
+                        {
+                            PushToUserList(pushAndroidMessage, msg);
+                        }
                     }
 
                     #region 记录日志
@@ -2177,7 +2195,7 @@ namespace JIT.CPOS.BS.BLL
             try
             {
                 bool mailOK = false;
-              //  IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
+                //  IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
                 IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByMenuCode("CustomerOrders");
 
                 Loggers.Debug(new DebugLogInfo() { Message = "客服列表，userInfos:" + userInfos.ToJSON() });
@@ -2224,8 +2242,8 @@ namespace JIT.CPOS.BS.BLL
         {
             try
             {
-             //  IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
-                IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByMenuCode("CustomerOrders");
+                //  IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
+                IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByMenuCode("CustomerOrders",null);
                 Loggers.Debug(new DebugLogInfo() { Message = "客服列表，userInfos:" + userInfos.ToJSON() });
 
                 foreach (var userInfo in userInfos)
@@ -2243,13 +2261,43 @@ namespace JIT.CPOS.BS.BLL
             }
         }
 
+
+
+
+        /// <summary>
+        /// 推送消息给客服 {增加门店}
+        /// </summary>
+        /// <param name="pPushMessage">消息内容</param>
+        /// <param name="msg">推送的具体消息</param>
+        private void PushToUserList(IPushMessage pPushMessage, string msg, string unit_id)
+        {
+            try
+            {
+                //  IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
+                IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByMenuCode("CustomerOrders", unit_id);
+                Loggers.Debug(new DebugLogInfo() { Message = "客服列表，userInfos:" + userInfos.ToJSON() });
+
+                foreach (var userInfo in userInfos)
+                {
+                    //IOS推送
+                    pPushMessage.PushMessage(userInfo.User_Id, msg);
+                }
+            }
+            catch (Exception ex)
+            {
+                Loggers.Debug(new DebugLogInfo()
+                {
+                    Message = string.Format("推送客服消息异常信息: {0}", ex.ToString())
+                });
+            }
+        }
         /// <summary>
         /// 这是OrderPushMessage
         /// 根据订单状态，做出不同的推送消息
         /// </summary>
         /// <param name="orderId">订单ID</param>
         /// <param name="status">状态</param>
-        public void OrderPushMessageBAK(string orderId, string status)
+        public void OrderPushMessageBAK(string orderId, string status,string unit_id)
         {
             Loggers.Debug(new DebugLogInfo() { Message = "推送开始......" });
             IPushMessage pushIOSMessage = new PushIOSMessage(loggingSessionInfo);
@@ -2262,8 +2310,13 @@ namespace JIT.CPOS.BS.BLL
                 //推送给客服
                 try
                 {
+                        var inoutEntity = this.GetInoutInfoById(orderId);
+                        if (inoutEntity==null)
+                        {
+                            inoutEntity = new InoutInfo();
+                        }
                     //IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
-                    IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByMenuCode("CustomerOrders");
+                    IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByMenuCode("CustomerOrders", inoutEntity.unit_id);
                     Loggers.Debug(new DebugLogInfo() { Message = "客服列表，userInfos:" + userInfos.ToJSON() });
 
                     string msg = "你有一笔新订单待处理";
@@ -2409,15 +2462,14 @@ namespace JIT.CPOS.BS.BLL
                     inoutInfo.purchase_unit_id = SetOrderInfo.StoreId; //到店提货的店标识
                     inoutInfo.unit_id = SetOrderInfo.StoreId;
                     inoutInfo.sales_unit_id = SetOrderInfo.StoreId;
-                    inoutInfo.create_unit_id = SetOrderInfo.StoreId;
                 }
                 #endregion
 
                 bool bReturn = Update(inoutInfo, out strError);
 
-                //支付成功，发送邮件与短信
-                cUserService userServer = new cUserService(loggingSessionInfo);
-                userServer.SendOrderMessage(inoutInfo.order_id);
+                //支付成功，发送邮件与短信  （这里只是修改配送信息的）
+                //cUserService userServer = new cUserService(loggingSessionInfo);
+                //userServer.SendOrderMessage(inoutInfo.order_id);
 
                 //strError = "提交订单成功.";
                 return bReturn;

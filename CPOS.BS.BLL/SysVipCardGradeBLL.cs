@@ -51,7 +51,7 @@ namespace JIT.CPOS.BS.BLL
         /// <returns></returns>
         public decimal GetVipDiscount()
         {
-            decimal vipDiscount = 1;    //会员折扣
+            decimal vipDiscount = 10;    //会员折扣
             //判断是否启用会员折扣
             var basicSettingBLL = new CustomerBasicSettingBLL(CurrentUserInfo);
             var vipBLL = new VipBLL(CurrentUserInfo);
@@ -84,9 +84,9 @@ namespace JIT.CPOS.BS.BLL
                 if (vipCardInfo != null)
                 {
                     var vipCardRuleInfo = vipCardRuleBLL.QueryByEntity(new VipCardRuleEntity() { VipCardTypeID = vipCardInfo.VipCardTypeID }, null).FirstOrDefault();
-                    if (vipCardRuleInfo != null&&vipCardRuleInfo.CardDiscount>0)
+                    if (vipCardRuleInfo != null && vipCardRuleInfo.CardDiscount > 0)
                     {
-                        vipDiscount = vipCardRuleInfo.CardDiscount == null ? 1 : (vipCardRuleInfo.CardDiscount.Value / 10);
+                        vipDiscount = vipCardRuleInfo.CardDiscount == null ? 10 : (vipCardRuleInfo.CardDiscount.Value / 10);
                     }
                 }
             }

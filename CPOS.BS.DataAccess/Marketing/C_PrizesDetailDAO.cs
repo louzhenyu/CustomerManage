@@ -54,7 +54,7 @@ namespace JIT.CPOS.BS.DataAccess
             if (!string.IsNullOrWhiteSpace(PrizesID))
             {
                 StringBuilder sql = new StringBuilder();
-                sql.Append("select a.*,b.CouponTypeName,b.EndTime,b.IssuedQty,b.IsVoucher,b.CouponTypeDesc from C_PrizesDetail as a ");
+                sql.Append("select a.*,b.CouponTypeName,b.EndTime,b.IssuedQty,b.IsVoucher,b.CouponTypeDesc,b.IsNotLimitQty from C_PrizesDetail as a ");
                 sql.Append("left join CouponType as b on a.CouponTypeID=b.CouponTypeID and b.IsDelete=0 ");
                 sql.AppendFormat("where a.IsDelete=0 and a.PrizesID='{0}'", PrizesID);
 

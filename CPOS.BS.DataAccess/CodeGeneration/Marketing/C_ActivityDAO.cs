@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015/9/9 17:12:31
+ * Create On	:2016/7/13 11:56:02
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [C_Activity](");
-            strSql.Append("[ActivityType],[ActivityName],[StartTime],[EndTime],[IsLongTime],[PointsMultiple],[SendCouponQty],[Status],[IsAllVipCardType],[IsVipGrouping],[CustomerID],[CreateBy],[CreateTime],[LastUpdateBy],[LastUpdateTime],[IsDelete],[ActivityID])");
+            strSql.Append("[ActivityType],[ActivityName],[StartTime],[EndTime],[IsLongTime],[PointsMultiple],[SendCouponQty],[Status],[IsAllVipCardType],[IsVipGrouping],[CustomerID],[TargetCount],[Remark],[CreateBy],[CreateTime],[LastUpdateBy],[LastUpdateTime],[IsDelete],[ActivityID])");
             strSql.Append(" values (");
-            strSql.Append("@ActivityType,@ActivityName,@StartTime,@EndTime,@IsLongTime,@PointsMultiple,@SendCouponQty,@Status,@IsAllVipCardType,@IsVipGrouping,@CustomerID,@CreateBy,@CreateTime,@LastUpdateBy,@LastUpdateTime,@IsDelete,@ActivityID)");            
+            strSql.Append("@ActivityType,@ActivityName,@StartTime,@EndTime,@IsLongTime,@PointsMultiple,@SendCouponQty,@Status,@IsAllVipCardType,@IsVipGrouping,@CustomerID,@TargetCount,@Remark,@CreateBy,@CreateTime,@LastUpdateBy,@LastUpdateTime,@IsDelete,@ActivityID)");            
 
 			Guid? pkGuid;
 			if (pEntity.ActivityID == null)
@@ -104,6 +104,8 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@IsAllVipCardType",SqlDbType.Int),
 					new SqlParameter("@IsVipGrouping",SqlDbType.Int),
 					new SqlParameter("@CustomerID",SqlDbType.VarChar),
+					new SqlParameter("@TargetCount",SqlDbType.Int),
+					new SqlParameter("@Remark",SqlDbType.NVarChar),
 					new SqlParameter("@CreateBy",SqlDbType.VarChar),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
@@ -122,12 +124,14 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[8].Value = pEntity.IsAllVipCardType;
 			parameters[9].Value = pEntity.IsVipGrouping;
 			parameters[10].Value = pEntity.CustomerID;
-			parameters[11].Value = pEntity.CreateBy;
-			parameters[12].Value = pEntity.CreateTime;
-			parameters[13].Value = pEntity.LastUpdateBy;
-			parameters[14].Value = pEntity.LastUpdateTime;
-			parameters[15].Value = pEntity.IsDelete;
-			parameters[16].Value = pkGuid;
+			parameters[11].Value = pEntity.TargetCount;
+			parameters[12].Value = pEntity.Remark;
+			parameters[13].Value = pEntity.CreateBy;
+			parameters[14].Value = pEntity.CreateTime;
+			parameters[15].Value = pEntity.LastUpdateBy;
+			parameters[16].Value = pEntity.LastUpdateTime;
+			parameters[17].Value = pEntity.IsDelete;
+			parameters[18].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -243,10 +247,16 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[IsVipGrouping]=@IsVipGrouping,");
             if (pIsUpdateNullField || pEntity.CustomerID!=null)
                 strSql.Append( "[CustomerID]=@CustomerID,");
+            if (pIsUpdateNullField || pEntity.TargetCount!=null)
+                strSql.Append( "[TargetCount]=@TargetCount,");
+            if (pIsUpdateNullField || pEntity.Remark!=null)
+                strSql.Append( "[Remark]=@Remark,");
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime");
+            if (strSql.ToString().EndsWith(","))
+                strSql.Remove(strSql.Length - 1, 1);
             strSql.Append(" where ActivityID=@ActivityID ");
             SqlParameter[] parameters = 
             {
@@ -261,6 +271,8 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@IsAllVipCardType",SqlDbType.Int),
 					new SqlParameter("@IsVipGrouping",SqlDbType.Int),
 					new SqlParameter("@CustomerID",SqlDbType.VarChar),
+					new SqlParameter("@TargetCount",SqlDbType.Int),
+					new SqlParameter("@Remark",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@ActivityID",SqlDbType.UniqueIdentifier)
@@ -276,9 +288,11 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[8].Value = pEntity.IsAllVipCardType;
 			parameters[9].Value = pEntity.IsVipGrouping;
 			parameters[10].Value = pEntity.CustomerID;
-			parameters[11].Value = pEntity.LastUpdateBy;
-			parameters[12].Value = pEntity.LastUpdateTime;
-			parameters[13].Value = pEntity.ActivityID;
+			parameters[11].Value = pEntity.TargetCount;
+			parameters[12].Value = pEntity.Remark;
+			parameters[13].Value = pEntity.LastUpdateBy;
+			parameters[14].Value = pEntity.LastUpdateTime;
+			parameters[15].Value = pEntity.ActivityID;
 
             //执行语句
             int result = 0;
@@ -588,6 +602,10 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsVipGrouping", Value = pQueryEntity.IsVipGrouping });
             if (pQueryEntity.CustomerID!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = pQueryEntity.CustomerID });
+            if (pQueryEntity.TargetCount!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "TargetCount", Value = pQueryEntity.TargetCount });
+            if (pQueryEntity.Remark!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Remark", Value = pQueryEntity.Remark });
             if (pQueryEntity.CreateBy!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateBy", Value = pQueryEntity.CreateBy });
             if (pQueryEntity.CreateTime!=null)
@@ -660,6 +678,14 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["CustomerID"] != DBNull.Value)
 			{
 				pInstance.CustomerID =  Convert.ToString(pReader["CustomerID"]);
+			}
+			if (pReader["TargetCount"] != DBNull.Value)
+			{
+				pInstance.TargetCount =   Convert.ToInt32(pReader["TargetCount"]);
+			}
+			if (pReader["Remark"] != DBNull.Value)
+			{
+				pInstance.Remark =  Convert.ToString(pReader["Remark"]);
 			}
 			if (pReader["CreateBy"] != DBNull.Value)
 			{

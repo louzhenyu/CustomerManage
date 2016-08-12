@@ -53,28 +53,35 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.OrderNotPay
                 for (var i = 0; i < numCount; i++)
                 {
                     //
-                    var response = RedisOpenAPI.Instance.CCOrderNotPay().GetOrderNotPay(new CC_OrderNotPay
+                    try
                     {
-                        CustomerID = customer.Key
-                    });
-                    if (response.Code == ResponseCode.Success)
-                    {
-                        var templateID = response.Result.ConfigData.TemplateID;
-                        var openID = response.Result.ConfigData.OpenID;
-                        var vipID = response.Result.ConfigData.VipID;
-                        var loggingSessionInfo = response.Result.ConfigData.LogSession.JsonDeserialize<LoggingSessionInfo>();
-                        var Data = new NotPay
+                        var response = RedisOpenAPI.Instance.CCOrderNotPay().GetOrderNotPay(new CC_OrderNotPay
                         {
-                            first = new DataInfo { value = response.Result.OrderNotPayData.first.value, color = response.Result.OrderNotPayData.first.color },
-                            orderProductPrice = new DataInfo { value = response.Result.OrderNotPayData.orderProductPrice.value, color = response.Result.OrderNotPayData.orderProductPrice.color },
-                            orderProductName = new DataInfo { value = response.Result.OrderNotPayData.orderProductName.value, color = response.Result.OrderNotPayData.orderProductName.color },
-                            orderAddress = new DataInfo { value = response.Result.OrderNotPayData.orderAddress.value, color = response.Result.OrderNotPayData.orderAddress.color },
-                            orderName = new DataInfo { value = response.Result.OrderNotPayData.orderName.value, color = response.Result.OrderNotPayData.orderName.color },
-                            remark = new DataInfo { value = response.Result.OrderNotPayData.remark.value, color = response.Result.OrderNotPayData.remark.color }
-                        };
+                            CustomerID = customer.Key
+                        });
+                        if (response.Code == ResponseCode.Success)
+                        {
+                            var templateID = response.Result.ConfigData.TemplateID;
+                            var openID = response.Result.ConfigData.OpenID;
+                            var vipID = response.Result.ConfigData.VipID;
+                            var loggingSessionInfo = CustomerBLL.Instance.GetBSLoggingSession(customer.Key, "1"); //response.Result.ConfigData.LogSession.JsonDeserialize<LoggingSessionInfo>();
+                            var Data = new NotPay
+                            {
+                                first = new DataInfo { value = response.Result.OrderNotPayData.first.value, color = response.Result.OrderNotPayData.first.color },
+                                orderProductPrice = new DataInfo { value = response.Result.OrderNotPayData.orderProductPrice.value, color = response.Result.OrderNotPayData.orderProductPrice.color },
+                                orderProductName = new DataInfo { value = Math.Round(Convert.ToDecimal(response.Result.OrderNotPayData.orderProductName.value), 2).ToString(), color = response.Result.OrderNotPayData.orderProductName.color },
+                                orderAddress = new DataInfo { value = response.Result.OrderNotPayData.orderAddress.value, color = response.Result.OrderNotPayData.orderAddress.color },
+                                orderName = new DataInfo { value = response.Result.OrderNotPayData.orderName.value, color = response.Result.OrderNotPayData.orderName.color },
+                                remark = new DataInfo { value = response.Result.OrderNotPayData.remark.value, color = response.Result.OrderNotPayData.remark.color }
+                            };
 
-                        commonBLL.SendMatchWXTemplateMessage(templateID, null, null, null, null, null, null, null, Data, "2", openID, null, loggingSessionInfo);
+                            commonBLL.SendMatchWXTemplateMessage(templateID, null, null, null, null, null, null, null, Data, "2", openID, null, loggingSessionInfo);
 
+                        }
+                    }
+                    catch
+                    {
+                        continue;
                     }
                 }
             }

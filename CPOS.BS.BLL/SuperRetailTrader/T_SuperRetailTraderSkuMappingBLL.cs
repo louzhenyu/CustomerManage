@@ -62,5 +62,15 @@ namespace JIT.CPOS.BS.BLL
         {
             return _currentDAO.GetSuperRetailTraderSkuDetail(itemId, customerId);
         }
+
+        /// <summary>
+        /// 获取超级分销商Sku价格
+        /// </summary>
+        /// <param name="skuId"></param>
+        /// <returns></returns>
+        public List<SkuPrice> GetSuperRetailTraderSkuPrice(string skuId,string customerId)
+        {
+            return _currentDAO.GetSuperRetailTraderSkuPrice(skuId,customerId);
+        }
     }
 }

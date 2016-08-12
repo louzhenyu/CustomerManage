@@ -243,6 +243,9 @@ function SetLogoInfo() {
                     }).delegate(".datagrid-cell-check", "mousedown", function (e) {
                     var dom = $(this);
                     var nondes = dom.parents(".datagrid-body-inner").find(".datagrid-cell-check input");
+                    if(nondes.length==0){
+                        nondes = dom.parents(".datagrid-body").find(".datagrid-cell-check input");
+                    }
                     //验证是否是全选
                     var isSeletAll = true;
                     for (var i = 0; i < nondes.length; i++) {

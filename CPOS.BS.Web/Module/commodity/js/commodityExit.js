@@ -509,9 +509,8 @@
                                                 if(record.VirtualItemTypeId==-1){
                                                     $("#ObjecetType").combobox("setValue","请选择");
                                                 }else {
-                                            $("#ObjecetType").combobox("setValue", "请选择");
                                                     var selectData = record.VirtualItemTypeCode;
-                                            if (selectData == "VipCard" || selectData == "RechargeCard" || selectData == "Package") {
+                                                    if (selectData == "VipCard") {
                                                         that.loadData.getSysVipCardTypeList(function (cardData) {
                                                             if (cardData.Data.SysVipCardTypeList && cardData.Data.SysVipCardTypeList.length > 0) {
                                                                 cardData.Data.SysVipCardTypeList[0]["selected"] = true;
@@ -531,7 +530,7 @@
                                                                 console.log("未创建任何类型的卡")
                                                             }
 
-                                                }, selectData);
+                                                        });
 
                                                     } else if (selectData == "Coupon") {
 
@@ -1360,7 +1359,7 @@
                             isSubmit=false
                         }
                         that.loadData.addPram.SkuList[0].barcode = me.val();
-                        console.log("商品编码" + me.val());
+                        console.log("商品条码" + me.val());
                     }
                 });
             }else{
@@ -1693,17 +1692,11 @@
                 });
             },
             //获取卡类型
-            getSysVipCardTypeList: function (callback, selectData) {
-                var cardType = 0;
-                if (selectData == "RechargeCard") {
-                    cardType = 1;
-                } else if (selectData == "Package") {
-                    cardType = 2
-                }
+            getSysVipCardTypeList:function(callback){
                 $.util.ajax({
                     url: " /ApplicationInterface/Gateway.ashx",
                     data: {
-                        action: 'VIP.SysVipCardType.GetSysVipCardTypeList&cardType=' + cardType
+                        action: 'VIP.SysVipCardType.GetSysVipCardTypeList'
                     },
                     success: function (data) {
                         if (data.IsSuccess && data.ResultCode == 0) {

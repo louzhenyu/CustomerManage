@@ -29,6 +29,7 @@ namespace JIT.CPOS.DTO.Module.Marketing.Coupon.Request
         /// 绑定商品的类型对应的ID
         /// </summary>
         public ObjectInfo[] BindTypeIdList { get; set; }
+        public int IsNotLimitQty { get; set; }
         public void Validate()
         {
 

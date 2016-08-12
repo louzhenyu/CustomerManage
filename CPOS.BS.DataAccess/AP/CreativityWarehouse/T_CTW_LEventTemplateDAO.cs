@@ -72,7 +72,7 @@ namespace JIT.CPOS.BS.DataAccess
                                         a.ActivityGroupId,
                                         b.[ActivityGroupCode] ,
                                         b.Name,
-                                        TemplateId ,
+                                        a.TemplateId ,
                                         c.ImageURL ,
                                         BannerUrl ,
                                         BannerName ,
@@ -86,13 +86,9 @@ namespace JIT.CPOS.BS.DataAccess
                                                   order by theme.createtime asc
                                                 )QRCodeUrl
                                          ,
-                                                ( SELECT   
-                                                            COUNT(DISTINCT CustomerId) UseCount
-                                                  FROM      [cpos_bs_alading].dbo.T_CTW_LEvent ctw
-                                                  WHERE     IsDelete = 0 AND ctw.TemplateId=a.TemplateId
-                                                  GROUP BY  TemplateId
-                                                ) UserCount
+                                        (ISNULL(temp.Usecount,0)+ISNULL(temp.ClickCount,0)) as UserCount
                                 FROM    T_CTW_Banner a
+                                        INNER JOIN T_CTW_LEventTemplate temp ON a.TemplateId=temp.TemplateId and temp.IsDelete=0
                                         LEFT JOIN SysMarketingGroupType b ON a.ActivityGroupId = b.ActivityGroupId
                                         LEFT JOIN dbo.ObjectImages c ON a.BannerImageId = c.ImageId
                                 WHERE   a.IsDelete = 0 and Status=30
@@ -115,12 +111,7 @@ namespace JIT.CPOS.BS.DataAccess
                                                             AND RCodeUrl IS NOT NULL
                                                   order by theme.createtime asc
                                                 )RCodeUrl,
-                                                ( SELECT   
-                                                            COUNT(DISTINCT CustomerId) UseCount
-                                                  FROM      [cpos_bs_alading].dbo.T_CTW_LEvent ctw
-                                                  WHERE     IsDelete = 0 AND ctw.TemplateId=Tem.TemplateId
-                                                  GROUP BY  TemplateId
-                                                ) UserCount
+                                        (ISNULL(tem.Usecount,0)+ISNULL(tem.ClickCount,0)) as UserCount
                                 FROM    T_CTW_LEventTemplate Tem
                                         
                                         LEFT JOIN dbo.ObjectImages Img ON Tem.ImageId = Img.ImageId
@@ -144,6 +135,30 @@ namespace JIT.CPOS.BS.DataAccess
                                 ", strActivityGroupCode);
             ds = staticSqlHelper.ExecuteDataset(strSql);
             return ds;
+        }
+        /// <summary>
+        /// 更新创意仓库活动模板的参与人数数据
+        /// </summary>
+        /// <param name="TemplateId"></param>
+        /// <param name="pType">1=UseCount更新,2=ClickCount更新</param>
+        /// <returns></returns>
+        public int UpdateTemplateInfo(string pTemplateId, int pType)
+        {
+            string strSql = string.Empty;
+            if (pType == 1)
+            {
+                strSql = @" update T_CTW_LEventTemplate  set LastUpdateBy=@UserID,LastUpdateTime=getdate(),UseCount=ISNULL(UseCount,0)+1 where TemplateId=@TemplateId ";
+            }
+            else
+            {
+                strSql = @" update T_CTW_LEventTemplate  set LastUpdateBy=@UserID,LastUpdateTime=getdate(),ClickCount=ISNULL(ClickCount,0)+1 where TemplateId=@TemplateId ";
+            }
+            SqlParameter[] parameter = new SqlParameter[]{
+                new SqlParameter("@UserID",this.CurrentUserInfo.UserID),
+                new SqlParameter("@TemplateId",pTemplateId)
+            };
+            int result = this.staticSqlHelper.ExecuteNonQuery(CommandType.Text, strSql, parameter);
+            return result;
         }
     }
 }

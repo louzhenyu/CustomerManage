@@ -29,9 +29,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                 complexCondition.Add(new LikeCondition() { FieldName = "ActivityName", Value = "%"+para.ActivityName + "%" });
             if (!string.IsNullOrEmpty(para.Status))
             {
-                if (para.Status.Equals("1"))
+                if (para.Status.Equals("1") || para.Status.Equals("5"))
                 {
-                    //暂停
+                    //暂停或不完整
                     complexCondition.Add(new EqualsCondition() { FieldName = "Status", Value = para.Status });
                 }
                 else
@@ -47,7 +47,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                             break;
                         case "3":
                             //运行中
-                            complexCondition.Add(new DirectCondition("((StartTime<='" + m_Date + "' and EndTime>='" + m_Date + "') or (IsLongTime=1 and StartTime<='" + m_Date + "')) "));
+                            complexCondition.Add(
+                                new DirectCondition("((StartTime<='" + m_Date + "' and EndTime>='" + m_Date +
+                                                    "') or (IsLongTime=1 and StartTime<='" + m_Date + "')) "));
                             break;
                         case "4":
                             //结束
@@ -71,58 +73,60 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
             rd.ActivityList = tempList.Entities.Select(t => new ActivityInfo()
             {
                 ActivityID = t.ActivityID.ToString(),
+                ActivityType = t.ActivityType.Value,
                 ActivityName = t.ActivityName,
-                TargetGroups = ActivityBLL.GetTargetGroups(t.ActivityID.ToString()),
+                IsAllCardType = t.IsAllVipCardType ?? 0,
+                TargetGroups = ActivityBLL.GetTargetGroups(t.IsAllVipCardType ?? 0, t.ActivityID.ToString()),
                 BeginEndData = (t.StartTime == null ? "" : t.StartTime.Value.ToString("yyyy-MM-dd至")) + (t.EndTime == null ? "" : t.EndTime.Value.ToString("yyyy-MM-dd")),
                 Status = t.Status.Value,
                 SendCouponQty = t.SendCouponQty == null ? 0 : t.SendCouponQty.Value,
                 IsLongTime = t.IsLongTime == null ? 0 : t.IsLongTime.Value,
                 StartTime = t.StartTime == null ? "" : t.StartTime.Value.ToString("yyyy-MM-dd"),
                 EndTime = t.EndTime == null ? "" : t.EndTime.Value.ToString("yyyy-MM-dd"),
+                TargetCount = ActivityBLL.GetTargetCount(ActivityBLL.GetTargetGroupId(t.IsAllVipCardType ?? 0, t.ActivityID.ToString()), t.ActivityType.Value, t.StartTime == null ? "" : t.StartTime.Value.ToString("yyyy-MM-dd"), t.EndTime == null ? "" : t.EndTime.Value.ToString("yyyy-MM-dd"), t.IsAllVipCardType ?? 0)
             }).ToList();
-
-            foreach (var item in rd.ActivityList)
-            {
-                if (item.Status == 0)
+                foreach (var item in rd.ActivityList)
                 {
-                    //当前活动不是长期
-                    DateTime NowData = DateTime.Now.Date;
+                    if (item.Status == 0)
+                    {
+                        //当前活动不是长期
+                        DateTime NowData = DateTime.Now.Date;
+                        if (item.IsLongTime == 1)
+                        {
+                            //长期
+                            if (!string.IsNullOrWhiteSpace(item.StartTime))
+                            {
+                                if (NowData < Convert.ToDateTime(item.StartTime).Date)
+                                    item.Status = 2;
+                                else
+                                    item.Status = 3;
+                            }
+                        }
+                        else
+                        {
+                            //不是长期
+                            if (!string.IsNullOrWhiteSpace(item.StartTime) && !string.IsNullOrWhiteSpace(item.EndTime))
+                            {
+                                if (NowData < Convert.ToDateTime(item.StartTime).Date)
+                                    item.Status = 2;
+                                else if (NowData <= Convert.ToDateTime(item.EndTime).Date)
+                                    item.Status = 3;
+                                else
+                                    item.Status = 4;
+                            }
+                        }
+                    }
+
                     if (item.IsLongTime == 1)
                     {
-                        //长期
-                        if (!string.IsNullOrWhiteSpace(item.StartTime))
+                        int i = item.BeginEndData.IndexOf("至");
+                        if (i > 0)
                         {
-                            if (NowData < Convert.ToDateTime(item.StartTime).Date)
-                                item.Status = 2;
-                            else
-                                item.Status = 3;
+                            item.BeginEndData = item.BeginEndData.Substring(0, (i + 1)) + "长期";
                         }
                     }
-                    else
-                    {
-                        //不是长期
-                        if (!string.IsNullOrWhiteSpace(item.StartTime) && !string.IsNullOrWhiteSpace(item.EndTime))
-                        {
-                            if (NowData < Convert.ToDateTime(item.StartTime).Date)
-                                item.Status = 2;
-                            else if (NowData <= Convert.ToDateTime(item.EndTime).Date)
-                                item.Status = 3;
-                            else
-                                item.Status = 4;
-                        }
-                    }
-                }
 
-                if (item.IsLongTime == 1)
-                {
-                    int i = item.BeginEndData.IndexOf("至");
-                    if (i > 0)
-                    {
-                        item.BeginEndData = item.BeginEndData.Substring(0, (i + 1)) + "长期";
-                    }
                 }
-
-            }
 
             return rd;
         }

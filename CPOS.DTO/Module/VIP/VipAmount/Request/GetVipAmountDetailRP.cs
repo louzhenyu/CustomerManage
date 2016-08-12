@@ -17,9 +17,13 @@ namespace JIT.CPOS.DTO.Module.VIP.VipAmount.Request
         /// </summary>
         public string VipCardCode { get; set; }
         /// <summary>
-        /// 类型（1=余额;2=返现）
+        /// 类型（1=余额;2=返现;3=红利明细）
         /// </summary>
         public int Type { get; set; }
+        /// <summary>
+        /// 1=全部;2=收入;3=提现
+        /// </summary>
+        public int DdividendType { get; set; }
         /// <summary>
         /// 页码。为空则默认为0
         /// </summary>

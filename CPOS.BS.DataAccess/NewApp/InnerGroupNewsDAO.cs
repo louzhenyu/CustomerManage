@@ -146,7 +146,7 @@ select a.*  from InnerGroupNews a
                         a.ObjectId
                         from InnerGroupNews a 
                         LEFT JOIN newsusermapping mum ON mum.GroupNewsId=a.GroupNewsId  AND mum.UserId=@UserId
-                        WHERE 1 = 1 AND a.isdelete = 0 ");
+                        WHERE 1 = 1 AND a.isdelete = 0  AND BusType <> 3");
             if (BusType != null && BusType != 0)
             {
                 pagedSql.Append(" AND BusType='" + BusType + "'");
@@ -171,7 +171,7 @@ select a.*  from InnerGroupNews a
 
             #region 记录总数sql
             totalCountSql.Append(@"select count(1) from InnerGroupNews as a WHERE  a.CustomerID =@CustomerID
-                                AND a.NoticePlatformType=@NoticePlatformTypeId AND a.IsDelete=0 AND a.CreateTime>=@CreateTime");
+                                AND a.NoticePlatformType=@NoticePlatformTypeId AND a.BusType <> 3 AND a.IsDelete=0 AND a.CreateTime>=@CreateTime");
 
             if (BusType != null && BusType != 0)
             {
@@ -228,7 +228,7 @@ select a.*  from InnerGroupNews a
                     select COUNT(*) AS 'UnReadCount' from InnerGroupNews a 
                     LEFT JOIN newsusermapping mum ON mum.GroupNewsId=a.GroupNewsId  AND mum.UserId=@UserId
                     WHERE a.isdelete = 0 
-                    and a.CustomerID =@CustomerID
+                    and a.CustomerID =@CustomerID AND a.BusType<> 3
                   ");
             if (!String.IsNullOrEmpty(NewsGroupId))
             {
@@ -296,11 +296,11 @@ select a.*  from InnerGroupNews a
 
             sbentitysql.Append(@"select COUNT(*) AS 'PageIndex'
                     from InnerGroupNews a  
-                    WHERE a.CreateTime>='" + CreateTime + "' AND a.NoticePlatformType=@NoticePlatformType AND a.createtime {0} (SELECT CreateTime FROM InnerGroupNews WHERE GroupNewsId=@GroupNewsId)  AND CustomerId=@CustomerId"); //获取当前商户的上一条消息或下一条消息 同时获取当前索引
+                    WHERE a.CreateTime>='" + CreateTime + "' AND a.NoticePlatformType=@NoticePlatformType and a.BusType<> 3 AND a.createtime {0} (SELECT CreateTime FROM InnerGroupNews WHERE GroupNewsId=@GroupNewsId)  AND CustomerId=@CustomerId"); //获取当前商户的上一条消息或下一条消息 同时获取当前索引
 
             sbentitysql.Append(@" select TOP 1 a.GroupNewsId AS 'GroupNewsId' ,a.Title AS 'Title',a.Text AS 'Text',a.ObjectId,a.CreateTime
                     from InnerGroupNews a  
-                    WHERE a.NoticePlatformType=@NoticePlatformType AND a.CreateTime>='" + CreateTime + @"' AND a.createtime {0} (SELECT CreateTime FROM InnerGroupNews WHERE GroupNewsId=@GroupNewsId)  AND CustomerId=@CustomerId
+                    WHERE a.NoticePlatformType=@NoticePlatformType AND a.BusType<> 3 AND a.CreateTime>='" + CreateTime + @"' AND a.createtime {0} (SELECT CreateTime FROM InnerGroupNews WHERE GroupNewsId=@GroupNewsId)  AND CustomerId=@CustomerId
                     ORDER BY a.CreateTime {1}"); //获取当前商户的上一条消息或下一条消息 同时获取当前索引
             SqlParameter[] parameter = new SqlParameter[]{
                 new SqlParameter("@NoticePlatformType",NoticePlatformTypeId),
@@ -346,6 +346,45 @@ select a.*  from InnerGroupNews a
             return entity;
         }
         #endregion
-
+        /// <summary>
+        /// 获取针对单个用户的站内信
+        /// </summary>
+        /// <param name="CustomerID"></param>
+        /// <param name="SentType">发送类型(1=即时查看 2=平铺)</param>
+        /// <param name="NoticePlatformType">平台类型（1：微信用户2：APP员工 3 ：超级分销APP）</param>
+        /// <param name="BusType">(1：内部公告 2：集客行动 3:升级提示)</param>
+        /// <param name="IsRead">是否已读</param>
+        /// <returns></returns>
+        public DataSet GetVipInnerNewsInfo(string CustomerID, int? SentType, int? NoticePlatformType, int? BusType,int? IsRead)
+        {
+            StringBuilder sbsql = new StringBuilder();
+            SqlParameter[] parameter = new SqlParameter[]{
+                new SqlParameter("@CustomerID",CustomerID),
+                new SqlParameter("@SentType",SentType),
+                new SqlParameter("@NoticePlatformType",NoticePlatformType),
+                new SqlParameter("@BusType",BusType),
+                new SqlParameter("@HasRead",IsRead)
+            };
+            sbsql.Append(@"select A.GroupNewsId, A.[Text],B.UserID,B.MappingID from InnerGroupNews A
+                        inner join NewsUserMapping B ON A.GroupNewsId=B.GroupNewsID
+                        Where A.CustomerID=@CustomerID and A.IsDelete=0");
+            if (SentType != null)
+            {
+                sbsql.Append(" and A.SentType=@SentType");
+            }
+            if (NoticePlatformType != null)
+            {
+                sbsql.Append(" and A.NoticePlatformType=@NoticePlatformType");
+            }
+            if (BusType != null)
+            {
+                sbsql.Append(" and A.BusType=@BusType");
+            }
+            if (IsRead != null)
+            {
+                sbsql.Append(" and B.HasRead=@HasRead");
+            }
+            return this.SQLHelper.ExecuteDataset(CommandType.Text, sbsql.ToString(), parameter);
+        }
     }
 }

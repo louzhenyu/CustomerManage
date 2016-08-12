@@ -787,6 +787,87 @@ insert into @TmpTable(user_id,row_no)
             return ds;
         }
 
+        #region 根据菜单编码和用户编号获取菜单权限{查看当前用户+店长 客服 菜单权限}
+        /// <summary>
+        /// 根据菜单编码和用户编号获取菜单权限{查看当前用户+店长 客服 菜单权限}
+        /// </summary>
+        /// <param name="roleCode"></param>
+        /// <returns></returns>
+        public DataSet GetUserInfoByMenuCode(string menuCode, string userId)
+        {
+            DataSet ds = new DataSet();
+            List<SqlParameter> ls = new List<System.Data.SqlClient.SqlParameter>();
+            ls.Add(new SqlParameter("@menuCode", menuCode));
+            ls.Add(new SqlParameter("@customer_id", CurrentUserInfo.CurrentUser.customer_id));
+            ls.Add(new SqlParameter("@UserId", userId));
+            string sql = @"select a.* 
+                              from T_User a 
+			                  where a.user_id in (
+				                   select  b.user_id from  T_User_Role b
+					                 inner join T_Role c on b.role_id=c.role_id 
+					                 inner join t_role_menu d on d.role_id=c.role_id
+					                 inner join t_menu e on e.menu_id=d.menu_id
+					                 where a.user_status='1' and b.status='1' and c.status='1' and d.status=1 and e.status=1					
+					                 and e.menu_code=@menuCode					  
+					                 and c.customer_id=@customer_id
+					                 and e.customer_id=@customer_id 
+                                     AND b.[user_id]=@UserId
+                                      )
+			                 and a.customer_id=@customer_id";
+
+
+            string rolesql = @"  SELECT USER_ID,tur.role_id,tr.role_name,tur.unit_id
+                             FROM T_User_Role AS tur
+                           INNER JOIN T_Role  AS tr ON tur.role_id=tr.role_id
+                          inner join t_role_menu d on d.role_id=tr.role_id
+					      inner join t_menu e on e.menu_id=d.menu_id
+                           WHERE tr.customer_id=@customer_id AND tr.role_name LIKE '%店长(APP)%' 
+                            AND tr.[status]=1 AND e.[status]=1 AND d.[status]=1
+                            AND tur.user_id <> @UserId --避免重复发送信息
+                            AND e.menu_code=@menuCode
+                            AND tur.unit_id IN (SELECT TOP 1 unit_id FROM T_User_Role WHERE [user_id]=@UserId)";
+            ds = this.SQLHelper.ExecuteDataset(CommandType.Text, sql + " " + rolesql, ls.ToArray());
+            return ds;
+        }
+        #endregion
+
+        #region 获取总部菜单权限的员工
+        public DataSet GetUserListByMenuNameAndTypeName(string menuCode)
+        {
+            List<SqlParameter> ls = new List<System.Data.SqlClient.SqlParameter>();
+            ls.Add(new SqlParameter("@menuCode", menuCode));
+            ls.Add(new SqlParameter("@customer_id", CurrentUserInfo.CurrentUser.customer_id));
+
+            string sql = @"SELECT USER_ID,
+                               tur.role_id,
+                               tr.role_name,
+                               tur.unit_id,
+                               e.menu_name,
+                               e.menu_code
+                        FROM   T_User_Role        AS tur
+                               INNER JOIN T_Role  AS tr
+                                    ON  tur.role_id = tr.role_id
+                               INNER JOIN t_role_menu d
+                                    ON  d.role_id = tr.role_id
+                               INNER JOIN t_menu e
+                                    ON  e.menu_id = d.menu_id
+                        WHERE  tr.customer_id =@customer_id
+                               AND e.menu_code =@menuCode
+                               AND tr.[status] = 1
+                               AND e.[status] = 1
+                               AND d.[status] = 1
+                               AND tur.unit_id IN (SELECT tu.unit_id
+                                                   FROM   T_Type AS tt
+                                                          INNER JOIN t_unit AS tu
+                                                               ON  tt.[type_id] = tu.[type_id]
+                                                   WHERE  TT.type_code = '总部'
+                                                          AND tt.Customer_id =@customer_id)";
+            var ds = this.SQLHelper.ExecuteDataset(CommandType.Text, sql, ls.ToArray());
+            return ds;
+        }
+        #endregion
+       
+
         #region 根据用户标识获取角色信息
         /// <summary>
         /// 根据用户标识获取角色信息
@@ -1088,7 +1169,7 @@ insert into @TmpTable(user_id,row_no)
         /// </summary>
         /// <param name="roleCode"></param>
         /// <returns></returns>
-        public DataSet GetUserListByMenuCode(string menuCode)
+        public DataSet GetUserListByMenuCode(string menuCode, string unit_id)
         {
             DataSet ds = new DataSet();
             List<SqlParameter> ls = new List<System.Data.SqlClient.SqlParameter>();
@@ -1104,11 +1185,16 @@ insert into @TmpTable(user_id,row_no)
 					                 where a.user_status='1' and b.status='1' and c.status='1' and d.status=1 and e.status=1					
 					                 and e.menu_code=@menuCode					  
 					                  and c.customer_id=@customer_id
-					                  and e.customer_id=@customer_id
-	    	                 )
+					                  and e.customer_id=@customer_id";
+            if (!String.IsNullOrEmpty(unit_id))
+            {
+                sql += " and b.unit_id='" + unit_id + "'";
+            }
+
+            sql += @"   )
 			                 and a.customer_id=@customer_id";
-         
-            ds = this.SQLHelper.ExecuteDataset(CommandType.Text,sql,ls.ToArray());
+
+            ds = this.SQLHelper.ExecuteDataset(CommandType.Text, sql, ls.ToArray());
             return ds;
         }
 

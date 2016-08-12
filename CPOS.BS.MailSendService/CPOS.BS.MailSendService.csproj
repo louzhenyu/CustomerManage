@@ -87,12 +87,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CPOS.BS.BLL\CPOS.BS.BLL.csproj">
-      <Project>{9ADF4825-9B7C-4BB1-A05C-9C137B33D81B}</Project>
+      <Project>{9adf4825-9b7c-4bb1-a05c-9c137b33d81b}</Project>
       <Name>CPOS.BS.BLL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CPOS.BS.DataAccess\CPOS.BS.DataAccess.csproj">
-      <Project>{928C0A63-F799-49B5-A566-65BE4ABC9F56}</Project>
-      <Name>CPOS.BS.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.Entity\CPOS.BS.Entity.csproj">
       <Project>{6D911430-7243-4AB2-B70E-4DAFFC4D1B22}</Project>

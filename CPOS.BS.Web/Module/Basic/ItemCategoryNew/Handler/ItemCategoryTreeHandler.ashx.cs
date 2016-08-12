@@ -44,13 +44,12 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
                     node.Status = item.Status;
                     node.IsLeaf = true;
                     node.NodeLevel = GetLevel(item.Parent_Id);
-                    node.DisplayIndex = item.DisplayIndex ?? 0;//排序字段,新加
+                    node.DisplayIndex = item.DisplayIndex == null ? 0 : (int)item.DisplayIndex;//排序字段,新加
 
                     //新添加的节点
                     node.create_time = string.IsNullOrEmpty(item.Create_Time) ? "" : Convert.ToDateTime(item.Create_Time).ToShortDateString();
                     node.ImageUrl = item.ImageUrl;
                     node.PromotionItemCount = item.PromotionItemCount;
-                    //node.CommissionRate = item.CommissionRate;
                     nodes.Add(node);
                 }
             }

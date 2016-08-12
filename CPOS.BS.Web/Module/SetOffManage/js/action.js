@@ -1155,16 +1155,16 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                             if(type=='1'){
                                 $('#winMessage').window('close');
                                 alert('集客行动及活动消息已发布');
-                               $.util.toNewUrlPath( "/module/SetOffManage/Source.aspx");
+                                location.href =( "/module/SetOffManage/Source.aspx");
                             }else if(type=='2'){
                                 $('#winMessage').window('close');
                                 alert('活动消息已发布');
-                                $.util.toNewUrlPath( "/module/SetOffManage/Source.aspx");
+                                location.href =( "/module/SetOffManage/Source.aspx");
                             }
                             else{
                                 $('#winMessage').window('close');
                                 alert('集客行动已发布');
-                               $.util.toNewUrlPath( "/module/SetOffManage/Source.aspx");
+                                location.href =( "/module/SetOffManage/Source.aspx");
                             }
 
                         });
@@ -1183,7 +1183,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                 if(type=='1'){
                     $('#winMessage').window('close');
                     alert('集客行动已发布');
-                    $.util.toNewUrlPath( "/module/SetOffManage/Source.aspx");
+                    location.href =("/module/SetOffManage/Source.aspx");
                 }else{
                     $('#winMessage').window('close');
                     location.reload()

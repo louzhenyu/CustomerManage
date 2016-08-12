@@ -14,17 +14,17 @@ namespace JIT.CPOS.DTO.Module.Marketing.Activity.Request
         /// </summary>
         public string ActivityID { get; set; }
         /// <summary>
-        /// 操作类型
+        /// 奖品ID
         /// </summary>
-        public int OperationType { get; set; }
+        public string PrizesID { get; set; }
         /// <summary>
-        /// 赠值限额
+        /// 奖品类型
         /// </summary>
-        public decimal? PointsMultiple { get; set; }
+        public int PrizesType { get; set; }
         /// <summary>
-        /// 奖品集合
+        /// 奖品明细集合
         /// </summary>
-        public List<PrizesInfo> PrizesInfoList { get; set; }
+        public List<PrizesDetailInfo> PrizesDetailList { get; set; }
 
         public void Validate() { }
     }

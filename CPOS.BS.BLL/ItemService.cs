@@ -55,7 +55,7 @@ namespace JIT.CPOS.BS.BLL
                                         , string item_name
                                         , string item_category_id
                                         , string status
-                                        , string item_can_redeem,string SalesPromotion_id
+                                        , string item_can_redeem, string SalesPromotion_id
                                         , int maxRowCount
                                         , int startRowIndex)
         {
@@ -151,13 +151,13 @@ namespace JIT.CPOS.BS.BLL
             //获取商品与分类关系
             itemInfo.ItemCategoryMappingList = new ItemCategoryMappingBLL(loggingSessionInfo).GetItemCategoryListByItemId(item_id);
             itemInfo.SalesPromotionList = itemInfo.ItemCategoryMappingList;
-          
+
             //对于新板块
-           // 商品sku名 (基础数据)
+            // 商品sku名 (基础数据)
             itemInfo.T_ItemSkuProp = new T_ItemSkuPropBLL(loggingSessionInfo).GetItemSkuPropByItemId(item_id);
 
             //虚拟商品
-            T_VirtualItemTypeSettingEntity entityVirtualItemType=new T_VirtualItemTypeSettingBLL(loggingSessionInfo).QueryByEntity(new T_VirtualItemTypeSettingEntity() {ItemId =item_id}, null).FirstOrDefault();
+            T_VirtualItemTypeSettingEntity entityVirtualItemType = new T_VirtualItemTypeSettingBLL(loggingSessionInfo).QueryByEntity(new T_VirtualItemTypeSettingEntity() { ItemId = item_id }, null).FirstOrDefault();
             if (entityVirtualItemType != null)
             {
                 itemInfo.VirtualItemTypeId = entityVirtualItemType.VirtualItemTypeId.ToString();
@@ -635,7 +635,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="itemId"></param>
         /// <param name="propDetailId"></param>
         /// <returns></returns>
-        public DataSet GetItemProp2List(string itemId, string propDetailId,int type,string eventId)
+        public DataSet GetItemProp2List(string itemId, string propDetailId, int type, string eventId)
         {
             return itemService.GetItemProp2List(itemId, propDetailId, type, eventId);
         }
@@ -841,6 +841,346 @@ namespace JIT.CPOS.BS.BLL
                 pageIndex, pageSize);
         }
 
+        /// <summary>
+        /// 获取配置商品的基础数据
+        /// </summary>
+        /// <param name="loggingSessionInfo"></param>
+        /// <returns></returns>
+        public GetItemBaseDataRD GetItemBaseData(LoggingSessionInfo loggingSessionInfo)
+        {
+            //var rp = pRequest.DeserializeJSONTo<APIRequest<GetItemBaseDataRP>>();
+            //var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
+            var rd = new GetItemBaseDataRD();//返回值
+            /// Prop_Type属性类型 1=组,2=属性,3=属性明细';
+            var propService = new JIT.CPOS.BS.BLL.PropService(loggingSessionInfo);
+            var ItemDomain = "ITEM";
+            var grouplist = propService.GetPropListFirstByDomain(ItemDomain);//获取商品属性组
+            foreach (var group in grouplist)
+            {
+                var propList = propService.GetPropListByParentId(ItemDomain, group.Prop_Id);//获取属性                
+                //Prop_Default_Value,每个属性上有默认的属性值
+                foreach (var prop in propList)
+                {
+                    var propDetailList = propService.GetPropListByParentId(ItemDomain, prop.Prop_Id);//获取属性明细 （即属性的选项值）   
+                    prop.Children = propDetailList;
+                }
+                group.Children = propList;
+            }
+            rd.ItemPropGroupList = grouplist;
+            //sku部分
+            var SKUDomain = "SKU";
+            var skuPropService = new JIT.CPOS.BS.BLL.SkuPropServer(loggingSessionInfo);
+            var skuList = skuPropService.GetSkuPropList();//获取了所有的规格（T_SKU_PROPerty a  和  T_Prop关联有数据的），T_SKU_PROPerty只存T_Prop表里prop_type为2（即属性级别的）并且domain为sku的
+            foreach (var sku in skuList)
+            {
+                sku.Children = propService.GetPropListByParentId(SKUDomain, sku.prop_id);//sku的明细项
+            }
+            rd.SKUPropList = skuList;
+
+            //获取价格类型
+            var priceTypeService = new JIT.CPOS.BS.BLL.ItemPriceTypeService(loggingSessionInfo);
+            var priceTypeList = priceTypeService.GetItemPriceTypeList();
+            rd.ItemPriceTypeList = priceTypeList;
+
+            return rd;
+
+            //var rsp = new SuccessResponse<IAPIResponseData>(rd);
+
+            //return rsp.ToJSON();
+        }
+
+
+        #region   卡与虚拟商品
+        public void SaveCardToOffenTItem(LoggingSessionInfo loggingSessionInfo, SysVipCardTypeEntity entityVipCardType)
+        {
+            //商品配置的基础属性
+            GetItemBaseDataRD _GetItemBaseDataRD = GetItemBaseData(loggingSessionInfo);
+            //查找基础数据
+            IList<ItemPriceTypeInfo> _ItemPriceTypeList = _GetItemBaseDataRD.ItemPriceTypeList;
+            //商品价格类型
+            ItemPriceTypeInfo ItemPriceTypeInfo_OrginPrice = _ItemPriceTypeList.Where(p => p.item_price_type_code == "Price").SingleOrDefault();
+            ItemPriceTypeInfo ItemPriceTypeInfo_Sales = _ItemPriceTypeList.Where(p => p.item_price_type_code == "零售价").SingleOrDefault();
+            ItemPriceTypeInfo ItemPriceTypeInfo_Qty = _ItemPriceTypeList.Where(p => p.item_price_type_code == "库存").SingleOrDefault();
+            ItemPriceTypeInfo ItemPriceTypeInfo_SalesCount = _ItemPriceTypeList.Where(p => p.item_price_type_code == "销量").SingleOrDefault();
+            //商品属性
+            PropInfo _ItemPropGroup = _GetItemBaseDataRD.ItemPropGroupList.Where(p => p.Prop_Code == "商品信息").SingleOrDefault();//一级商品属性
+            PropInfo _ItemPropDetail = _ItemPropGroup.Children.Where(p => p.Prop_Code == "ItemJS").SingleOrDefault();//商品详情
+            PropInfo _ItemPropQty = _ItemPropGroup.Children.Where(p => p.Prop_Code == "Qty").SingleOrDefault();//库存
+            PropInfo _ItemPropSalesCount = _ItemPropGroup.Children.Where(p => p.Prop_Code == "SalesCount").SingleOrDefault();//销量
+
+
+            string OperationType = "";//add或者update（通过查数据库来看），通过这样的方式，可以容错，防止之前的数据创建了卡了，没有创建对应的虚拟商品
+            var itemService = new JIT.CPOS.BS.BLL.ItemService(loggingSessionInfo);
+            // 虚拟商品类型
+            SysVirtualItemTypeBLL bllSysVirtualItemType = new SysVirtualItemTypeBLL(loggingSessionInfo);
+            SysVirtualItemTypeEntity SysVirtualItemType = bllSysVirtualItemType.QueryByEntity(new SysVirtualItemTypeEntity() { IsDelete = 0, VirtualItemTypeCode = "VipCard" }, null).FirstOrDefault();
+            // Hashtable _ht = new Hashtable();
+            //_ht.Add("Item_Id", item_id);
+            ItemInfo itemInfo = new ItemInfo();
+            //获取基础信息
+            DataSet ds = new DataSet();
+            // ds = itemService.GetItemById(item_id);
+            // 获取卡对应的虚拟商品
+            var itemServiceDal = new JIT.CPOS.BS.DataAccess.ItemService(loggingSessionInfo);
+            //根据虚拟商品类型和卡的id获取商品的信息
+            ds = itemServiceDal.GetItemByCardID(SysVirtualItemType.VirtualItemTypeId.ToString(), entityVipCardType.VipCardTypeID.ToString());
+            if (ds != null && ds.Tables[0].Rows.Count > 0)   //通过这样的做法
+            {
+                OperationType = "update";
+            }
+            else
+            {
+                OperationType = "add";
+            }
+            //公用的部分：
+            #region 创建图片的
+            ObjectImagesEntity ObjectImages = new ObjectImagesEntity();
+            ObjectImages.ImageURL = entityVipCardType.PicUrl;
+            ObjectImages.IsDelete = 0;
+            ObjectImages.LastUpdateBy = loggingSessionInfo.CurrentUser.User_Id;
+            ObjectImages.CreateBy = loggingSessionInfo.CurrentUser.User_Id;
+            ObjectImages.CreateTime = DateTime.Now;
+            ObjectImages.LastUpdateTime = DateTime.Now;
+            ObjectImages.DisplayIndex = 0;
+            ObjectImages.Title = "虚拟卡";
+            ObjectImages.Description = "虚拟卡";
+            ObjectImages.CustomerId = loggingSessionInfo.ClientID;
+            ObjectImages.IfFlag = 0;
+            #endregion
+
+
+            //添加的时候
+            if (OperationType == "add")//添加的时候
+            {
+                var item = new ItemInfo();
+
+                //if (string.IsNullOrEmpty(rp.Parameters.Item_Id))
+                //{
+                item.Item_Id = Utils.NewGuid();
+                //  }
+
+                //  item.Item_Code = rp.Parameters.Item_Code;
+                item.Item_Name = entityVipCardType.VipCardTypeName;//rp.Parameters.Item_Name;
+                // item.Item_Category_Id = rp.Parameters.Item_Category_Id;
+
+                //if (string.IsNullOrEmpty(rp.Parameters.Item_Code))
+                //{
+                item.Item_Code = itemService.GetGreatestItemCode(loggingSessionInfo);
+                if (item.Item_Code.Length == 0)
+                {
+                    throw new APIException("商品编码自动生成失败，请联系管理员。") { ErrorCode = 135 };
+                }
+                //}
+                //else
+                //{
+
+                //    if (!itemService.IsExistItemCode(loggingSessionInfo, item.Item_Code, item.Item_Id))
+                //    {
+                //        throw new APIException("商品编码不能重复。") { ErrorCode = 135 };
+                //    }
+
+                //}
+                item.OperationType = OperationType;
+
+                List<ObjectImagesEntity> images = new List<ObjectImagesEntity>();
+                ObjectImages.ObjectId = item.Item_Id;//图片关联商品
+                images.Add(ObjectImages);
+                item.ItemImageList = images;
+                //属性，
+                #region 给虚拟商品创建属性
+             
+
+                List<ItemPropInfo> PropList = new List<ItemPropInfo>();
+                ItemPropInfo P_Detail = new ItemPropInfo();
+                P_Detail.Item_Id = item.Item_Id;
+                P_Detail.PropertyCodeId = _ItemPropDetail.Prop_Id;
+                P_Detail.PropertyDetailId = "";
+                P_Detail.PropertyCodeValue = "商品详情";
+                P_Detail.IsEditor = true;
+                PropList.Add(P_Detail);
+
+                ItemPropInfo P_Qty = new ItemPropInfo();
+                P_Qty.Item_Id = item.Item_Id;
+                P_Qty.PropertyCodeId = _ItemPropQty.Prop_Id;
+                P_Qty.PropertyDetailId = "";
+                P_Qty.PropertyCodeValue = "1000000";
+                P_Qty.IsEditor = false;
+                PropList.Add(P_Qty);
+
+                ItemPropInfo P_SalesCount = new ItemPropInfo();
+                P_SalesCount.Item_Id = item.Item_Id;
+                P_SalesCount.PropertyCodeId = _ItemPropSalesCount.Prop_Id;
+                P_SalesCount.PropertyDetailId = "";
+                P_SalesCount.PropertyCodeValue = "0";
+                P_SalesCount.IsEditor = false;
+                PropList.Add(P_SalesCount);
+                #endregion
+                item.ItemPropList = PropList;// rp.Parameters.ItemPropList;
+
+                item.T_ItemSkuProp = null;// rp.Parameters.T_ItemSkuProp;//这个商品跟那些sku属性关联了
+
+                //一个默认的sku，三个价格类型的信息
+                SkuInfo onlySku = new SkuInfo();
+                onlySku.barcode = "虚拟商品仅有的sku";
+                onlySku.bat_id = "1";
+                onlySku.sku_id = Utils.NewGuid();//新建sku信息
+                onlySku.item_id = item.Item_Id;//跟新建的商品建立关联关系
+                onlySku.status = "1";
+                onlySku.create_time = DateTime.Now.ToString();
+                onlySku.create_user_id = loggingSessionInfo.UserID;
+                onlySku.modify_time = DateTime.Now.ToString();//跟新建的商品建立关联关系
+                onlySku.modify_user_id = loggingSessionInfo.UserID;//跟新建的商品建立关联关系
+                onlySku.sku_price_list=new List<SkuPriceInfo>();
+
+             //sku的价格信息
+                List<SkuPriceInfo> sku_price_list = new List<SkuPriceInfo>();//唯一的sku的价格信息
+
+                SkuPriceInfo ItemPriceOrigin = new SkuPriceInfo();//原价
+                ItemPriceOrigin.sku_price_id = Utils.NewGuid();
+                ItemPriceOrigin.item_price_type_id = ItemPriceTypeInfo_OrginPrice.item_price_type_id;
+                ItemPriceOrigin.sku_price = (decimal)entityVipCardType.Prices;
+                ItemPriceOrigin.sku_id = onlySku.sku_id;
+                ItemPriceOrigin.customer_id = loggingSessionInfo.ClientID;
+                ItemPriceOrigin.create_time = DateTime.Now.ToString();
+                ItemPriceOrigin.modify_time = DateTime.Now.ToString();
+                ItemPriceOrigin.modify_user_id = loggingSessionInfo.UserID;
+                onlySku.sku_price_list.Add(ItemPriceOrigin);
+                //零售价
+                SkuPriceInfo ItemPriceSales = new SkuPriceInfo();//零售价               
+                ItemPriceSales.sku_price_id = Utils.NewGuid();
+                ItemPriceSales.item_price_type_id = ItemPriceTypeInfo_Sales.item_price_type_id;
+                ItemPriceSales.sku_price = (decimal)entityVipCardType.Prices;
+                ItemPriceSales.sku_id = onlySku.sku_id;
+                ItemPriceSales.customer_id = loggingSessionInfo.ClientID;
+                ItemPriceSales.create_time = DateTime.Now.ToString();
+                ItemPriceSales.modify_time = DateTime.Now.ToString();
+                ItemPriceSales.modify_user_id = loggingSessionInfo.UserID;
+                onlySku.sku_price_list.Add(ItemPriceSales);
+                //库存
+                SkuPriceInfo ItemPriceQty = new SkuPriceInfo();//零售价               
+                ItemPriceQty.sku_price_id = Utils.NewGuid();
+                ItemPriceQty.item_price_type_id = ItemPriceTypeInfo_Qty.item_price_type_id;
+                ItemPriceQty.sku_price = 1000000;//库存为0
+                ItemPriceQty.sku_id = onlySku.sku_id;
+                ItemPriceQty.customer_id = loggingSessionInfo.ClientID;
+                ItemPriceQty.create_time = DateTime.Now.ToString();
+                ItemPriceQty.modify_time = DateTime.Now.ToString();
+                ItemPriceQty.modify_user_id = loggingSessionInfo.UserID;
+                onlySku.sku_price_list.Add(ItemPriceQty);
+                //销量
+                SkuPriceInfo ItemPriceSalesCount = new SkuPriceInfo();//零售价               
+                ItemPriceSalesCount.sku_price_id = Utils.NewGuid();
+                ItemPriceSalesCount.item_price_type_id = ItemPriceTypeInfo_SalesCount.item_price_type_id;
+                ItemPriceSalesCount.sku_price =0;
+                ItemPriceSalesCount.sku_id = onlySku.sku_id;
+                ItemPriceSalesCount.customer_id = loggingSessionInfo.ClientID;
+                ItemPriceSalesCount.create_user_id = loggingSessionInfo.UserID;
+                ItemPriceSalesCount.create_time = DateTime.Now.ToString();
+                ItemPriceSalesCount.modify_time = DateTime.Now.ToString();
+                ItemPriceSalesCount.modify_user_id = loggingSessionInfo.UserID;
+                onlySku.sku_price_list.Add(ItemPriceSalesCount);
+
+                //sku
+                List<SkuInfo> skuList = new List<SkuInfo>();
+                skuList.Add(onlySku);
+
+                item.SkuList = skuList;//rp.Parameters.SkuList;//
+                item.SalesPromotionList = new List<ItemCategoryMappingEntity>();  // rp.Parameters.SalesPromotionList;//促销分组
+
+                item.isGB = 1; // 0-非标商品，1-标准商品
+                item.ifservice = 1;//是否虚拟商品
+                item.ifoften = 1;    // 是否系统商品
+                //对应的虚拟商品              
+                item.VirtualItemTypeId = SysVirtualItemType.VirtualItemTypeId.ToString();
+                item.ObjecetTypeId = entityVipCardType.VipCardTypeID.ToString(); // rp.Parameters.ObjecetTypeId;
+
+                string error = "";
+                SetItemInfoNew(item,out error);               
+
+
+            }
+            else if (OperationType == "update")
+            {
+              
+
+                if (ds != null && ds.Tables[0].Rows.Count > 0)
+                {
+                    itemInfo = DataTableToObject.ConvertToObject<ItemInfo>(ds.Tables[0].Rows[0]);
+                }
+                itemInfo.OperationType = "add";//因为更新sku
+                itemInfo.Item_Name = entityVipCardType.VipCardTypeName;
+                //获取商品与属性关系信息
+                itemInfo.ItemPropList = new ItemPropService(loggingSessionInfo).GetItemPropListByItemId(itemInfo.Item_Id);
+                //获取商品与商品价格类型信息
+                itemInfo.ItemPriceList = new ItemPriceService(loggingSessionInfo).GetItemPriceListByItemId(itemInfo.Item_Id);
+
+                //获取商品与sku关系信息
+                itemInfo.SkuList = new SkuService(loggingSessionInfo).GetSkuListByItemId(itemInfo.Item_Id);
+                //遍历添加sku价格集合(jifeng.cao 20140221)
+                if (itemInfo.SkuList != null && itemInfo.SkuList.Count > 0)
+                {
+                    foreach (var skuInfo in itemInfo.SkuList)
+                    {
+                        skuInfo.sku_price_list = new SkuPriceService(loggingSessionInfo).GetSkuPriceListBySkuId(skuInfo.sku_id);
+                    }
+                }
+
+         
+
+                //获取商品与门店信息
+                itemInfo.ItemUnitList = new ItemStoreMappingBLL(loggingSessionInfo).GetItemUnitListByItemId(itemInfo.Item_Id);
+                //获取商品与分类关系
+                itemInfo.ItemCategoryMappingList = new ItemCategoryMappingBLL(loggingSessionInfo).GetItemCategoryListByItemId(itemInfo.Item_Id);
+                itemInfo.SalesPromotionList = itemInfo.ItemCategoryMappingList;
+
+                //对于新板块
+                // 商品sku名 (基础数据)
+                itemInfo.T_ItemSkuProp = new T_ItemSkuPropBLL(loggingSessionInfo).GetItemSkuPropByItemId(itemInfo.Item_Id);
+                //虚拟商品
+                T_VirtualItemTypeSettingEntity entityVirtualItemType = new T_VirtualItemTypeSettingBLL(loggingSessionInfo).QueryByEntity(new T_VirtualItemTypeSettingEntity() { ItemId = itemInfo.Item_Id }, null).FirstOrDefault();
+                if (entityVirtualItemType != null)
+                {
+                    itemInfo.VirtualItemTypeId = entityVirtualItemType.VirtualItemTypeId.ToString();
+                    itemInfo.ObjecetTypeId = entityVirtualItemType.ObjecetTypeId;
+                }
+
+
+                //取出来属性和sku，只更新属性和sku里的价格，别的不变***
+                //只修改价格的信息
+                itemInfo.SkuList[0].sku_price_list.ToList().Where(p => p.item_price_type_id == ItemPriceTypeInfo_OrginPrice.item_price_type_id).SingleOrDefault().price = (decimal)entityVipCardType.Prices;
+                itemInfo.SkuList[0].sku_price_list.ToList().Where(p => p.item_price_type_id == ItemPriceTypeInfo_Sales.item_price_type_id).SingleOrDefault().price = (decimal)entityVipCardType.Prices;
+                itemInfo.SkuList[0].sku_price_list.ToList().Where(p => p.item_price_type_id == ItemPriceTypeInfo_OrginPrice.item_price_type_id).SingleOrDefault().sku_price = (decimal)entityVipCardType.Prices;
+                itemInfo.SkuList[0].sku_price_list.ToList().Where(p => p.item_price_type_id == ItemPriceTypeInfo_Sales.item_price_type_id).SingleOrDefault().sku_price = (decimal)entityVipCardType.Prices;
+                itemInfo.SkuList[0].modify_time = DateTime.Now.ToString();
+                itemInfo.SkuList[0].modify_user_id = loggingSessionInfo.UserID;
+                itemInfo.SkuList[0].sku_price_list.ToList().Where(p => p.item_price_type_id == ItemPriceTypeInfo_OrginPrice.item_price_type_id).SingleOrDefault().modify_time=DateTime.Now.ToString();
+                itemInfo.SkuList[0].sku_price_list.ToList().Where(p => p.item_price_type_id == ItemPriceTypeInfo_Sales.item_price_type_id).SingleOrDefault().modify_time = DateTime.Now.ToString();
+       
+                //修改图片
+                List<ObjectImagesEntity> images = new List<ObjectImagesEntity>();
+                ObjectImages.ObjectId = itemInfo.Item_Id;//图片关联商品
+                images.Add(ObjectImages);
+                itemInfo.ItemImageList = images;
+
+
+                string error = "";
+                SetItemInfoNew(itemInfo, out error);      //修改         
+
+
+            }
+            //如果添加，就包含库存和销量的信息  （sku和整体的属性销量和sku）
+            //如果是修改，就不包含库存和销量的信息（只修改价格的信息）
+
+
+
+
+
+        }
+
+        #endregion
+
+
+
 
         #region 新版本保存商品信息
 
@@ -855,6 +1195,81 @@ namespace JIT.CPOS.BS.BLL
         /// <returns></returns>
         public bool SetItemInfoNew(ItemInfo itemInfo, out string strError)
         {
+            #region  从web层取过来
+            //sku值
+            if (itemInfo.SkuList != null && itemInfo.SkuList.Count > 0)//在单个的时候都已经添加过了
+            {
+                foreach (var tmpSku in itemInfo.SkuList)
+                {
+                    tmpSku.item_id = itemInfo.Item_Id;
+                    //SkuId为空，新生成SkuId
+                    if (tmpSku.sku_id == null || tmpSku.sku_id.Length == 0)
+                    {
+                        tmpSku.sku_id = Utils.NewGuid();
+                    }
+                    //处理sku相关价格(jifeng.cao 20140224)
+                    foreach (var skuprice in tmpSku.sku_price_list)
+                    {
+                        skuprice.sku_id = tmpSku.sku_id;
+                        //SkuPriceId为空，新生成SkuPriceId
+                        if (skuprice.sku_price_id == null || skuprice.sku_price_id.Length == 0)
+                        {
+                            skuprice.sku_price_id = Utils.NewGuid();
+                        }
+                    }
+
+                }
+            }
+            else
+            {
+                //对于无SKU配置的客户，默认生成一个SKU
+                SkuInfo skuInfo = new SkuInfo();
+                skuInfo.sku_id = Utils.NewGuid();
+                skuInfo.item_id = itemInfo.Item_Id;
+                // item_id = skuInfo.sku_id;
+                //skuInfo.barcode = skuInfo.item_code;
+                //skuInfo.prop_1_detail_id = "--";
+                //skuInfo.prop_2_detail_id = "--";
+                //skuInfo.prop_3_detail_id = "--";
+                //skuInfo.prop_4_detail_id = "--";
+                //skuInfo.prop_5_detail_id = "--";
+                //skuInfo.status = "1";
+                //skuInfo.create_user_id = "System";
+                //skuInfo.create_time = DateTime.Now.ToString();
+
+                itemInfo.SkuList.Add(skuInfo);
+            }
+
+            //虚拟商品处理
+            if (itemInfo.ifservice == 1)
+            {
+                T_VirtualItemTypeSettingBLL bllVirtualItem = new T_VirtualItemTypeSettingBLL(loggingSessionInfo);
+                T_VirtualItemTypeSettingEntity entityVirtualItem = new T_VirtualItemTypeSettingEntity();
+                //entityVirtualItem = bllVirtualItem.QueryByEntity(new T_VirtualItemTypeSettingEntity() { ItemId = rp.Parameters.Item_Id, SkuId = rp.Parameters.SkuList[0].sku_id }, null).FirstOrDefault();
+                entityVirtualItem = bllVirtualItem.QueryByEntity(new T_VirtualItemTypeSettingEntity() { ItemId = itemInfo.Item_Id }, null).FirstOrDefault();//商品的标识
+                if (entityVirtualItem != null)
+                {
+                    entityVirtualItem.VirtualItemTypeId = new Guid(itemInfo.VirtualItemTypeId); //new Guid(rp.Parameters.VirtualItemTypeId),
+                    entityVirtualItem.ObjecetTypeId = itemInfo.ObjecetTypeId;  // rp.Parameters.ObjecetTypeId,
+                    bllVirtualItem.Update(entityVirtualItem);
+                }
+                else
+                {
+                    entityVirtualItem = new T_VirtualItemTypeSettingEntity
+                    {
+                        Id = Guid.NewGuid(),
+                        ItemId = itemInfo.Item_Id,
+                        SkuId = itemInfo.SkuList[0].sku_id,//原来用 rp.Parameters.SkuList[0].sku_id,这个可能会出错
+                        VirtualItemTypeId = new Guid(itemInfo.VirtualItemTypeId),//new Guid(rp.Parameters.VirtualItemTypeId),
+                        ObjecetTypeId = itemInfo.ObjecetTypeId,//rp.Parameters.ObjecetTypeId,
+                        CustomerId = loggingSessionInfo.ClientID
+                    };
+                    bllVirtualItem.Create(entityVirtualItem);
+                }
+            }
+
+            #endregion
+
 
             try
             {
@@ -898,7 +1313,7 @@ namespace JIT.CPOS.BS.BLL
                     //处理富文本编辑内容中的图片
                     ImageHandler(itemInfo);
                     //处理促销分组
-                    //先把之前的删除掉
+                    //先把之前商品品类删除掉
                     ItemCategoryMappingBLL itemCategoryMappingBLL = new ItemCategoryMappingBLL(loggingSessionInfo);
                     itemCategoryMappingBLL.DeleteByItemID(itemInfo.Item_Id);
                     //然后加新的                 ;
@@ -907,7 +1322,7 @@ namespace JIT.CPOS.BS.BLL
                         SalesPromotion.MappingId = Guid.NewGuid();
                         SalesPromotion.ItemId = itemInfo.Item_Id;
 
-                     //   SalesPromotion.status = "1";
+                        //   SalesPromotion.status = "1";
                         SalesPromotion.IsDelete = 0;
                         SalesPromotion.CreateBy = "";
                         SalesPromotion.CreateTime = DateTime.Now;
@@ -915,7 +1330,7 @@ namespace JIT.CPOS.BS.BLL
                         SalesPromotion.LastUpdateBy = "";
                         itemCategoryMappingBLL.Create(SalesPromotion);
                     }
-                   
+
 
                     //处理商品的sku基础数据属性
                     T_ItemSkuPropBLL t_ItemSkuPropBLL = new T_ItemSkuPropBLL(loggingSessionInfo);
@@ -951,7 +1366,7 @@ namespace JIT.CPOS.BS.BLL
             {
                 throw (ex);
             }
-                    
+
         }
         #endregion
 
@@ -1156,5 +1571,16 @@ namespace JIT.CPOS.BS.BLL
         {
             return itemService.GetItemSkuInfoByCategory(strCategory, strItemName, strBatId);
         }
+    }
+
+
+
+    //获取保存商品需要的基础数据
+    public class GetItemBaseDataRD : IAPIResponseData
+    {
+        public IList<PropInfo> ItemPropGroupList { get; set; }//属性组
+        public IList<SkuPropInfo> SKUPropList { get; set; }//sku属性列表
+        public IList<ItemPriceTypeInfo> ItemPriceTypeList { get; set; }//sku属性列表
+
     }
 }

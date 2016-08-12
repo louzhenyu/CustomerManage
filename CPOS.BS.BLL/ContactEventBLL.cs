@@ -85,5 +85,17 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetContactEventByCTWEventId(strCTWEventId);
 
         }
+        /// <summary>
+        /// 根据当前活动类型和奖励类型获取赠送积分信息
+        /// </summary>
+        /// <param name="CustomerID"></param>
+        /// <param name="ContactTypeCode"></param>
+        /// <param name="PrizeType"></param>
+        /// <param name="IsCTW"></param>
+        /// <returns></returns>
+        public int GetContactEventIntegral(string CustomerID, string ContactTypeCode, string PrizeType, int IsCTW)
+        {
+            return this._currentDAO.GetContactEventIntegral(CustomerID,ContactTypeCode,PrizeType,IsCTW);
+        }
     }
 }

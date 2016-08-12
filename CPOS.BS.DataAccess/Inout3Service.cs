@@ -322,7 +322,6 @@ namespace JIT.CPOS.BS.DataAccess
                         + " ,a.Field18 "
                         + " ,a.Field19 "
                         + " ,a.Field20 "
-                        + " ,a.paymentcenter_id"
                         + " ,(select DeliveryName From Delivery x WHERE x.DeliveryId = a.Field8 ) DeliveryName"
                         + " ,(select DefrayTypeName From DefrayType x WHERE x.DefrayTypeId = a.Field11 ) DefrayTypeName "
                         + " ,(SELECT dbo.DateToTimestamp(a.modify_time)) timestamp "
@@ -487,6 +486,13 @@ namespace JIT.CPOS.BS.DataAccess
             string sqlTemp = GetSearchPublicSql2(orderSearchInfo, 1);
             #region
             string sql = "";
+            //先把需要全表扫描的数据查出来，后面就不需要查了
+            //if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
+            //{
+            //    sql += " select * into #unitTemp from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' and customer_id='"
+            //        + orderSearchInfo.customer_id + "' ";
+            //}
+
             sql += string.Format(@"DECLARE @AllUnit NVARCHAR(200)
 
                 CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))   
@@ -590,8 +596,8 @@ namespace JIT.CPOS.BS.DataAccess
                         + " ,a.Field18 "
                         + " ,a.Field19 "
                         + " ,a.Field20 "
-						+ " ,a.paymentcenter_id"
-                        + " ,a.reserveDay,reserveQuantum , reserveDay+' '+reserveQuantum as reserveTime" //配送日期
+                        + " ,a.paymentcenter_id"
+                        + " ,(a.reserveDay +  ' ' + a.reserveQuantum ) as ReserveTime"
                         + " ,(select DeliveryName From Delivery x WHERE x.DeliveryId = a.Field8 ) DeliveryName"
                         + " ,(select DefrayTypeName From DefrayType x WHERE x.DefrayTypeId = a.pay_id ) DefrayTypeName "
                 //有一个客户，时间里含有.却没有带毫秒
@@ -601,9 +607,7 @@ namespace JIT.CPOS.BS.DataAccess
                         + @",isnull((SELECT SUM(ABS(Integral)) FROM dbo.VipIntegralDetail	 WHERE IntegralSourceID=21 AND ObjectId=a.order_id ),0) as IntegralBack"
                 //返回的现金，是用的2
                         + @",isnull((SELECT  ISNULL(SUM(Amount),0) FROM dbo.VipAmountDetail	WHERE AmountSourceId=2  AND ObjectId=a.order_id),0) as AmountBack"
-                //返回退款状态
-                    + @",isnull((select top 1 status from [T_RefundOrder] where OrderID=a.order_id and IsDelete=0),0) as RefundStatus"
-                        + " From T_Inout a "
+                      + " From T_Inout a "
                       + " inner join ( " + sqlTemp + " ) b "
                       + " on(a.order_id = b.order_id) "
                       + " where 1=1 "
@@ -1070,25 +1074,10 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 sql = pService.GetLinkSql(sql, "a.complete_date", orderSearchInfo.complete_date_begin, ">=");
             }
-
             if (!string.IsNullOrEmpty(orderSearchInfo.complete_date_end))
             {
                 sql = pService.GetLinkSql(sql, "a.complete_date", orderSearchInfo.complete_date_end, "<=");
             }
-            //配送日期
-            if (!string.IsNullOrEmpty(orderSearchInfo.reserveDay_begin))
-            {
-              //  sql = pService.GetLinkSql(sql, "a.reserveDay", orderSearchInfo.reserveDay_begin, ">=");
-                sql = sql + " and CONVERT(datetime, a.reserveDay)>= CONVERT(datetime, '" + orderSearchInfo.reserveDay_begin+"')";
-            }
-
-            if (!string.IsNullOrEmpty(orderSearchInfo.reserveDay_end))
-            {
-               // sql = pService.GetLinkSql(sql, "a.reserveDay", orderSearchInfo.reserveDay_end+" 23:59:59", "<=");
-                sql = sql + " and CONVERT(datetime, a.reserveDay)<= CONVERT(datetime, '" + orderSearchInfo.reserveDay_end + " 23:59:59')";
-     
-            }
-
             sql = pService.GetLinkSql(sql, "a.status", orderSearchInfo.status, "=");
             sql = pService.GetLinkSql(sql, "a.warehouse_id", orderSearchInfo.warehouse_id, "=");
             sql = pService.GetLinkSql(sql, "a.ref_order_no", orderSearchInfo.ref_order_no, "%");
@@ -1551,8 +1540,6 @@ namespace JIT.CPOS.BS.DataAccess
                         + " ,a.Field20 "
                          + " ,(select DeliveryName From Delivery x WHERE x.DeliveryId = a.Field8 ) DeliveryName"
                         + " ,(select DefrayTypeName From DefrayType x WHERE x.DefrayTypeId = a.Field11 ) DefrayTypeName "
-                           + ",a.reserveDay,a.reserveQuantum, reserveDay+' '+reserveQuantum as reserveTime"
-
                       + " From T_Inout a "
 
                       + " where 1=1 and a.order_id = '" + order_id + "';";
@@ -1750,7 +1737,6 @@ namespace JIT.CPOS.BS.DataAccess
                       + " ,a.sales_warehouse_id "
                       + " ,a.purchase_warehouse_id "
                       + " ,a.data_from_id "
-                      + ",a.reserveDay,a.reserveQuantum, reserveDay+' '+reserveQuantum as reserveTime"
                       + " ,(select vipsourceName From SysVipSource where vipsourceId = a.data_from_id) data_from_name "
                       + " ,(select order_type_code From T_Order_Type where order_type_id = a.order_type_id) order_type_code "
                       + " ,(select reason_type_code From T_Order_Reason_Type where reason_type_id = a.order_reason_id) order_reason_code "
@@ -1959,16 +1945,16 @@ FROM         dbo.T_Inout AS I INNER JOIN
                             FROM          dbo.vw_sku) AS T ON S.sku_id = T.sku_id
 WHERE     1=1) as t";
             //VwInoutOrderItems
-            string sql = @"select ItemCode,BarCode,SalesUnitName,EnterPrice,qty,EnterAmount,Remark,ItemName,ItemDesc from " + sql1
+            string sql = @"select ItemCode,BarCode,SalesUnitName,EnterPrice,qty,EnterAmount,Remark,ItemName from " + sql1
                 + @" where orderid='{0}'
-                            union all select null,null,null,null,null,null,null,null,null
-                            union all select null,null,null,null,null,null,null,null,null
-                            union all select null,null,null,null,null,null,null,null,null
-                            union all select null,null,null,null,null,null,null,null,null
-                            union all select null,null,null,null,null,null,null,null,null
-                            union all select null,null,null,null,null,null,null,null,null
-                            union all select null,null,null,null,null,null,null,null,null
-                            union all select null,null,null,null,null,null,null,null,null";
+                            union all select null,null,null,null,null,null,null,null
+                            union all select null,null,null,null,null,null,null,null
+                            union all select null,null,null,null,null,null,null,null
+                            union all select null,null,null,null,null,null,null,null
+                            union all select null,null,null,null,null,null,null,null
+                            union all select null,null,null,null,null,null,null,null
+                            union all select null,null,null,null,null,null,null,null
+                            union all select null,null,null,null,null,null,null,null";
             return SQLHelper.ExecuteDataset(string.Format(sql, orderId));
         }
         /// <summary>

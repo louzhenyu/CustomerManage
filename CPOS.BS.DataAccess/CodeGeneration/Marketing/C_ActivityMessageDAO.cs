@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015/9/9 17:12:31
+ * Create On	:2016/6/28 17:13:19
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [C_ActivityMessage](");
-            strSql.Append("[ActivityID],[TemplateID],[MessageType],[Content],[SendTime],[CustomerID],[CreateBy],[CreateTime],[LastUpdateBy],[LastUpdateTime],[IsDelete],[MessageID])");
+            strSql.Append("[ActivityID],[TemplateID],[MessageType],[Content],[SendTime],[CustomerID],[CreateBy],[CreateTime],[LastUpdateBy],[LastUpdateTime],[IsDelete],[AdvanceDays],[SendAtHour],[MessageID])");
             strSql.Append(" values (");
-            strSql.Append("@ActivityID,@TemplateID,@MessageType,@Content,@SendTime,@CustomerID,@CreateBy,@CreateTime,@LastUpdateBy,@LastUpdateTime,@IsDelete,@MessageID)");            
+            strSql.Append("@ActivityID,@TemplateID,@MessageType,@Content,@SendTime,@CustomerID,@CreateBy,@CreateTime,@LastUpdateBy,@LastUpdateTime,@IsDelete,@AdvanceDays,@SendAtHour,@MessageID)");            
 
 			Guid? pkGuid;
 			if (pEntity.MessageID == null)
@@ -104,6 +104,8 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
+					new SqlParameter("@AdvanceDays",SqlDbType.Int),
+					new SqlParameter("@SendAtHour",SqlDbType.Int),
 					new SqlParameter("@MessageID",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.ActivityID;
@@ -117,7 +119,9 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[8].Value = pEntity.LastUpdateBy;
 			parameters[9].Value = pEntity.LastUpdateTime;
 			parameters[10].Value = pEntity.IsDelete;
-			parameters[11].Value = pkGuid;
+			parameters[11].Value = pEntity.AdvanceDays;
+			parameters[12].Value = pEntity.SendAtHour;
+			parameters[13].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -226,7 +230,13 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
-                strSql.Append( "[LastUpdateTime]=@LastUpdateTime");
+                strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
+            if (pIsUpdateNullField || pEntity.AdvanceDays!=null)
+                strSql.Append( "[AdvanceDays]=@AdvanceDays,");
+            if (pIsUpdateNullField || pEntity.SendAtHour!=null)
+                strSql.Append( "[SendAtHour]=@SendAtHour");
+            if (strSql.ToString().EndsWith(","))
+                strSql.Remove(strSql.Length - 1, 1);
             strSql.Append(" where MessageID=@MessageID ");
             SqlParameter[] parameters = 
             {
@@ -238,6 +248,8 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@CustomerID",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
+					new SqlParameter("@AdvanceDays",SqlDbType.Int),
+					new SqlParameter("@SendAtHour",SqlDbType.Int),
 					new SqlParameter("@MessageID",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.ActivityID;
@@ -248,7 +260,9 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[5].Value = pEntity.CustomerID;
 			parameters[6].Value = pEntity.LastUpdateBy;
 			parameters[7].Value = pEntity.LastUpdateTime;
-			parameters[8].Value = pEntity.MessageID;
+			parameters[8].Value = pEntity.AdvanceDays;
+			parameters[9].Value = pEntity.SendAtHour;
+			parameters[10].Value = pEntity.MessageID;
 
             //执行语句
             int result = 0;
@@ -558,6 +572,10 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
             if (pQueryEntity.IsDelete!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
+            if (pQueryEntity.AdvanceDays!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "AdvanceDays", Value = pQueryEntity.AdvanceDays });
+            if (pQueryEntity.SendAtHour!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "SendAtHour", Value = pQueryEntity.SendAtHour });
 
             return lstWhereCondition.ToArray();
         }
@@ -587,7 +605,7 @@ namespace JIT.CPOS.BS.DataAccess
 			}
 			if (pReader["MessageType"] != DBNull.Value)
 			{
-				pInstance.MessageType =Convert.ToString(pReader["MessageType"]);
+                pInstance.MessageType = Convert.ToString(pReader["MessageType"]);
 			}
 			if (pReader["Content"] != DBNull.Value)
 			{
@@ -620,6 +638,14 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["IsDelete"] != DBNull.Value)
 			{
 				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
+			}
+			if (pReader["AdvanceDays"] != DBNull.Value)
+			{
+				pInstance.AdvanceDays =   Convert.ToInt32(pReader["AdvanceDays"]);
+			}
+			if (pReader["SendAtHour"] != DBNull.Value)
+			{
+				pInstance.SendAtHour =   Convert.ToInt32(pReader["SendAtHour"]);
 			}
 
         }

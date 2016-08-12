@@ -97,7 +97,7 @@
                 if(optType=="exit"){
                     that.elems.optionType="exit";
                     that.update();
-                    $('#addProm').form('load', { Item_Category_Name: row.text, CommissionRate: row.CommissionRate, Item_Category_Id: row.id });
+                    $('#addProm').form('load',{Item_Category_Name:row.text,Item_Category_Id:row.id});
                 }
 
             }).delegate(".commonBtn","click",function(e){
@@ -150,7 +150,7 @@
             var that=this;
             if(!data){
 
-                return;
+                data=[];
             }
             //jQuery easy datagrid  表格处理
             that.elems.tabel.datagrid({
@@ -186,10 +186,9 @@
                             }
                         }
                     },
-                    
 
-                    { field: 'PromotionItemCount', title: '商品数', width: 100, align: 'center', resizable: false },
-                    //{ field: 'CommissionRate', title: '佣金比率(%)', width: 100, align: 'center', resizable: false },
+
+                    {field : 'PromotionItemCount',title : '商品数',width:100,align:'center',resizable:false} ,
                     {field : 'create_time',title : '创建时间',width:100,align:'center',resizable:false,
                         formatter:function(value ,row,index){
                             return new Date(value).format("yyyy-MM-dd");

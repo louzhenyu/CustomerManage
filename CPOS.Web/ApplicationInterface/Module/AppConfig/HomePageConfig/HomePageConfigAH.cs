@@ -232,38 +232,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.AppConfig.HomePageConfig
                         dsItem = adAreaBll.GetGroupProductList(groupItem.GroupId.ToString(), entityHome.HomeId.ToString(), category.showCount);
                     else
                         dsItem = adAreaBll.GetCategoryProductList(groupItem.GroupId.ToString(), entityHome.HomeId.ToString(), category.showCount);
+
                     if (dsItem != null && dsItem.Tables.Count > 0 && dsItem.Tables[0].Rows.Count > 0)
                     {
-                        // 设置分类ID
-                        category.categoryId = dsItem.Tables[0].Rows[0]["objectId"].ToString();
                         category.CategoryAreaList = DataTableToObject.ConvertToList<ProductInfo>(dsItem.Tables[0]);
-                        foreach (ProductInfo pf in category.CategoryAreaList)
-                        {
-                            double rate = (int)((pf.SalesPrice / pf.Price) * 100) / 10.0;
-                            if (rate < 10)
-                            {
-                                pf.DiscountRate = string.Format("{0}折", rate);
-                            }
-                            else
-                            {
-                                pf.DiscountRate = string.Empty;
-                            }
-                            // 获取sku id
-                            pf.SkuList =
-                                dsItem.Tables[1].AsEnumerable()
-                                    .Where(r => r.Field<string>("item_id").Equals(pf.ItemID))
-                                    .Select(r => r.Field<string>("sku_id"))
-                                    .ToList();
-                            if (string.IsNullOrEmpty(pf.SalesCount))
-                            {
-                                pf.SalesCount = "0";
-                            }
-                        }
                     }
-                    if (category.CategoryAreaList.Count > 0)
-                    {
-                        productList.Add(category);
-                    }
+                    productList.Add(category);
                 }
             }
 

@@ -108,6 +108,10 @@ namespace JIT.CPOS.BS.Entity
 		/// </summary>
 		public Int32? IsDelete { get; set; }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? PaidGivePercetPoints { get; set; }
 
         #endregion
 

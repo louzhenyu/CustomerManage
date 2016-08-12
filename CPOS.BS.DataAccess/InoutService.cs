@@ -7,7 +7,6 @@ using JIT.CPOS.BS.Entity;
 using JIT.Utility;
 using System.Data;
 using System.Data.SqlClient;
-using CPOS.BS.Entity;
 using JIT.Utility.DataAccess;
 
 namespace JIT.CPOS.BS.DataAccess
@@ -483,14 +482,20 @@ where order_id='{0}'
         }
 
 
-
-        public string GetCustomerName(string customerId)
+        public string GetCustomerName(string customerId, string unitId)
         {
+            //            string sql = string.Format(
+            //                @"select unit_name from t_unit a 
+            //where a.customer_id='{0}' 
+            //and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
+            //                customerId);
+
             string sql = string.Format(
                 @"select unit_name from t_unit a 
 where a.customer_id='{0}' 
-and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
-                customerId);
+and a.unit_id='{1}'",
+                customerId, unitId);
+
             var result = SQLHelper.ExecuteScalar(sql);
             return result == null || result == DBNull.Value ? string.Empty : result.ToString();
         }
@@ -612,9 +617,6 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
         {
             #region
             string sql = "select a.order_detail_id "
-                + @",isnull((select prop_value from  T_Item_Property x inner join T_Prop y on  x.prop_id=y.prop_id where y.prop_code='IsItemOnlyBuyOnce' and x.item_id=b.item_id ),'0') as IsItemOnlyBuyOnce
-,isnull((select prop_value from  T_Item_Property x inner join T_Prop y on  x.prop_id=y.prop_id where y.prop_code='IsItemGoToShop'  and x.item_id=b.item_id  ),'0') as IsItemGoToShop
-"
                       + " ,a.order_id "
                       + " ,a.ref_order_detail_id "
                       + " ,a.sku_id "
@@ -649,7 +651,6 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
                       + " ,isnull(b.prop_4_detail_name,'') prop_4_detail_name "
                       + " ,isnull(b.prop_5_detail_name,'') prop_5_detail_name "
                       + " ,(select discount_rate from t_inout where order_id = a.order_id)  order_discount_rate "
-                      + " ,reserveDay,reserveQuantum, reserveDay+' '+reserveQuantum as reserveTime"
                       + " ,isnull((select i.ifservice from dbo.T_Item i where i.item_id in (select item_id from dbo.T_Sku s where s.sku_id = a.sku_id  )),0) as IfService "
                       + " ,isnull(d.isGB,1) as isGB"
                       + " ,a.Field1 "
@@ -661,22 +662,14 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
                         + " ,a.Field7 "
                         + " ,a.Field8 "
                         + " ,a.Field9 "
-                        + @" ,( SELECT    CONVERT(DECIMAL(18, 2), price) AS Expr1            
-              FROM(SELECT    MIN(price) AS price,
-                                    item_id
-                          FROM      dbo.vw_sku_price AS vw_sku_price_4
-                          WHERE(item_price_type_id = '75412168A16C4D2296B92CA0E596A188')
-                          GROUP BY  item_id
-                        ) AS x_5
-              WHERE(item_id = d.item_id)
-            ) AS SalesPrice "
+                        + " ,a.Field10,SalesPrice "
                         + ",(SELECT y.item_category_name  FROM dbo.T_Item x INNER JOIN dbo.T_Item_Category y ON(x.item_category_id = y.item_category_id) WHERE x.item_id = b.item_id ) itemCategoryName "
                         + " ,isnull(datediff(day,a.Field1,a.Field2),0) DayCount "
                       + " From t_inout_detail a "
                       + " left join vw_sku b "
                       + " on(a.sku_id = b.sku_id) "
                       + " inner join t_inout c "
-                      + @" on(a.order_id = c.order_id)  inner join dbo.T_Item d on d.item_id=b.item_id  where a.order_id= '" + orderId + "' order by b.item_code";
+                      + @" on(a.order_id = c.order_id)  left join vw_item_detail d on d.item_id=b.item_id  where a.order_id= '" + orderId + "' order by b.item_code";
             #endregion
             DataSet ds = new DataSet();
             ds = this.SQLHelper.ExecuteDataset(sql);
@@ -768,11 +761,6 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
                             }
                         }
                     }
-                    if (!InsertInoutExpand(inoutInfo.InoutExpandEntity, tran))
-                    {
-                        strError = "插入订单扩展字段失败!";
-                        throw (new System.Exception(strError));
-                    }
                     tran.Commit();
                     strError = "成功";
                     return true;
@@ -817,8 +805,6 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
                 throw (ex);
             }
         }
-
-
 
         /// <summary>
         /// 根据订单号，获取订单标识
@@ -896,6 +882,7 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
             sql = pService.GetIsNotNullUpdateSql(sql, "actual_amount", inoutInfo.actual_amount.ToString());
             sql = pService.GetIsNotNullUpdateSql(sql, "receive_points", inoutInfo.receive_points.ToString());
             sql = pService.GetIsNotNullUpdateSql(sql, "pay_points", inoutInfo.pay_points.ToString());
+            sql = pService.GetIsNotNullUpdateSql(sql, "pay_id", inoutInfo.pay_points.ToString());
             sql = pService.GetIsNotNullUpdateSql(sql, "print_times", inoutInfo.print_times.ToString());
             sql = pService.GetIsNotNullUpdateSql(sql, "carrier_id", inoutInfo.carrier_id);
             sql = pService.GetIsNotNullUpdateSql(sql, "remark", inoutInfo.remark.Replace("'", ""));
@@ -1231,73 +1218,6 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
                         + " ,'" + inoutDetailInfo.Field9 + "' Field9 "
                         + " ,'" + inoutDetailInfo.Field10 + "' Field10 "
                         + " ,'" + inoutDetailInfo.ReturnCash + "'  "
-                        ;
-            #endregion
-            if (pTran != null)
-            {
-                this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), null);
-            }
-            else
-            {
-                this.SQLHelper.ExecuteNonQuery(sql);
-            }
-            return true;
-        }
-
-        /// <summary>
-        /// 插入订单扩展表
-        /// </summary>
-        /// <param name="inoutInfo"></param>
-        /// <param name="pTran"></param>
-        /// <returns></returns>
-        private bool InsertInoutExpand(T_Inout_ExpandEntity inoutDetailInfo, IDbTransaction pTran)
-        {
-            #region
-            string sql = "delete T_Inout_Expand where OrderId='" + inoutDetailInfo.OrderId + "';insert into T_Inout_Expand "
-                        + " ( "
-                        + " OrderExpandID "
-                        + " ,OrderId "
-                        + " ,DeliveryMode "
-                        + " ,PackageRemark "
-                        + " ,LogisticRemark "
-                        + " ,TransType "
-                        + " ,CreateTime "
-                        + " ,CreateBy "
-                        + " ,LastUpdateTime "
-                        + " ,LastUpdateBy "
-                        + " ,CustomerID"
-                        + " ,ProvinceCode "
-                        + " ,Province "
-                        + " ,CityCode "
-                        + " ,City "
-                        + " ,AreaCode "
-                        + " ,Area "
-                        + " ,DiscRemarks"
-                        + " ,IsCallBeDeli "
-                        + " ,GoodsAndInvoice "
-                        + " ,IsDelete "
-                        + " )"
-                        + "select  '" + inoutDetailInfo.OrderExpandID + "' "
-                        + " ,'" + inoutDetailInfo.OrderId + "'  "
-                        + " ,'" + inoutDetailInfo.DeliveryMode + "'  "
-                        + " ,'" + inoutDetailInfo.PackageRemark + "'  "
-                        + " ,'" + inoutDetailInfo.LogisticRemark + "'  "
-                        + " ,'" + inoutDetailInfo.TransType + "'  "
-                        + " ,'" + inoutDetailInfo.CreateTime + "'  "
-                        + " ,'" + inoutDetailInfo.CreateBy + "'  "
-                        + " ,'" + inoutDetailInfo.LastUpdateTime + "'  "
-                        + " ,'" + inoutDetailInfo.LastUpdateBy + "'  "
-                        + " ,'" + inoutDetailInfo.CustomerID + "'  "
-                        + " ,'" + inoutDetailInfo.ProvinceCode + "'  "
-                        + " ,'" + inoutDetailInfo.Province + "'  "
-                        + " ,'" + inoutDetailInfo.CityCode + "'  "
-                        + " ,'" + inoutDetailInfo.City + "'  "
-                        + " ,'" + inoutDetailInfo.AreaCode + "'  "
-                        + " ,'" + inoutDetailInfo.Area + "'  "
-                        + " ,'" + inoutDetailInfo.DiscRemarks + "'  "
-                        + " ,'" + inoutDetailInfo.IsCallBeDeli + "'  "
-                        + " ,'" + inoutDetailInfo.GoodsAndInvoice + "'  "
-                        + " ," + inoutDetailInfo.IsDelete + "  "
                         ;
             #endregion
             if (pTran != null)

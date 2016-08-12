@@ -96,7 +96,7 @@ namespace JIT.CPOS.BS.BLL
         }
         public void Update(VipCardGradeChangeLogEntity pEntity, bool pIsUpdateNullField , IDbTransaction pTran)
         {
-            _currentDAO.Update(pEntity,pIsUpdateNullField,pTran);
+            _currentDAO.Update(pEntity,pTran);
         }
 
 
@@ -106,11 +106,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pEntity">ÊµÌåÊµÀý</param>
         public void Update(VipCardGradeChangeLogEntity pEntity)
         {
-            Update(pEntity , true);
-        }
-        public void Update(VipCardGradeChangeLogEntity pEntity , bool pIsUpdateNullField)
-        {
-            _currentDAO.Update(pEntity,pIsUpdateNullField);
+            Update(pEntity);
         }
 
         /// <summary>

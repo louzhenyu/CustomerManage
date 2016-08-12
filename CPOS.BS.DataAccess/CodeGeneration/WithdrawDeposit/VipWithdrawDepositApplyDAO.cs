@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [VipWithdrawDepositApply](");
-            strSql.Append("[VipID],[WithdrawNo],[Amount],[Status],[ApplyDate],[ConfirmDate],[CompleteDate],[VipBankID],[CustomerID],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[ApplyID])");
+            strSql.Append("[VipID],[WithdrawNo],[Amount],[Status],[ApplyDate],[ConfirmDate],[CompleteDate],[VipBankID],[CustomerID],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[ApplyID],[VipType])");
             strSql.Append(" values (");
-            strSql.Append("@VipID,@WithdrawNo,@Amount,@Status,@ApplyDate,@ConfirmDate,@CompleteDate,@VipBankID,@CustomerID,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@ApplyID)");            
+            strSql.Append("@VipID,@WithdrawNo,@Amount,@Status,@ApplyDate,@ConfirmDate,@CompleteDate,@VipBankID,@CustomerID,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@ApplyID,@VipType)");            
 
 			Guid? pkGuid;
 			if (pEntity.ApplyID == null)
@@ -107,7 +107,8 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
-					new SqlParameter("@ApplyID",SqlDbType.UniqueIdentifier)
+					new SqlParameter("@ApplyID",SqlDbType.UniqueIdentifier),
+                    new SqlParameter("@VipType",SqlDbType.Int)
             };
 			parameters[0].Value = pEntity.VipID;
 			parameters[1].Value = pEntity.WithdrawNo;
@@ -124,6 +125,7 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[12].Value = pEntity.LastUpdateBy;
 			parameters[13].Value = pEntity.IsDelete;
 			parameters[14].Value = pkGuid;
+            parameters[15].Value = pEntity.VipType.GetValueOrDefault();
 
             //执行并将结果回写
             int result;

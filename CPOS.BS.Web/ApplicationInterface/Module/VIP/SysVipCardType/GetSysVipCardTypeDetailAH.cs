@@ -62,8 +62,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.SysVipCardType
                 {
                     SpecialID = t.SpecialId,
                     HolidayName = t.HolidayName,
-                    BeginDate = t.BeginDate == null ? "" : t.BeginDate.Value.ToString("yyyy-MM-dd"),
-                    EndDate = t.EndDate == null ? "" : t.EndDate.Value.ToString("yyyy-MM-dd"),
+                    BeginDate = t.BeginDate.Value.ToString("yyyy-MM-dd"),
+                    EndDate = t.EndDate.Value.ToString("yyyy-MM-dd"),
                     NoAvailablePoints = t.NoAvailablePoints,
                     NoAvailableDiscount = t.NoAvailableDiscount,
                     NoRewardPoints = t.NoRewardPoints

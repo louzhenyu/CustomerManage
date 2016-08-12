@@ -163,9 +163,8 @@
                            } else {
                                $("#ObjecetType").combobox("setValue", "请选择");
                                var selectData = record.VirtualItemTypeCode;
-                                if (selectData == "VipCard" || selectData == "RechargeCard" || selectData == "Package") {
-                                    that.loadData.getSysVipCardTypeList(
-                                        function (cardData) {
+                               if (selectData == "VipCard") {
+                                   that.loadData.getSysVipCardTypeList(function (cardData) {
                                        if (cardData.Data.SysVipCardTypeList && cardData.Data.SysVipCardTypeList.length > 0) {
                                            cardData.Data.SysVipCardTypeList[0]["selected"] = true;
                                            $("#ObjecetType").combobox({
@@ -180,7 +179,7 @@
                                            console.log("未创建任何类型的卡")
                                        }
 
-                                        }, selectData);
+                                   });
 
                                } else if (selectData == "Coupon") {
 
@@ -1478,17 +1477,11 @@
                 });
             },
             //获取卡类型
-            getSysVipCardTypeList: function (callback, selectData) {
-                var cardType = 0;
-                if (selectData == "RechargeCard") {
-                    cardType = 1;
-                } else if (selectData == "Package") {
-                    cardType = 2
-                }
+            getSysVipCardTypeList:function(callback){
                 $.util.ajax({
                     url: " /ApplicationInterface/Gateway.ashx",
                     data: {
-                        action: 'VIP.SysVipCardType.GetSysVipCardTypeList&cardType=' + cardType
+                        action: 'VIP.SysVipCardType.GetSysVipCardTypeList'
                     },
                     success: function (data) {
                         if (data.IsSuccess && data.ResultCode == 0) {

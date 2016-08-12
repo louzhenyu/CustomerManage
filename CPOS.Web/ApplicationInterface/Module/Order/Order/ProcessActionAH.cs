@@ -78,7 +78,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                     if (ActionCode == "700" && entity.status != "700")
                     {
                         //确认收货时处理积分、返现、佣金[完成订单]
-                        //vipIntegralBLL.OrderReward(entity, tran);
+                        // vipIntegralBLL.OrderReward(entity, tran);
                         new SendOrderRewardMsgBLL().OrderReward(entity, this.CurrentUserInfo, tran);//存入到缓存
                     }
 
@@ -113,9 +113,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                         }
                         //更新订单支付状态
                         entity.Field1 = "1";
-
-
-                   
+                        entity.accpect_time = DateTime.Now.ToString();
 
                         #region 提货，订单明细修改
 
@@ -131,7 +129,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                                 if (vipAmountDetailEntity != null)
                                 {
                                     item.SumPrice += Math.Abs(Convert.ToDecimal(vipAmountDetailEntity.Amount));
-                                } 
+                                }
                                 inoutDetailEntity.enter_qty = item.EnterQty;
                                 inoutDetailEntity.Field9 = "kg";
                                 inoutDetailEntity.enter_amount = item.SumPrice;
@@ -145,10 +143,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                         #endregion
 
                     }
+                    entity.accpect_time = DateTime.Now.ToString();
                     _TInoutbll.Update(entity, tran); //用事物更新订单表(T_Inout)
                     #endregion
 
-                 
+
 
                     #region 2.根据订单ID更新订单日志表中数据
 
@@ -189,17 +188,17 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                         //物流公司
                         string LogisticsName = inoutService.GetCompanyName(entity.carrier_id);
 
-                    var InoutInfo = new InoutInfo()
-                    {
-                        order_no = entity.order_no,
-                        carrier_name = LogisticsName,
-                        vipId = entity.vip_no,
-                        Field2 = entity.Field2
-                    };
+                        var InoutInfo = new InoutInfo()
+                        {
+                            order_no = entity.order_no,
+                            carrier_name = LogisticsName,
+                            vipId = entity.vip_no,
+                            Field2 = entity.Field2
+                        };
 
-                      //  var CommonBLL = new CommonBLL();
-                     //   CommonBLL.SentShipMessage(InoutInfo, vipInfo.WeiXinUserId, InoutInfo.vip_no, CurrentUserInfo);                     
-                         new SendOrderSendMsgBLL().SentShipMessage(InoutInfo, vipInfo.WeiXinUserId, InoutInfo.vip_no, CurrentUserInfo);
+                        //  var CommonBLL = new CommonBLL();
+                        //   CommonBLL.SentShipMessage(InoutInfo, vipInfo.WeiXinUserId, InoutInfo.vip_no, CurrentUserInfo);                     
+                        new SendOrderSendMsgBLL().SentShipMessage(InoutInfo, vipInfo.WeiXinUserId, InoutInfo.vip_no, CurrentUserInfo);
                         #endregion
                     }
 

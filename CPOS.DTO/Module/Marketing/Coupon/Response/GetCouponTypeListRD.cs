@@ -34,6 +34,7 @@ namespace JIT.CPOS.DTO.Module.Marketing.Coupon.Response
         /// </summary>
         public string EndTimeDate { get; set; }
         public int? ServiceLife { get; set; }
+        public int IsNotLimitQty { get; set; }
 
     }
 }

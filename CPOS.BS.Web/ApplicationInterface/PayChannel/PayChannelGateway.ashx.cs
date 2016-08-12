@@ -151,12 +151,17 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.PayChannel
                         var RSA_PublicKey = wapData.RSA_PublicKey;
                         var RSA_PrivateKey = wapData.RSA_PrivateKey;
                         var MD5Key = wapData.MD5Key;
+                        var SCAN_AppID = wapData.SCAN_AppID;
+                        var PayEncryptedPwd = wapData.PayEncryptedPwd;
+
 
                         updateSql = "PayAccountNumber ='" + partner + "',"
                                 + "PayAccounPublic='" + RSA_PublicKey + "',"
                                 + "PayPrivate='" + RSA_PrivateKey + "',"
                                 + "SalesTBAccess='" + sellerAccountName + "',"
                                 + "ApplyMD5Key='" + MD5Key + "',"
+                                + "EncryptionCertificate='" + SCAN_AppID + "',"
+                                + "PayEncryptedPwd='" + PayEncryptedPwd + "',"
                                 + "PayDeplyType=1";
                     }
                     if (payTypeId == 5 || payTypeId == 6)
@@ -371,6 +376,15 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.PayChannel
         public string MD5Key { get; set; }
 
         public string AgentID { get; set; }
+        /// <summary>
+        /// 扫码支付appId 对应数据库字段 EncryptionCertificate
+        /// </summary>
+        public string SCAN_AppID { get; set; }
+
+        /// <summary>
+        /// 支付模式：1：网页支付;2：扫码支付;3：APP支付
+        /// </summary>
+        public string PayEncryptedPwd { get; set; }
 
     }
 

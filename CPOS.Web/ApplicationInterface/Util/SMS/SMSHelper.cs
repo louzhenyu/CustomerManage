@@ -28,6 +28,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Util.SMS
                 var request = new { Action = "SendMessage", Parameters = para };
                 str = string.Format("request={0}", request.ToJSON());//请求参数
 
+
+                //var para = new { MobileNO = pPhone, SMSContent = string.Format(@"您的验证码是：{1}，请不要把验证码泄露给其他人。", currentUserInfo.ClientName, pContent), Sign = pSign };
+                //var request = new { Action = "SendMessage", Parameters = para };
+                //string str = string.Format("request={0}", request.ToJSON());//请求参数
+
                 
                 Loggers.Debug(new DebugLogInfo() { Message = "发送短信:" + str });
                 var res = HttpClient.PostQueryString(url, str);//发送请求，开始发送短信

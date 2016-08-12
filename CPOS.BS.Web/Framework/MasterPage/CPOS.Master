@@ -32,7 +32,7 @@
         var apiurl = '<%=System.Web.Configuration.WebConfigurationManager.AppSettings["interfacehost"] %>';
         window.apiurl = apiurl;
 </script>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
      <%--模板 公共样式strart--%>   
      <link href="<%=StaticUrl+"/module/static/css/easyui.css"%>" rel="stylesheet" type="text/css" />   
        <%--分页--%>
@@ -70,6 +70,8 @@
 
     <link href="<%=StaticUrl+"/Lib/Javascript/Ext4.1.0/Resources/css/ext-all-gray.css"%>" rel="stylesheet" type="text/css" />
     <link href="<%=StaticUrl+"/Lib/Css/jit-all.css"%>" rel="stylesheet" type="text/css" />
+    
+
     <script src="<%=StaticUrl+"/Lib/Javascript/Ext4.1.0/ext-all.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Lib/Javascript/Ext4.1.0/locale/ext-lang-zh_CN.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Lib/Javascript/Jit/jit-all-dev.js"%>" type="text/javascript"></script>
@@ -143,6 +145,8 @@
                         <%-- <a href="###">个人信息</a>
                             <a href="###">系统通知(1)</a>--%>
                         <%--    <a href="#" class="fl mr25 nava3" onclick="fnChangePwd()">修改密码</a>--%>
+                        <span class="commonBtn safetyOutBtn" data-menucode="txgl"><a class="five menusrc" href="#" >提现管理</a>
+                         </span>
                          <span class="commonBtn safetyOutBtn" data-menucode="jysj"><a class="one menusrc" href="#" >经营数据</a>
                         </span>
                         <span class="commonBtn safetyOutBtn" data-menucode="fstz"><a  class="four menusrc" href="#" onclick=""> 发送通知</a>

@@ -161,8 +161,10 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public String CouponTypeDesc { get; set; }
-
-
+        /// <summary>
+        /// 是否不限数量
+        /// </summary>
+        public int IsNotLimitQty { get; set; }
         #endregion
 
     }

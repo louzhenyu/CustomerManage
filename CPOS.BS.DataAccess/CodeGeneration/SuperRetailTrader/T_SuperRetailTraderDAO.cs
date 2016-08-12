@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [T_SuperRetailTrader](");
-            strSql.Append("[SuperRetailTraderCode],[SuperRetailTraderName],[SuperRetailTraderLogin],[SuperRetailTraderPass],[SuperRetailTraderMan],[SuperRetailTraderPhone],[SuperRetailTraderAddress],[SuperRetailTraderFrom],[SuperRetailTraderFromId],[HigheSuperRetailTraderID],[JoinTime],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerId],[Status],[SuperRetailTraderID])");
+            strSql.Append("[SuperRetailTraderCode],[SuperRetailTraderName],[SuperRetailTraderLogin],[SuperRetailTraderPass],[SuperRetailTraderMan],[SuperRetailTraderPhone],[SuperRetailTraderAddress],[SuperRetailTraderFrom],[SuperRetailTraderFromId],[HigheSuperRetailTraderID],[JoinTime],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerId],[Status],[SuperRetailTraderPassData],[SuperRetailTraderID])");
             strSql.Append(" values (");
-            strSql.Append("@SuperRetailTraderCode,@SuperRetailTraderName,@SuperRetailTraderLogin,@SuperRetailTraderPass,@SuperRetailTraderMan,@SuperRetailTraderPhone,@SuperRetailTraderAddress,@SuperRetailTraderFrom,@SuperRetailTraderFromId,@HigheSuperRetailTraderID,@JoinTime,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerId,@Status,@SuperRetailTraderID)");            
+            strSql.Append("@SuperRetailTraderCode,@SuperRetailTraderName,@SuperRetailTraderLogin,@SuperRetailTraderPass,@SuperRetailTraderMan,@SuperRetailTraderPhone,@SuperRetailTraderAddress,@SuperRetailTraderFrom,@SuperRetailTraderFromId,@HigheSuperRetailTraderID,@JoinTime,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerId,@Status,@SuperRetailTraderPassData,@SuperRetailTraderID)");            
 
 			Guid? pkGuid;
 			if (pEntity.SuperRetailTraderID == null)
@@ -111,6 +111,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@IsDelete",SqlDbType.Int),
 					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
 					new SqlParameter("@Status",SqlDbType.NVarChar),
+					new SqlParameter("@SuperRetailTraderPassData",SqlDbType.NVarChar),
 					new SqlParameter("@SuperRetailTraderID",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.SuperRetailTraderCode;
@@ -131,7 +132,8 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[15].Value = pEntity.IsDelete;
 			parameters[16].Value = pEntity.CustomerId;
 			parameters[17].Value = pEntity.Status;
-			parameters[18].Value = pkGuid;
+			parameters[18].Value = pEntity.SuperRetailTraderPassData;
+			parameters[19].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -254,7 +256,9 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.CustomerId!=null)
                 strSql.Append( "[CustomerId]=@CustomerId,");
             if (pIsUpdateNullField || pEntity.Status!=null)
-                strSql.Append( "[Status]=@Status");
+                strSql.Append( "[Status]=@Status,");
+            if (pIsUpdateNullField || pEntity.SuperRetailTraderPassData!=null)
+                strSql.Append( "[SuperRetailTraderPassData]=@SuperRetailTraderPassData");
             if (strSql.ToString().EndsWith(","))
                 strSql.Remove(strSql.Length - 1, 1);
             strSql.Append(" where SuperRetailTraderID=@SuperRetailTraderID ");
@@ -275,6 +279,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
 					new SqlParameter("@Status",SqlDbType.NVarChar),
+					new SqlParameter("@SuperRetailTraderPassData",SqlDbType.NVarChar),
 					new SqlParameter("@SuperRetailTraderID",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.SuperRetailTraderCode;
@@ -292,7 +297,8 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[12].Value = pEntity.LastUpdateTime;
 			parameters[13].Value = pEntity.CustomerId;
 			parameters[14].Value = pEntity.Status;
-			parameters[15].Value = pEntity.SuperRetailTraderID;
+			parameters[15].Value = pEntity.SuperRetailTraderPassData;
+			parameters[16].Value = pEntity.SuperRetailTraderID;
 
             //执行语句
             int result = 0;
@@ -578,6 +584,8 @@ namespace JIT.CPOS.BS.DataAccess
         { 
             //获取非空属性数量
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
+            if (pQueryEntity.SuperRetailTraderID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "SuperRetailTraderID", Value = pQueryEntity.SuperRetailTraderID });
             if (pQueryEntity.SuperRetailTraderCode!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "SuperRetailTraderCode", Value = pQueryEntity.SuperRetailTraderCode });
             if (pQueryEntity.SuperRetailTraderName!=null)
@@ -614,8 +622,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerId", Value = pQueryEntity.CustomerId });
             if (pQueryEntity.Status!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Status", Value = pQueryEntity.Status });
-            if (pQueryEntity.SuperRetailTraderID!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "SuperRetailTraderID", Value = pQueryEntity.SuperRetailTraderID });
+            if (pQueryEntity.SuperRetailTraderPassData!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "SuperRetailTraderPassData", Value = pQueryEntity.SuperRetailTraderPassData });
 
             return lstWhereCondition.ToArray();
         }
@@ -631,6 +639,10 @@ namespace JIT.CPOS.BS.DataAccess
             pInstance.PersistenceHandle = new PersistenceHandle();
             pInstance.PersistenceHandle.Load();
 
+			if (pReader["SuperRetailTraderID"] != DBNull.Value)
+			{
+				pInstance.SuperRetailTraderID =  (Guid)pReader["SuperRetailTraderID"];
+			}
 			if (pReader["SuperRetailTraderCode"] != DBNull.Value)
 			{
 				pInstance.SuperRetailTraderCode =  Convert.ToString(pReader["SuperRetailTraderCode"]);
@@ -675,37 +687,37 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.JoinTime =  Convert.ToDateTime(pReader["JoinTime"]);
 			}
-            if (pReader["CreateTime"] != DBNull.Value)
-            {
-                pInstance.CreateTime = Convert.ToDateTime(pReader["CreateTime"]);
-            }
-            if (pReader["CreateBy"] != DBNull.Value)
-            {
-                pInstance.CreateBy = Convert.ToString(pReader["CreateBy"]);
-            }
-            if (pReader["LastUpdateBy"] != DBNull.Value)
-            {
-                pInstance.LastUpdateBy = Convert.ToString(pReader["LastUpdateBy"]);
-            }
-            if (pReader["LastUpdateTime"] != DBNull.Value)
-            {
-                pInstance.LastUpdateTime = Convert.ToDateTime(pReader["LastUpdateTime"]);
-            }
-            if (pReader["IsDelete"] != DBNull.Value)
-            {
-                pInstance.IsDelete = Convert.ToInt32(pReader["IsDelete"]);
-            }
-            if (pReader["CustomerId"] != DBNull.Value)
-            {
-                pInstance.CustomerId = Convert.ToString(pReader["CustomerId"]);
-            }
-            if (pReader["Status"] != DBNull.Value)
-            {
-                pInstance.Status = Convert.ToString(pReader["Status"]);
-            }
-			if (pReader["SuperRetailTraderID"] != DBNull.Value)
+			if (pReader["CreateTime"] != DBNull.Value)
 			{
-				pInstance.SuperRetailTraderID =  (Guid)pReader["SuperRetailTraderID"];
+				pInstance.CreateTime =  Convert.ToDateTime(pReader["CreateTime"]);
+			}
+			if (pReader["CreateBy"] != DBNull.Value)
+			{
+				pInstance.CreateBy =  Convert.ToString(pReader["CreateBy"]);
+			}
+			if (pReader["LastUpdateBy"] != DBNull.Value)
+			{
+				pInstance.LastUpdateBy =  Convert.ToString(pReader["LastUpdateBy"]);
+			}
+			if (pReader["LastUpdateTime"] != DBNull.Value)
+			{
+				pInstance.LastUpdateTime =  Convert.ToDateTime(pReader["LastUpdateTime"]);
+			}
+			if (pReader["IsDelete"] != DBNull.Value)
+			{
+				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
+			}
+			if (pReader["CustomerId"] != DBNull.Value)
+			{
+				pInstance.CustomerId =  Convert.ToString(pReader["CustomerId"]);
+			}
+			if (pReader["Status"] != DBNull.Value)
+			{
+				pInstance.Status =  Convert.ToString(pReader["Status"]);
+			}
+			if (pReader["SuperRetailTraderPassData"] != DBNull.Value)
+			{
+				pInstance.SuperRetailTraderPassData =  Convert.ToString(pReader["SuperRetailTraderPassData"]);
 			}
 
         }

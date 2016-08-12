@@ -47,6 +47,7 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Request
         /// 优惠券种ID (区分优惠券与活动)
         /// </summary>
         public string couponId { get; set; }
+        public int? registerType { get; set; }
         public void Validate()
         {
 

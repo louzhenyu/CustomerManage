@@ -298,143 +298,155 @@
             var that = this;
             that.elems.operation.find(".commonBtn[data-status]").hide();
             that.elems.operation.hide();
-           that.loadData.getSkuPropCfg(function(skuCfg){
-               that.loadData.get_unit_tree(function(data) {
-                   debugger;
+            that.loadData.getOrderStatusList(function(statusListInfo){
+                        debugger;
+                if(statusListInfo.length>0){
+                    $.each(statusListInfo,function(index,filed){
+
+                        var html='<div class="commonBtn" data-status='+filed.NextValue+'>'+filed.ActionDesc+'</div>';
+                        $(".optionBtn").prepend(html);
+                    })
+                }
+
+                that.loadData.getSkuPropCfg(function(skuCfg){
+                    that.loadData.get_unit_tree(function(data) {
+                        debugger;
 
 
-                   $("#setUnitId").combotree({
-                       // animate:true
-                       lines: true,
-                       checkbox: true,
-                       id: 'id',
-                       text: 'text',
-                       data: data,
-                       onChange: function (para)
-                       {
-                           debugger;
-                           that.loadData.GetUnitInfo(para, function (data) {
-                               if (data)
-                               {
-                                   debugger;
-                                   $("#unitphone").val(data.UnitPhone);
-                                   $("#UnitAddr").val(data.UnitAddress);
-                               }
+                        $("#setUnitId").combotree({
+                            // animate:true
+                            lines: true,
+                            checkbox: true,
+                            id: 'id',
+                            text: 'text',
+                            data: data,
+                            onChange: function (para)
+                            {
+                                debugger;
+                                that.loadData.GetUnitInfo(para, function (data) {
+                                    if (data)
+                                    {
+                                        debugger;
+                                        $("#unitphone").val(data.UnitPhone);
+                                        $("#UnitAddr").val(data.UnitAddress);
+                                    }
 
-                           });
-                       }
+                                });
+                            }
 
-                   });
-                   $(".tooltip ").hide();
-                   that.loadData.getOrderInfo(function (data) {
+                        });
+                        $(".tooltip ").hide();
+                        that.loadData.getOrderInfo(function (data) {
 
-                       data.topics.skuCfg=skuCfg;
-                       that.elems.orderIdInfo=data.topics;
-                       var orderinfo=data.topics;
-                       that.elems.ishideOption=orderinfo.status==700?true:false;
-                       if(that.elems.ishideOption){
-                           $(".updateBtn").remove();
-                       }
-                       if(orderinfo.status=='800'){
-                           $('.printBtn').attr('data-opttype','');
-                           $('.printBtn').css({'background':'#ccc','cursor':'default'});
-                       }
-                       /* orderinfo.create_time=new Date(orderinfo.create_time).format("yyyy-MM-dd hh:mm");*/
-                       if(orderinfo.Field7=='500' || orderinfo.Field7=='100' || orderinfo.Field7=='900'){
-                           $('#deliveryExpressBox').hide();
-                           $('#expressNumBox').hide();
-                           $('#deliveryExpressBox2').hide();
-                           $('#expressNumBox2').hide();
-                       }
+                            data.topics.skuCfg=skuCfg;
+                            that.elems.orderIdInfo=data.topics;
+                            var orderinfo=data.topics;
+                            that.elems.ishideOption=orderinfo.status==700?true:false;
+                            if(that.elems.ishideOption){
+                                $(".updateBtn").remove();
+                            }
+                            if(orderinfo.status=='800'){
+                                $('.printBtn').attr('data-opttype','');
+                                $('.printBtn').css({'background':'#ccc','cursor':'default'});
+                            }
+                            /* orderinfo.create_time=new Date(orderinfo.create_time).format("yyyy-MM-dd hh:mm");*/
+                            if(orderinfo.Field7=='500' || orderinfo.Field7=='100' || orderinfo.Field7=='900'){
+                                $('#deliveryExpressBox').hide();
+                                $('#expressNumBox').hide();
+                                $('#deliveryExpressBox2').hide();
+                                $('#expressNumBox2').hide();
+                            }
 
-                       if(orderinfo.Field7=='800' || orderinfo.Field7=='700'){
-                           $("[data-flag='update']").hide();
-                       }
+                            if(orderinfo.Field7=='800' || orderinfo.Field7=='700'){
+                                $("[data-flag='update']").hide();
+                            }
 
-                       that.elems.ishideOption=true;
-                       that.renderTable(orderinfo);
+                            that.elems.ishideOption=true;
+                            that.renderTable(orderinfo);
 
-                       orderinfo.memberPrice=orderinfo.VipDiscount;
-                       if(orderinfo.DeliveryName=="到店自提"){
-                           $(".DeliveryName1").hide();
-                           $(".DeliveryName2").show();
-                           $(".DeliveryInformation").show();
-                           $(".ConsigneeInformation").hide();
+                            orderinfo.memberPrice=orderinfo.VipDiscount;
+                            if(orderinfo.DeliveryName=="到店自提"){
+                                $(".DeliveryName1").hide();
+                                $(".DeliveryName2").show();
+                                $(".DeliveryInformation").show();
+                                $(".ConsigneeInformation").hide();
 
-                       }else{
-                           $(".DeliveryName1").show();
-                           $(".DeliveryName2").hide();
-                           $(".DeliveryInformation").hide();
-                           $(".ConsigneeInformation").show();
+                            }else{
+                                $(".DeliveryName1").show();
+                                $(".DeliveryName2").hide();
+                                $(".DeliveryInformation").hide();
+                                $(".ConsigneeInformation").show();
 
-                       }
+                            }
 
-                       that.elems.operation.find(".commonBtn[data-status]").each(function(){
+                            that.elems.operation.find(".commonBtn[data-status]").each(function(){
 
-                           var me=$(this).data("showstaus");
+                                var me=$(this).data("showstaus");
 
-                           if(me&&me.toString().indexOf(orderinfo.status)!=-1){
-                               $(this).show();
-                           } else{
-                               $(this).hide();
-                           }
-                           if(orderinfo.status==100||orderinfo.status==900){
-                               if(orderinfo.DeliveryName=="到店自提"){
-                                   $(".commonBtn.DeliveryName1").hide();
-                                   $(".commonBtn.DeliveryName2").show();
+                                if(me&&me.toString().indexOf(orderinfo.status)!=-1){
+                                    $(this).show();
+                                } else if(me){
+                                    $(this).hide();
+                                }
+                                if(orderinfo.status==100||orderinfo.status==900){
+                                    if(orderinfo.DeliveryName=="到店自提"){
+                                        $(".commonBtn.DeliveryName1").hide();
+                                        $(".commonBtn.DeliveryName2").show();
 
-                               }else{
-                                   $(".commonBtn.DeliveryName1").show();
-                                   $(".commonBtn.DeliveryName2").hide();
+                                    }else{
+                                        $(".commonBtn.DeliveryName1").show();
+                                        $(".commonBtn.DeliveryName2").hide();
 
-                               }
-                           }
-
-
-                       });
-
-                       //收款按钮单独处理
-                       if (orderinfo["Field1"] == "1") {
-                           orderinfo["paystatus"]= "已付款";
-                           $(".commonBtn[data-optType='payment']").hide()
-                           $(".Paystatus").html("实付金额：");
-                           $(".PaystatusDetail").html("实付金额明细");
-                       } else {
-                           orderinfo["paystatus"] = "未付款";
-                           $(".Paystatus").html("应付金额：");
-                           $(".PaystatusDetail").html("应付金额明细");
-                           if(orderinfo.status!="800"&&orderinfo.status!="900")
-                           {
-                               $(".commonBtn[data-optType='payment']").show()
-                           }
-                       }
-                       that.loadData.opertionField.DeliveryType=orderinfo.DeliveryName=="送货到家"?'1':'2';//配送方式
-
-                       if (orderinfo.DeliveryName != "到店自提") {
-                           that.loadData.opertionField.Carrier_id = orderinfo.carrier_id;//配送商id
-                           that.loadData.opertionField.ReceiveMan = orderinfo.Field14;  //收件人
-                           that.loadData.opertionField.Addr = orderinfo.Field4;//配送地址
-                           that.loadData.opertionField.Phone = orderinfo.Field6;//手机号
-                       }
-                       that.loadData.opertionField.DeliveryCode=orderinfo.Field2;//配送号
-
-                       /*purchase_unit_id: "0da0d3a6a0d899e6d639bfbf25005300"
-                        purchase_unit_name: "浙江巨圣鞋业(桥下店)"*/
-
-                       debugger
-                       $("#orderInfo").form('load',orderinfo);
+                                    }
+                                }
 
 
-                       if (orderinfo.DeliveryName == "到店自提") {
-                           that.loadData.opertionField.Addr = orderinfo.unit_address;//配送地址
-                           that.loadData.opertionField.Phone = orderinfo.unit_tel;//手机号
-                       }
+                            });
 
-                       that.elems.operation.show();
-                   })
-               });
+                            //收款按钮单独处理
+                            if (orderinfo["Field1"] == "1") {
+                                orderinfo["paystatus"]= "已付款";
+                                $(".commonBtn[data-optType='payment']").hide()
+                                $(".Paystatus").html("实付金额：");
+                                $(".PaystatusDetail").html("实付金额明细");
+                            } else {
+                                orderinfo["paystatus"] = "未付款";
+                                $(".Paystatus").html("应付金额：");
+                                $(".PaystatusDetail").html("应付金额明细");
+                                if(orderinfo.status!="800"&&orderinfo.status!="900")
+                                {
+                                    $(".commonBtn[data-optType='payment']").show()
+                                }
+                            }
+                            that.loadData.opertionField.DeliveryType=orderinfo.DeliveryName=="送货到家"?'1':'2';//配送方式
 
-           });
+                            if (orderinfo.DeliveryName != "到店自提") {
+                                that.loadData.opertionField.Carrier_id = orderinfo.carrier_id;//配送商id
+                                that.loadData.opertionField.ReceiveMan = orderinfo.Field14;  //收件人
+                                that.loadData.opertionField.Addr = orderinfo.Field4;//配送地址
+                                that.loadData.opertionField.Phone = orderinfo.Field6;//手机号
+                            }
+                            that.loadData.opertionField.DeliveryCode=orderinfo.Field2;//配送号
+
+                            /*purchase_unit_id: "0da0d3a6a0d899e6d639bfbf25005300"
+                             purchase_unit_name: "浙江巨圣鞋业(桥下店)"*/
+
+                            debugger
+                            $("#orderInfo").form('load',orderinfo);
+
+
+                            if (orderinfo.DeliveryName == "到店自提") {
+                                that.loadData.opertionField.Addr = orderinfo.unit_address;//配送地址
+                                that.loadData.opertionField.Phone = orderinfo.unit_tel;//手机号
+                            }
+
+                            that.elems.operation.show();
+                        })
+                    });
+
+                });
+            })
+
             that.loadData.GetInoutStatusList(function(data){
 				
                 that.elems.StatusList.datagrid({
@@ -840,6 +852,26 @@
                         if (data.topics) {
                             if (callback) {
                                 callback(data);
+                            }
+
+                        } else {
+                            alert("加载数据不成功");
+                        }
+                    }
+                });
+            },
+            getOrderStatusList: function (callback) {
+                $.util.oldAjax({
+                    url: "/Module/Order/InoutOrders/Handler/Inout3Handler.ashx",
+                    data: {
+                        action: 'GetOrderStatusList',
+                        order_id: this.args.orderId
+                    },
+                    success: function (data) {
+                        debugger;
+                        if (data.topics) {
+                            if (callback) {
+                                callback(data.topics);
                             }
 
                         } else {

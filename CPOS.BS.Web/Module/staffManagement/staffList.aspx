@@ -5,30 +5,6 @@
     <title>员工管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="<%=StaticUrl+"/module/staffManagement/css/style.css?v=0.63"%>" rel="stylesheet" type="text/css" />
-    <style type="text/css">
-	.queryTermArea{border-bottom:1px dashed #dcdcdc;background:#fafafa;}
-	.queryTermArea .item{display:inline-block;}
-	#opt{padding-top:17px;border-top:none;background:#fff;}
-	.moreQueryWrap{float:left;margin-left:25px;}
-	.textbox-addon-right{right:9px !important;}
-	#addRoleBtn{width:115px; text-indent:20px;background:#0cc url(images/icon-add.png) no-repeat 20px center;}
-	
-	.datagrid-body .datagrid-row{}
-	/*.datagrid-body .handle{display:inline-block;}
-	.deleteBtn{background:url(images/delete.png) no-repeat center center;}
-	.editBtn{background:url(images/edit.png) no-repeat center center;}
-	.resetBtn{background:url(images/icon-reset.png) no-repeat center center;}
-	.pauseBtn{background:url(images/pause.png) no-repeat center center;}
-	.runningBtn{background:url(images/running.png) no-repeat center center;}*/
-	
-	#win .commonSelectWrap{margin:12px 10px 32px 0;}
-	#win .searchInput{width:232px;}
-	.textbox-invalid{border:none;background:none;}
-	.limitsTreeBox{height:200px;width:460px;margin-left:110px;border:1px solid #d0d5d8;border-radius:3px;overflow-x:auto;}
-	#btnWrap{height:60px !important;}
-	.loading{width:81%;}
-	
-    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 

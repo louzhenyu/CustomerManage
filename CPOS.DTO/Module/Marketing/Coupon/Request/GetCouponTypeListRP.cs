@@ -16,7 +16,12 @@ namespace JIT.CPOS.DTO.Module.Marketing.Coupon.Request
         public bool? IsEffective { get; set; }
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
+		/// <summary>
+		/// 是否设置了相对时间
+		/// </summary>
+		public int IsServiceLife { get; set; }
 
+		public int? IsNotLimitQty { get; set; }
         /// <summary>
         /// SurplusCount==1 查询剩余张数大于0 的优惠券 否则不做处理
         /// </summary>

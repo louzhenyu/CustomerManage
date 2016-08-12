@@ -98,10 +98,15 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.OrderNotPay
                             }
 
                         }
-                        //获取会员的信息
-                        var vip = _VipBLL.GetByID(t_InoutInfo.order_id);
+                        try
+                        {
+                            //获取会员的信息
+                            var vip = _VipBLL.GetByID(t_InoutInfo.vip_no);
 
-                        new SendOrderNotPayMsgBLL().NotPayMessage(t_InoutInfo.actual_amount.ToString(), productNames, t_InoutInfo.Field4, t_InoutInfo.order_no, vip.WeiXinUserId, _T_loggingSessionInfo);
+                            new SendOrderNotPayMsgBLL().NotPayMessage(t_InoutInfo.actual_amount.ToString(), productNames, t_InoutInfo.Field4, t_InoutInfo.order_no, vip.WeiXinUserId, _T_loggingSessionInfo);
+                        }
+                        catch { continue; }
+
                     }
 
 

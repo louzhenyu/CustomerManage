@@ -25,6 +25,7 @@ using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.BS.Entity;
+using System.Data.SqlClient;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -41,6 +42,24 @@ namespace JIT.CPOS.BS.BLL
         public DataSet GetInoutOrderItems(string orderId)
         {
             return this._currentDAO.GetInoutOrderItems(orderId);
+        }
+        /// <summary>
+        /// 事务
+        /// </summary>
+        /// <returns></returns>
+        public SqlTransaction GetTran()
+        {
+            return this._currentDAO.GetTran();
+        }
+        /// <summary>
+        /// 根据当前卡类型ID 获取充值活动列表
+        /// </summary>
+        /// <param name="CustomerID"></param>
+        /// <param name="vipCardTypeID"></param>
+        /// <returns></returns>
+        public DataSet GetRechargeActivityList(string CustomerID, string vipCardTypeID, int ActType)
+        {
+            return this._currentDAO.GetRechargeActivityList(CustomerID, vipCardTypeID,ActType);
         }
     }
 }

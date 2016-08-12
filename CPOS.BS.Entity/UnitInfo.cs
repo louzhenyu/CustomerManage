@@ -211,12 +211,12 @@ namespace JIT.CPOS.BS.Entity
         }
         public string provinceId//省份两位
         {
-            get { return string.IsNullOrEmpty(CityId) || CityId.Length < 2 ? "" : CityId.Substring(0, 2); }
+            get { return string.IsNullOrEmpty(CityId) ? "" : CityId.Substring(0, 2); }
             set { cityCode = value; }
         }
         public string townId//市4位
         {
-            get { return string.IsNullOrEmpty(CityId) || CityId.Length < 4 ? "" : CityId.Substring(0, 4); }
+            get { return string.IsNullOrEmpty(CityId) ? "" : CityId.Substring(0, 4); }
             set { cityCode = value; }
         }
 

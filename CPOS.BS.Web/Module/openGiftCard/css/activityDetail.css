@@ -1,0 +1,71 @@
+@charset "utf-8";
+.queryTermArea{ background:none;width:100%;padding: 30px 15px 0 30px; }
+.queryTermArea  .panelList{width:100%;  text-align: center;/*border: 1px solid #d8d8d8;*/ border-radius:8px 8px 0 0;border-bottom:0;}
+.commonSelectWrap .selectBox{ border: 1px solid transparent;}
+.line{border-top: 1px solid #d0d5d8; margin:0 auto; width:95%; display:inline-block}
+.title{ height: 57px; background:#f2f2f2; border-bottom:1px solid #d8d8d8;border-radius:8px 8px 0 0; }
+.title li{cursor: pointer;  width:50%; height: 56px; line-height: 56px;  float:left; text-align:center; font-size: 17px; font-weight:600; color:#3d3e40;  border-right:1px solid #d8d8d8; }
+.title li.on{ background:#fff;}
+.title li.one{ border-radius: 8px 0 0 0;}
+.title li.borderNone{ border:none}
+.btnopt{margin: 0 auto;margin-top: 45px; width:266px;}
+
+.btnopt .commonBtn.cancel{ background-color: #cccccc}
+.btnopt .commonBtn.bgWhite{ display:none;}
+.checkBoxList{padding-left:8px; width: 278px; height: 100px; float: left; }
+.panelDiv{display:none;text-align: center; }
+#nav02.panelDiv{margin: 0 auto; width: 100%}
+.left{ float: left;} .right{float: right}
+.listBtn{ width: 110px; height:34px; float: left;cursor: pointer; text-align: center; line-height: 34px; color: #999; font-size: 14px; background: #fff; position: relative; margin-right: 25px; border:1px solid #e1e1e1 ; margin-bottom: 20px; border-radius: 3px;}
+.listBtn .on{ background:url("../images/duihao.png") no-repeat; width: 27px; height:22px; position:absolute; right: 0; bottom: 0;display: none}
+
+.listBtn.show{ border-color: #00a0e8;color: #00a0e8;}
+.listBtn.show .on{ display: block;}
+
+#nav01 .commonSelectWrap{ margin:16px 20px 16px 0;font-size:14px;}
+#nav01 .commonSelectWrap .tit{ width:auto;font-size:14px;color:#999;}
+#nav01 .commonSelectWrap .hint{ color: #cc0000; line-height: 35px; }
+
+/*上传图片样式*/
+.commonSelectWrap .handleLayer{ display: block; float: left;}
+.handleLayer .jsAreaItem{width: 497px; margin-top: 15px; position: relative;display: inline-block;}
+.handleLayer .wrapPic{float:left;width: 410px;}
+.handleLayer .wrapPic .imglist{ width: 50px; }
+.handleLayer .wrapPic .imglist img{ height: 50px;width:50px;border:1px solid #cfcedc; margin-bottom: 8px;}
+.handleLayer .wrapPic .imglist img.on{ border: 3px solid #00acee;}
+.handleLayer .wrapPic .size{display:block;width:50%;margin:15% auto;}
+.handleLayer .wrapPic .imgPanl{width: 300px;background:#dde0e9;overflow:hidden;position: absolute; top: 0;left: 0;}
+.handleLayer .wrapPic .imgPanl img{width:100%;}
+.handleLayer .wrapPic .uploadBtn{float: right; position: relative; width: 90px; height: 30px;border-radius: 4px; line-height: 30px; cursor:pointer;margin-top: 103px; background: #00a0e8; font-size: 12px; color: #fff;}
+.handleLayer .wrapPic .uploadBtn .ke-button-common { width: 100%; height: 30px;	 cursor: pointer;overflow: visible;  display: inline-block;vertical-align: top;
+    }
+.handleLayer .wrapPic .uploadBtn input{display:block;width:300px;height:32px;opacity:0;filter:Alpha(opacity=0);position:absolute;top:0;right:0;}
+.ke-upload-area {height: 100%;}
+.ke-upload-area .ke-upload-file {height:100%;cursor:pointer;}
+
+.handleLayer  .txt{float: right;position: absolute;right: -38px;top: 118px;font-size: 14px;color: #999;}
+.linetext{ line-height: 38px; margin-top: 25px; display: block; width:50%; float: left;}
+.checkBox{ float: left;}
+.linetext .inputDiv{float: left;margin-left:20px;margin-top: -10px; display: inline-block; font-size: 14px; color:#999}
+#info{ width: 100%; height: 400px; }
+.textList{ width: 100%;clear: both;}
+.textList .commonSelectWrap{margin: 10px 10px 10px 0; }
+.textList .commonSelectWrap .searchInput { width: auto;}
+
+#nav02 .commonBtn{ width: 80px; line-height: 30px; height: 30px;}
+#nav02 .optBtnPanel{ height: 76px;padding-left: 30px; padding-top: 22px;  border-bottom: 1px solid #d8d8d8;width: 100%;}
+.borderNone{ border: 1px solid  transparent;  background: none}
+
+.bgColor{ background-color: #efefef}
+.bgColor input{ background-color: #efefef}
+.bgCcc{background-color: #ccc}
+
+.vipTypeCard .radio{float:left;margin:2px 105px 0 0;font-size:14px;color:#999;}
+.checkBox span{padding-left:5px;font-size:14px;color:#999;}
+.monadBox{float:left;padding:8px 0 0 8px;font-size:14px;color:#999;}
+.textF33{color:#f33;}
+.expText{display:inline-block;width:100%;text-align:left;line-height:22px;padding-top:10px;font-size:14px;color:#f33;}
+.radio em{margin-right:7px;}
+.commonSelectWrap .checkBox{ margin-top: 8px;}
+.commonSelectWrap .tip{ float: right;background: url("../images/icon-tip.png") no-repeat right center;width: 16px;height: 22px;display: block;margin-left: 20px;margin-top: 8px;}
+.ruleTipText{display:none;clear:left;padding-left:130px;color:#f00;}

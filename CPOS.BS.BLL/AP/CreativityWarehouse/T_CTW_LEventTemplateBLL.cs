@@ -37,5 +37,14 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetTemplateList(strActivityGroupCode);
         }
-    }
+
+        /// <summary>
+        /// 获取创意仓库主题列表信息（包括主题列表，计划列表，Banner列表）
+        /// </summary>
+        /// <returns></returns>
+        public int UpdateTemplateInfo(string pTemplateId, int pType)
+        {
+            return this._currentDAO.UpdateTemplateInfo(pTemplateId,pType);
+        }
+    }     
 }

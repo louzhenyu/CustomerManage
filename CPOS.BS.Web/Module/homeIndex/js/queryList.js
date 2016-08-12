@@ -1452,7 +1452,7 @@ define(['jquery','customerTemp','kindeditor', 'kkpager','artTemplate','tools'], 
                     success: function (data) {
                         debugger;
                         if (data.IsSuccess) {
-                            alert("保存成功，应用以后生效");
+                            alert("保存成功"); //，应用以后生效
                             //window.location.href = "pageList.aspx";
                         } else {
                             alert(data.Message);

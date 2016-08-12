@@ -45,7 +45,7 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetVipAmountByOrderId(orderId, userId, amountSourceId);
         }
-        
+
         /// <summary>
         /// 获取余额/返现变更明细
         /// </summary>
@@ -57,6 +57,19 @@ namespace JIT.CPOS.BS.BLL
         public PagedQueryResult<VipAmountDetailEntity> GetVipAmountDetailList(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
             return this._currentDAO.GetVipAmountDetailList(pWhereConditions, pOrderBys, pPageSize, pCurrentPageIndex);
+        }
+
+        /// <summary>
+        /// 获取 会员中心 红利 全部=全部收入+提现明细
+        /// </summary>
+        /// <param name="pWhereConditions">筛选条件</param> 
+        /// /// <param name="pOrderBys">排序</param>
+        /// <param name="pPageSize">每页的记录数</param>
+        /// <param name="pCurrentPageIndex">以0开始的当前页码</param>
+        /// <returns></returns>
+        public PagedQueryResult<VipAmountDetailEntity> GetVipAmountDetailAndWithdrawList(IWhereCondition[] pWhereConditions, string VipId, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        {
+            return this._currentDAO.GetVipAmountDetailAndWithdrawList(pWhereConditions, VipId, pOrderBys, pPageSize, pCurrentPageIndex);
         }
     }
 }

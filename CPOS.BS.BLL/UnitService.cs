@@ -950,7 +950,7 @@ namespace JIT.CPOS.BS.BLL
                 if (C_Count == 13)
                 {
                     DataTable dtUnit = new DataTable();
-                    dtUnit.Columns.Add("UnitType", typeof(Int32));
+                    dtUnit.Columns.Add("UnitType", typeof(string));
                     dtUnit.Columns.Add("UnitName", typeof(string));
                     dtUnit.Columns.Add("UnitCode", typeof(string));
                     dtUnit.Columns.Add("UnitContact", typeof(string));
@@ -1038,35 +1038,6 @@ namespace JIT.CPOS.BS.BLL
 
             return dsResult;
         }
-        public DataSet DataTableToDb(DataTable dt, LoggingSessionInfo CurrentUserInfo)
-        {
-
-            DataSet dsResult = null; //要插入的数据  
-            try
-            {
-                string connString=System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Conn_alading"].ToString();
-                //string connString = @"user id=dev;password=JtLaxT7668;data source=182.254.219.83,3433;database=cpos_bs_alading;";   //连接数据库的路径方法  
-                SqlConnection connSql = new SqlConnection(connString);
-                connSql.Open();
-                DataRow dr = null;
-                int C_Count = dt.Columns.Count;//获取列数  
-                for (int i = 0; i < dt.Rows.Count; i++)  //记录表中的行数，循环插入  
-                {
-                    dr = dt.Rows[i];
-                    this.unitService.insertToSql(dr, C_Count, connSql, CurrentUserInfo.ClientID, CurrentUserInfo.UserID);
-                }
-
-                connSql.Close();
-                //临时表导入正式表
-                dsResult = this.unitService.ExcelImportToDB(CurrentUserInfo.ClientID);
-            }
-            catch (Exception)
-            {
-            }
-
-            return dsResult;
-        }
-
             
         
 

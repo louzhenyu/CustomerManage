@@ -19,7 +19,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.OperatingOrder
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var T_Iount = new T_InoutBLL(loggingSessionInfo);
-
+            
             //审核不通过:900
             //未发货：500
             //待提货：510
@@ -33,8 +33,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.OperatingOrder
                     var Entity = new InoutInfo()
                     {
                         order_id = item.OrderID,
-                        OldStatusDesc = item.StatusDesc,
-                        status = item.Status
+                        OldStatusDesc = item.StatusDesc
                     };
                     OrderList.Add(Entity);
                 }

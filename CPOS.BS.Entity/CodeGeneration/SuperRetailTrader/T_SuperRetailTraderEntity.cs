@@ -40,6 +40,11 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
+		public Guid? SuperRetailTraderID { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public String SuperRetailTraderCode { get; set; }
 
 		/// <summary>
@@ -130,7 +135,7 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public Guid? SuperRetailTraderID { get; set; }
+		public String SuperRetailTraderPassData { get; set; }
 
 
         #endregion

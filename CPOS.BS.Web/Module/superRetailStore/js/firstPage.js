@@ -124,7 +124,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     DataMonth = DataMonth.substring(1,2);
                 }
                 if(DataDay.substring(0,1)=='0'){
-                    DataDay = DataDay.substring(7,8);
+                    DataDay = DataDay.substring(1,2);
                 }
                 DataCount = DataMonth+"月"+DataDay+"日";
                 DayVipRTSalesAmount.push(that.LocationData.DaySevenRTSalesList[i].DayVipRTSalesAmount);
@@ -211,7 +211,7 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
                     DataMonth = DataMonth.substring(1,2);
                 }
                 if(DataDay.substring(0,1)=='0'){
-                    DataDay = DataDay.substring(7,8);
+                    DataDay = DataDay.substring(1,2);
                 }
                 DataCount = DataMonth+"月"+DataDay+"日";
                 DayAddVipRTCount.push(that.LocationData.DaySevenRTCountList[i].DayAddVipRTCount);

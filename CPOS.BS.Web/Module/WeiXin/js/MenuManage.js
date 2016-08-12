@@ -1121,7 +1121,7 @@ define(['jquery', 'tools', 'template', 'kindeditor', 'lang', 'pagination', 'drag
                     var eventName = $("#theTitle").val();
                     var eventType = that.elems.imageCategory.val();
                     page.MaterialTextName = eventName;  //图文名称
-                    page.MaterialTypeId = eventType;    //图文typeId
+                    page.MaterialTypeId = (eventType=='请选择')?'':eventType;    //图文typeId
                     page.pageIndex = 0;  //只要查询就从头查询
                     that.loadData.getMaterialTextList("", function (data) {
                         var obj = {

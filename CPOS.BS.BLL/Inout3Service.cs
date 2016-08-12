@@ -166,8 +166,7 @@ namespace JIT.CPOS.BS.BLL
                                        , string DeliveryDateEnd    //
                                        , string CancelDateBegin
                                        , string CancelDateEnd, string order_id, string vipId,
-            string path_unit_id, string timestamp, string InoutSort, bool getDetail = false  //getDetail默认是false，不是取详细信息。
-             , string reserveDay_begin = null, string reserveDay_end = null) //配送日期也是配置成可选的
+            string path_unit_id, string timestamp, string InoutSort, bool getDetail = false)//getDetail默认是false，不是取详细信息。
         {
             InoutInfo inoutInfo = new InoutInfo();
             OrderSearchInfo orderSearchInfo = new OrderSearchInfo();
@@ -204,9 +203,6 @@ namespace JIT.CPOS.BS.BLL
             orderSearchInfo.timestamp = timestamp;
 
             orderSearchInfo.PayStatus = PayStatus;
-
-            orderSearchInfo.reserveDay_begin = reserveDay_begin;//配送日期
-            orderSearchInfo.reserveDay_end = reserveDay_end;
 
             inoutInfo = SearchInoutInfo_lj(orderSearchInfo, getDetail);
             return inoutInfo;
@@ -246,9 +242,7 @@ namespace JIT.CPOS.BS.BLL
                                     , string DeliveryDateEnd    //
                                     , string CancelDateBegin
                                     , string CancelDateEnd, string order_id, string vipId,
-         string path_unit_id, string timestamp, string InoutSort, bool getDetail = false
-             , string reserveDay_begin=null, string reserveDay_end=null   //配送日期也是配置成可选的
-            )//getDetail默认是false，不是取详细信息。
+         string path_unit_id, string timestamp, string InoutSort, bool getDetail = false)//getDetail默认是false，不是取详细信息。
         {
             InoutInfo inoutInfo = new InoutInfo();
             OrderSearchInfo orderSearchInfo = new OrderSearchInfo();
@@ -291,8 +285,6 @@ namespace JIT.CPOS.BS.BLL
             orderSearchInfo.VipCardTypeID = VipCardTypeID;
             orderSearchInfo.ReserveDateBegin = reserveDateBegin;
             orderSearchInfo.ReserveDateEnd = reserveDateEnd;
-			orderSearchInfo.reserveDay_begin = reserveDay_begin;//配送日期
-            orderSearchInfo.reserveDay_end = reserveDay_end;
 
             inoutInfo = SearchInoutInfo_lj2(orderSearchInfo, getDetail);
             return inoutInfo;
@@ -400,7 +392,7 @@ namespace JIT.CPOS.BS.BLL
                                    , string DeliveryDateEnd    //
                                    , string CancelDateBegin
                                    , string CancelDateEnd, string order_id, string vipId,
-        string path_unit_id, string timestamp, string InoutSort, string reserveDay_begin, string reserveDay_end, bool getDetail = false)//getDetail默认是false，不是取详细信息。
+        string path_unit_id, string timestamp, string InoutSort, bool getDetail = false)//getDetail默认是false，不是取详细信息。
         {
             InoutInfo inoutInfo = new InoutInfo();
             OrderSearchInfo orderSearchInfo = new OrderSearchInfo();
@@ -1389,11 +1381,12 @@ namespace JIT.CPOS.BS.BLL
                         inoutInfo.sales_user_name = tempName;
                     }
 
-                    decimal vipDiscount = 0;//会员折扣金额
+                    decimal vipDiscount = 100;//会员折扣金额
                     if (inoutInfo.discount_rate > 0)
                     {
-                        var tempAmount = inoutInfo.actual_amount - inoutInfo.DeliveryAmount; //应付-运费后的应付金额
-                        vipDiscount = tempAmount / (inoutInfo.discount_rate / 100) - tempAmount;// (应付-运费)/折扣率=去除折扣后实付Y；Y-包含折扣的实付=会员折扣
+                        var tempAmount = inoutInfo.total_amount - inoutInfo.DeliveryAmount; //应付-运费后的应付金额
+                        //vipDiscount = tempAmount / (inoutInfo.discount_rate / 100) - tempAmount;// (应付-运费)/折扣率=去除折扣后实付Y；Y-包含折扣的实付=会员折扣
+                        vipDiscount = tempAmount - tempAmount * (inoutInfo.discount_rate / 100); // (应付 - 运费) - （应付 - 运费）* 会员折扣
                     }
 
                     //积分抵扣
@@ -1406,6 +1399,13 @@ namespace JIT.CPOS.BS.BLL
                         inoutInfo.pay_pointsAmount = 0;
                     }
                     inoutInfo.VipDiscount = -Math.Round(vipDiscount, 2);
+
+                    //余额支付,将实付金额中的余额拆分出来
+                    if (inoutInfo.vipEndAmount != 0)
+                    {
+                        inoutInfo.actual_amount = inoutInfo.actual_amount + inoutInfo.vipEndAmount; //vipEndAmount为负，所以这里是+
+                    }
+
 
                 }
                 inoutInfo.InoutDetailList = GetInoutDetailInfoByOrderId(orderId, loggingSessionInfo.CurrentLoggingManager.Customer_Id);//获取明细信息

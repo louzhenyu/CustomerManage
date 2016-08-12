@@ -120,7 +120,7 @@ namespace JIT.CPOS.BS.BLL
                         vipObj.VipName = dr["VipName"] != DBNull.Value ? dr["VipName"].ToString() : "";
                         vipObj.Phone = dr["Phone"] != DBNull.Value ? dr["Phone"].ToString() : "";
                         vipObj.WeiXin = dr["WeiXin"] != DBNull.Value ? dr["WeiXin"].ToString() : "";
-                        vipObj.Integration = dr["Integration"] != DBNull.Value ? Convert.ToInt32(dr["Integration"].ToString()) : 0;
+                        vipObj.Integration = dr["Integration"] != DBNull.Value ? Convert.ToDecimal(dr["Integration"].ToString()) : 0;
                         vipObj.LastUpdateTime = dr["LastUpdateTime"] != DBNull.Value ? Convert.ToDateTime(dr["LastUpdateTime"].ToString()) : DateTime.Now;
                         vipObj.PurchaseAmount = dr["PurchaseAmount"] != DBNull.Value ? Convert.ToDecimal(dr["PurchaseAmount"].ToString()) : 0;
                         vipObj.PurchaseCount = dr["PurchaseCount"] != DBNull.Value ? Convert.ToInt32(dr["PurchaseCount"].ToString()) : 0;

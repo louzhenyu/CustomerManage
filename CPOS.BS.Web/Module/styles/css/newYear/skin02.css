@@ -82,19 +82,21 @@ body{overflow-x: hidden;}
 .commonHeader .setBox p{background: url(../../images/newYear/jiantou.png) no-repeat 95%  center;  padding-right: 28px; line-height: 50px;  text-indent:0.5em;}
 .commonHeader .setBox p:hover{background-color: #0c5e99;}
 .commonHeader .setBox p b{font-size: 16px; float: left;  font-weight: 500;}
-.commonHeader .setBox-tip{top: 50px;  padding: 0;background: url(../../images/newYear/set-tip-bg.png) repeat-y 0 0;  left: 0; width: 158px; height: 132px; border-bottom: none;}
+.commonHeader .setBox-tip{top: 50px;  padding: 0;background: url(../../images/newYear/set-tip-bg.png) repeat-y 0 0;  left: 0; width: 158px; height: 162px; border-bottom: none;}
 .commonHeader .setBox-tip .safetyOutBtn{ border-radius:0; width: 100%; height: 32px;  padding:0;  line-height: 32px; background: none;  text-align: center;margin: 0;}
-.commonHeader .setBox-tip .safetyOutBtn:nth-child(4){border-bottom:none;height:38px;background: url("../../images/newYear/setBoxBot.png") no-repeat bottom center;}
+.commonHeader .setBox-tip .safetyOutBtn:nth-child(5){border-bottom:none;height:38px;background: url("../../images/newYear/setBoxBot.png") no-repeat bottom center;}
 .commonHeader .setBox-tip a{padding-left: 48px;text-align:left; background-repeat: no-repeat; background-position: 20px center;color: #999; line-height: 32px; font-size: 12px; margin:0 auto;}
 .commonHeader .setBox-tip a:hover { background-color:#0c5e99; color: #fff;border-radius: 0;background-repeat: no-repeat; background-position: 20px center;}
 .commonHeader .setBox-tip a.one{background-image: url("../../images/newYear/set_top/abacus.png");}
 .commonHeader .setBox-tip a.two{background-image: url("../../images/newYear/set_top/unlock.png");}
 .commonHeader .setBox-tip a.three{background-image: url("../../images/newYear/set_top/upload.png");}
 .commonHeader .setBox-tip a.four{background-image: url("../../images/newYear/set_top/fsxx.png");}
+.commonHeader .setBox-tip a.five{background-image: url("../../images/newYear/set_top/sendingIcon2.png");}
 .commonHeader .setBox-tip a.one:hover{background-image: url("../../images/newYear/set_top/abacuson.png");}
 .commonHeader .setBox-tip a.two:hover{background-image: url("../../images/newYear/set_top/unlockon.png");}
 .commonHeader .setBox-tip a.three:hover{background-image: url("../../images/newYear/set_top/uploadon.png");}
 .commonHeader .setBox-tip a.four:hover{background-image: url("../../images/newYear/set_top/fsxxon.png");}
+.commonHeader .setBox-tip a.five:hover{background-image: url("../../images/newYear/set_top/sendingIcon.png");}
 .commonHeader .imgList{ width:112px; padding: 0 20px; float: left;}
 .commonHeader .imgList a{height: 50px;width: 16px;}
 .commonHeader .imgList .l{ background: url("../../images/newYear/set_top/settings.png") no-repeat center center;}
@@ -123,6 +125,14 @@ body{overflow-x: hidden;}
 .commonNav li a.icon_hyjk_zcd{ background-image: url("../../images/newYear/icon/icon_hyjk_zcd.png")}
 .commonNav li a.icon_hyjk_dsj{ background-image: url("../../images/newYear/icon/icon_hyjk_dsj.png")}
 .commonNav li a.icon_hyjk_hyk{ background-image: url("../../images/newYear/icon/icon_hyjk_hyk.png")}
+/*二期 */
+.commonNav li a.icon_hyjk_gl{ background-image: url("../../images/newYear/icon/icon_hyjk_gl.png")}
+.commonNav li a.icon_hyjk_jk{ background-image: url("../../images/newYear/icon/icon_hyjk_jk.png")}
+.commonNav li a.icon_hyjk_qy{ background-image: url("../../images/newYear/icon/icon_hyjk_qy.png")}
+.commonNav li a.icon_hyjk_hygl{ background-image: url("../../images/newYear/icon/icon_hyjk_hygl.png")}
+.commonNav li a.icon_hyjk_lpk{ background-image: url("../../images/newYear/icon/icon_hyjk_lpk.png")}
+
+
 /****员工激励****/
 .commonNav li a.icon_ygjl_ygjl{ background-image: url("../../images/newYear/icon/icon_ygjl_ygjl.png")}
 /****创新渠道****/
@@ -144,8 +154,8 @@ body{overflow-x: hidden;}
 .commonNav li a.icon_cjfx_fx{ background-image: url("../../images/newYear/icon/icon_cjfx_fx.png")}
 .commonNav li a.icon_cjfx_sp{ background-image: url("../../images/newYear/icon/icon_cjfx_sp.png")}
 .commonNav li a.icon_cjfx_tz{ background-image: url("../../images/newYear/icon/icon_dzhh_dzhh.png")}
-
-
+/****提现管理****/
+.commonNav li a.icon_txgl_txgl{ background-image:url("../../images/newYear/icon/icon_txgl_txgl.png")}
 /***图标End***/
 
 
@@ -357,7 +367,7 @@ body{overflow-x: hidden;}
 
 
 
-.radio{height: 28px; line-height: 28px;  }
+.radio{height: 28px; line-height: 28px;cursor: pointer;  }
 .radio  span{ float: left; color: #666; padding-left: 10px; white-space:normal;}
 .radio em{  height: 28px;   width: 28px; background: url("../../images/newYear/radio.png") center center no-repeat; float: left; }
 .radio.on em{ background-image: url("../../images/newYear/radioOn.png")}

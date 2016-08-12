@@ -66,38 +66,42 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
 
                 //根据订单ID获取订单明细[复用]
                 DataRow drItem = inoutService.GetOrderDetailByOrderId(item.OrderID).Tables[0].Select(" item_id= '" + item.ItemID + "'").FirstOrDefault();
-                //获取商品的图片[复用]
-                string itemImage = tInoutDetailBll.GetOrderDetailImageList("'" + item.ItemID + "'").Tables[0].Rows[0]["imageUrl"].ToString();
-                //获取订单详细列表中的商品规格[复用]
-                //DataRow[] drSku = inoutService.GetInoutDetailGgByOrderId(item.OrderID).Tables[0].Select(" sku_id='" + item.SkuID + "'");
+                if (drItem != null)
+                {
+                    //获取商品的图片[复用]
+                    string itemImage = tInoutDetailBll.GetOrderDetailImageList("'" + item.ItemID + "'").Tables[0].Rows[0]["imageUrl"].ToString();
+                    //获取订单详细列表中的商品规格[复用]
+                    //DataRow[] drSku = inoutService.GetInoutDetailGgByOrderId(item.OrderID).Tables[0].Select(" sku_id='" + item.SkuID + "'");
 
-                salesReturnInfo.SalesReturnID = item.SalesReturnID.ToString();
-                salesReturnInfo.SalesReturnNo = item.SalesReturnNo;
-                salesReturnInfo.ItemName = drItem != null ? drItem["item_name"].ToString() : "未知商品";
-                salesReturnInfo.SalesPrice = drItem != null ? Convert.ToDecimal(drItem["enter_price"]) : 0;
-                salesReturnInfo.Qty = item.Qty;
-                salesReturnInfo.Status = item.Status;
-                salesReturnInfo.ImageUrl = ImagePathUtil.GetImagePathStr(itemImage, "240");
+                    salesReturnInfo.SalesReturnID = item.SalesReturnID.ToString();
+                    salesReturnInfo.SalesReturnNo = item.SalesReturnNo;
+                    salesReturnInfo.ItemName = drItem["item_name"].ToString();
+                    salesReturnInfo.SalesPrice = Convert.ToDecimal(drItem["enter_price"]);
+                    salesReturnInfo.Qty = item.Qty;
+                    salesReturnInfo.Status = item.Status;
+                    salesReturnInfo.ImageUrl = ImagePathUtil.GetImagePathStr(itemImage, "240");
 
-                salesReturnInfo.VipName = item.VipName;
-                salesReturnInfo.DeliveryType = item.DeliveryType;
-                salesReturnInfo.CreateTime = item.CreateTime.Value.ToString("yyyy-MM-dd HH:mm");
-                //商户单号，支付方式
-                salesReturnInfo.paymentcenterId = item.paymentcenterId;
-                salesReturnInfo.paymentName = item.PayTypeName;
-                //if (drSku.Count() > 0)
-                //{
-                //    skuDetail = new SkuDetailInfo();
-                //    skuDetail.PropName1 = drSku[0]["prop_1_name"].ToString();
-                //    skuDetail.PropDetailName1 = drSku[0]["prop_1_detail_name"].ToString();
-                //    skuDetail.PropName2 = drSku[0]["prop_2_name"].ToString();
-                //    skuDetail.PropDetailName2 = drSku[0]["prop_2_detail_name"].ToString();
-                //    skuDetail.PropName3 = drSku[0]["prop_3_name"].ToString();
-                //    skuDetail.PropDetailName3 = drSku[0]["prop_3_detail_name"].ToString();
-                //    salesReturnInfo.SkuDetail = skuDetail;
-                //   
-                //}
-                salesReturnList.Add(salesReturnInfo);
+                    salesReturnInfo.VipName = item.VipName;
+                    salesReturnInfo.DeliveryType = item.DeliveryType;
+                    salesReturnInfo.CreateTime = item.CreateTime.Value.ToString("yyyy-MM-dd HH:mm");
+                    //商户单号，支付方式
+                    salesReturnInfo.paymentcenterId = item.paymentcenterId;
+                    salesReturnInfo.paymentName = item.PayTypeName;
+                    salesReturnInfo.ServicesType = item.ServicesType;
+                    //if (drSku.Count() > 0)
+                    //{
+                    //    skuDetail = new SkuDetailInfo();
+                    //    skuDetail.PropName1 = drSku[0]["prop_1_name"].ToString();
+                    //    skuDetail.PropDetailName1 = drSku[0]["prop_1_detail_name"].ToString();
+                    //    skuDetail.PropName2 = drSku[0]["prop_2_name"].ToString();
+                    //    skuDetail.PropDetailName2 = drSku[0]["prop_2_detail_name"].ToString();
+                    //    skuDetail.PropName3 = drSku[0]["prop_3_name"].ToString();
+                    //    skuDetail.PropDetailName3 = drSku[0]["prop_3_detail_name"].ToString();
+                    //    salesReturnInfo.SkuDetail = skuDetail;
+                    //   
+                    //}
+                    salesReturnList.Add(salesReturnInfo);
+                }
             }
 
             rd.SalesReturnList = salesReturnList.ToArray();

@@ -8,22 +8,6 @@ namespace JIT.CPOS.DTO.Module.VIP.VIPCardManage.Request
 {
     public class SetVipCardRP : IAPIRequestParameter
     {
-        #region VipAmount接口合并进来新增的参数
-        /// <summary>
-        /// 会员ID
-        /// </summary>
-        public string VipID { get; set; }
-        /// <summary>
-        /// 会员编码
-        /// </summary>
-        public string VipCode { get; set; }
-        /// <summary>
-        /// 余额/返现来源（23=人工调整余额；24=人工调整返现）
-        /// </summary>
-        public string AmountSourceID { get; set; }
-
-        #endregion
-
         /// <summary>
         /// 卡ID
         /// </summary>
@@ -63,5 +47,7 @@ namespace JIT.CPOS.DTO.Module.VIP.VIPCardManage.Request
         
 
         public void Validate() { }
+
+        
     }
 }

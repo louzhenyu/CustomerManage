@@ -6,11 +6,11 @@ using System.Text;
 
 namespace JIT.CPOS.DTO.Module.VIP.SysVipCardType.Response
 {
-    public class GetSysVipCardTypeListRD : IAPIResponseData
+    public class GetSysVipCardTypeListsRD : IAPIResponseData
     {
-        public List<SysVipCardTypeInfo> SysVipCardTypeList { get; set; }
+        public List<SysVipCardTypeInfos> SysVipCardTypeList { get; set; }
     }
-    public class SysVipCardTypeInfo
+    public class SysVipCardTypeInfos
     {
         /// <summary>
         /// 卡类别ID
@@ -40,5 +40,9 @@ namespace JIT.CPOS.DTO.Module.VIP.SysVipCardType.Response
         /// 充值送n
         /// </summary>
         public decimal? ChargeGive { get; set; }
+        /// <summary>
+        /// 售卡金额
+        /// </summary>
+        public decimal? Price { get; set; }
     }
 }

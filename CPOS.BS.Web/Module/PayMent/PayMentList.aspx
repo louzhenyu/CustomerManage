@@ -3,13 +3,13 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>支付方式管理</title>
-      <link href="<%=StaticUrl+"/module/PayMent/css/style.css?v=0.6"%>" rel="stylesheet" type="text/css" />
+      <link href="<%=StaticUrl+"/module/PayMent/css/style.css?v1.0"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 
 
-<div class="payMentListArea" id="section" data-js="js/payMentList.js">
+<div class="payMentListArea" id="section" data-js="js/payMentList.js?v1.0">
     <div class="tableWrap cursorDef">
         <!-- 已确认名单表格 -->
      <!--   <table class="dataTable" style="display:inline-table;">
@@ -29,7 +29,7 @@
         <div id="payMentList">
         	<div class="loading" style="padding-top:40px;">
               <span><img src="../static/images/loading.gif"></span>
-           </div>
+            </div>
         </div>
         <p class="tip-payment">至少配置一种支付方式，否则无法完成支付环节。</p>
     </div>
@@ -47,7 +47,7 @@
         <span class="jui-dialog-close"></span>
     </div>
     <div class="payMentContent">
-    	<div class="commonSelectWrap">
+    	<div class="commonSelectWrap" style="margin:3px 0">
         	<a href="http://help.chainclouds.cn/?p=700" target="_blank" class="handleGuide" title="操作指引"></a>
             <em class="tit">是否启用:</em>
             <div class="radioWrap">
@@ -56,9 +56,21 @@
             </div>
         </div>
         
+        <div class="commonSelectWrap" style="margin:3px 0 10px">
+            <em class="tit">支付方式:</em>
+            <div class="checkWrap">
+                <p id="pagePay" class="checkBox on" data-value='pagePay'>网页支付</p>
+                <p id="scanCodePay" class="checkBox" data-value="scanCodePay">扫码支付<strong>暂只支持超级分销</strong></p>
+            </div>
+        </div>
+        
         <div class="commonSelectWrap">
             <em class="tit"><span class="fontRed">*</span> 合作者身份(PID):</em>
             <p class="searchInput"><input id="AlipayWap_id" type="text" value="" /></p>
+        </div>
+        <div class="commonSelectWrap">
+            <em class="tit"><span class="fontRed">*</span> 服务商应用(APPID):</em>
+            <p class="searchInput"><input id="AlipayWap_appid" type="text" value="" /></p>
         </div>
         <div class="commonSelectWrap">
             <em class="tit"><span class="fontRed">*</span> 支付宝账号:</em>

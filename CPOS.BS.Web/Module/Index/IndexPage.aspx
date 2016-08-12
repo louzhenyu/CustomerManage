@@ -2,7 +2,7 @@
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 	<title>连锁掌柜-首页</title>
-    <link href="css/IndexPage.css?ver=2" rel="stylesheet" />
+    <link href="css/IndexPage.css?ver=3" rel="stylesheet" />
    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -289,7 +289,7 @@
                                 </div>
                             </div>
                         </div
-                    </div>
+                    ></div>
                 </div>
                 
             </div>

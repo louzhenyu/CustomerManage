@@ -192,6 +192,10 @@ namespace JIT.CPOS.BS.Entity
 		/// </summary>
 		public Int32? IsDelete { get; set; }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? IsOnlineSales { get; set; }
 
         #endregion
 

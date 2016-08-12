@@ -35,6 +35,35 @@ namespace JIT.CPOS.BS.Entity
         /// 手工调整时，显示操作人
         /// </summary>
         public string CreateByName { get; set; }
+
+        /// <summary>
+        /// 对应Amount
+        /// </summary>
+        public decimal UpdateCount { get; set; }
+        /// <summary>
+        /// 对应CreateTime
+        /// </summary>
+        public DateTime UpdateTime { get; set; }
+        /// <summary>
+        /// 对应Remark
+        /// </summary>
+        public string UpdateReason { get; set; }
         #endregion
+    }
+
+    public partial class SumVipAmountDetailEntity
+    {
+        /// <summary>
+        /// 当前余额
+        /// </summary>
+        public decimal? IncomeAmount { get; set; }
+        /// <summary>
+        /// 提现余额
+        /// </summary>
+        public decimal? ExpenditureAmount { get; set; }
+        /// <summary>
+        /// 总收入
+        /// </summary>
+        public int TotalAmount { get; set; }
     }
 }

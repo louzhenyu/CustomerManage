@@ -246,14 +246,21 @@ namespace JIT.CPOS.BS.BLL
         /// <returns></returns>
         public List<string> GetMenuIds(Uri currentUri)
         {
+            // 特殊化 处理 先虎 新增优惠券 链接菜单问题  {李银 2016.7.1 修改}
+            string urlpath = currentUri.PathAndQuery;
+            if (urlpath.ToString().Contains("skipType"))
+            {
+                urlpath = "/module/couponManage/querylist.aspx";
+            }
             //2016.5
-            var targetStr = currentUri.PathAndQuery;
+            var targetStr = urlpath;
             var index = targetStr.IndexOf("mid=") - 1;
+         
             if (index >= 0)
             {
                 targetStr = targetStr.Substring(0, index);
             }
-            var result = appSysService.GetMenuIds(targetStr);
+            var result = appSysService.GetMenuIds(urlpath);
             return result;
         }
         #endregion

@@ -34,19 +34,19 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Report.VipGoldReport
                 var result = DataTableToObject.ConvertToList<R_VipGoldHomeEntity>(ds.Tables[0]).FirstOrDefault();
                 if (result != null)
                 {
-                    rd.OnlineFansCount = result.OnlineFansCount;
-                    rd.OnlineOnlyFansCount = result.OnlineOnlyFansCount;
-                    rd.OnlineVipCount = result.OnlineVipCount;
-                    rd.VipCount = result.VipCount;
-                    rd.OfflineVipCount = result.OfflineVipCount;
-                    rd.OnlineVipCountFor30DayOrder = result.OnlineVipCountFor30DayOrder;
-                    rd.OnlineVipCountPerFor30DayOrder = result.OnlineVipCountPerFor30DayOrder;
-                    rd.OnlineVipCountFor30DayOrderM2M = result.OnlineVipCountFor30DayOrderM2M;
-                    rd.OnlineVipCountPerFor30DayOrderM2M = result.OnlineVipCountPerFor30DayOrderM2M;
-                    rd.OnlineVipSalesFor30Day = result.OnlineVipSalesFor30Day;
-                    rd.OnlineVipSalesFor30DayM2M = result.OnlineVipSalesFor30DayM2M;
-                    rd.OnlineVipSalesPerFor30Day = result.OnlineVipSalesPerFor30Day;
-                    rd.OnlineVipSalesPerFor30DayM2M = result.OnlineVipSalesPerFor30DayM2M;
+                    rd.OnlineFansCount = result.OnlineFansCount == null ? 0 : result.OnlineFansCount;
+                    rd.OnlineOnlyFansCount = result.OnlineOnlyFansCount == null ? 0 : result.OnlineOnlyFansCount;
+                    rd.OnlineVipCount = result.OnlineVipCount == null ? 0 : result.OnlineVipCount;
+                    rd.VipCount = result.VipCount == null ? 0 : result.VipCount;
+                    rd.OfflineVipCount = result.OfflineVipCount == null ? 0 : result.OfflineVipCount;
+                    rd.OnlineVipCountFor30DayOrder = result.OnlineVipCountFor30DayOrder == null ? 0 : result.OnlineVipCountFor30DayOrder;
+                    rd.OnlineVipCountPerFor30DayOrder = result.OnlineVipCountPerFor30DayOrder == null ? 0 : result.OnlineVipCountPerFor30DayOrder;
+                    rd.OnlineVipCountFor30DayOrderM2M = result.OnlineVipCountFor30DayOrderM2M == null ? 0 : result.OnlineVipCountFor30DayOrderM2M;
+                    rd.OnlineVipCountPerFor30DayOrderM2M = result.OnlineVipCountPerFor30DayOrderM2M == null ? 0 : result.OnlineVipCountPerFor30DayOrderM2M;
+                    rd.OnlineVipSalesFor30Day = result.OnlineVipSalesFor30Day == null ? 0 : result.OnlineVipSalesFor30Day;
+                    rd.OnlineVipSalesFor30DayM2M = result.OnlineVipSalesFor30DayM2M == null ? 0 : result.OnlineVipSalesFor30DayM2M;
+                    rd.OnlineVipSalesPerFor30Day = result.OnlineVipSalesPerFor30Day == null ? 0 : result.OnlineVipSalesPerFor30Day;
+                    rd.OnlineVipSalesPerFor30DayM2M = result.OnlineVipSalesPerFor30DayM2M == null ? 0 : result.OnlineVipSalesPerFor30DayM2M;
                 }
             }
             return rd;

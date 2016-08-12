@@ -74,6 +74,7 @@ namespace JIT.CPOS.Web.WeiXin
             Response.ContentEncoding = Encoding.UTF8;
             Response.Write(content);
             Response.End();
+        //    Response.End();
         }
 
         #region 用户关注
@@ -105,14 +106,14 @@ namespace JIT.CPOS.Web.WeiXin
                 string headimgurl = Request["headimgurl"];
                 string unionid = Request["unionid"]; //多个公众账号唯一标识
                 //这里加密，只能取当前的了
-                LoggingSessionInfo loggingSessionInfo = BaseService.GetWeixinLoggingSession(WeiXin);
-                var application = new WApplicationInterfaceBLL(loggingSessionInfo);
+                LoggingSessionInfo customerLogging = BaseService.GetWeixinLoggingSession(WeiXin);
+                var application = new WApplicationInterfaceBLL(customerLogging);
                 var appEntitys = application.QueryByEntity(new WApplicationInterfaceEntity() { WeiXinID = WeiXin }, null);
 
                 //下面的取开发平台的放在解密的代码里，因为明文用不到
                 //如果公众帐号授权给第三方平台管理了
-                var wAppEntity = appEntitys[0];
-                if (!string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid))
+            var    wAppEntity=appEntitys[0];
+            if (!string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid))
                 {
                     DataSet WXOpenOAuthDs = application.GetWXOpenOAuth(wAppEntity.OpenOAuthAppid);
                     if (WXOpenOAuthDs.Tables != null && WXOpenOAuthDs.Tables != null && WXOpenOAuthDs.Tables.Count != 0 && WXOpenOAuthDs.Tables[0].Rows.Count != 0)
@@ -126,8 +127,8 @@ namespace JIT.CPOS.Web.WeiXin
                 }
 
                 //生成时间戳
-                System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1));
-                int timestamp = (int)(DateTime.Now - startTime).TotalSeconds;
+                  System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1));  
+                int timestamp= (int)(DateTime.Now - startTime).TotalSeconds; 
                 //生成随机数
                 Random ran = new Random();
                 int RandKey = ran.Next(10000, 99999);
@@ -135,19 +136,19 @@ namespace JIT.CPOS.Web.WeiXin
                 string nonce = RandKey.ToString() + RandKey2.ToString();
 
                 var requestParams = new RequestParams()
-                {
-                    OpenId = OpenID,
-                    WeixinId = WeiXin,
-                    //MsgType = msgType,
-                    //XmlNode = xn,
-                    LoggingSessionInfo = BaseService.GetWeixinLoggingSession(WeiXin),
-                    TrueEncodingAESKey = string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid) ? wAppEntity.CurrentEncodingAESKey : wAppEntity.OpenCurrentEncodingAESKey, //appEntitys[0].CurrentEncodingAESKey,
-                    Token = string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid) ? wAppEntity.Token : wAppEntity.OpenToken,//如果授权给公众平台了，就用公众平台的token
-                    AppID = string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid) ? wAppEntity.AppID : wAppEntity.OpenAppID,
-                    EncryptType = wAppEntity.EncryptType == null ? 0 : (int)wAppEntity.EncryptType,
-                    Timestamp = timestamp.ToString(),
-                    Nonce = nonce
-                };
+            {
+                OpenId = OpenID,
+                WeixinId = WeiXin,
+                //MsgType = msgType,
+                //XmlNode = xn,
+                LoggingSessionInfo = BaseService.GetWeixinLoggingSession(WeiXin),
+                TrueEncodingAESKey = string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid) ? wAppEntity.CurrentEncodingAESKey : wAppEntity.OpenCurrentEncodingAESKey, //appEntitys[0].CurrentEncodingAESKey,
+                Token = string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid) ? wAppEntity.Token : wAppEntity.OpenToken,//如果授权给公众平台了，就用公众平台的token
+                AppID = string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid) ? wAppEntity.AppID : wAppEntity.OpenAppID,
+                EncryptType = wAppEntity.EncryptType == null ? 0 : (int)wAppEntity.EncryptType,
+                Timestamp=timestamp.ToString(),
+                Nonce=nonce
+            };
 
                 #region 1.头像处理
                 if (headimgurl == null || headimgurl.Equals(""))
@@ -167,7 +168,7 @@ namespace JIT.CPOS.Web.WeiXin
                         OpenID, City, Gender, VipName, IsShow, qrcode, WeiXin)
                 });
                 #endregion
-                var apLoggingSessionInfo = Default.GetAPLoggingSession("");
+                var loggingSessionInfo = Default.GetAPLoggingSession("");//默认使用ap管理数据库
 
                 #region 2.管理平台处理日志
                 VipShowLogEntity vipShowLogInfo = new VipShowLogEntity();
@@ -176,7 +177,7 @@ namespace JIT.CPOS.Web.WeiXin
                 vipShowLogInfo.City = qrcode_id;
                 vipShowLogInfo.IsShow = Convert.ToInt32(IsShow);
                 vipShowLogInfo.WeiXin = WeiXin;
-                VipShowLogBLL vipShowLogBll = new VipShowLogBLL(apLoggingSessionInfo);
+                VipShowLogBLL vipShowLogBll = new VipShowLogBLL(loggingSessionInfo);
                 vipShowLogInfo.VipName = VipName;
                 vipShowLogInfo.Language = iRad.ToString();
                 vipShowLogBll.Create(vipShowLogInfo);
@@ -184,7 +185,7 @@ namespace JIT.CPOS.Web.WeiXin
 
 
 
-                VipBLL vipService = new VipBLL(apLoggingSessionInfo);
+                VipBLL vipService = new VipBLL(loggingSessionInfo);
                 var vipCode = vipService.GetVipCode();//获取新的vipcode
                 var vipCodeShort = vipCode.Substring(4).Insert(3, " ");
 
@@ -220,6 +221,8 @@ namespace JIT.CPOS.Web.WeiXin
                             vipInfo.VipName = VipName;
                             //vipInfo.CouponInfo = qrcode;//CouponInfo已作为会籍店使用                         
                             vipInfo.HeadImgUrl = headimgurl;
+                            vipInfo.Col25 = "";
+                            
                             if (vipObj == null || vipObj.Length == 0 || vipObj[0] == null)
                             {
                                 //couponInfo字段保存总部门店ID
@@ -293,7 +296,7 @@ namespace JIT.CPOS.Web.WeiXin
                 customerIdUnoin = menuServer.GetCustomerIdByWx(WeiXin);
                 #region --在商户系统中处理
                 //插入商户业务系统
-                customerIdUnoin = SetCustomerVipInfo(apLoggingSessionInfo, WeiXin, OpenID, City, IsShow, VipName, Gender, qrcode, null, null, headimgurl, qrcode_id, unionid, out VipIdTmp);
+                customerIdUnoin = SetCustomerVipInfo(loggingSessionInfo, WeiXin, OpenID, City, IsShow, VipName, Gender, qrcode, null, null, headimgurl, qrcode_id, unionid, out VipIdTmp);
                 #endregion
 
                 //else //固定二维码
@@ -1375,10 +1378,9 @@ namespace JIT.CPOS.Web.WeiXin
                 // vipInfo.QRVipCode = ConfigurationManager.AppSettings["website_url"].Trim() + "WeiXin/" + newFilePath;
                 // vipInfo.CouponURL = ConfigurationManager.AppSettings["website_url"].Trim() + "WeiXin/" + couponNewFilePath;
                 vipInfo.Col49 = qrcode;//这个应该放在这里，因为这样会作为一个查询条件，这样之前不是集客方式注册的会员就不会被查到
-                vipInfo.WeiXin = WeiXin;
-                vipInfo.VipSourceId = "3";
+                vipInfo.WeiXin = WeiXin;                
                 vipInfo.HeadImgUrl = headimgurl;
-
+                
                 var vipObj = vipServiceUnion.QueryByEntity(vipQueryInfo, null);
 
                 //取消关注做一个标识，以和未关注的oauth认证做区别***
@@ -1720,7 +1722,7 @@ namespace JIT.CPOS.Web.WeiXin
                 else
                 {
                     VipEntity vipInfoUnion = vipObj[0];
-                    vipInfoUnion.Status = 0;
+                    //vipInfoUnion.Status = 0;//目前规定取消关注时不置为0
                     vipInfoUnion.VipCode = null;
 
                     //取消关注做一个标识，以和未关注的oauth认证做区别***
@@ -1799,6 +1801,7 @@ namespace JIT.CPOS.Web.WeiXin
                             QRCode = qrcode_id
                         }, null)[0];
                 //记录扫描记录
+                /**
                 QRCodeScanLogEntity qrCodeScanLogEntity = new QRCodeScanLogEntity();
                 qrCodeScanLogEntity.QRCodeScanLogID = Guid.NewGuid();
                 qrCodeScanLogEntity.VipID = userId;
@@ -1808,6 +1811,7 @@ namespace JIT.CPOS.Web.WeiXin
                 qrCodeScanLogEntity.CustomerId = customerId;
                 QRCodeScanLogBLL qrCodeScanLogBll = new QRCodeScanLogBLL(loggingSessionInfo);
                 qrCodeScanLogBll.Create(qrCodeScanLogEntity);
+                 * */
                 //触发扫描动作
                 QRSacnPreAction(loggingSessionInfo, WeiXin, userId, openId, qrcode_id);
 
@@ -1825,9 +1829,9 @@ namespace JIT.CPOS.Web.WeiXin
                 string appID = applicationInterfaceEntity[0].AppID;
                 string appSecret = applicationInterfaceEntity[0].AppSecret;
                 WQRCodeManagerEntity qCodeManagerEntity = qCodeManagerBll.QueryByEntity(new WQRCodeManagerEntity
-                {
-                    QRCode = qrcode_id
-                }, null)[0];
+                    {
+                        QRCode = qrcode_id
+                    }, null)[0];
 
                 if (qCodeManagerEntity == null)
                 {
@@ -1847,9 +1851,9 @@ namespace JIT.CPOS.Web.WeiXin
                 #endregion
 
                 var modelMappings = qCodeTypeModelMappingBll.QueryByEntity(new WQRCodeTypeModelMappingEntity
-                {
-                    QRCodeTypeId = qCodeManagerEntity.QRCodeTypeId
-                }, null);
+                    {
+                        QRCodeTypeId = qCodeManagerEntity.QRCodeTypeId
+                    }, null);
                 if (modelMappings.Length > 0)
                 {
                     foreach (var modelMapping in modelMappings)
@@ -1983,10 +1987,10 @@ namespace JIT.CPOS.Web.WeiXin
             WQRCodeTypeOperatingMappingBLL wqrCodeTypeOperatingMappingBll = new WQRCodeTypeOperatingMappingBLL(loggingSessionInfo);
             WQRCodeTypeOperatingMappingEntity[] wqrCodeTypeOperatingMappingEntities =
                 wqrCodeTypeOperatingMappingBll.QueryByEntity(new WQRCodeTypeOperatingMappingEntity
-                {
-                    WeiXinID = weiXin,
-                    QRCodeTypeId = qCodeManagerEntity.QRCodeTypeId
-                }, new[]
+                    {
+                        WeiXinID = weiXin,
+                        QRCodeTypeId = qCodeManagerEntity.QRCodeTypeId
+                    }, new[]
                     {
                         new OrderBy
                             {
@@ -2010,7 +2014,7 @@ namespace JIT.CPOS.Web.WeiXin
                             if (!string.IsNullOrEmpty(qCodeManagerEntity.ObjectId))
                             {
                                 //避免重复签到
-                                var eventUserEntity = eventUserMappingServer.Query(new IWhereCondition[] {
+                                var eventUserEntity = eventUserMappingServer.Query(new IWhereCondition[] { 
                                     new EqualsCondition() { FieldName="EventID", Value=qCodeManagerEntity.ObjectId},
                                     new EqualsCondition(){ FieldName="UserID", Value = userId }
                                 }, null);

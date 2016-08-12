@@ -33,7 +33,7 @@ namespace JIT.CPOS.BS.BLL
     /// 业务处理：  
     /// </summary>
     public partial class VipWithdrawDepositApplyBLL
-    {  
+    {
         /// <summary>
         /// 获取今日提款情况
         /// </summary>
@@ -43,6 +43,19 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetVipWDApplyByToday(vipId);
         }
+         /// <summary>
+        /// 根据提现次数限制类型获取提现次数
+        /// </summary>
+        /// <param name="vipId"></param>
+        /// <returns></returns>
+        public VipWithdrawDepositApplyEntity[] GetVipWDApplyByNumType(string vipId, int WithDrawNumType)
+        {
+            return this._currentDAO.GetVipWDApplyByNumType(vipId, WithDrawNumType);
+        }
+
+
+        
+
         public SqlTransaction GetTran()
         {
             return this._currentDAO.GetTran();
@@ -55,7 +68,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pPageSize">每页的记录数</param>
         /// <param name="pCurrentPageIndex">以0开始的当前页码</param>
         /// <returns></returns>
-        public PagedQueryResult<VipWithdrawDepositApplyEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex,int isVip)
+        public PagedQueryResult<VipWithdrawDepositApplyEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex, int isVip)
         {
             if (isVip == 1)//会员
                 return this._currentDAO.PagedQueryByVipName(pWhereConditions, pOrderBys, pPageSize, pCurrentPageIndex);
@@ -63,6 +76,24 @@ namespace JIT.CPOS.BS.BLL
                 return this._currentDAO.PagedQueryByUserName(pWhereConditions, pOrderBys, pPageSize, pCurrentPageIndex);
             else // (isVip ==3)//分销商
                 return this._currentDAO.PagedQueryByRetailName(pWhereConditions, pOrderBys, pPageSize, pCurrentPageIndex);
+        }
+
+        public DataSet PagedQueryDbSet(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex, out int rowCount, out int pageCount)
+        {
+            return _currentDAO.PagedQueryDbSet(pWhereConditions, pOrderBys, pPageSize, pCurrentPageIndex, out  rowCount, out  pageCount);
+        }
+        public bool MultiCheck(string[] ids, int type, string remark)
+        {
+            int status = -1;
+            if (type == 1)
+                status = 2;
+            else if (type == 2)
+                status = 4;
+            return _currentDAO.MultiCheck(ids, status, remark);
+        }
+        public bool MultiComplete(string[] ids)
+        {
+            return _currentDAO.MultiCheck(ids, 3);
         }
     }
 }

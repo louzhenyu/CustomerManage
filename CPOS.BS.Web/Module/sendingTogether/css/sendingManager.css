@@ -1,0 +1,86 @@
+.commonTitle{height:16px;line-height:16px;margin:15px 0 5px 53px;padding-left:8px;border-left:4px solid #fe7c23;color:#666;margin-bottom: 20px;}
+.commonSelectWrap .selectList{top:3px;border-top:2px solid #fe7c24;}
+.commonSelectWrap .selectList p:hover{color:#fe7c24;}
+.contents{clear:both}
+.tableHandleBox{text-align:left;}
+.tableHandleBox .exportBtn{float:right;margin-right:10px;}
+.tableHandleBox .affirmBtn{float:left;}
+.tableHandleBox .finishBtn{}
+
+.bordernone{border: none;}
+.dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none;margin-top:-55px;}
+
+
+/* distributr*/
+.panlDiv{border-bottom: 1px solid #d0d5d8;width: 100%; float: left;padding:8px 10px 8px 30px}
+.panlDiv:nth-last-of-type(1){border-bottom:none;}
+.panlDiv .title{ line-height:28px;font-size: 14px;}
+.panlDiv .radio{float: left; margin-right: 45px;}
+.panlDiv .commonSelectWrap{ display: block;margin-left:50px;line-height: 33px}
+.panlDiv .commonSelectWrap .searchInput{ margin-right: 8px; border:none;}
+.panlDiv .commonSelectWrap .tit{ width: auto;}
+.panlDiv .commonSelectWrap .searchInput.whauto{ width: auto; height: auto;}
+.panlDiv .commonSelectWrap .searchInput .line{ height: 46px;}
+.panlDiv .commonSelectWrap .searchInput .linetext{ height: 28px; line-height: 28px; padding-left:10px;   color: #666; float: left; display: inline;}
+.panlDiv .commonSelectWrap .searchInput .linetext input{ width: 100px; height: 28px; }
+.panlDiv .commonSelectWrap .searchInput .linetext span{  margin-left:5px; }
+.panlDiv .commonSelectWrap .tit .checkBox{float: right}
+.pl_45{padding-left:45px;}
+/*.commonSelectWrap .tit{ text-align: left; padding-left: 28px;} */  /*左对齐文本框 */
+.panlDiv .explain{padding-left:50px;color:#fe2222;font-size:14px;;background:url(../images/icon-tips.png) no-repeat left center;}
+.panlDiv .lineH30{ line-height: 30px; white-space: nowrap;}
+
+
+.titleBar{display:inline-block;width:100%;height:53px;line-height:52px;padding-left:30px;font-size:16px;border-top:1px solid #e1e7ea;border-bottom:1px solid #e1e7ea;background:#fafafa;color:#666;}
+.checkBoxTag{display:inline-block;cursor:pointer;}
+.checkBoxTag em{float:left;width:35px;height:52px;background:url(../../styles/images/newYear/check.png) no-repeat left center;}
+.checkBoxTag.on em{background:url(../../styles/images/newYear/checkon.png) no-repeat left center;}
+.salesWrapArea{display:inline-block;width:100%;border-bottom:1px solid #e1e7ea;}
+.tipsBottomBox{display:none;text-align:center;color:#fe2222;}
+.tplWindow{width:300px;margin:30px auto;}
+.tplWindow .edits em{width:40px;}
+.tplWindow .edits span[disabled=disabled]{background:#ddd;}
+.tplWindow .edits span{display:inline-block;width:120px;height:30px;text-align: center;line-height:30px;border:1px solid #e1e7ea;}
+.tplWindow .edits span.on{border:1px solid #00a0e8;background:url(../images/duihao2.png) no-repeat right bottom #fff;}
+.tplWindow .edits span.disab{background:url(../images/duihao3.png) no-repeat right bottom #ddd;}
+.tplWindow .edits span:nth-of-type(2){float:right;}
+.tplWindow .edits textarea{width:255px;margin-top:10px;border:1px solid #e1e7ea;height:60px;text-indent:10px;padding-top:5px;}
+.tplWindow .edits textarea[disabled=disabled]{background:#ddd;}
+/*totalStatistic*/
+.totalStatistic{width:1140px;padding:20px 0;}
+.totalContent{height:220px;padding:0 20px;}
+.totalStatistic .itemTotle{width:260px;height:222px;border:1px solid #f0f0f0;border-radius:5px;background-color:#fafafa;float:left;margin-left:20px;}
+.totalStatistic .itemTotle:nth-of-type(1){margin-left:0;}
+.totalStatistic .itemTotle .head{background-color:#ff4d4d;padding:9px 0;border-radius: 3px 3px 0 0;border-bottom: 1px solid #ddd;}
+.totalStatistic .item{width:260px;height:222px;background:#fafafa;border:1px solid #f0f0f0;border-radius:5px;float:left;margin-bottom:20px;margin-left:20px;}
+.itemTotle .head .title{color:#fff;margin-left:10px;}
+.itemTotle .content{height:60px;margin:20px;}
+.itemTotle .content ul li{float:left;width:33%;}
+.itemTotle .content:nth-of-type(1){border-bottom: 1px solid #ccc;}
+.itemTotle .content p{text-align: left;line-height:22px;text-align: center;}
+.itemTotle .content p:nth-of-type(2){line-height: 30px;color:#ff4d4d;}
+.itemTotle .content p:nth-of-type(2) .totle{font-size:14px;}
+.itemTotle .content p .totle{font-size:18px;font-weight:400;font-style:normal;margin-right:4px;}
+.itemTotle .record p{color:#ff4d4d;text-align: center;line-height: 40px;}
+.itemTotle .record p .totle{font-weight:bold;}
+.itemTotle .content span{color:#aaa;}
+.itemTotle .content span i{margin-left:5px;}
+.item .head{background:#f7f6f6;padding:9px 0;border-bottom:1px solid #ddd;}
+.item .head .title{color:#aaa;margin-left:10px;height:16px;}
+.item .head .title img{float:left;}
+.item .head .title span{float:left;line-height:16px;margin-left:5px;}
+.item .content{height:60px;margin:20px;position:relative;}
+.item .content .viewPoint{position:absolute;right:0;line-height:30px;font-size:14px;color:#089ff8;top:-10px;cursor:pointer;}
+.item .content ul li{float:left;width:33%;}
+.item .content p .totle{font-size:18px;font-weight: 400;font-style:normal;margin-right:4px;}
+.item .content p:nth-of-type(1){display:block;line-height: 22px;text-align: center;}
+.item .record p:nth-of-type(1){color:#089ff8;line-height:40px;text-align: center;}
+.item .content p:nth-of-type(2){line-height: 30px;color:#089ff8;text-align: center;}
+.item .content p:nth-of-type(2) .totle{font-size:14px;}
+.item .record p .totle{font-weight:bold;}
+.item .content span{color:#aaa;}
+.item .content span i{margin-left:5px;}
+.packBtn.down{width:37px;float: right;height: 30px;line-height: 30px;padding-right: 13px;margin-top: 10px;margin-right:20px;font-size: 12px;background: url(../images/icon-unfold.png) no-repeat right center;color: #00a0e8;cursor: pointer;}
+.packBtn.up{width:37px;float: right;height: 30px;line-height: 30px;padding-right: 13px;margin-top: 10px;margin-right:20px;font-size: 12px;background: url(../images/icon-packup.png) no-repeat right center;color: #00a0e8;cursor: pointer;}
+.packBtn.top{background: no-repeat center center;float: right;padding-right: 13px;background-image: url(../images/top.png);width:66px;height: 18px;cursor: pointer;}
+.packBtn.bottom{float: right;padding-right: 13px;background: no-repeat center center;background-image: url(../images/bottom.png);width: 66px;height: 18px;cursor: pointer;}

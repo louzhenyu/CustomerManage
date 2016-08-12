@@ -30,8 +30,6 @@ using JIT.CPOS.Common;
 using System.Transactions;
 using System.Data.SqlClient;
 using JIT.CPOS.DTO.Module.Report.DayReport.Response;
-using JIT.CPOS.DTO.Base;
-using System.Collections;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -48,12 +46,6 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetTran();
         }
-
-        public VipCardEntity GetByID(object pID, string CustomerID)
-        {
-            return this._currentDAO.GetByID(pID, CustomerID);
-        }
-
         #region 查询会员卡信息
         /// <summary>
         /// 查询会员卡信息
@@ -277,8 +269,7 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="p_BatchNo"></param>
         /// <returns></returns>
-        public DataSet ExportVipCardCode(string p_BatchNo)
-        {
+        public DataSet ExportVipCardCode(string p_BatchNo) {
             return this._currentDAO.ExportVipCardCode(p_BatchNo);
         }
 
@@ -376,10 +367,10 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="EndDate"></param>
         /// <param name="UnitID"></param>
         /// <returns></returns>
-        public DayReconciliationRD GetDayReconciliation(DateTime StareDate, DateTime EndDate, int Days, string UnitID, string CustomerID)
+        public DayReconciliationRD GetDayReconciliation(DateTime StareDate, DateTime EndDate, string UnitID, string CustomerID)
         {
             DayReconciliationRD Data = null;
-            DataSet ds = this._currentDAO.GetDayReconciliation(StareDate, EndDate, Days, UnitID, CustomerID);
+            DataSet ds = this._currentDAO.GetDayReconciliation(StareDate, EndDate, UnitID, CustomerID);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 Data = new DayReconciliationRD();
@@ -430,190 +421,5 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetVipCardByVipMapping(vipId);
         }
-		
-        #region 会员卡返现、余额操作
-        /// <summary>
-        /// 添加返现操作
-        /// </summary>
-        /// <param name="pVipCardCode">卡号</param>
-        /// <param name="pTotalReturnAmount">返现金额</param>
-        /// <param name="tran">事务</param>
-        public void AddReturnCash(string pVipCardCode, decimal pTotalReturnAmount, t_unitEntity unitInfo, SqlTransaction tran, string pImageUrl, VipCardEntity pVipCardEntity)
-        {
-            bool isUpdate = false;// 当pVipCardEntity为空的时候需要直接更新数据库而不是返回更新后的实体，因为当为空的时候表示不需要事务提交的，否则必须返回更新后的实体，因为会牵扯到多次修改
-            var vipCardTransLogBLL = new VipCardTransLogBLL(CurrentUserInfo); //丰收日交易记录对象示例化
-            var vipCardBLL = new VipCardBLL(CurrentUserInfo); //丰收日交易记录对象示例化
-            if (pVipCardEntity == null)
-            {
-                isUpdate = true;
-                pVipCardEntity = vipCardBLL.QueryByEntity(new VipCardEntity()
-                {
-                    VipCardCode = pVipCardCode
-                }, null).FirstOrDefault();
-            }
-            //图片
-            var objectImagesBLL = new ObjectImagesBLL(CurrentUserInfo);
-            // 
-            var unitBLL2 = new TUnitBLL(CurrentUserInfo);//门店业务对象
-            //余额变动记录
-            var VipCardBalanceChangeBLL = new VipCardBalanceChangeBLL(CurrentUserInfo);
-
-            var vipCardTransLogEntity = new VipCardTransLogEntity()
-            {
-                VipCardCode = pVipCardCode,
-                UnitCode = unitInfo != null ? unitInfo.unit_code : string.Empty,
-                TransContent = "返现",
-                TransType = "B",
-                TransTime = DateTime.Now,
-                TransAmount = pTotalReturnAmount,
-                LastValue = Convert.ToInt32(pVipCardEntity.BalanceBonus ?? 0m),        //期初金额
-                NewValue = Convert.ToInt32((pVipCardEntity.BalanceBonus ?? 0m) + pTotalReturnAmount), //期末金额
-                CustomerID = pVipCardEntity.CustomerID
-            };
-            //新增返现变动记录
-            string blaneId = System.Guid.NewGuid().ToString();
-            VipCardBalanceChangeEntity AddEntity = new VipCardBalanceChangeEntity()
-            {
-                ChangeID = blaneId,
-                VipCardCode = pVipCardCode,
-                ChangeAmount = pTotalReturnAmount,
-                //变动前卡内余额
-                ChangeBeforeBalance = (pVipCardEntity.BalanceBonus ?? 0m),
-                //变动后卡内余额
-                ChangeAfterBalance = (pVipCardEntity.BalanceBonus ?? 0m) + pTotalReturnAmount,
-                ChangeReason = "返现",
-                Status = 1,
-                Remark = "",
-                CustomerID = CurrentUserInfo.ClientID,
-                UnitID = unitInfo != null ? unitInfo.unit_id : string.Empty,
-                ImageURL = ""
-            };
-            //增加图片上传
-            if (!string.IsNullOrEmpty(pImageUrl))
-            {
-                var objectImagesEntity = new ObjectImagesEntity()
-                {
-                    ImageId = System.Guid.NewGuid().ToString(),
-                    ObjectId = AddEntity.ChangeID,
-                    ImageURL = pImageUrl
-                };
-                objectImagesBLL.Create(objectImagesEntity, tran);
-            }
-            //执行新增
-            VipCardBalanceChangeBLL.Create(AddEntity, tran);
-            vipCardTransLogBLL.Create(vipCardTransLogEntity, tran);
-            // 判断是扣还是增
-            if (pTotalReturnAmount > 0)
-            {
-                pVipCardEntity.CumulativeBonus = (pVipCardEntity.CumulativeBonus ?? 0m) + pTotalReturnAmount;
-            }
-            pVipCardEntity.BalanceBonus = (pVipCardEntity.BalanceBonus ?? 0m) + pTotalReturnAmount;
-
-            if (isUpdate)
-            {
-                vipCardBLL.Update(pVipCardEntity, tran);
-            }
-        }
-
-        /// <summary>
-        /// 添加余额操作
-        /// </summary>
-        /// <param name="pVipCardCode">卡号</param>
-        /// <param name="pTotalReturnAmount">金额</param>
-        /// <param name="tran">事务</param>
-        public void AddBalance(string pVipCardCode, decimal pTotalReturnAmount, t_unitEntity unitInfo, SqlTransaction tran, string pImageUrl, VipCardEntity pVipCardEntity)
-        {
-            var vipCardTransLogBLL = new VipCardTransLogBLL(CurrentUserInfo); //丰收日交易记录对象示例化
-            bool isUpdate = false;// 当pVipCardEntity为空的时候需要直接更新数据库而不是返回更新后的实体，因为当为空的时候表示不需要事务提交的，否则必须返回更新后的实体，因为会牵扯到多次修改
-            var vipCardBLL = new VipCardBLL(CurrentUserInfo); //丰收日交易记录对象示例化
-            if (pVipCardEntity == null)
-            {
-                isUpdate = true;
-                pVipCardEntity = vipCardBLL.QueryByEntity(new VipCardEntity()
-                {
-                    VipCardCode = pVipCardCode
-                }, null).FirstOrDefault();
-            }
-            //图片
-            var objectImagesBLL = new ObjectImagesBLL(CurrentUserInfo);
-            // 
-            var unitBLL2 = new TUnitBLL(CurrentUserInfo);//门店业务对象
-            //余额变动记录
-            var VipCardBalanceChangeBLL = new VipCardBalanceChangeBLL(CurrentUserInfo);
-
-            var vipCardTransLogEntity = new VipCardTransLogEntity()
-            {
-                VipCardCode = pVipCardCode,
-                UnitCode = unitInfo != null ? unitInfo.unit_code : string.Empty,
-                TransContent = "余额",
-                TransType = "C",
-                TransTime = DateTime.Now,
-                TransAmount = pTotalReturnAmount,
-                LastValue = Convert.ToInt32(pVipCardEntity.BalanceAmount ?? 0m),        //期初金额
-                NewValue = Convert.ToInt32((pVipCardEntity.BalanceAmount ?? 0m) + pTotalReturnAmount), //期末金额
-                CustomerID = pVipCardEntity.CustomerID
-            };
-
-            //新增余额变动记录
-            string blaneId = System.Guid.NewGuid().ToString();
-            VipCardBalanceChangeEntity AddEntity = new VipCardBalanceChangeEntity()
-            {
-                ChangeID = blaneId,
-                VipCardCode = pVipCardCode,
-                ChangeAmount = pTotalReturnAmount,
-                //变动前卡内余额
-                ChangeBeforeBalance = (pVipCardEntity.BalanceAmount ?? 0m),
-                //变动后卡内余额
-                ChangeAfterBalance = (pVipCardEntity.BalanceAmount ?? 0m) + pTotalReturnAmount,
-                ChangeReason = "余额",
-                Status = 1,
-                Remark = "",
-                CustomerID = CurrentUserInfo.ClientID,
-                UnitID = unitInfo != null ? unitInfo.unit_id : string.Empty,
-                ImageURL = pImageUrl
-            };
-
-            //增加图片上传
-            if (!string.IsNullOrEmpty(pImageUrl))
-            {
-                var objectImagesEntity = new ObjectImagesEntity()
-                {
-                    ImageId = Guid.NewGuid().ToString(),
-                    ObjectId = AddEntity.ChangeID,
-                    ImageURL = pImageUrl
-                };
-                objectImagesBLL.Create(objectImagesEntity, tran);
-            }
-            //执行新增
-            VipCardBalanceChangeBLL.Create(AddEntity, tran);
-            vipCardTransLogBLL.Create(vipCardTransLogEntity, tran);
-            // 判断是扣还是增
-            if (pTotalReturnAmount > 0)
-            {
-                pVipCardEntity.RechargeTotalAmount = (pVipCardEntity.RechargeTotalAmount ?? 0m) + pTotalReturnAmount;
-            }
-            pVipCardEntity.BalanceAmount = (pVipCardEntity.BalanceAmount ?? 0m) + pTotalReturnAmount;
-
-            if (isUpdate)
-            {
-                vipCardBLL.Update(pVipCardEntity, tran);
-            }
-        }
-
-        /// <summary>
-        /// 更新积分
-        /// </summary>
-        /// <param name="pVipCardCode">卡号</param>
-        /// <param name="pTotalAmount">可用积分</param>
-        /// <param name="tran"></param>
-        public void UpdateIntegral(string pVipCardCode, Int32? pTotalAmount, SqlTransaction tran)
-        {
-            VipCardEntity vipCardEntity = _currentDAO.QueryByEntity(new VipCardEntity { VipCardCode = pVipCardCode }, null).FirstOrDefault();
-            vipCardEntity.BalancePoints = pTotalAmount;
-            _currentDAO.Update(vipCardEntity, tran);
-        }
-
-        #endregion
-
     }
 }

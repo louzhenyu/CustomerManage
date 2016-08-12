@@ -30,6 +30,7 @@
         },
         initEvent: function () {
             var that = this;
+            
             //点击查询按钮进行数据查询
 
             that.elems.sectionPage.delegate(".queryBtn","click", function (e) {
@@ -119,8 +120,8 @@
                 }
 
                 if (optType == "Download") {
-                    var restnum = $(this).parents('tr').find('td').eq(4).find('div').text();
-                    if (restnum > 0) {
+                    var restnum = row.IssuedQty;
+                    if (restnum > 0||row.IsNotLimitQty==1) {
                         $('#DownPaper').window({
                             title: "下载优惠券", width: 560, height: 400, top: ($(window).height() - 400) * 0.5,
                             left: ($(window).width() - 560) * 0.5
@@ -128,15 +129,18 @@
                         if (restnum < 1000) {
                             $('#checknum').text("请输入1-" + restnum + "数字");
                         }
-                        $('#num').attr('placeholder','剩余' + restnum + "张优惠券")
-                        var quanName = $(this).parents('tr').find('div .rowText').text();
-                        $('#DownPaper').find('span').eq(1).text(quanName);
+                        if(row.IsNotLimitQty==1){
+                            $('#num').attr('placeholder', "请输入不大于1000的数值");
+                        } else {
+                            $('#num').attr('placeholder', '剩余' + row.SurplusQty + "张优惠券");
+
+                        }
+                        $('#DownPaper').find('span').eq(1).text(row.CouponTypeName);
                         $('#DownPaper').window('open');
                     } else {
                         $.messager.alert('提示','优惠券剩余量为0，不提供下载功能')
                     }
                 }
-
                 if(optType=="delete"){
                     if (row.BeginTime&&row.EndTime) {
                         var Begindate = Date.parse(new Date(row.BeginTime).format("yyyy-MM-dd").replace(/-/g, "/"));
@@ -187,7 +191,7 @@
             /**************** -------------------列表操作事件用例 End****************/
         },
 
-
+        
         //收款
         addNumber:function(data){
             debugger;
@@ -237,7 +241,7 @@
             var that=this;
             if(!data.CouponTypeList){
 
-                return;
+                data.CouponTypeList=[];
             }
             //jQuery easy datagrid  表格处理
             that.elems.tabel.datagrid({
@@ -287,22 +291,25 @@
                     },
                     {field : 'IssuedQty',title : '数量',width:100,align:'center',resizable:false,
                         formatter:function(value,row,index){
-                            if(isNaN(parseInt(value))){
-                                return 0;
+                            if(row.IsNotLimitQty==1) {
+                                return "不限数量";
                             }else{
-                                return parseInt(value);
+                                if (isNaN(parseInt(value))) {
+                                    return 0;
+                                } else {
+                                    return parseInt(value);
+                                }
                             }
                         }},
                     {field : 'SurplusQty',title : '剩余量',width:100,align:'center',resizable:false,
                         formatter:function(value,row,index){
-                            if(isNaN(parseInt(value))){
-                                return 0;
-                            } else {
-                                var result = parseInt(value);
-                                if (result > 0) {
-                                    return result;
+                            if(row.IsNotLimitQty==1) {
+                                return "不限数量";
+                            }else{
+                                if (isNaN(parseInt(value))) {
+                                    return 0;
                                 } else {
-                                    return -result;
+                                    return parseInt(value);
                                 }
                             }
                         }},
@@ -311,7 +318,9 @@
                         field: 'addOptdel', title: '操作', width: 200, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
                             var str = "<div class='operation'><div data-index=" + index + " data-flag='add' class='btnAdd  opt' title='追加'> </div>";
-
+                            if(row.IsNotLimitQty==1){
+                                str="";
+                            }
                             str += "<div data-index=" + index + "  data-flag='Download' data-TypeName='" + row.CouponTypeName + "' data-TypeID='" + row.CouponTypeID + "' class='btnDownload  opt' title='下载'> </div>";
 
                             str += "<div data-index=" + index + " data-flag='delete' class='delete opt' title='删除'></div></div>";

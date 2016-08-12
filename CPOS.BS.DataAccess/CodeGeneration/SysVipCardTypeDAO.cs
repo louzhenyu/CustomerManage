@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [SysVipCardType](");
-            strSql.Append("[Category],[VipCardTypeCode],[VipCardTypeName],[VipCardLevel],[IsPassword],[AddUpAmount],[IsExpandVip],[PreferentialAmount],[SalesPreferentiaAmount],[IntegralMultiples],[Isprepaid],[IsPoints],[IsDiscount],[IsOnlineRecharge],[IsRegName],[IsUseCoupon],[IsBindECard],[PicUrl],[UpgradeAmount],[UpgradeOnceAmount],[UpgradePoint],[ExchangeIntegral],[Prices],[IsExtraMoney],[CustomerID],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete])");
+            strSql.Append("[Category],[VipCardTypeCode],[VipCardTypeName],[VipCardLevel],[IsPassword],[AddUpAmount],[IsExpandVip],[PreferentialAmount],[SalesPreferentiaAmount],[IntegralMultiples],[Isprepaid],[IsPoints],[IsDiscount],[IsOnlineRecharge],[IsRegName],[IsUseCoupon],[IsBindECard],[PicUrl],[UpgradeAmount],[UpgradeOnceAmount],[UpgradePoint],[ExchangeIntegral],[Prices],[IsExtraMoney],[CustomerID],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[IsOnlineSales])");
             strSql.Append(" values (");
-            strSql.Append("@Category,@VipCardTypeCode,@VipCardTypeName,@VipCardLevel,@IsPassword,@AddUpAmount,@IsExpandVip,@PreferentialAmount,@SalesPreferentiaAmount,@IntegralMultiples,@Isprepaid,@IsPoints,@IsDiscount,@IsOnlineRecharge,@IsRegName,@IsUseCoupon,@IsBindECard,@PicUrl,@UpgradeAmount,@UpgradeOnceAmount,@UpgradePoint,@ExchangeIntegral,@Prices,@IsExtraMoney,@CustomerID,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete)");            
+            strSql.Append("@Category,@VipCardTypeCode,@VipCardTypeName,@VipCardLevel,@IsPassword,@AddUpAmount,@IsExpandVip,@PreferentialAmount,@SalesPreferentiaAmount,@IntegralMultiples,@Isprepaid,@IsPoints,@IsDiscount,@IsOnlineRecharge,@IsRegName,@IsUseCoupon,@IsBindECard,@PicUrl,@UpgradeAmount,@UpgradeOnceAmount,@UpgradePoint,@ExchangeIntegral,@Prices,@IsExtraMoney,@CustomerID,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@IsOnlineSales)");            
 			strSql.AppendFormat("{0}select SCOPE_IDENTITY();", Environment.NewLine);
 
 
@@ -118,7 +118,8 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@CreateBy",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
-					new SqlParameter("@IsDelete",SqlDbType.Int)
+					new SqlParameter("@IsDelete",SqlDbType.Int),
+					new SqlParameter("@IsOnlineSales",SqlDbType.Int)
             };
 			parameters[0].Value = pEntity.Category;
 			parameters[1].Value = pEntity.VipCardTypeCode;
@@ -150,6 +151,7 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[27].Value = pEntity.LastUpdateTime;
 			parameters[28].Value = pEntity.LastUpdateBy;
 			parameters[29].Value = pEntity.IsDelete;
+			parameters[30].Value = pEntity.IsOnlineSales;
 
             //执行并将结果回写
             object result;
@@ -296,7 +298,11 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
-                strSql.Append( "[LastUpdateBy]=@LastUpdateBy");
+                strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
+            if (pIsUpdateNullField || pEntity.IsOnlineSales!=null)
+                strSql.Append( "[IsOnlineSales]=@IsOnlineSales");
+            if (strSql.ToString().EndsWith(","))
+                strSql.Remove(strSql.Length - 1, 1);
             strSql.Append(" where VipCardTypeID=@VipCardTypeID ");
             SqlParameter[] parameters = 
             {
@@ -327,6 +333,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@CustomerID",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
+					new SqlParameter("@IsOnlineSales",SqlDbType.Int),
 					new SqlParameter("@VipCardTypeID",SqlDbType.Int)
             };
 			parameters[0].Value = pEntity.Category;
@@ -356,7 +363,8 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[24].Value = pEntity.CustomerID;
 			parameters[25].Value = pEntity.LastUpdateTime;
 			parameters[26].Value = pEntity.LastUpdateBy;
-			parameters[27].Value = pEntity.VipCardTypeID;
+			parameters[27].Value = pEntity.IsOnlineSales;
+			parameters[28].Value = pEntity.VipCardTypeID;
 
             //执行语句
             int result = 0;
@@ -704,6 +712,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
             if (pQueryEntity.IsDelete!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
+            if (pQueryEntity.IsOnlineSales!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsOnlineSales", Value = pQueryEntity.IsOnlineSales });
 
             return lstWhereCondition.ToArray();
         }
@@ -859,6 +869,10 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["IsDelete"] != DBNull.Value)
 			{
 				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
+			}
+			if (pReader["IsOnlineSales"] != DBNull.Value)
+			{
+				pInstance.IsOnlineSales =   Convert.ToInt32(pReader["IsOnlineSales"]);
 			}
 
         }

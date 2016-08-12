@@ -1619,12 +1619,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','js/salesPromotion.j
                     $("#prizeListGrid").parents(".tableWap").show();
 
                     if(type==0) {
-                        if(type0List.length>0){
-                            $("#win").find(".listName").hide();
-                        }else{
-                            $("#win").find(".listName").show();
-                        }
-                        $("#win").find(".listName").html("你目前没有代金券奖品，请点击新增");
+
                         $("#prizeListGrid").datagrid({
                             method: 'post',
                             iconCls: 'icon-list', //图标
@@ -1671,7 +1666,10 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','js/salesPromotion.j
                                     field: 'TemplateId', title: '操作', width: 30, align: 'left', resizable: false,
                                     formatter: function (value, row, index) {
                                         var str = "<div class='operation'>";
-                                        str += "<div class='opt' data-opttype='addCoupon'  data-index="+index+"  data-type="+type+" data-id="+row.CouponTypeID+">追加券数量</div>";
+                                        if(row.IsNotLimitQty!=1) {
+                                            str += "<div class='opt' data-opttype='addCoupon'  data-index=" + index + "  data-type=" + type + " data-id=" + row.CouponTypeID + ">追加券数量</div>";
+
+                                        }
                                         str += "</div>";
                                         return str
                                     }
@@ -1679,7 +1677,12 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','js/salesPromotion.j
                             ]],
                             onLoadSuccess : function(data) {
                                 debugger;
-
+                                if(type0List.length>0){
+                                    $("#win").find(".listName").hide();
+                                }else{
+                                    $("#win").find(".listName").show();
+                                }
+                                $("#win").find(".listName").html("你目前没有代金券奖品，请点击新增");
                                 $("#prizeListGrid").datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
                             },
 
@@ -1722,12 +1725,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','js/salesPromotion.j
 
                     }
                     if(type==1) {
-                        if(type1List.length>0){
-                            $("#win").find(".listName").hide();
-                        }else{
-                            $("#win").find(".listName").show();
-                        }
-                        $("#win").find(".listName").html("你目前没有兑换券奖品，请点击新增");
+
                         $("#prizeListGrid").datagrid({
                             method: 'post',
                             iconCls: 'icon-list', //图标
@@ -1756,7 +1754,15 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','js/salesPromotion.j
                                 },
                                 {field: 'CouponTypeName', title: '兑换券名称', width: 100, resizable: false, align: 'left'},
                                 {field: 'ValidityPeriod', title: '有效日期', width: 70, align: 'left', resizable: false},
-                                {field: 'SurplusQty', title: '已有数量', width: 80, align: 'left', resizable: false},
+                                {field: 'SurplusQty', title: '已有数量', width: 70, align: 'center', resizable: false,
+                                    formatter:function(value,row,index){
+                                        if(row.IsNotLimitQty==1){
+                                            return "不限数量"
+                                        }else{
+                                            return value;
+                                        }
+                                    }
+                                },
                                 {
                                     field: 'PrizeCount', title: '奖品数量', width: 60, align: 'left', resizable: false,
                                     formatter: function (value, row, index) {
@@ -1775,7 +1781,9 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','js/salesPromotion.j
                                     field: 'TemplateId', title: '操作', width: 30, align: 'left', resizable: false,
                                     formatter: function (value, row, index) {
                                         var str = "<div class='operation'>";
-                                        str += "<div class='opt' data-opttype='addCoupon'  data-index="+index+"  data-type="+type+" data-id="+row.CouponTypeID+">追加券数量</div>";
+                                        if(row.IsNotLimitQty!=1){
+                                            str += "<div class='opt' data-opttype='addCoupon'  data-index="+index+"  data-type="+type+" data-id="+row.CouponTypeID+">追加券数量</div>";
+                                        }
                                         str += "</div>";
                                         return str
                                     }
@@ -1783,7 +1791,12 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','js/salesPromotion.j
                             ]],
                             onLoadSuccess : function(data) {
                                 debugger;
-
+                                if(type1List.length>0){
+                                    $("#win").find(".listName").hide();
+                                }else{
+                                    $("#win").find(".listName").show();
+                                }
+                                $("#win").find(".listName").html("你目前没有兑换券奖品，请点击新增");
                                 $("#prizeListGrid").datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
                             },
 

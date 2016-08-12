@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015-8-14 20:35:19
+ * Create On	:2013/3/21 14:52:32
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -15,9 +15,6 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using JIT.Utility;
 using JIT.Utility.Entity;
 
 namespace JIT.CPOS.BS.Entity
@@ -25,7 +22,7 @@ namespace JIT.CPOS.BS.Entity
     /// <summary>
     /// 实体： 品牌 
     /// </summary>
-    public partial class BrandEntity : BaseEntity 
+    public partial class BrandEntity : BaseEntity
     {
         #region 构造函数
         /// <summary>
@@ -34,93 +31,93 @@ namespace JIT.CPOS.BS.Entity
         public BrandEntity()
         {
         }
-        #endregion     
+        #endregion
 
         #region 属性集
-		/// <summary>
-		/// 自动编号
-		/// </summary>
-		public Int32? BrandID { get; set; }
+        /// <summary>
+        /// 自动编号
+        /// </summary>
+        public int? BrandID { get; set; }
 
-		/// <summary>
-		/// 品牌编号
-		/// </summary>
-		public String BrandNo { get; set; }
+        /// <summary>
+        /// 品牌编号
+        /// </summary>
+        public string BrandNo { get; set; }
 
-		/// <summary>
-		/// 品牌名称
-		/// </summary>
-		public String BrandName { get; set; }
+        /// <summary>
+        /// 品牌名称
+        /// </summary>
+        public string BrandName { get; set; }
 
-		/// <summary>
-		/// 品牌名称(英文)
-		/// </summary>
-		public String BrandNameEn { get; set; }
+        /// <summary>
+        /// 品牌名称(英文)
+        /// </summary>
+        public string BrandNameEn { get; set; }
 
-		/// <summary>
-		/// 是否自有品牌(0-否,1-是)
-		/// </summary>
-		public Int32? IsOwner { get; set; }
+        /// <summary>
+        /// 是否自有品牌(0-否,1-是)
+        /// </summary>
+        public int? IsOwner { get; set; }
 
-		/// <summary>
-		/// 所属公司
-		/// </summary>
-		public String Firm { get; set; }
+        /// <summary>
+        /// 所属公司
+        /// </summary>
+        public string Firm { get; set; }
 
-		/// <summary>
-		/// 品牌等级
-		/// </summary>
-		public Int32? BrandLevel { get; set; }
+        /// <summary>
+        /// 品牌等级
+        /// </summary>
+        public int? BrandLevel { get; set; }
 
-		/// <summary>
-		/// 是否叶子节点(0-否,1-是)
-		/// </summary>
-		public Int32? IsLeaf { get; set; }
+        /// <summary>
+        /// 是否叶子节点(0-否,1-是)
+        /// </summary>
+        public int? IsLeaf { get; set; }
 
-		/// <summary>
-		/// 上级品牌标识
-		/// </summary>
-		public Int32? ParentID { get; set; }
+        /// <summary>
+        /// 上级品牌编号
+        /// </summary>
+        public int? ParentID { get; set; }
 
-		/// <summary>
-		/// 备注
-		/// </summary>
-		public String Remark { get; set; }
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public string Remark { get; set; }
 
-		/// <summary>
-		/// 客户标识
-		/// </summary>
-		public String ClientID { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ClientID { get; set; }
 
-		/// <summary>
-		/// 客户经销商标识
-		/// </summary>
-		public Int32? ClientDistributorID { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int? ClientDistributorID { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public String CreateBy { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string CreateBy { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public DateTime? CreateTime { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? CreateTime { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public String LastUpdateBy { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string LastUpdateBy { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public DateTime? LastUpdateTime { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? LastUpdateTime { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? IsDelete { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int? IsDelete { get; set; }
 
 
         #endregion

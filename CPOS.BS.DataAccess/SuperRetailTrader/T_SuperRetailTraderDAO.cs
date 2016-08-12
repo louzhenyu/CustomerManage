@@ -75,26 +75,12 @@ namespace JIT.CPOS.BS.DataAccess
             }
 
 
-            pagedSql.Append(@") AS RowNumber,a.SuperRetailTraderID,
-                                            a.SuperRetailTraderCode,
-                                            a.SuperRetailTraderName,
-                                            a.SuperRetailTraderLogin,
-                                            a.SuperRetailTraderPass,
-                                            a.SuperRetailTraderMan,
-                                            a.SuperRetailTraderPhone,
-                                            a.SuperRetailTraderAddress,
-                                            a.SuperRetailTraderFrom,
-                                            a.SuperRetailTraderFromId,
-                                            a.HigheSuperRetailTraderID,
-                                            a.JoinTime,a.CreateTime,a.CreateBy,a.LastUpdateBy,a.LastUpdateTime,a.IsDelete,a.CustomerId,a.Status,
+            pagedSql.Append(@") AS RowNumber,a.*,
                                             WithdrawCount=(SELECT COUNT(*) FROM VipWithdrawDepositApply WHERE VipId=a.SuperRetailTraderFromId),
-                                            OrderCount=(SELECT COUNT(*) FROM T_inout WHERE sales_user=cast(a.SuperRetailTraderID AS VARCHAR(500))),
-                                            WithdrawTotalMoney=(SELECT SUM(Amount) FROM VipWithdrawDepositApply WHERE VipId=a.SuperRetailTraderFromId),
-                                            NumberOffline=(SELECT COUNT(*) FROM T_SuperRetailTrader WHERE HigheSuperRetailTraderID=a.SuperRetailTraderID AND Status='10')
+                                            OrderCount=ISNULL((SELECT COUNT(*) FROM T_inout WHERE sales_user=cast(a.SuperRetailTraderID AS VARCHAR(500))),0),
+                                            WithdrawTotalMoney=ISNULL((SELECT SUM(Amount) FROM VipWithdrawDepositApply WHERE status=3 AND VipId=cast(a.SuperRetailTraderID AS VARCHAR(500))),0),
+                                            NumberOffline=ISNULL((SELECT COUNT(*) FROM T_SuperRetailTrader WHERE HigheSuperRetailTraderID=a.SuperRetailTraderID AND Status='10'),0)
                                  from T_SuperRetailTrader as a  ");
-            //pagedSql.Append(" left JOIN T_SuperRetailTrader AS b ON b.HigheSuperRetailTraderID=a.SuperRetailTraderID"); //已完成 
-            // pagedSql.Append(" left JOIN VipWithdrawDepositApply AS vwda ON vwda.VipID=a.SuperRetailTraderFromId AND vwda.Status=2 AND vwda.IsDelete=0  AND vwda.ApplyDate>=a.JoinTime"); //已完成 
-            // pagedSql.Append(" left JOIN T_inout AS ti ON ti.sales_user=a.SuperRetailTraderID AND ti.customer_id=@CustomerId  AND  ti.order_date>=a.JoinTime "); //成交 和未成交 订单 已和 保林 确认啦，就是所有订单哈。
             SqlParameter[] parameter = new SqlParameter[]{
                 new SqlParameter("@CustomerId",customerId)
             };
@@ -118,23 +104,9 @@ namespace JIT.CPOS.BS.DataAccess
                     }
                 }
             }
-//            pagedSql.Append(@"
-//                                GROUP BY a.SuperRetailTraderID,
-//                                a.SuperRetailTraderCode,
-//                                a.SuperRetailTraderName,
-//                                a.SuperRetailTraderLogin,
-//                                a.SuperRetailTraderPass,
-//                                a.SuperRetailTraderMan,
-//                                a.SuperRetailTraderPhone,
-//                                a.SuperRetailTraderAddress,
-//                                a.SuperRetailTraderFrom,
-//                                a.SuperRetailTraderFromId,
-//                                a.HigheSuperRetailTraderID,
-//                                a.JoinTime,
-//                                a.CreateTime,a.CreateBy,a.LastUpdateBy,a.LastUpdateTime,a.IsDelete,a.CustomerId,a.Status");
             pagedSql.AppendFormat(") as h where RowNumber >{0}*({1}-1) AND RowNumber<={0}*{1} ", PageSize, PageIndex);
             #endregion
-
+            Loggers.Debug(new DebugLogInfo() { Message = pagedSql.ToString() });
 
             #region 执行,转换实体,分页属性赋值
             PagedQueryResult<T_SuperRetailTraderEntity> result = new PagedQueryResult<T_SuperRetailTraderEntity>();
@@ -190,7 +162,6 @@ namespace JIT.CPOS.BS.DataAccess
 
             #region 组织SQL
             StringBuilder pagedSql = new StringBuilder();
-            StringBuilder totalCountSql = new StringBuilder();
             pagedSql.Append(" SELECT * FROM (select ROW_NUMBER() OVER (ORDER BY  ");
 
             if (pOrderBys != null && pOrderBys.Length > 0)
@@ -210,36 +181,17 @@ namespace JIT.CPOS.BS.DataAccess
             }
 
 
-            pagedSql.Append(@") AS RowNumber,a.SuperRetailTraderID,
-                                            a.SuperRetailTraderCode,
-                                            a.SuperRetailTraderName,
-                                            a.SuperRetailTraderLogin,
-                                            a.SuperRetailTraderPass,
-                                            a.SuperRetailTraderMan,
-                                            a.SuperRetailTraderPhone,
-                                            a.SuperRetailTraderAddress,
-                                            a.SuperRetailTraderFrom,
-                                            a.SuperRetailTraderFromId,
-                                            a.HigheSuperRetailTraderID,
-                                            a.JoinTime,a.CreateTime,a.CreateBy,a.LastUpdateBy,a.LastUpdateTime,a.IsDelete,a.CustomerId,a.Status,
+            pagedSql.Append(@") AS RowNumber,a.*,
                                             WithdrawCount=(SELECT COUNT(*) FROM VipWithdrawDepositApply WHERE VipId=a.SuperRetailTraderFromId),
                                             OrderCount=(SELECT COUNT(*) FROM T_inout WHERE sales_user=cast(a.SuperRetailTraderID as varchar(500))),
-                                            WithdrawTotalMoney=(SELECT SUM(Amount) FROM VipWithdrawDepositApply WHERE VipId=a.SuperRetailTraderFromId),
+                                            WithdrawTotalMoney=(SELECT SUM(Amount) FROM VipWithdrawDepositApply WHERE status=3 AND VipId=cast(a.SuperRetailTraderID AS VARCHAR(500))),
                                            NumberOffline=(SELECT COUNT(*) FROM T_SuperRetailTrader WHERE HigheSuperRetailTraderID=a.SuperRetailTraderID AND Status='10')
                                  from T_SuperRetailTrader as a  ");
-            //pagedSql.Append(" left JOIN T_SuperRetailTrader AS b ON b.HigheSuperRetailTraderID=a.SuperRetailTraderID"); //已完成 
-            // pagedSql.Append(" left JOIN VipWithdrawDepositApply AS vwda ON vwda.VipID=a.SuperRetailTraderFromId AND vwda.Status=2 AND vwda.IsDelete=0  AND vwda.ApplyDate>=a.JoinTime"); //已完成 
-            // pagedSql.Append(" left JOIN T_inout AS ti ON ti.sales_user=a.SuperRetailTraderID AND ti.customer_id=@CustomerId  AND  ti.order_date>=a.JoinTime "); //成交 和未成交 订单 已和 保林 确认啦，就是所有订单哈。
             SqlParameter[] parameter = new SqlParameter[]{
                 new SqlParameter("@CustomerId",customerId)
             };
             pagedSql.Append("  Where 1=1 ");
 
-            #region 记录总数sql
-            totalCountSql.Append("select count(1) from T_SuperRetailTrader as a ");
-
-            totalCountSql.Append("Where 1=1 ");
-            #endregion
 
             //过滤条件
             if (pWhereConditions != null)
@@ -249,24 +201,9 @@ namespace JIT.CPOS.BS.DataAccess
                     if (item != null)
                     {
                         pagedSql.AppendFormat(" and {0}", item.GetExpression());
-                        totalCountSql.AppendFormat(" and {0}", item.GetExpression());
                     }
                 }
             }
-            pagedSql.Append(@"
-                                GROUP BY a.SuperRetailTraderID,
-                                a.SuperRetailTraderCode,
-                                a.SuperRetailTraderName,
-                                a.SuperRetailTraderLogin,
-                                a.SuperRetailTraderPass,
-                                a.SuperRetailTraderMan,
-                                a.SuperRetailTraderPhone,
-                                a.SuperRetailTraderAddress,
-                                a.SuperRetailTraderFrom,
-                                a.SuperRetailTraderFromId,
-                                a.HigheSuperRetailTraderID,
-                                a.JoinTime,
-                                a.CreateTime,a.CreateBy,a.LastUpdateBy,a.LastUpdateTime,a.IsDelete,a.CustomerId,a.Status");
             pagedSql.AppendFormat(") as h  ");
             #endregion
 
@@ -304,10 +241,7 @@ namespace JIT.CPOS.BS.DataAccess
                 }
             }
             result.Entities = list.ToArray();
-
-            int totalCount = Convert.ToInt32(this.SQLHelper.ExecuteScalar(totalCountSql.ToString()));    //计算总行数
-            result.RowCount = totalCount;
-
+            result.RowCount = 0;
             #endregion
             return result;
         }

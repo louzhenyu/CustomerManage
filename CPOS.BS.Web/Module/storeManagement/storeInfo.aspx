@@ -1,9 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-  <meta charset="UTF-8" />
   <title>门店信息</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link href="<%=StaticUrl+"/module/storeManagement/css/storeInfo.css?v=0.4"%>" rel="stylesheet" type="text/css" />
   <style type="text/css">
 a:hover{color:#fff;}
@@ -133,12 +131,6 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
 .addImgMessagePopup .textInfo .name{display:block;margin:2px 0 5px 0;}
 .addImgMessagePopup .item.on .radioBox{background:url(images/on-icon.png) no-repeat center center;}
 .addImgMessagePopup .item.on{background: #ecf6ff;}
-
-
-      /*补丁--jw*/ 
-      .textbox > .combo {width:200px;height:30px; }
-       .textbox > .combo > .textbox-icon > .combo-arrow{ height:30px;}
-       .textbox > .combo >input{ width:180px !important;}
 /*
 .show{display:inline-block;}
 */
@@ -169,8 +161,8 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                 <div class="inlineBlockArea">
 					  <div class="commonSelectWrap">
                         <em class="tit">组织层级：</em>
-                        <label class="searchInput clearBorder" >
-                          <input data-text="上级组织层级" class="easyui-combobox" id="Parent_Unit_Id" style="width:200px !important;"  data-flag="Parent_Unit_Id" name="Parent_Unit_Id" type="text" value="" data-options="required:true"  validType='selectIndex'>
+                        <label class="searchInput clearBorder">
+                          <input data-text="上级组织层级" class="easyui-combotree" id="Parent_Unit_Id" data-flag="Parent_Unit_Id" name="Parent_Unit_Id" type="text" value="" data-options="required:true"  validType='selectIndex'>
                         </label>
                       </div>
 
@@ -183,7 +175,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                       <div class="commonSelectWrap">
                         <em class="tit">编码：</em>
                         <label class="searchInput clearBorder">
-                          <input data-text="编码" class="easyui-validatebox"  data-flag="Code" id="Code" name="Code" type="text" data-options="required:true"  value="" placeholder="请输入">
+                          <input data-text="店名" class="easyui-validatebox"  data-flag="Code" id="Code" name="Code" type="text" data-options="required:true"  value="" placeholder="请输入">
                         </label>
                       </div>
 
@@ -191,15 +183,15 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                       <div class="commonSelectWrap cityLinkageBox">
                         <em class="tit">地址：</em>
                         <label class="searchInput clearBorder" style="width:70px;" >
-                          <input class="easyui-combobox" id="provinceId" data-flag="provinceId" name="provinceId" type="text" value="" data-options="required:true,width:70,height:32"  validType='selectIndex'>
+                          <input class="easyui-combobox" id="provinceId" data-flag="provinceId" name="provinceId" type="text" value="" data-options="required:true,width:70,height:32" >
                         </label>
                         
                         <label class="searchInput clearBorder" style="width:70px;">
-                          <input class="easyui-combobox" id="townId" data-flag="townId" name="townId" type="text" value="" data-options="required:true,width:70,height:32"  validType='selectIndex'>
+                          <input class="easyui-combobox" id="townId" data-flag="townId" name="townId" type="text" value="" data-options="required:true,width:70,height:32">
                         </label>
                         
                         <label class="searchInput clearBorder" style="width:70px;">
-                          <input class="easyui-combobox" id="CityId" data-flag="CityId" name="CityId" type="text" value="" data-options="required:true,width:70,height:32"  validType='selectIndex'>
+                          <input class="easyui-combobox" id="CityId" data-flag="CityId" name="CityId" type="text" value="" data-options="required:true,width:70,height:32">
                         </label>
                       </div>
                       
@@ -233,7 +225,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                       <div class="commonSelectWrap">
                         <em class="tit">电话：</em>
                         <label class="searchInput clearBorder">
-                          <input data-text="电话" class="easyui-validatebox"  data-flag="Telephone" id="Telephone" name="Telephone" type="text" data-options="required:true" maxlength="11" validType='telephone'  value="" placeholder="请输入">
+                          <input data-text="电话" class="easyui-validatebox"  data-flag="Telephone" id="Telephone" name="Telephone" type="text" data-options="required:true"  value="" placeholder="请输入">
                         </label>
                       </div>
 

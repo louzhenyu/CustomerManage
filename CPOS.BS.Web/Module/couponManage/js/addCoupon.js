@@ -18,10 +18,19 @@
             tagType:[],                             //标签类型
             tagList:[]                              //标签列表
         },
+        skipType:"",
         selectDataUnit:[],
         selectDataUnitList:[],
         init: function () {
+
             this.initEvent();
+            var type= $.util.getUrlParam("skipType");
+            if(type){
+
+                $('[data-flag="IsNotLimitQty"]').trigger("click");
+                this.skipType= type;
+                $("[data-validity='day'].radio").trigger("click");
+            }
         },
         unitBtnEvent:function(){
             var that = this;
@@ -44,7 +53,7 @@
         initEvent: function () {
             var that = this;
 
-            that.elems.sectionPage.on("keyup", ".validDays .numberbox input", function () {
+            that.elems.sectionPage.delegate("keyup", ".validDays .numberbox input", function () {
                 $("#validDays").numberbox("setValue", $("#validDays").numberbox("getText"));
 
             });
@@ -103,16 +112,25 @@
                         disabled: true
                         //required: false
                     });
-                    if (me.data("validity") == "time") {
-                        me.siblings().find(".easyui-datebox").datebox({
+                    if(that.skipType) {
+                        $("[data-validity='time'].radio").removeClass("on");
+                        $("[data-validity='day'].radio").addClass("on");
+                        $("[data-validity='day'].radio").siblings().find(".easyui-numberbox").numberbox({
                             disabled: false,
                             required: true
                         });
-                    } else if (me.data("validity") == "day") {
-                        me.siblings().find(".easyui-numberbox").numberbox({
-                            disabled: false,
-                            required: true
-                        });
+                    }else{
+                        if (me.data("validity") == "time") {
+                            me.siblings().find(".easyui-datebox").datebox({
+                                disabled: false,
+                                required: true
+                            });
+                        } else if (me.data("validity") == "day") {
+                            me.siblings().find(".easyui-numberbox").numberbox({
+                                disabled: false,
+                                required: true
+                            });
+                        }
                     }
                     var valueType = me.data("valuetype");
                     if (name == "unit") {
@@ -154,7 +172,7 @@
                             window.parent.$('#win1').window('close');
                         } else {
                             alert("操作成功");
-                           // var mid = JITMethod.getUrlParam("mid");
+                            // var mid = JITMethod.getUrlParam("mid");
                             $.util.toNewUrlPath("queryList.aspx");
                         }
 
@@ -210,6 +228,29 @@
                     });
                     $('#ConditionValue').siblings(".textbox.numberbox").css({"background": "#efefef"});
                 }
+                if(that.skipType) {
+                    me.addClass("on")
+
+                }  else{
+                    if (me.hasClass("on") && me.data("flag") == "IsNotLimitQty") {
+                        $(me).parent().find(".easyui-numberbox").numberbox({
+                            /*  max: 0,*/
+                            disabled: true
+                        });
+                        $(me).parent().find(".textbox.numberbox").css({"background": "#efefef"});
+                    } else if (me.data("flag") == "IsNotLimitQty") {
+
+                        $(me).parent().find(".easyui-numberbox").numberbox({
+                            min: 0,
+                            max: null,
+                            disabled: false
+                        });
+                        $(me).parent().find(".textbox.numberbox").css({"background": "#fff"});
+
+
+                    }
+                }
+
             });
             that.elems.sectionPage.find(".checkBox").trigger("click").trigger("click");
             /*  that.elems.Tooltip.delegate(".commonBtn","click",function(e){
@@ -373,7 +414,7 @@
                 closed: true,
                 closable: true,
                 onBeforeOpen: function () {
-                   // $("body").css({"overflowY": "hidden"});
+                    // $("body").css({"overflowY": "hidden"});
                 },
                 onBeforeClose: function () {
 
@@ -531,7 +572,7 @@
                             s= '<div class="bg" >'+s+'</div>'
                         }
                     }else{
-                         s+='<em class="delete" title="删除" data-target='+node.id+'></em>'
+                        s+='<em class="delete" title="删除" data-target='+node.id+'></em>'
                     }
                     return s;
                 },onLoadSuccess:function() {
@@ -546,15 +587,15 @@
 
                 var nodeList=[] ;
                 var isDel=true;
-                    var node= $('#unitParentTree').tree("getSelected");
-                   nodeList = $("#unitGrid").datagrid('getData').rows;
+                var node= $('#unitParentTree').tree("getSelected");
+                nodeList = $("#unitGrid").datagrid('getData').rows;
 
                 if(nodeList.length>0){
                     for(var j=0;j<nodeList.length;j++){
-                       if(nodeList[j].Id==id){
-                           isDel=false;
-                           $("#unitGrid").datagrid("uncheckRow",j);
-                       }
+                        if(nodeList[j].Id==id){
+                            isDel=false;
+                            $("#unitGrid").datagrid("uncheckRow",j);
+                        }
                     }
 
                 }
@@ -569,7 +610,7 @@
         //刷新选中门店数据
         reloadUnitData:function(delList){
             var that=this;
-           var   selectDataUnit=that.selectDataUnit;
+            var   selectDataUnit=that.selectDataUnit;
 
             if (selectDataUnit.length > 0&&delList&&delList.length>0) {
                 var dataUnitlist=[];
@@ -616,41 +657,41 @@
             var isAdd = true,nodeList=[];
 
 
-              var node= $('#unitParentTree').tree("getSelected");
-               nodeList=$("#unitGrid").datagrid('getChecked');
-              var nodeParent={id:node.id,text:node.text,"children":[]};
+            var node= $('#unitParentTree').tree("getSelected");
+            nodeList=$("#unitGrid").datagrid('getChecked');
+            var nodeParent={id:node.id,text:node.text,"children":[]};
             var nodeObjList=[];
-              if(nodeList.length>0){
-                  for(var j=0;j<nodeList.length;j++){
-                      var obj={};
-                      obj["id"]=nodeList[j].Id;
-                      obj["text"]=nodeList[j].Name;
-                      nodeObjList.push(obj)
-                  }
-                  nodeParent["children"]=nodeObjList;
-              }
-              var dataUnitlist=[],  selectDataUnit=that.selectDataUnit;
+            if(nodeList.length>0){
+                for(var j=0;j<nodeList.length;j++){
+                    var obj={};
+                    obj["id"]=nodeList[j].Id;
+                    obj["text"]=nodeList[j].Name;
+                    nodeObjList.push(obj)
+                }
+                nodeParent["children"]=nodeObjList;
+            }
+            var dataUnitlist=[],  selectDataUnit=that.selectDataUnit;
 
-              if (selectDataUnit.length > 0) {
-                  for (var i = 0; i < selectDataUnit.length; i++) {
-                      if (nodeParent.id!== selectDataUnit[i].id) {
-                          var nodeNew={id:selectDataUnit[i].id,text:selectDataUnit[i].text,"children":selectDataUnit[i].children};
-                          dataUnitlist.push(nodeNew);
-                      }
+            if (selectDataUnit.length > 0) {
+                for (var i = 0; i < selectDataUnit.length; i++) {
+                    if (nodeParent.id!== selectDataUnit[i].id) {
+                        var nodeNew={id:selectDataUnit[i].id,text:selectDataUnit[i].text,"children":selectDataUnit[i].children};
+                        dataUnitlist.push(nodeNew);
+                    }
 
-                  }
-              }
-              if(nodeObjList.length>0){
-                  dataUnitlist.push(nodeParent)
-              }
+                }
+            }
+            if(nodeObjList.length>0){
+                dataUnitlist.push(nodeParent)
+            }
 
             that.selectDataUnit=dataUnitlist;
             $('#unitTreeSelect').tree("loadData",dataUnitlist);
         },
-         //绑定门店数据
+        //绑定门店数据
         renderTableUnit:function(){
-                 var that=this;
-           var node= $('#unitParentTree').tree("getSelected");
+            var that=this;
+            var node= $('#unitParentTree').tree("getSelected");
             if(node){
                 that.loadData.unitSearch.Parent_Unit_ID=node.id;
             } else{
@@ -661,136 +702,136 @@
 
             that.loadData.getUnitList(function(data){
                 var isSubMit=false;
-                  $("#unitGrid").datagrid({
-                      method : 'post',
-                      iconCls : 'icon-list', //图标
-                      singleSelect : false, //多选false 单选true
-                      height : 430, //高度
-                      fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
-                      striped : true, //奇偶行颜色不同
-                      collapsible : true,//可折叠
-                      scrollbarSize:18,
-                      //数据来源
-                      data:data.topics,
-                      sortName : 'Id', //排序的列
-                      /*sortOrder : 'desc', //倒序
-                       remoteSort : true, // 服务器排序*/
-                      idField : 'Id', //主键字段
-                      /* pageNumber:1,*/
+                $("#unitGrid").datagrid({
+                    method : 'post',
+                    iconCls : 'icon-list', //图标
+                    singleSelect : false, //多选false 单选true
+                    height : 430, //高度
+                    fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+                    striped : true, //奇偶行颜色不同
+                    collapsible : true,//可折叠
+                    scrollbarSize:18,
+                    //数据来源
+                    data:data.topics,
+                    sortName : 'Id', //排序的列
+                    /*sortOrder : 'desc', //倒序
+                     remoteSort : true, // 服务器排序*/
+                    idField : 'Id', //主键字段
+                    /* pageNumber:1,*/
 
-                      columns : [[
-                          {field : 'Name',title : '店名',width:60,align:'left',resizable:false,
-                              formatter:function(value ,row,index){
-                                  return value;
-                              }
-                          },
-                   /*       {field : 'Contact',title : '联系人',width:70,align:'left',resizable:false,
-                              formatter:function(value ,row,index){
-                                  return value;
-                              }
-                          },
-                          {field : 'Telephone',title : '电话',width:60,resizable:false,align:'left',resizable:false,formatter:function(value ,row,index){
-                              return value;
-                          }
-                          },
-                          {field : 'Parent_Unit_Name',title : '上级组织',width:80,align:'left',resizable:false,
-                              formatter:function(value,row,index){
-                                  return value
-                              }
-                          },
-                          {field : 'StoreType',title : '类型',width:60,align:'left',resizable:false,formatter:function(value ,row,index){
-                              var staus;
-                              switch (value){
-                                  case "DirectStore": staus="直营店";break;
+                    columns : [[
+                        {field : 'Name',title : '店名',width:60,align:'left',resizable:false,
+                            formatter:function(value ,row,index){
+                                return value;
+                            }
+                        },
+                        /*       {field : 'Contact',title : '联系人',width:70,align:'left',resizable:false,
+                         formatter:function(value ,row,index){
+                         return value;
+                         }
+                         },
+                         {field : 'Telephone',title : '电话',width:60,resizable:false,align:'left',resizable:false,formatter:function(value ,row,index){
+                         return value;
+                         }
+                         },
+                         {field : 'Parent_Unit_Name',title : '上级组织',width:80,align:'left',resizable:false,
+                         formatter:function(value,row,index){
+                         return value
+                         }
+                         },
+                         {field : 'StoreType',title : '类型',width:60,align:'left',resizable:false,formatter:function(value ,row,index){
+                         var staus;
+                         switch (value){
+                         case "DirectStore": staus="直营店";break;
 
-                                  case "NapaStores": staus= "加盟店"; break;
-                              }
-                              return staus;
-                          }
-                          },
-                          {field : 'Status',title : '状态',width:60,align:'left',resizable:false,
-                              formatter:function(value ,row,index){
-                                  var staus;
-                                  switch (value){
-                                      case "1": staus="正常";break;
+                         case "NapaStores": staus= "加盟店"; break;
+                         }
+                         return staus;
+                         }
+                         },
+                         {field : 'Status',title : '状态',width:60,align:'left',resizable:false,
+                         formatter:function(value ,row,index){
+                         var staus;
+                         switch (value){
+                         case "1": staus="正常";break;
 
-                                      case "-1": staus= "停用"; break;
-                                  }
-                                  return staus;
-                              }
-                          },*/
+                         case "-1": staus= "停用"; break;
+                         }
+                         return staus;
+                         }
+                         },*/
 
-                          {
-                              field : 'ck',
-                              width:20,
-                              title:'全选',
-                              align:'center',
-                              checkbox : true
-                          }
+                        {
+                            field : 'ck',
+                            width:20,
+                            title:'全选',
+                            align:'center',
+                            checkbox : true
+                        }
 
 
-                      ]],
+                    ]],
                     /*  frozenColumns:[[
-                          {
-                              field : 'ck',
-                              width:70,
-                              title:'全选',
-                              align:'center',
-                              checkbox : true
-                          }
-                      ]],*/
-                      onLoadSuccess : function(data) {
-                          debugger;
+                     {
+                     field : 'ck',
+                     width:70,
+                     title:'全选',
+                     align:'center',
+                     checkbox : true
+                     }
+                     ]],*/
+                    onLoadSuccess : function(data) {
+                        debugger;
 
-                          $("#unitGrid").datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
-                          isSubMit=true;
-                      },
+                        $("#unitGrid").datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+                        isSubMit=true;
+                    },
 
-                      onCheck:function(){
-                          var check= $("#unitGrid").datagrid("getPanel").find(".datagrid-header-check").find("input").get(0).checked
-                          if(check){
-                              $(this).datagrid("getPanel").find(".datagrid-header-check").addClass("on");
-                          } else{
-                              $(this).datagrid("getPanel").find(".datagrid-header-check").removeClass("on");
-                          }
-                          if(isSubMit) {
-                              that.cacheUnitData();
-                          }
+                    onCheck:function(){
+                        var check= $("#unitGrid").datagrid("getPanel").find(".datagrid-header-check").find("input").get(0).checked
+                        if(check){
+                            $(this).datagrid("getPanel").find(".datagrid-header-check").addClass("on");
+                        } else{
+                            $(this).datagrid("getPanel").find(".datagrid-header-check").removeClass("on");
+                        }
+                        if(isSubMit) {
+                            that.cacheUnitData();
+                        }
 
-                      } ,
-                     onUncheck:function(){
-                         var check= $("#unitGrid").datagrid("getPanel").find(".datagrid-header-check").find("input").get(0).checked
-                         if(check){
-                             $(this).datagrid("getPanel").find(".datagrid-header-check").addClass("on");
-                         } else{
-                             $(this).datagrid("getPanel").find(".datagrid-header-check").removeClass("on");
-                         }
-                         if(isSubMit) {
-                             that.cacheUnitData();
-                         }
+                    } ,
+                    onUncheck:function(){
+                        var check= $("#unitGrid").datagrid("getPanel").find(".datagrid-header-check").find("input").get(0).checked
+                        if(check){
+                            $(this).datagrid("getPanel").find(".datagrid-header-check").addClass("on");
+                        } else{
+                            $(this).datagrid("getPanel").find(".datagrid-header-check").removeClass("on");
+                        }
+                        if(isSubMit) {
+                            that.cacheUnitData();
+                        }
 
-                      } ,
-                      onCheckAll:function(){
-                          $(this).datagrid("getPanel").find(".datagrid-header-check").addClass("on");
-                          if(isSubMit) {
-                              that.cacheUnitData();
-                          }
-                      } ,onUncheckAll:function(){
-                          $(this).datagrid("getPanel").find(".datagrid-header-check").removeClass("on");
-                          if(isSubMit) {
-                              that.cacheUnitData();
-                          }
-                      }
+                    } ,
+                    onCheckAll:function(){
+                        $(this).datagrid("getPanel").find(".datagrid-header-check").addClass("on");
+                        if(isSubMit) {
+                            that.cacheUnitData();
+                        }
+                    } ,onUncheckAll:function(){
+                        $(this).datagrid("getPanel").find(".datagrid-header-check").removeClass("on");
+                        if(isSubMit) {
+                            that.cacheUnitData();
+                        }
+                    }
 
 
-                  });
+                });
             })
 
         },
 
         renderProductTable :function(){
             var that=this;
-             var batId=$("#selectType").combobox("getValue");
+            var batId=$("#selectType").combobox("getValue");
             var node= $('#unitParentTree').tree("getSelected");
             if(node){
                 that.loadData.productSearch.CategoryId=node.id;
@@ -996,18 +1037,18 @@
             };
             $('#panlconent').layout('add',options);
 
-              $("#win").window("open");
+            $("#win").window("open");
 
 
-                   $("#unitTree").combotree({
-                       //panelWidth:300,
-                       width:220,
-                       //animate:true,
-                       multiple:false,
-                       valueField: 'id',
-                       textField: 'text',
-                       data:that.unitTree
-                   });
+            $("#unitTree").combotree({
+                //panelWidth:300,
+                width:220,
+                //animate:true,
+                multiple:false,
+                valueField: 'id',
+                textField: 'text',
+                data:that.unitTree
+            });
             $("#unitTree").combotree("setText","选择分销商所属门店");
 
             $("#searchGrid").datagrid({
@@ -1103,29 +1144,29 @@
                 UnitID:""
             },
             getUitTree:{
-               node:""
+                node:""
             },
             opertionField:{},
 
             getCommodityList: function (callback) {
                 $.util.oldAjax({
                     url: "/module/basic/Item/Handler/ItemHandler.ashx",
-                      data:{
-                          action:'search_item',
-                          item_category_id:this.seach.item_category_id,
-                          SalesPromotion_id:this.seach.SalesPromotion_id,
-                          page:this.args.page,
-                          start:this.args.start,
-                          limit:this.args.limit,
-                          form:{
-                              item_code:"",
-                              item_name:this.seach.form.item_name,
-                              item_status:this.seach.form.item_status,
-                              item_can_redeem:null
-                          }
-                      },
-                      success: function (data) {
-                          debugger;
+                    data:{
+                        action:'search_item',
+                        item_category_id:this.seach.item_category_id,
+                        SalesPromotion_id:this.seach.SalesPromotion_id,
+                        page:this.args.page,
+                        start:this.args.start,
+                        limit:this.args.limit,
+                        form:{
+                            item_code:"",
+                            item_name:this.seach.form.item_name,
+                            item_status:this.seach.form.item_status,
+                            item_can_redeem:null
+                        }
+                    },
+                    success: function (data) {
+                        debugger;
                         if (data.topics) {
                             if (callback) {
                                 callback(data);
@@ -1220,27 +1261,27 @@
             //只获取门店列表
             getUnitList: function (callback) {
                 $.util.isLoading();
-            debugger;
-        $.util.oldAjax({
-            url: "/module/basic/unit/Handler/UnitHandler.ashx",
-            data:{
-                action:'search_unit',
-                page:1,
-                //start:this.args.start,
-                limit:100000,
-                form:this.unitSearch
-            },
-            success: function (data) {
-                if (data.topics) {
-                    if (callback) {
-                        callback(data);
+                debugger;
+                $.util.oldAjax({
+                    url: "/module/basic/unit/Handler/UnitHandler.ashx",
+                    data:{
+                        action:'search_unit',
+                        page:1,
+                        //start:this.args.start,
+                        limit:100000,
+                        form:this.unitSearch
+                    },
+                    success: function (data) {
+                        if (data.topics) {
+                            if (callback) {
+                                callback(data);
+                            }
+                        } else {
+                            alert("加载门店列表数据不成功");
+                        }
                     }
-                } else {
-                    alert("加载门店列表数据不成功");
-                }
-            }
-        });
-    },
+                });
+            },
             //分类
             getClassify: function (callback) {
                 $.util.oldAjax({
@@ -1280,33 +1321,33 @@
                 }else if($(".listBtn.show").data("coupontype")==0){  //是现金券
                     prams.data["CouponCategory"]="CASH";
                 }
-               /* var str= $("#applicationType").combobox("getValue");*/
+                /* var str= $("#applicationType").combobox("getValue");*/
                 //适用门店(1=所有门店；2=部分门店/分销商;3=所有分销商)
-                        if( $(".radio.on[data-name='unit']").data("valuetype")=="all"){
-                            prams.data["SuitableForStore"]=1
-                        }else{
-                            prams.data["SuitableForStore"]=2;
-                            prams.data.ObjectIDList=[];
-                           var data= page.elems.listTable.datagrid("getData");
-                           for(var i=0;i<data.rows.length; i++){
+                if( $(".radio.on[data-name='unit']").data("valuetype")=="all"){
+                    prams.data["SuitableForStore"]=1
+                }else{
+                    prams.data["SuitableForStore"]=2;
+                    prams.data.ObjectIDList=[];
+                    var data= page.elems.listTable.datagrid("getData");
+                    for(var i=0;i<data.rows.length; i++){
 
-                                   prams.data.ObjectIDList.push({"ObjectID": data.rows[i].id});
+                        prams.data.ObjectIDList.push({"ObjectID": data.rows[i].id});
 
-                                  // prams.data.ObjectIDList.push({"ObjectID": data.rows[i].RetailTraderID});
+                        // prams.data.ObjectIDList.push({"ObjectID": data.rows[i].RetailTraderID});
 
-                            }
+                    }
 
-                        }
+                }
                 $.each(pram, function (index, field) {
                     if(field.value!=="") {
                         prams.data[field.name] = field.value;
                     }
                 });
                 if(prams.data["ParValue"]==="0.00"||prams.data["ParValue"]==="0"){
-                   $.messager.alert("错误提示","优惠券面值必须大于零");
+                    $.messager.alert("错误提示","优惠券面值必须大于零");
                     return false;
                 }
-
+                prams.data["IsNotLimitQty"]=$('[data-name="IsNotLimitQty"].on.checkBox').length;//  合理的写法应该是三位运算符号。 1代表是不限制数量，0代表正常数量。
 
 
                 $.util.ajax({
@@ -1329,7 +1370,7 @@
 
 
         },
-		addGroupDialog:function(){
+        addGroupDialog:function(){
             var that=this;
             $('#win').window({title:"选择品类分组",width:550,height:480,top:50,left:($(window).width() - 550) * 0.5});
             //改变弹框内容，调用百度模板显示不同内容
@@ -1341,34 +1382,34 @@
             };
             $('#panlconent').layout('add',options);
         },
-		getGroupTree:function(roleId,defAppId){
-			var that = this;
-			$.util.oldAjax({
-				url: "/Module/Basic/Role/Handler/RoleHandler.ashx",
-				  data:{
-					  action:'get_sys_menus_by_role_id',
-					  role_id:roleId,
-					  app_sys_id:defAppId
-				  },
-				  success: function (data) {
-					if(data.totalCount) {
-						var result = data.data;
-						$("#selectGroupTreeBox").tree({
-							//animate:true,
-							//lines: true,
-							checkbox: true,
-							cascadeCheck: false,
-							//valueField: 'id',
-							//textField: 'text',
-							data: result
-						});
-						
-					}else{
-						alert("加载数据不成功");
-					}
-				}
-			});
-		}
+        getGroupTree:function(roleId,defAppId){
+            var that = this;
+            $.util.oldAjax({
+                url: "/Module/Basic/Role/Handler/RoleHandler.ashx",
+                data:{
+                    action:'get_sys_menus_by_role_id',
+                    role_id:roleId,
+                    app_sys_id:defAppId
+                },
+                success: function (data) {
+                    if(data.totalCount) {
+                        var result = data.data;
+                        $("#selectGroupTreeBox").tree({
+                            //animate:true,
+                            //lines: true,
+                            checkbox: true,
+                            cascadeCheck: false,
+                            //valueField: 'id',
+                            //textField: 'text',
+                            data: result
+                        });
+
+                    }else{
+                        alert("加载数据不成功");
+                    }
+                }
+            });
+        }
     };
     page.init();
 });

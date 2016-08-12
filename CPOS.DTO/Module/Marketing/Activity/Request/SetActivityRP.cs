@@ -33,13 +33,10 @@ namespace JIT.CPOS.DTO.Module.Marketing.Activity.Request
         /// </summary>
         public int IsLongTime { get; set; }
         /// <summary>
-        /// 会员卡关联类型ID
+        /// 会员卡关联类型ID集合
         /// </summary>
-        public string VipCardTypeID { get; set; }
-        /// <summary>
-        ///  会员分组ID
-        /// </summary>
-        public string VIPID { get; set; }
+        public List<string> VipCardTypeIDList { get; set; }
+        public string IsAllCardType { get; set; }
         public void Validate() { }
     }
 }

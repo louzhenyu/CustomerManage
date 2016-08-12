@@ -97,7 +97,7 @@ namespace JIT.CPOS.DTO.Module.VIP.VIPCardManage.Response
         /// <summary>
         /// 性别
         /// </summary>
-        public int? Gender { get; set; }
+        public int Gender { get; set; }
         /// <summary>
         /// 判定会员生日是否可以修改
         /// </summary>

@@ -2,7 +2,7 @@
 using JIT.CPOS.BS.BLL;
 using JIT.CPOS.BS.Entity;
 using JIT.CPOS.Web.ApplicationInterface.Base;
-//using JIT.CPOS.BS.Web.Session;
+using JIT.CPOS.BS.Web.Session;
 using JIT.CPOS.DTO.Base;
 using JIT.Utility.DataAccess;
 using JIT.CPOS.DTO.Module.SuperRetailTraderProfit.Request;

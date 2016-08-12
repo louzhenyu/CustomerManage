@@ -45,12 +45,22 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
+		public Guid? ActivityID { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public String RechargeStrategyName { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
 		public String RechargeStrategyDesc { get; set; }
+
+		/// <summary>
+		/// Step ½×ÌÝ   Superposition µþ¼Ó
+		/// </summary>
+		public String RuleType { get; set; }
 
 		/// <summary>
 		/// 

@@ -14,15 +14,17 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Sys.InnerGroupNews
 {
     public class GetInnerGroupNewsListAH : BaseActionHandler<GetInnerGroupNewsListRP, GetInnerGroupNewsListRD>
     {
+        /// <summary>
+        /// 消息列表数据 接口
+        /// </summary>
+        /// <param name="pRequest"></param>
+        /// <returns></returns>
         protected override GetInnerGroupNewsListRD ProcessRequest(DTO.Base.APIRequest<GetInnerGroupNewsListRP> pRequest)
         {
             var parameter = pRequest.Parameters;
             LoggingSessionInfo loggingSessionInfo = Default.GetBSLoggingSession(pRequest.CustomerID, pRequest.UserID);
-
             InnerGroupNewsBLL bll = new InnerGroupNewsBLL(loggingSessionInfo);
-
             var rd = new GetInnerGroupNewsListRD();
-
             //分页查找消息列表
             DateTime CreateTime = DateTime.Now;
             var vipinfo = new VipBLL(loggingSessionInfo).GetByID(loggingSessionInfo.CurrentUser.User_Id);
@@ -61,7 +63,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Sys.InnerGroupNews
             rd.InnerGroupNewsList = lst.Entities.Select(m => new InnerGroupNewsInfo()
                                                         {
                                                             Title = m.Title,
-                                                            IsRead = m.IsRead,
+                                                            IsRead = m.IsRead == "0" ? 0 : 1,
                                                             BusType = m.BusType,
                                                             GroupNewsId = m.GroupNewsId,
                                                             MsgTime = m.CreateTime + "",

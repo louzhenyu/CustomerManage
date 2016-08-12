@@ -24,9 +24,18 @@
             tagList:[]                              //标签列表
         },
         init: function () {
+
             this.initEvent();
             this.quicklyDialog();
-            this.loadPageData();
+            this.loadData.getOrderStatusList(function(statusList){
+                   if(statusList.length>0){
+                       $.each(statusList,function(indx,filed){
+                           $(".tableList ul").append('<li data-Field7="'+filed.StatusType+'"><em>'+filed.StatusTypeName+'</em></li>')
+                       });
+                   }
+                page.loadPageData();
+            });
+
 
         },
         initEvent: function () {
@@ -672,6 +681,37 @@
                     form:this.seach.form
                 };
                 this.exportExcel(data, getUrl);
+            },
+            getOrderStatusList:function(callback){
+                $.util.oldAjax({
+                    url: "/Module/Order/InoutOrders/Handler/Inout3Handler.ashx",
+                    data: {
+                        action: 'GetPosOrderTotalCount_lj',
+                        form: {
+                            "order_no": "",
+                            "vip_no": "",
+                            "sales_unit_id": "",
+                            "order_date_begin": "",
+                            "order_date_end": "",
+                            "data_from_id": null,
+                            "DeliveryId": null,
+                            "ModifyTime_begin": "",
+                            "ModifyTime_end": ""
+                        }
+                    },
+                    success: function (data) {
+                        debugger;
+                        if (data.data) {
+                            if (callback) {
+                                callback(data.data);
+                            }
+
+                        } else {
+                            alert("加载数据不成功");
+                        }
+                    }
+                });
+
             },
             getOrderList: function (callback) {
                 $.util.partialRefresh($("#gridTable"))

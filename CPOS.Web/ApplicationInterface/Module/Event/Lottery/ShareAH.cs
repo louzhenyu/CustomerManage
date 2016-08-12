@@ -35,7 +35,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                         rd = bllPrize.CheckIsWinnerForShareForRedis(para.ShareUserId, para.EventId, para.Type, this.CurrentUserInfo);
                     }
 
-
                 }
                 catch (Exception ex)
                 {

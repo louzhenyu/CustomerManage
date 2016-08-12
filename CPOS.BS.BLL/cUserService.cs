@@ -1054,6 +1054,48 @@ namespace JIT.CPOS.BS.BLL
             IList<UserInfo> userInfoList = new List<UserInfo>();
             return userInfoList;
         }
+
+        #region 根据菜单编码和用户编号获取菜单菜单权限
+        /// <summary>
+        /// 根据菜单编码和用户编号获取菜单菜单权限
+        /// </summary>
+        /// <param name="roleCode"></param>
+        /// <returns></returns>
+        public IList<UserInfo> GetUserInfoByMenuCode(string menuCode, string userId)
+        {
+            DataSet ds = userService.GetUserInfoByMenuCode(menuCode, userId);
+
+            List<UserInfo> userList = new List<UserInfo>();
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                userList.AddRange(DataTableToObject.ConvertToList<UserInfo>(ds.Tables[0]));
+            }
+            if (ds != null && ds.Tables[1].Rows.Count > 0)
+            {
+                userList.AddRange(DataTableToObject.ConvertToList<UserInfo>(ds.Tables[1]));
+            }
+            return userList;
+        }
+        #endregion
+
+        #region 根据菜单编码 获取总部 有权限的 员工
+        /// <summary>
+        /// 根据菜单编码 获取总部 有权限的 员工
+        /// </summary>
+        /// <param name="roleCode"></param>
+        /// <returns></returns>
+        public IList<UserInfo> GetUserListByMenuNameAndTypeName(string menuCode)
+        {
+            DataSet ds = userService.GetUserListByMenuNameAndTypeName(menuCode);
+            List<UserInfo> userList = new List<UserInfo>();
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                userList.AddRange(DataTableToObject.ConvertToList<UserInfo>(ds.Tables[0]));
+            }
+            return userList;
+        }
+        #endregion
+      
         
         #region 上传到中间层
         /// <summary>
@@ -1451,7 +1493,7 @@ namespace JIT.CPOS.BS.BLL
         /// <returns></returns>
         public IList<UserInfo> GetUserListByMenuCode(string menuCode)
         {
-            DataSet ds = userService.GetUserListByMenuCode(menuCode);
+            DataSet ds = userService.GetUserListByMenuCode(menuCode, null);
 
             IList<UserInfo> userList = new List<UserInfo>();
             if (ds != null && ds.Tables[0].Rows.Count > 0)
@@ -1461,6 +1503,23 @@ namespace JIT.CPOS.BS.BLL
             return userList;
         }
 
+
+        /// <summary>
+        /// 根据菜单编码获取用户列表
+        /// </summary>
+        /// <param name="roleCode"></param>
+        /// <returns></returns>
+        public IList<UserInfo> GetUserListByMenuCode(string menuCode, string unit_id)
+        {
+            DataSet ds = userService.GetUserListByMenuCode(menuCode, unit_id);
+
+            IList<UserInfo> userList = new List<UserInfo>();
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                userList = DataTableToObject.ConvertToList<UserInfo>(ds.Tables[0]);
+            }
+            return userList;
+        }
 
         #region CreateQrcode
         /// <summary>
@@ -1642,7 +1701,7 @@ namespace JIT.CPOS.BS.BLL
                             dr_Usr["id"] = 0;
                             dr_Usr["UserName"] = dr[0].ToString();
                             dr_Usr["UserCode"] = dr[1].ToString();
-                            dr_Usr["Password"] = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(dr[2].ToString() == "" ? "888888" : dr[2].ToString(), "MD5");
+                            dr_Usr["Password"] = EncryptManager.Hash(dr[2].ToString() == "" ? "888888" : dr[2].ToString(), HashProviderType.MD5);// System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(dr[2].ToString() == "" ? "888888" : dr[2].ToString(), "MD5");
                             dr_Usr["UserTel"] = dr[3].ToString();
                             dr_Usr["Unit"] = dr[4].ToString();
                             dr_Usr["AppRole"] = dr[5].ToString();

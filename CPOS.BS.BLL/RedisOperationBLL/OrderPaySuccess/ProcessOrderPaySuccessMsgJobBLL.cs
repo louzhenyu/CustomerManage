@@ -63,7 +63,7 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.OrderPaySuccess
                         var templateID = response.Result.ConfigData.TemplateID;
                         var openID = response.Result.ConfigData.OpenID;
                         var vipID = response.Result.ConfigData.VipID;
-                        var loggingSessionInfo = response.Result.ConfigData.LogSession.JsonDeserialize<LoggingSessionInfo>();
+                        var loggingSessionInfo = CustomerBLL.Instance.GetBSLoggingSession(customer.Key,"1");//response.Result.ConfigData.LogSession.JsonDeserialize<LoggingSessionInfo>();
                         var paySuccessData = new PaySuccess
                         {
                             first = new DataInfo { value = response.Result.PaySuccessData.first.value, color = response.Result.PaySuccessData.first.color },

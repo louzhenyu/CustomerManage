@@ -141,6 +141,8 @@ namespace JIT.CPOS.DTO.Module.CreativityWarehouse.MarketingActivity.Response
         public string PrizeLevelName { get; set; }
         public string CouponTypeName { get; set; }
         public string CouponTypeID { get; set; }
+		public int IsNotLimitQty { get; set; }
+
         public int PrizeCount { get; set; }
         public int IssuedQty { get; set; }
         public decimal Probability { get; set; }

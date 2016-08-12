@@ -56,8 +56,8 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.OrderSend
                 {
                     first = new CC_DataInfo { value = CommonData.first.value, color = CommonData.first.color },
                     keyword1 = new CC_DataInfo { value = CommonData.keyword1.value, color = CommonData.keyword1.color },
-                    keyword2 = new CC_DataInfo { value = CommonData.keyword1.value, color = CommonData.keyword1.color },
-                    keyword3 = new CC_DataInfo { value = CommonData.keyword1.value, color = CommonData.keyword1.color },
+                    keyword2 = new CC_DataInfo { value = CommonData.keyword2.value, color = CommonData.keyword2.color },
+                    keyword3 = new CC_DataInfo { value = CommonData.keyword3.value, color = CommonData.keyword3.color },
 
                     remark = new CC_DataInfo { value = CommonData.remark.value, color = CommonData.remark.color }
                 }

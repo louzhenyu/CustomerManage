@@ -47,9 +47,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferenceDll\Aspose.Cells.dll</HintPath>
     </Reference>
-    <Reference Include="BouncyCastle.Crypto">
-      <HintPath>..\ReferenceDll\BouncyCastle.Crypto.dll</HintPath>
-    </Reference>
     <Reference Include="NPOI, Version=2.0.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferenceDll\NPOI.dll</HintPath>
@@ -91,15 +88,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferenceDll\Utility.dll</HintPath>
     </Reference>
+    <Reference Include="zxing">
+      <HintPath>..\ReferenceDll\zxing.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AESHelper.cs" />
-    <Compile Include="BouncyCastleHelper.cs" />
     <Compile Include="BulkSMS\api.cs" />
     <Compile Include="CommonCompress.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="AppType.cs" />
-    <Compile Include="ConfigHelper.cs" />
     <Compile Include="Core\GenericHelper.cs" />
     <Compile Include="Core\LazyInstance.cs" />
     <Compile Include="Core\TypeConst.cs" />
@@ -107,9 +104,6 @@
     <Compile Include="DownloadImage.cs" />
     <Compile Include="ExcelHelper.cs" />
     <Compile Include="FileType.cs" />
-    <Compile Include="HashEncryptHelper.cs" />
-    <Compile Include="HttpClientProxy.cs" />
-    <Compile Include="HttpHelper.cs" />
     <Compile Include="ImagePathUtil.cs" />
     <Compile Include="IOUtil.cs" />
     <Compile Include="JsonHelper.cs" />
@@ -119,10 +113,8 @@
     <Compile Include="LogMethod.cs" />
     <Compile Include="ErrorCode.cs" />
     <Compile Include="TransType.cs" />
-    <Compile Include="TypeParse.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WxPayData.cs" />
     <Compile Include="XmlHelper.cs" />
   </ItemGroup>
   <ItemGroup />

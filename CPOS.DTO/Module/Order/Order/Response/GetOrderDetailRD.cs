@@ -2,26 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using CPOS.BS.Entity;
 using JIT.CPOS.DTO.Base;
-using JIT.CPOS.BS.Entity;
 
 namespace JIT.CPOS.DTO.Module.Order.Order.Response
 {
     public class GetOrderDetailRD : IAPIResponseData
     {
-        public OrderListInfo OrderListInfo { get; set; }
-        public List<reserveDays> reserveDaysList { get; set; } 
-         public string IsItemGoToShop { get; set; } 
+        public OrderListInfo OrderListInfo { get; set; } 
     }
-    public class OrderListInfo{
-         public string reserveDay { get; set; }
-        public string reserveQuantum { get; set; }
-        public string reserveQuantumID { get; set; }
-        public string reserveTime { get { return reserveDay + " " + reserveQuantum; } }
-
-
-
+    public class OrderListInfo
+    {
         #region 订单信息
 
         public decimal discount_rate { get; set; }
@@ -107,6 +97,7 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         /// </summary>
         public string OrderReasonTypeId { get; set; }
         #endregion
+
         #region 配送信息
         /// <summary>
         /// 配送方式ID
@@ -124,9 +115,9 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         /// 配送时间
         /// </summary>
         public string DeliveryTime { get; set; }
-        /// <summary>
-        /// 配送方式
-        /// </summary>
+       /// <summary>
+       /// 配送方式
+       /// </summary>
         public string DeliveryName { get; set; }
 
         #endregion
@@ -137,7 +128,7 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         public string StoreTel { get; set; }
         #endregion
 
-        
+      
 
         #region 会员信息
         /// <summary>
@@ -204,7 +195,8 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         /// 是否已评论 0=未评；2=已评
         /// </summary>
         public int IsEvaluation { get; set; }
-		/// <summary>
+
+        /// <summary>
         /// 提货时间
         /// </summary>
         public string ReserveTime { get; set; }
@@ -213,26 +205,9 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         /// 订单是否包含虚拟商品 1-全部为实物商品 2-包含实物商品和虚拟商品 3-全部为虚拟商品
         /// </summary>
         public int IsAllService { get; set; }
-        /// <summary>
-        /// 订单来源信息
-        /// </summary>
-        public SysVipSourceEntity SysVipSource { get; set; }
-        /// <summary>
-        /// 下单人员
-        /// </summary>
-        public string CreateBy { get; set; }
-        /// <summary>
-        /// 订单类型信息
-        /// </summary>
-        public T_Order_Reason_TypeEntity OrderReasonTypeInfo { get; set; }
     }
     public class OrderDetailEntity
     {
-      public string IsItemOnlyBuyOnce { get; set; }
-        public string IsItemGoToShop { get; set; }
-        public string reserveDay { get; set; }
-        public string reserveQuantum { get; set; }
-        public string reserveTime { get; set; }
         public string SkuID { get; set; }
         public string ItemID { get; set; }
         public string ItemName { get; set; }
@@ -257,22 +232,6 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         public int IfService { get; set; }
 
         public int isGB { get; set; }
-        /// <summary>
-        /// 最终单价
-        /// </summary>
-        public decimal Enter_Price { get; set; }
-        /// <summary>
-        /// 备注
-        /// </summary>
-        public string Remark { get; set; }
-        /// <summary>
-        /// 总价   乘以数量后的
-        /// </summary>
-        public decimal Enter_Amount { get; set; }
-        /// <summary>
-        /// 产品编码
-        /// </summary>
-        public string ItemCode { get; set; }
     }
     public class OrderDetailImage
     {
@@ -292,10 +251,5 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         public string PropDetailName4 { get; set; }
         public string PropName5 { get; set; }
         public string PropDetailName5 { get; set; }
-    }
-
-    public class reserveDays {
-        public string reserveDay { set; get; }
-        public List<SysTimeQuantumEntity> TimeQuantums { set; get; }
     }
 }

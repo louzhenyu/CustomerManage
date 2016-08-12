@@ -31,6 +31,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                 complexCondition.Add(new LikeCondition() { FieldName = "CouponTypeName", Value = "%" + para.CouponTypeName + "%" });
             if (!string.IsNullOrEmpty(para.ParValue))
                 complexCondition.Add(new LikeCondition() { FieldName = "ParValue", Value = para.ParValue.ToString() });
+            if (para.IsNotLimitQty != null && para.IsNotLimitQty.ToString()!="")
+                complexCondition.Add(new LikeCondition() { FieldName = "IsNotLimitQty", Value = para.IsNotLimitQty.ToString() });
             //过滤用完的 #bug 2838 (不改了 改从前端改)
             //complexCondition.Add(new DirectCondition(" ((IssuedQty-IsVoucher)>0) "));
 
@@ -39,11 +41,13 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                 complexCondition.Add(new DirectCondition(" IssuedQty-IsVoucher>0 ")); //剩余张数大于o
                 complexCondition.Add(new DirectCondition(" (EndTime>='" + DateTime.Now + "' OR (BeginTime IS NULL AND EndTime IS NULL AND ServiceLife>0))")); //剩余张数大于o  结束时间小于当前时间也要过滤掉
             }
+			if(para.IsServiceLife==1) {
+				complexCondition.Add(new DirectCondition(" ServiceLife>0 ")); //设置了有效期的相对时间
+			}
 
 
-
-            //排序参数
-            List<OrderBy> lstOrder = new List<OrderBy> { };
+			//排序参数
+			List<OrderBy> lstOrder = new List<OrderBy> { };
             lstOrder.Add(new OrderBy() { FieldName = "CreateTime", Direction = OrderByDirections.Desc });
 
 
@@ -63,7 +67,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                 EndTime = t.EndTime,
                 BeginTimeDate = t.BeginTime == null ? "" : t.BeginTime.Value.ToString("yyyy年MM月dd日"),
                 EndTimeDate = t.EndTime == null ? "" : t.EndTime.Value.ToString("yyyy年MM月dd日"),
-                ServiceLife = t.ServiceLife
+                ServiceLife = t.ServiceLife,
+                IsNotLimitQty = t.IsNotLimitQty
             }).ToArray();
             return rd;
         }

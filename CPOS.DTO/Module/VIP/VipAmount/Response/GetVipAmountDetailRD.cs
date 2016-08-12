@@ -21,6 +21,20 @@ namespace JIT.CPOS.DTO.Module.VIP.VipAmount.Response
         /// </summary>
         public decimal CurrentAmount { get; set; }
 
+        /// <summary>
+        /// 支出 余额
+        /// </summary>
+        public decimal OutAmount { get; set; }
+
+        /// <summary>
+        /// 总收入金额 {兼容 微信端 会员中心 红利明细}
+        /// </summary>
+        public decimal? InAmount { get; set; }
+        /// <summary>
+        /// 提现总金额
+        /// </summary>
+        public decimal? WithdrawAmount { get; set; }
+
         public VipAmountDetailInfo[] VipAmountDetailList { get; set; }
 
     }

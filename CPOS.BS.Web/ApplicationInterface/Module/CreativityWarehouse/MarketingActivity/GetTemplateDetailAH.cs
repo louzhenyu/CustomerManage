@@ -31,6 +31,13 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             CTW_SpreadSettingBLL bllSpreadSetting = new CTW_SpreadSettingBLL(loggingSessionInfo);
             T_CTW_LEventsBLL bllEvents = new T_CTW_LEventsBLL(loggingSessionInfo);
             T_CTW_PanicbuyingEventBLL bllPanicbuying = new T_CTW_PanicbuyingEventBLL(loggingSessionInfo);
+            //更新模板点击数量
+            T_CTW_LEventTemplateBLL bllTemplate = new T_CTW_LEventTemplateBLL(loggingSessionInfo);
+            try
+            {
+                bllTemplate.UpdateTemplateInfo(para.TemplateId, 2);
+            }
+            catch { }
             ///获取模版信息
             DataSet dsInteraction = bllInteraction.GetEventInteractionByTemplateId(para.TemplateId);
             if (dsInteraction != null && dsInteraction.Tables[0].Rows.Count > 0)

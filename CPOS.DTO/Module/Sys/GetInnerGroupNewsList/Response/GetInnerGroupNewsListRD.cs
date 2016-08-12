@@ -20,7 +20,7 @@ namespace JIT.CPOS.DTO.Module.Sys.InnerGroupNews.Response
         public string MsgTime { get; set; }
         public string Text { get; set; }
 
-        public string IsRead { get; set; }
+        public int IsRead { get; set; }
 
         public int? BusType { get; set; }
     }

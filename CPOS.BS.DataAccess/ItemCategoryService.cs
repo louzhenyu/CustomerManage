@@ -125,7 +125,6 @@ namespace JIT.CPOS.BS.DataAccess
                           ,a.Create_User_Id 
                           ,a.Create_Time 
                           ,a.Modify_User_Id 
-                          ,a.CommissionRate 
                           ,a.modify_time 
                           ,a.displayindex as DisplayIndex
                           ,(select top 1 ImageUrl from objectimages where a.item_category_id = objectid and IsDelete=0 order by create_time desc) as ImageUrl
@@ -278,7 +277,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             string sql = "update t_item_category "
                        + " set DisplayIndex = '" + itemCategoryInfo.DisplayIndex + "' "
-
+                   
                        + " ,Modify_Time = '" + itemCategoryInfo.Modify_Time + "' "
                        + " ,Modify_User_Id =  '" + itemCategoryInfo.Modify_User_Id + "' "
                        + " where item_category_id = '" + itemCategoryInfo.Item_Category_Id + "' ;";
@@ -318,8 +317,7 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
                         + "   modify_time , "
                         + "   bat_id , "
                         + "   if_flag , "
-                        + "   CustomerID,DisplayIndex, "
-                        + "   CommissionRate  "
+                        + "   CustomerID,DisplayIndex "
                         + " ) "
                         + " select '" + itemCategoryInfo.Item_Category_Id + "' item_category_id "
                         + " ,'" + itemCategoryInfo.Item_Category_Code + "' item_category_code "
@@ -334,8 +332,7 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
                         + " ,'" + itemCategoryInfo.bat_id + "' bat_id " //" ,null bat_id "
                         + " ,'0' if_flag "
                         + " ,'" + this.CurrentUserInfo.CurrentUser.customer_id + "' CustomerID "
-                        + " ,'" + itemCategoryInfo.DisplayIndex + "' DisplayIndex "
-                        + " ," + itemCategoryInfo.CommissionRate + " CommissionRate ";
+                        + " ,'" + itemCategoryInfo.DisplayIndex + "' DisplayIndex ";
             this.SQLHelper.ExecuteNonQuery(sql);
             return true;
         }
@@ -363,8 +360,6 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
 
             if (itemCategoryInfo != null || itemCategoryInfo.Parent_Id != null)
                 sql += ",Parent_Id = '" + itemCategoryInfo.Parent_Id + "'";
-            if (itemCategoryInfo != null)
-                sql += ",CommissionRate = " + itemCategoryInfo.CommissionRate;
 
             sql += " ,modify_user_id = '" + this.CurrentUserInfo.CurrentLoggingManager.User_Id + "' ";
             sql += " ,modify_time = '" + GetCurrentDateTime() + "' ";
@@ -442,7 +437,7 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
         /// </summary>
         public int GetItemCategoryCount(string customerId, string categoryName)
         {
-            string sql = GetItemCategorySql(customerId, categoryName, "1");
+            string sql = GetItemCategorySql(customerId, categoryName,"1");
             sql = sql + " select count(*) as icount From #tmp  ; ";
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
         }
@@ -468,7 +463,7 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
             int beginSize = pageIndex * pageSize + 1;
             int endSize = pageIndex * pageSize + pageSize;
 
-            string sql = GetItemCategorySql(customerId, categoryName, "1");
+            string sql = GetItemCategorySql(customerId, categoryName,"1");
             sql += " select * From #tmp a where 1=1  and a.displayindex between '" +
                 beginSize + "' and '" + endSize + "' order by a.displayindex ";
             var ds = this.SQLHelper.ExecuteDataset(sql);
@@ -479,7 +474,7 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
         /// 公共查询sql
         /// </summary>
         /// <returns></returns>
-        private string GetItemCategorySql(string customerId, string categoryName, string strBatId)
+        private string GetItemCategorySql(string customerId, string categoryName,string strBatId)
         {
             string sql = string.Empty;
             sql += " SELECT categoryId = item_category_id ";
@@ -657,10 +652,10 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
         {
             string customerId = this.CurrentUserInfo.ClientID;
             string userId = this.CurrentUserInfo.UserID;
-            string sql = string.Format(@"DELETE MHCategoryArea  where GroupId={0} and HomeId='{1}'", groupId, strHomeId);
-            //            string sql = string.Format(@"update a set isdelete = 1,LastUpdateBy ='{0}' ,LastUpdateTime =getdate()  
-            //                    from MHCategoryArea a,MobileHome b where a.HomeId = b.HomeId 
-            //                    and a.GroupId={1} and b.customerId = '{2}' and a.HomeId='{3}'", userId, groupId, customerId,strHomeId);
+            string sql = string.Format(@"DELETE MHCategoryArea  where GroupId={0} and HomeId='{1}'", groupId,strHomeId);
+//            string sql = string.Format(@"update a set isdelete = 1,LastUpdateBy ='{0}' ,LastUpdateTime =getdate()  
+//                    from MHCategoryArea a,MobileHome b where a.HomeId = b.HomeId 
+//                    and a.GroupId={1} and b.customerId = '{2}' and a.HomeId='{3}'", userId, groupId, customerId,strHomeId);
             this.SQLHelper.ExecuteNonQuery(sql);
         }
 

@@ -165,6 +165,39 @@ namespace JIT.CPOS.BS.DataAccess
             string strSql = string.Format(" SELECT ContactTypeCode,ContactEventId FROM ContactEvent WHERE IsDelete=0 and EventId='{0}'", strCTWEventId);
             return this.SQLHelper.ExecuteDataset(strSql);
         }
+        /// <summary>
+        /// 根据当前活动类型和奖励类型获取赠送积分信息
+        /// </summary>
+        /// <param name="CustomerID"></param>
+        /// <param name="ContactTypeCode"></param>
+        /// <param name="PrizeType"></param>
+        /// <param name="IsCTW"></param>
+        /// <returns></returns>
+        public int GetContactEventIntegral(string CustomerID, string ContactTypeCode, string PrizeType, int IsCTW)
+        {
+            string strSql = @"   SELECT ISNULL(Integral,0) Integral 
+                                 FROM dbo.ContactEvent 
+                                 WHERE CustomerID=@CustomerID
+                                 AND ContactTypeCode=@ContactTypeCode
+                                 AND IsDelete=0                                 
+                                 AND Status=2
+                                 AND PrizeType=@PrizeType ";
+            if (IsCTW > 0)
+            {
+                strSql += " AND IsCTW=1 ";
+            }
+            else
+            {
+                strSql += " AND IsCTW=0 ";
+            }
+            SqlParameter[] parameter = new SqlParameter[]{
+                new SqlParameter("@CustomerID",CustomerID),
+                new SqlParameter("@ContactTypeCode",ContactTypeCode),
+                new SqlParameter("@PrizeType",PrizeType),
+                new SqlParameter("@IsCTW",IsCTW)
+            };
+            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(CommandType.Text,strSql,parameter));
+        }
 
     }
 }

@@ -439,15 +439,22 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns></returns>
         public CSConversationEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
         {
+                //--,(select top 1 HeadImageUrl from CSConversation x where IsCS=0 and CSMessageID=a.CSMessageID order by x.CreateTime desc ) as VipHeadImage
+                //             --  ,(select top 1 person from CSConversation x where IsCS=0 and CSMessageID=a.CSMessageID order by x.CreateTime desc ) as VipName
+                        
+
             //×éÖ¯SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat(@"select *,
+            sql.AppendFormat(@"
+                        select *,
                                                   (case when  IsCs=1 then  isnull((  select top 1 ImageURL from ObjectImages where ObjectId=PersonID and IsDelete=0
                                                               order by CreateTime desc),'')  else '' end ) as UserHeadUrl   
-                             ,(select top 1 HeadImageUrl from CSConversation x where IsCS=0 and CSMessageID=a.CSMessageID order by x.CreateTime desc ) as VipHeadImage
-                               ,(select top 1 person from CSConversation x where IsCS=0 and CSMessageID=a.CSMessageID order by x.CreateTime desc ) as VipName
-                            ,(select MemberID from CSMessage x where x.CSMessageID=a.CSMessageID ) as VipID
-                           from [CSConversation] a where isdelete=0 ");
+                                   ,(select top 1 HeadImgUrl from vip  inner join  CSMessage x  on vip.vipid=x.MemberID where x.CSMessageID=a.CSMessageID ) as VipHeadImage
+									  ,(select top 1 VipName from vip  inner join  CSMessage x  on vip.vipid=x.MemberID where x.CSMessageID=a.CSMessageID) as VipName
+						    ,(select MemberID from CSMessage x where x.CSMessageID=a.CSMessageID ) as VipID
+                           from [CSConversation] a where isdelete=0 
+
+                    ");
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)

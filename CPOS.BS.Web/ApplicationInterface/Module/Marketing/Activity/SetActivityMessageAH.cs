@@ -19,11 +19,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var ActivityMessageBLL = new C_ActivityMessageBLL(loggingSessionInfo);
-            var PrizesBLL = new C_PrizesBLL(loggingSessionInfo);
-            var C_MessageTemplateBLL = new C_MessageTemplateBLL(loggingSessionInfo);
+            var ActivityBLL = new C_ActivityBLL(loggingSessionInfo);
             //事物
             var pTran = ActivityMessageBLL.GetTran();
-            using (pTran)
+            using (pTran.Connection)
             {
                 try
                 {
@@ -50,6 +49,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                             AddData.Content = item.Content == null ? "" : item.Content;
                             AddData.SendTime = Convert.ToDateTime(item.SendTime);
                             AddData.CustomerID = loggingSessionInfo.ClientID;
+                            AddData.AdvanceDays = item.AdvanceDays;
+                            AddData.SendAtHour = item.SendAtHour;
                             AddDataList.Add(AddData);
                             #endregion
                         }
@@ -59,12 +60,14 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                             if (Data == null)
                                 throw new APIException("消息对象为NULL！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
 
-                            if (item.IsEnable.Value)
+                            if (item.IsEnable == 1)
                             {
                                 //更新
                                 Data.SendTime = Convert.ToDateTime(item.SendTime);
                                 Data.Content = item.Content;
                                 Data.TemplateID = new Guid();
+                                Data.AdvanceDays = item.AdvanceDays;
+                                Data.SendAtHour = item.SendAtHour;
                                 UpdateDataList.Add(Data);
                             }
                             else
@@ -108,6 +111,15 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                     pTran.Commit();
                     #endregion
 
+                    if (ActivityBLL.IsActivityValid(para.ActivityID))
+                    {
+                        var activity = ActivityBLL.GetByID(para.ActivityID);
+                        if (activity != null)
+                        {
+                            activity.Status = 0;
+                        }
+                        ActivityBLL.Update(activity);
+                    }
                 }
                 catch (APIException apiEx)
                 {

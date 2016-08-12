@@ -411,5 +411,45 @@ namespace JIT.CPOS.Web.ApplicationInterface.Project.HuaAn
             }
         }
 
+        #region JSON格式数据参数POST请求
+        /// <summary>
+        /// JSON格式数据参数POST请求
+        /// </summary>
+        /// <param name="requestURI">请求地址</param>
+        /// <param name="json">请求参数</param>
+        /// <returns></returns>
+        public static string SendHttpRequest(string requestURI, string json)
+        {
+            //json格式请求数据
+            string requestData = json;
+            //拼接URL
+            string serviceUrl = requestURI;
+            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create(serviceUrl);
+            //utf-8编码
+            byte[] buf = System.Text.Encoding.GetEncoding("UTF-8").GetBytes(requestData);
+
+            //post请求 
+            myRequest.Method = "POST";
+            myRequest.ContentLength = buf.Length;
+            //指定为json否则会出错
+            //myRequest.Accept = "application/plain";
+            myRequest.ContentType = "application/x-www-form-urlencoded";
+            myRequest.MaximumAutomaticRedirections = 1;
+            myRequest.AllowAutoRedirect = true;
+
+            Stream newStream = myRequest.GetRequestStream();
+            newStream.Write(buf, 0, buf.Length);
+            newStream.Close();
+
+            //获得接口返回值，格式为： {"VerifyResult":"aksjdfkasdf"} 
+            HttpWebResponse myResponse = (HttpWebResponse)myRequest.GetResponse();
+            StreamReader reader = new StreamReader(myResponse.GetResponseStream(), Encoding.UTF8);
+            string ReqResult = reader.ReadToEnd();
+            reader.Close();
+            myResponse.Close();
+            return ReqResult;
+        }
+        #endregion
+
     }
 }

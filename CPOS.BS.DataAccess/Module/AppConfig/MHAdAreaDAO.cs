@@ -313,21 +313,10 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " ,(  select  Cast(prop_value as DECIMAL) prop_value   from  t_prop as tp left join T_Item_Property  as tip on tip.prop_id=tp.prop_id where  tp.prop_code ='SalesCount' and item_id=b.item_id ) SalesCount";
 
             sql += " FROM dbo.MHCategoryArea a ";
-            sql += "  INNER JOIN [vw_item_detail] b ON a.ObjectId=b.item_category_id ";
+            sql += "  INNER JOIN ( SELECT * FROM   [vw_item_detail] WHERE  item_category_id IN ( SELECT  item_category_id FROM tmp ))  b ON a.ObjectId=b.item_category_id ";
             sql += " WHERE a.IsDelete = 0 AND a.GroupID = '" + groupId + "' ";
             sql += " and homeId = '" + homeId + "'";
             sql += " ORDER BY a.DisplayIndex ";
-
-
-            // »°skuid
-            sql += @";SELECT sku_id,item_id FROM dbo.T_Sku sku WITH(nolock) WHERE EXISTS(SELECT 1 FROM dbo.MHCategoryArea a
-            INNER JOIN [vw_item_detail] b ON a.ObjectId=b.item_category_id
-                                             AND b.IsDelete = 0
-                                             WHERE   a.IsDelete = 0
-            
-            AND a.GroupId = '" + groupId + @"'
-            AND HomeId = '" + homeId + @"'
-                                         AND b.item_id=sku.item_id) AND sku.status=1 ";
 
             return this.SQLHelper.ExecuteDataset(sql);
         }
@@ -355,7 +344,6 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " ,CASE WHEN b.Price IS NOT NULL AND b.Price<>0 AND b.SalesPrice<>b.Price THEN CAST(CAST(b.SalesPrice*10/b.Price AS DECIMAL(18,1)) AS NVARCHAR(10))+'’€' WHEN b.Price IS  NULL OR b.Price=0 OR b.SalesPrice=b.Price THEN '' END DiscountRate";
             sql += " ,b.item_id AS ItemID,b.item_name AS ItemName,b.imageUrl ImageUrl";
             sql += " ,(  select  Cast(prop_value as DECIMAL) prop_value   from  t_prop as tp left join T_Item_Property  as tip on tip.prop_id=tp.prop_id where  tp.prop_code ='SalesCount' and item_id=b.item_id ) SalesCount";
-            //sql += ",(SELECT sku_id+',' FROM  dbo.T_Sku WHERE item_id=b.item_id FOR XML PATH('')) AS 'sku_ids'";
 
             sql += " FROM dbo.MHCategoryArea a ";
             sql += "    INNER JOIN [ItemCategoryMapping] c ON a.ObjectId=c.ItemCategoryId AND c.IsDelete=0";
@@ -363,17 +351,6 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " WHERE a.IsDelete = 0 AND a.GroupID = '" + groupId + "' ";
             sql += " and homeId = '" + homeId + "'";
             sql += " ORDER BY a.DisplayIndex ";
-
-            // »°skuid
-            sql += @";SELECT sku_id,item_id FROM dbo.T_Sku sku WITH(nolock) WHERE EXISTS(SELECT 1 FROM dbo.MHCategoryArea a
-            INNER JOIN [ItemCategoryMapping] c ON a.ObjectId = c.ItemCategoryId
-                                                  AND c.IsDelete = 0
-            INNER JOIN [vw_item_detail] b ON c.ItemId = b.item_id
-                                             AND b.IsDelete = 0
-                                             WHERE   a.IsDelete = 0
-            AND a.GroupId = '" + groupId + @"'
-            AND HomeId = '" + homeId + @"'
-                                         AND b.item_id=sku.item_id) AND sku.status=1 ";
 
             return this.SQLHelper.ExecuteDataset(sql);
         }

@@ -26,7 +26,7 @@ namespace JIT.CPOS.BS.Entity
     /// <summary>
     /// 实体：  
     /// </summary>
-    public partial class VipIntegralDetailEntity : BaseEntity 
+    public partial class VipIntegralDetailEntity : BaseEntity
     {
         #region 属性集
 
@@ -39,11 +39,24 @@ namespace JIT.CPOS.BS.Entity
         /// 来源会员名称
         /// </summary>
         public string FromVipName { get; set; }
-        
+
         /// <summary>
         /// 创建日期
         /// </summary>
         public string Create_Time { get; set; }
+
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public string UpdateReason { get; set; }
+        /// <summary>
+        /// 次数
+        /// </summary>
+        public int UpdateCount { get; set; }
+        /// <summary>
+        /// 时间
+        /// </summary>
+        public DateTime UpdateTime { get; set; }
         #endregion
     }
 }

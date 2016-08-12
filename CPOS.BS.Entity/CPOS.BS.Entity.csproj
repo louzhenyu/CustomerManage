@@ -40,6 +40,10 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.SqlServer.Types, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferenceDll\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferenceDll\Newtonsoft.Json.dll</HintPath>
@@ -97,7 +101,6 @@
     <Compile Include="BillModel.cs" />
     <Compile Include="BillStatusModel.cs" />
     <Compile Include="BrandDetailEntity.cs" />
-    <Compile Include="BrandEntity.cs" />
     <Compile Include="BrowseHistoryEntity.cs" />
     <Compile Include="CardChannelInfoEntity.cs" />
     <Compile Include="CardCouponMappingEntity.cs" />
@@ -260,8 +263,6 @@
     <Compile Include="CodeGeneration\PanicbuyingEventItemMappingEntity.cs" />
     <Compile Include="CodeGeneration\PanicbuyingEventOrderMappingEntity.cs" />
     <Compile Include="CodeGeneration\PanicbuyingEventSkuMappingEntity.cs" />
-    <Compile Include="CodeGeneration\PA_PrepayNoEntity.cs" />
-    <Compile Include="CodeGeneration\PA_UserInfoEntity.cs" />
     <Compile Include="CodeGeneration\PanicbuyingKJEventItemMappingEntity.cs" />
     <Compile Include="CodeGeneration\PanicbuyingKJEventJoinDetailEntity.cs" />
     <Compile Include="CodeGeneration\PanicbuyingKJEventJoinEntity.cs" />
@@ -318,6 +319,7 @@
     <Compile Include="CodeGeneration\Report\StoreManagerReport\R_UnitProductYearSalesTopEntity.cs" />
     <Compile Include="CodeGeneration\RetailTraderItemMappingEntity.cs" />
     <Compile Include="CodeGeneration\R_SRT_ShareCountEntity.cs" />
+    <Compile Include="CodeGeneration\R_Withdraw_HomeEntity.cs" />
     <Compile Include="CodeGeneration\R_WxO2OPanel_30DaysEntity.cs" />
     <Compile Include="CodeGeneration\R_WxO2OPanel_7DaysEntity.cs" />
     <Compile Include="CodeGeneration\R_WxO2OPanel_ItemTopTenEntity.cs" />
@@ -379,12 +381,10 @@
     <Compile Include="CodeGeneration\T_HierarchySystemExNodeEntity.cs" />
     <Compile Include="CodeGeneration\T_InoutEntity.cs" />
     <Compile Include="CodeGeneration\T_Inout_DetailEntity.cs" />
-    <Compile Include="CodeGeneration\T_Inout_ExpandEntity.cs" />
     <Compile Include="CodeGeneration\T_Item_CategoryEntity.cs" />
     <Compile Include="CodeGeneration\T_Item_PriceEntity.cs" />
     <Compile Include="CodeGeneration\T_Item_Price_TypeEntity.cs" />
     <Compile Include="CodeGeneration\T_Item_PropertyEntity.cs" />
-    <Compile Include="CodeGeneration\T_Order_Reason_TypeEntity.cs" />
     <Compile Include="CodeGeneration\T_LEventsRegVipLogEntity.cs" />
     <Compile Include="CodeGeneration\T_LEventsSharePersonLogEntity.cs" />
     <Compile Include="CodeGeneration\T_Payment_detailEntity.cs" />
@@ -397,13 +397,16 @@
     <Compile Include="CodeGeneration\T_SkuEntity.cs" />
     <Compile Include="CodeGeneration\T_Sku_PriceEntity.cs" />
     <Compile Include="CodeGeneration\T_Sku_PropertyEntity.cs" />
+    <Compile Include="CodeGeneration\T_SplitProfitRecordEntity.cs" />
     <Compile Include="CodeGeneration\t_unitEntity.cs" />
     <Compile Include="CodeGeneration\T_UserEntity.cs" />
     <Compile Include="CodeGeneration\T_VirtualItemTypeSettingEntity.cs" />
+    <Compile Include="CodeGeneration\VipCardGradeChangeLogEntity.cs" />
     <Compile Include="CodeGeneration\VipGold\Agg_SetoffEffectDetailEntity.cs" />
     <Compile Include="CodeGeneration\VipGold\Agg_SetoffForSourceEntity.cs" />
     <Compile Include="CodeGeneration\VipGold\Agg_SetoffForToolEntity.cs" />
     <Compile Include="CodeGeneration\VipGold\IincentiveRuleEntity.cs" />
+    <Compile Include="CodeGeneration\VipGold\ReceiveAmountOrderEntity.cs" />
     <Compile Include="CodeGeneration\VipGold\R_SetoffHome2Entity.cs" />
     <Compile Include="CodeGeneration\VipGold\R_SetoffHomeEntity.cs" />
     <Compile Include="CodeGeneration\VipGold\R_VipGoldHomeEntity.cs" />
@@ -411,6 +414,12 @@
     <Compile Include="CodeGeneration\VipGold\SetoffPosterEntity.cs" />
     <Compile Include="CodeGeneration\VipGold\SetoffToolsEntity.cs" />
     <Compile Include="CodeGeneration\VipGold\SetoffToolUserViewEntity.cs" />
+    <Compile Include="CodeGeneration\VipGold\VipCardProfitRuleEntity.cs" />
+    <Compile Include="CodeGeneration\VipGold\VipCardProfitRuleUnitMappingEntity.cs" />
+    <Compile Include="CodeGeneration\VipGold\VipCardReRechargeProfitRuleEntity.cs" />
+    <Compile Include="CodeGeneration\VipGold\VipCardUpgradeRewardEntity.cs" />
+    <Compile Include="CodeGeneration\VipGold\VipCardUpgradeRuleEntity.cs" />
+    <Compile Include="CodeGeneration\VipWithDrawRuleEntity.cs" />
     <Compile Include="CodeGeneration\WXTMConfigEntity.cs" />
     <Compile Include="CodeGeneration\UnitCommentEntity.cs" />
     <Compile Include="CodeGeneration\UrlEntity.cs" />
@@ -534,7 +543,6 @@
     <Compile Include="Eliya\OrderStatisticsInfo.cs" />
     <Compile Include="Eliya\Province.cs" />
     <Compile Include="Eliya\StoreInfo.cs" />
-    <Compile Include="EnumType\ChannelType.cs" />
     <Compile Include="EventVipEntity.cs" />
     <Compile Include="Extension\X_ActivityEntity.cs" />
     <Compile Include="Extension\X_ActivityJoinEntity.cs" />
@@ -550,7 +558,6 @@
     <Compile Include="HotelsCheckUserEntity.cs" />
     <Compile Include="HotelsOrderDetailEntity.cs" />
     <Compile Include="HotelsOrderEntity.cs" />
-    <Compile Include="IgnoreSignatureAttribute.cs" />
     <Compile Include="IMGroupEntity.cs" />
     <Compile Include="IMGroupUserEntity.cs" />
     <Compile Include="InterfaceWebLogEntity.cs" />
@@ -763,7 +770,6 @@
     <Compile Include="CodeGeneration\VipCardCarBrandEntity.cs" />
     <Compile Include="CodeGeneration\VipCardDormancyEntity.cs" />
     <Compile Include="CodeGeneration\VipCardEntity.cs" />
-    <Compile Include="CodeGeneration\VipCardGradeChangeLogEntity.cs" />
     <Compile Include="CodeGeneration\VipCardModelsEntity.cs" />
     <Compile Include="CodeGeneration\VipCardRechargeRecordEntity.cs" />
     <Compile Include="CodeGeneration\VipCardSalesEntity.cs" />
@@ -960,9 +966,6 @@
     <Compile Include="OrderSearchInfo.cs" />
     <Compile Include="OrderTypeInfo.cs" />
     <Compile Include="PageInfo.cs" />
-    <Compile Include="PA\PALogEntity.cs" />
-    <Compile Include="PA_PrepayNoEntity.cs" />
-    <Compile Include="PA_UserInfoEntity.cs" />
     <Compile Include="Pos\ObjectOperateInfo.cs" />
     <Compile Include="Pos\PosInfo.cs" />
     <Compile Include="Pos\PosTypeInfo.cs" />
@@ -1092,6 +1095,7 @@
     <Compile Include="RoleMenuModel.cs" />
     <Compile Include="RoleModel.cs" />
     <Compile Include="R_SRT_ShareCountEntity.cs" />
+    <Compile Include="R_Withdraw_HomeEntity.cs" />
     <Compile Include="R_WxO2OPanel_30DaysEntity.cs" />
     <Compile Include="R_WxO2OPanel_7DaysEntity.cs" />
     <Compile Include="R_WxO2OPanel_ItemTopTenEntity.cs" />
@@ -1099,10 +1103,6 @@
     <Compile Include="Order\SalesReturn\T_RefundOrderEntity.cs" />
     <Compile Include="Order\SalesReturn\T_SalesReturnEntity.cs" />
     <Compile Include="Order\SalesReturn\T_SalesReturnHistoryEntity.cs" />
-    <Compile Include="SAP\DataQueueEntity.cs" />
-    <Compile Include="SAP\AdmInfoEntity.cs" />
-    <Compile Include="SAP\BusinessPartnersEntity.cs" />
-    <Compile Include="SAP\SAPOrder.cs" />
     <Compile Include="SeatOrderEntity.cs" />
     <Compile Include="SelectBillActionRoleInfo.cs" />
     <Compile Include="Services\RechargeStrategyEntity.cs" />
@@ -1111,7 +1111,6 @@
     <Compile Include="ShoppingCartEntity.cs" />
     <Compile Include="ShopProductEntity.cs" />
     <Compile Include="ShortUrlChangeEntity.cs" />
-    <Compile Include="SignatureFieldAttribute.cs" />
     <Compile Include="SkuInfo.cs" />
     <Compile Include="SkuPrice.cs" />
     <Compile Include="SkuPriceInfo.cs" />
@@ -1172,11 +1171,6 @@
     <Compile Include="TPaymentOrderLogEntity.cs" />
     <Compile Include="TPaymentTypeCustomerMappingEntity.cs" />
     <Compile Include="TPaymentTypeEntity.cs" />
-    <Compile Include="Transport\EMSEntity.cs" />
-    <Compile Include="Transport\ShunFengRDEntity.cs" />
-    <Compile Include="Transport\ShunFengRPEntity.cs" />
-    <Compile Include="Transport\TransportEntity.cs" />
-    <Compile Include="Transport\YunDaRDEntity.cs" />
     <Compile Include="TUnitExpandEntity.cs" />
     <Compile Include="TUnitSortEntity.cs" />
     <Compile Include="TUnitUnitSortMappingEntity.cs" />
@@ -1193,12 +1187,10 @@
     <Compile Include="T_HierarchySystemExNodeEntity.cs" />
     <Compile Include="T_InoutEntity.cs" />
     <Compile Include="T_Inout_DetailEntity.cs" />
-    <Compile Include="T_Inout_ExpandEntity.cs" />
     <Compile Include="T_Item_CategoryEntity.cs" />
     <Compile Include="T_Item_PriceEntity.cs" />
     <Compile Include="T_Item_Price_TypeEntity.cs" />
     <Compile Include="T_Item_PropertyEntity.cs" />
-    <Compile Include="T_Order_Reason_TypeEntity.cs" />
     <Compile Include="T_LEventsRegVipLogEntity.cs" />
     <Compile Include="T_LEventsSharePersonLogEntity.cs" />
     <Compile Include="T_Payment_detailEntity.cs" />
@@ -1212,13 +1204,16 @@
     <Compile Include="T_SkuEntity.cs" />
     <Compile Include="T_Sku_PriceEntity.cs" />
     <Compile Include="T_Sku_PropertyEntity.cs" />
+    <Compile Include="T_SplitProfitRecordEntity.cs" />
     <Compile Include="t_unitEntity.cs" />
     <Compile Include="T_VirtualItemTypeSettingEntity.cs" />
+    <Compile Include="VipCardGradeChangeLogEntity.cs" />
     <Compile Include="VipFeedbackInfoEntity.cs" />
     <Compile Include="VipGold\Agg_SetoffEffectDetailEntity.cs" />
     <Compile Include="VipGold\Agg_SetoffForSourceEntity.cs" />
     <Compile Include="VipGold\Agg_SetoffForToolEntity.cs" />
     <Compile Include="VipGold\IincentiveRuleEntity.cs" />
+    <Compile Include="VipGold\ReceiveAmountOrderEntity.cs" />
     <Compile Include="VipGold\R_SetoffHome2Entity.cs" />
     <Compile Include="VipGold\R_SetoffHomeEntity.cs" />
     <Compile Include="VipGold\R_VipGoldHomeEntity.cs" />
@@ -1226,8 +1221,12 @@
     <Compile Include="VipGold\SetoffPosterEntity.cs" />
     <Compile Include="VipGold\SetoffToolsEntity.cs" />
     <Compile Include="VipGold\SetoffToolUserViewEntity.cs" />
-    <Compile Include="VipLogEntity.cs" />
-    <Compile Include="VipSnapshotEntity.cs" />
+    <Compile Include="VipGold\VipCardProfitRuleEntity.cs" />
+    <Compile Include="VipGold\VipCardProfitRuleUnitMappingEntity.cs" />
+    <Compile Include="VipGold\VipCardReRechargeProfitRuleEntity.cs" />
+    <Compile Include="VipGold\VipCardUpgradeRewardEntity.cs" />
+    <Compile Include="VipGold\VipCardUpgradeRuleEntity.cs" />
+    <Compile Include="VipWithDrawRuleEntity.cs" />
     <Compile Include="WXTMConfigEntity.cs" />
     <Compile Include="UnitAccountTermInfo.cs" />
     <Compile Include="UnitCommentEntity.cs" />
@@ -1255,7 +1254,6 @@
     <Compile Include="VipCardCarBrandEntity.cs" />
     <Compile Include="VipCardDormancyEntity.cs" />
     <Compile Include="VipCardEntity.cs" />
-    <Compile Include="VipCardGradeChangeLogEntity.cs" />
     <Compile Include="VipCardModelsEntity.cs" />
     <Compile Include="VipCardRechargeRecordEntity.cs" />
     <Compile Include="VipCardRuleEntity.cs" />
@@ -1373,15 +1371,10 @@
     <Compile Include="AP\ZMBA\T_ZMBA_CourseEntity.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\Debug\" />
     <Folder Include="Module\VIP\" />
-    <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="obj\Debug\CPOS.BS.Entity.csproj.FileListAbsolute.txt" />
+    <None Include="CodeGeneration\ObjectEvaluationEntity.bak" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

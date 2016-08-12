@@ -48,6 +48,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                 case "bestowCoupon":
                     contion = BestowCoupon(pRequest);
                     break;
+                case "getVipCartDetail":
+                    contion = GetVipCartDetail(pRequest);
+                    break;
+
                 default:
                     throw new Exception("未定义的接口:" + pAction);
             }
@@ -100,7 +104,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                 var loggingSessionInfo = Default.GetBSLoggingSession(reqObj.customerId, "1");
                 CouponBLL bll = new CouponBLL(loggingSessionInfo);
                 //DataSet ds = bll.GetCouponList(reqObj.userId, reqObj.Parameters.couponTypeID);
-                DataSet ds = bll.GetCouponList(reqObj.userId,"");
+                DataSet ds = bll.GetCouponList(reqObj.userId, "");
 
                 if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                 {
@@ -138,19 +142,20 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                 }
                 var loggingSessionInfo = Default.GetBSLoggingSession(reqObj.customerId, reqObj.userId);
                 CouponBLL bll = new CouponBLL(loggingSessionInfo);
-                DataSet ds = bll.GetCouponDetail(reqObj.Parameters.cuponID,reqObj.userId);
+                DataSet ds = bll.GetCouponDetail(reqObj.Parameters.cuponID, reqObj.userId);
 
                 if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                 {
                     respData.couponDetail = DataTableToObject.ConvertToObject<CouponEntity>(ds.Tables[0].Rows[0]);
-                    respData.couponDetail.QRUrl = GeneratedQR(reqObj.Parameters.cuponID); //生成这优惠券的二维码
-                }else
+                    respData.couponDetail.QRUrl = GeneratedQR("YHQ/" + reqObj.Parameters.cuponID); //生成这优惠券的二维码
+                }
+                else
                 {
                     respData.ResultCode = "103";
                     respData.Message = "无效的优惠券";
                     return respData.ToJSON();
                 }
-               
+
 
             }
             catch (Exception)
@@ -158,6 +163,79 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
 
                 respData.ResultCode = "103";
                 respData.Message = "数据库操作失败";
+            }
+            return respData.ToJSON();
+        }
+        #endregion
+
+        #region GetVipCartDetail 获取会员扫码信息详情
+        /// <summary>
+        /// 获取会员扫码信息详情
+        /// </summary>
+        /// <param name="pReques"></param>
+        /// <returns></returns>
+        public string GetVipCartDetail(string pReques)
+        {
+            getVipCardDetailData respData = new getVipCardDetailData();
+            try
+            {
+                var reqObj = pReques.DeserializeJSONTo<reqConunbondata>();
+                BaseService.WriteLogWeixin("GetVipCartDetail获取会员扫码信息请求参数：" + reqObj.ToJSON());
+                if (string.IsNullOrEmpty(reqObj.userId))
+                {
+                    respData.ResultCode = "103";
+                    respData.Message = "登陆用户不能为空";
+                    return respData.ToJSON();
+                }
+
+                //redis使用缓存地址
+                string redisUrl = ConfigurationManager.AppSettings["RedisApiUrl"];
+
+                Random rd = new Random();
+                int num = rd.Next(100000, 1000000);
+                int num2 = rd.Next(100000, 1000000);
+                string redisKey = num.ToString() + num2.ToString();  //缓存的Key值二维码
+                string redisTime = "2";  //缓存过期时间分为单位
+                string url = "";
+
+                BaseService.WriteLogWeixin("开始获取用户信息：" + redisUrl);
+
+                var loggingSessionInfo = Default.GetBSLoggingSession(reqObj.customerId, reqObj.userId);
+                CouponBLL bll = new CouponBLL(loggingSessionInfo);
+                DataSet ds = bll.GetVipCartDetail(reqObj.userId);
+
+                if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+                {
+                    string vipCardCode = "" + ds.Tables[0].Rows[0]["VipCardCode"];
+
+                    respData.QRUrl = GeneratedQR(redisKey); //生成redisKey值会员的二维码
+                    respData.BarUrl = Utils.GeneratedBar(redisKey, 350, 100); //生成redisKey值会员的条形码
+                    respData.vipCardCode = redisKey; //二维码返回信息
+                    respData.ExpiredTime = "90"; //过期时间 
+
+                    //存入缓存
+                    url = redisUrl + "keyvalue/set/" + redisKey + "/" + vipCardCode + "/" + redisTime;
+                    var data = CommonBLL.GetRemoteData(url, "Get", string.Empty);
+                    var redisEntity = data.DeserializeJSONTo<RedisEntity>();
+
+                    if (redisEntity.Message == "success")
+                    {
+                        BaseService.WriteLogWeixin(vipCardCode + "值缓存成功!");
+                    }
+                }
+                else
+                {
+                    respData.ResultCode = "103";
+                    respData.Message = "无效的会员扫码信息";
+                    return respData.ToJSON();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                respData.ResultCode = "103";
+                respData.Message = "数据库操作失败";
+                BaseService.WriteLogWeixin("GetVipCartDetail程序异常：" + ex.Message + "；堆栈信息：" + ex.StackTrace);
             }
             return respData.ToJSON();
         }
@@ -208,9 +286,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                 }
                 else
                 {
-                   couponEntity = bll.GetByID(reqObj.Parameters.cuponID);
+                    couponEntity = bll.GetByID(reqObj.Parameters.cuponID);
                 }
-              
+
 
                 if (couponEntity != null)
                 {
@@ -234,7 +312,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                             }
                         }
                         if (couponTypeInfo.SuitableForStore == 3)//下面的doorid传的是门店的id，如果等于1所有门店都能用，如果等于3所有分销商都能用 
-                        { 
+                        {
                             //doorid必须是获取，分销商如果没数据，就报错。
                             RetailTraderBLL _RetailTraderBLL = new RetailTraderBLL(loggingSessionInfo);
                             RetailTraderEntity en = _RetailTraderBLL.GetByID(reqObj.Parameters.doorID);
@@ -257,7 +335,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                                 respData.Message = "请到指定门店使用";
                                 return respData.ToJSON();
                             }
-                        } 
+                        }
 
                         int res = bll.BestowCoupon(couponEntity.CouponID, reqObj.Parameters.doorID);
                         if (res > 0) //如果没有影响一行，所以Coupon表里这条记录的status=1了，不能被使用了。
@@ -279,7 +357,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                                 };
                                 couponUseBll.Create(couponUseEntity);//生成优惠券使用记录
                                 #endregion
-                               
+
                                 //#region 修改优惠券数量   2016-06-03 使用了redis不用在这里更新数量
                                 //couponTypeInfo.IsVoucher = couponTypeInfo.IsVoucher == null ? 1 : couponTypeInfo.IsVoucher + 1;
                                 //couponTypeBll.Update(couponTypeInfo, tran);
@@ -321,7 +399,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
 
             string res = "";
             var qrcode = new StringBuilder();
-            qrcode.AppendFormat("{0}", "YHQ/" + CouponID);
+            qrcode.AppendFormat("{0}", CouponID);
             QRCodeEncoder qrCodeEncoder = new QRCodeEncoder();
             qrCodeEncoder.QRCodeEncodeMode = QRCodeEncoder.ENCODE_MODE.BYTE;
             qrCodeEncoder.QRCodeScale = 5;
@@ -335,7 +413,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
             g2.Clear(System.Drawing.Color.Transparent);
             g2.DrawImage(qrImage, new System.Drawing.Rectangle(0, 0, 215, 215), new System.Drawing.Rectangle(0, 0, qrImage.Width, qrImage.Height), System.Drawing.GraphicsUnit.Pixel);
 
-            string fileName = CouponID.ToLower() + ".jpg";
+            string fileName = CouponID.Replace("/","").ToLower() + ".jpg";
             string host = ConfigurationManager.AppSettings["website_WWW"].ToString();
 
             if (!host.EndsWith("/")) host += "/";
@@ -417,6 +495,28 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
     {
         public CouponEntity couponDetail { set; get; }
     }
+
+    public class getVipCardDetailData : RespData
+    {
+        /// <summary>
+        ///二维码信息
+        /// </summary>
+        public string vipCardCode { set; get; }
+        /// <summary>
+        ///生成二维码url
+        /// </summary>
+        public string QRUrl { set; get; }
+
+        /// <summary>
+        ///生成条纹码url
+        /// </summary>
+        public string BarUrl { set; get; }
+
+        /// <summary>
+        //过期时间;单位秒
+        /// </summary>
+        public string ExpiredTime { set; get; }
+    }
     public class RespData
     {
         public string ResultCode = "200";
@@ -424,6 +524,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
         public string exception = null;
         public string data;
         public int searchCount;
+    }
+
+    public class RedisEntity
+    {
+        public string Code = string.Empty;
+        public string Message = string.Empty;
+        public string Result = string.Empty;
     }
     #endregion
 }

@@ -211,6 +211,14 @@ namespace JIT.CPOS.BS.Entity.Interface
         public decimal ReturnCash { get; set; } //佣金  add by donal 2014-12-9 10:37:10
 
         public string VipCardCode { get; set; } //卡号，券号
+
+        public decimal Integral { get; set; } //使用积分
+
+        public decimal IntegralAmount { get; set; } //积分转金额
+
+        public string Field17 { get; set; } //会员卡号
+
+        public string Field18 { get; set; } //会员卡类型
         
         #endregion
     }

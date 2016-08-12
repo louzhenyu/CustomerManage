@@ -62,7 +62,7 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.OrderSend
                         var templateID = response.Result.ConfigData.TemplateID;
                         var openID = response.Result.ConfigData.OpenID;
                         var vipID = response.Result.ConfigData.VipID;
-                        var loggingSessionInfo = response.Result.ConfigData.LogSession.JsonDeserialize<LoggingSessionInfo>();
+                        var loggingSessionInfo = CustomerBLL.Instance.GetBSLoggingSession(customer.Key, "1"); //response.Result.ConfigData.LogSession.JsonDeserialize<LoggingSessionInfo>();
                         var orderSendData = new CommonData
                         {
                             first = new DataInfo { value = response.Result.OrderSendData.first.value, color = response.Result.OrderSendData.first.color },

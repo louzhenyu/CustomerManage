@@ -14,27 +14,19 @@ namespace JIT.CPOS.DTO.Module.Marketing.Response
         /// <summary>
         /// 是否启用
         /// </summary>
-        public bool? IsEnable { get; set; }
+        public int IsEnable { get; set; }
         /// <summary>
         /// 奖品类型
         /// </summary>
         public int PrizesType { get; set; }
-        /// <summary>
-        /// 赠送限额
-        /// </summary>
-        public decimal? AmountLimit { get; set; }
-        /// <summary>
-        /// 是否循环赠送
-        /// </summary>
-        public int IsCirculation { get; set; }
-       
         /// <summary>
         /// 奖品明细集合
         /// </summary>
         public List<PrizesDetailInfo> PrizesDetailList { get; set; }
     }
 
-    public class PrizesDetailInfo {
+    public class PrizesDetailInfo
+    {
         /// <summary>
         /// 奖品明细ID
         /// </summary>
@@ -48,24 +40,20 @@ namespace JIT.CPOS.DTO.Module.Marketing.Response
         /// </summary>
         public string CouponTypeName { get; set; }
         /// <summary>
+        /// 每人赠送个数
+        /// </summary>
+        public int NumLimit { get; set; }
+        /// <summary>
+        /// 是否启用
+        /// </summary>
+        public int IsEnable { get; set; }
+
+        /// <summary>
         /// bug# 2838 有效期
         /// </summary>
         public string ValidityPeriod { get; set; }
-
         /// <summary>
-        /// 有效期（券结束时间）
-        /// </summary>
-        public string EndTime { get; set; }
-        /// <summary>
-        /// 使用数量
-        /// </summary>
-        public int IsVoucher { get; set; }
-        /// <summary>
-        /// 可用数量
-        /// </summary>
-        public int AvailableQty { get; set; }
-        /// <summary>
-        /// 券类型描述
+        /// 券描述
         /// </summary>
         public string CouponTypeDesc { get; set; }
     }

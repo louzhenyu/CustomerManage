@@ -401,7 +401,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
 
                     #region 会员会籍店、集客员工变动处理
                     //string.IsNullOrWhiteSpace(vipInfo.CouponInfo) || string.IsNullOrWhiteSpace(vipInfo.SetoffUserId) 目前未用到
-                    if (string.IsNullOrWhiteSpace(vipInfo.HigherVipID) && string.IsNullOrWhiteSpace(vipInfo.SetoffUserId) && string.IsNullOrWhiteSpace(vipInfo.Col20))
+                    if (string.IsNullOrWhiteSpace(vipInfo.HigherVipID) && string.IsNullOrWhiteSpace(vipInfo.SetoffUserId))
                     {//当会员会籍店、集客员工为空时
                         if (!string.IsNullOrEmpty(tt))
                         {
@@ -501,10 +501,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     string PlatformType = RP.Parameters.special.PlatformType;
                     #region 会员会籍店、集客员工变动处理
                     //当会员的HigherVipID、SetoffUserId、Col20都为空时可以进行处理
-                    if (string.IsNullOrWhiteSpace(vipInfo.HigherVipID) && string.IsNullOrWhiteSpace(vipInfo.SetoffUserId) && string.IsNullOrWhiteSpace(vipInfo.Col20))
+                    if ((string.IsNullOrWhiteSpace(vipInfo.HigherVipID) && string.IsNullOrWhiteSpace(vipInfo.SetoffUserId)) || string.IsNullOrWhiteSpace(vipInfo.Col20))
                     {
                         var HigherVipInfo = vipBll.QueryByEntity(new VipEntity() { ClientID = loggingSessionInfo.CurrentUser.customer_id, VIPID = RP.UserID }, null).FirstOrDefault();
-                        if (PlatformType != "" && PlatformType != null)//当为员工或会员时
+                        if (!string.IsNullOrWhiteSpace(PlatformType) && PlatformType != "4" && string.IsNullOrWhiteSpace(vipInfo.HigherVipID) && string.IsNullOrWhiteSpace(vipInfo.SetoffUserId))//当为员工或会员时
                         {
                             switch (PlatformType)
                             {
@@ -532,15 +532,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                                         vipInfo.CouponInfo = HigherVipInfo.CouponInfo;
                                     }
                                     vipInfo.Col23 = "3";
-                                    break;
-                                case "4":
-                                    vipInfo.Col20 = RP.UserID;//如果pushType=IsSuperRetail 则PlatformType=4 表示超级分销
-                                    if (HigherVipInfo != null && !string.IsNullOrEmpty(HigherVipInfo.CouponInfo))
-                                    {
-                                        vipInfo.CouponInfo = HigherVipInfo.CouponInfo;
-                                    }
-                                    vipInfo.Col23 = "4";//超级分销
-                                    break;
+                                    break;                               
                                 default:
                                     if (HigherVipInfo != null && !string.IsNullOrEmpty(HigherVipInfo.CouponInfo))
                                     {
@@ -549,7 +541,51 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                                     vipInfo.SetoffUserId = RP.UserID;
                                     break;
                             }
+                            //如果集客成功给出提示
+                            if (vipInfo != null && ((!string.IsNullOrEmpty(vipInfo.CouponInfo) && vipInfo.SetoffUserId == RP.UserID) || (!string.IsNullOrEmpty(vipInfo.HigherVipID) && vipInfo.HigherVipID == RP.UserID)))
+                            {
+                                if (PlatformType == "1" || PlatformType == "2")
+                                {
+                                    rsp.ResultCode = 306;
+                                    rsp.Message = "恭喜你集客成功。会员需要用心经营才会有订单哦！";
+                                }
+                                else
+                                {
+                                    rsp.ResultCode = 307;
+                                    rsp.Message = "恭喜您集客成功，集客注册成功后才能获得奖励哦!";
+                                }
+                            }
                         }
+                        else if (PlatformType == "4" && string.IsNullOrWhiteSpace(vipInfo.Col20))//当超级分销时
+                        {
+                            vipInfo.Col20 = RP.UserID;//如果pushType=IsSuperRetail 则PlatformType=4 表示超级分销
+                            if (HigherVipInfo != null && !string.IsNullOrEmpty(HigherVipInfo.CouponInfo))
+                            {
+                                vipInfo.CouponInfo = HigherVipInfo.CouponInfo;
+                            }
+                            vipInfo.Col23 = "4";//超级分销
+                            //如果分销成功给出提示
+                            if (vipInfo != null && !string.IsNullOrEmpty(vipInfo.Col20) && vipInfo.Col20 == RP.UserID)
+                            {
+                                rsp.ResultCode = 307;
+                                rsp.Message = "恭喜您分销成功，分销商销售成功后才可能获得奖励哦!";
+                            }
+                        }
+                        else
+                        {
+                            //如果已经集客给出提示
+                            if (vipInfo != null && ((!string.IsNullOrEmpty(vipInfo.CouponInfo) && vipInfo.SetoffUserId != RP.UserID) || (!string.IsNullOrEmpty(vipInfo.HigherVipID) && vipInfo.HigherVipID != RP.UserID)))
+                            {
+                                rsp.ResultCode = 312;
+                                rsp.Message = "此客户已是会员，无需再集客。老会员更要服务好哦！";
+                            }
+                            else if (vipInfo != null && ((!string.IsNullOrEmpty(vipInfo.CouponInfo) && vipInfo.SetoffUserId == RP.UserID) || (!string.IsNullOrEmpty(vipInfo.HigherVipID) && vipInfo.HigherVipID == RP.UserID)) && !string.IsNullOrEmpty(vipInfo.Col21) && Convert.ToDateTime(vipInfo.Col21).AddSeconds(3) < DateTime.Now)  //col21：员工集客/或者分销商集客时间
+                            {
+                                rsp.ResultCode = 313;
+                                rsp.Message = "此客户此前已经被您集客，无需重复集客！";
+                            }
+                        }
+                        
                         if (RP.Parameters.special.Mode.Equals("Coupon"))//如果是优惠券根据给定的VipSourceId=27给定
                         {
                             vipInfo.VipSourceId = "27";
@@ -566,37 +602,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                             vipInfo.VipSourceName = "员工集客";
                         }
                         vipInfo.Col24 = RP.Parameters.special.ObjectID;
-                        vipInfo.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//集客时间*****         
-                        //如果集客成功给出提示
-                        if (vipInfo != null && ((!string.IsNullOrEmpty(vipInfo.CouponInfo) && vipInfo.SetoffUserId == RP.UserID) || (!string.IsNullOrEmpty(vipInfo.HigherVipID) && vipInfo.HigherVipID == RP.UserID)))
-                        {
-                            if (PlatformType == "1" || PlatformType == "2")
-                            {
-                                rsp.ResultCode = 306;
-                                rsp.Message = "恭喜你集客成功。会员需要用心经营才会有订单哦！";
-                            }
-                            else
-                            {
-                                rsp.ResultCode = 307;
-                                rsp.Message = "恭喜您集客成功，集客注册成功后才能获得奖励哦!";
-                            }
-
-                        }
-                    }
-                    else
-                    {
-                        //如果已经集客给出提示
-                        if (vipInfo != null && ((!string.IsNullOrEmpty(vipInfo.CouponInfo) && vipInfo.SetoffUserId != RP.UserID) || (!string.IsNullOrEmpty(vipInfo.HigherVipID) && vipInfo.HigherVipID != RP.UserID)))
-                        {
-                            rsp.ResultCode = 312;
-                            rsp.Message = "此客户已是会员，无需再集客。老会员更要服务好哦！";
-                        }
-                        else if (vipInfo != null && ((!string.IsNullOrEmpty(vipInfo.CouponInfo) && vipInfo.SetoffUserId == RP.UserID) || (!string.IsNullOrEmpty(vipInfo.HigherVipID) && vipInfo.HigherVipID == RP.UserID)) && !string.IsNullOrEmpty(vipInfo.Col21) && Convert.ToDateTime(vipInfo.Col21).AddSeconds(3) < DateTime.Now)  //col21：员工集客/或者分销商集客时间
-                        {
-                            rsp.ResultCode = 313;
-                            rsp.Message = "此客户此前已经被您集客，无需重复集客。！";
-                        }
-                    }
+                        vipInfo.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//集客时间*****     
+                    }                    
                     if (UserStatus.Trim().Equals("-1"))//判断员工状态
                     {// 当前会员的集客员工离职时
 

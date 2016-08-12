@@ -95,10 +95,25 @@ namespace JIT.CPOS.BS.BLL
                                 var vipBLL = new VipBLL(loggingSession);
 
                                 var vipInfo = vipBLL.GetByID(strVipId);
+								string strIntegralSourceID = string.Empty;
+								switch (entityContact.ContactTypeCode.ToString().TrimEnd()) {
+									case "Reg":
+										strIntegralSourceID = "2";
+										break;
+									case "Focus":
+										strIntegralSourceID = "3";
+										break;
+									case "Share":
+										strIntegralSourceID = "28";
+										break;
+									default:
+										strIntegralSourceID = "22";
+										break;
+								}
                                 var IntegralDetail = new VipIntegralDetailEntity()
                                 {
                                     Integral = prize.Point,
-                                    IntegralSourceID = "22",
+									IntegralSourceID = strIntegralSourceID,
                                     ObjectId = entityContact.ContactEventId.ToString()
                                 };
                                 //变动前积分

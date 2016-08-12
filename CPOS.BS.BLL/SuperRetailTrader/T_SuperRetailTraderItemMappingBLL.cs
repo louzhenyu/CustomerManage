@@ -67,36 +67,47 @@ namespace JIT.CPOS.BS.BLL
         {
             return _currentDAO.GetSuperRetailTraderItemDetail(ItemId);
         }
+
         /// <summary>
-        /// 增加库存
+        /// 超级分销库存是否足够
         /// </summary>
         /// <param name="inoutDetailList"></param>
-        public bool SetSuperRetailTraderItemStock(List<InoutDetailInfo> inoutDetailList) 
+        /// <returns></returns>
+        public bool IsStockEnough(List<InoutDetailInfo> inoutDetailList) 
         {
             T_SuperRetailTraderSkuMappingBLL SkuBll = new T_SuperRetailTraderSkuMappingBLL((LoggingSessionInfo)CurrentUserInfo);
             bool result = true;
             foreach (var i in inoutDetailList)
             {
-                var itemEntity = this.QueryByEntity(new T_SuperRetailTraderItemMappingEntity() { CustomerID = CurrentUserInfo.ClientID, ItemId = i.item_id },null).FirstOrDefault();
                 var skuEntity = SkuBll.QueryByEntity(new T_SuperRetailTraderSkuMappingEntity() { CustomerID = CurrentUserInfo.ClientID, SkuId = i.sku_id }, null).FirstOrDefault();
-
-                if (skuEntity.SalesQty + i.enter_qty <= skuEntity.DistributerStock) //如果Sku的销量小于Sku总库存，则设置销量 
-                {
-                    //商品库存和销量处理
-                    itemEntity.SalesQty += Convert.ToInt32(i.enter_qty);
-                    itemEntity.LastUpdateTime = DateTime.Now;
-                    this.Update(itemEntity);
-                    //Sku库存和销量处理
-                    skuEntity.SalesQty += Convert.ToInt32(i.enter_qty);
-                    skuEntity.LastUpdateTime = DateTime.Now;
-                    SkuBll.Update(skuEntity);
-                }
-                else 
+                if (skuEntity.SalesQty + i.enter_qty > skuEntity.DistributerStock) //如果Sku的销量小于Sku总库存，则设置销量 
                 {
                     result = false;
                 }
             }
             return result;
+        }
+        /// <summary>
+        /// 增加库存
+        /// </summary>
+        /// <param name="inoutDetailList"></param>
+        public void SetSuperRetailTraderItemStock(List<InoutDetailInfo> inoutDetailList) 
+        {
+            T_SuperRetailTraderSkuMappingBLL SkuBll = new T_SuperRetailTraderSkuMappingBLL((LoggingSessionInfo)CurrentUserInfo);
+            foreach (var i in inoutDetailList)
+            {
+                var itemEntity = this.QueryByEntity(new T_SuperRetailTraderItemMappingEntity() { CustomerID = CurrentUserInfo.ClientID, ItemId = i.item_id },null).FirstOrDefault();
+                var skuEntity = SkuBll.QueryByEntity(new T_SuperRetailTraderSkuMappingEntity() { CustomerID = CurrentUserInfo.ClientID, SkuId = i.sku_id }, null).FirstOrDefault();
+
+                //商品库存和销量处理
+                itemEntity.SalesQty += Convert.ToInt32(i.enter_qty);
+                itemEntity.LastUpdateTime = DateTime.Now;
+                this.Update(itemEntity);
+                //Sku库存和销量处理
+                skuEntity.SalesQty += Convert.ToInt32(i.enter_qty);
+                skuEntity.LastUpdateTime = DateTime.Now;
+                SkuBll.Update(skuEntity);
+            }
         }
 
         /// <summary>
